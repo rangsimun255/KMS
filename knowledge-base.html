@@ -34,7 +34,7 @@
         
         .checkbox-group { display: flex; gap: 15px; align-items: center; flex-wrap: wrap; }
         .checkbox-item { display: flex; align-items: center; gap: 5px; }
-        .checkbox-item input { width: 18px; height: 18px; cursor: pointer; }
+        .checkbox-item input { width: 18px; height: 18px; }
         .checkbox-item label { font-size: 14px; cursor: pointer; }
         
         .btn-clear { padding: 10px 20px; background: #e74c3c; color: #fff; border: none; border-radius: 8px; cursor: pointer; font-size: 14px; }
@@ -53,25 +53,21 @@
         .card-type.wi { background: #e3f2fd; color: #1565c0; }
         .card-type.video { background: #fff3e0; color: #ef6c00; }
         .card-type.experience { background: #fce4ec; color: #c2185b; }
-        .card-title { font-size: 16px; font-weight: 600; color: #2c3e50; margin-bottom: 8px; line-height: 1.4; }
+        .card-title { font-size: 16px; font-weight: 600; color: #2c3e50; margin-bottom: 8px; }
         .card-info { font-size: 13px; color: #7f8c8d; margin-bottom: 5px; }
         .card-btn { display: inline-block; padding: 10px 20px; background: #5b9bd5; color: #fff; text-decoration: none; border-radius: 8px; font-size: 14px; margin-top: 10px; }
         .card-btn:hover { background: #4a89c8; }
-        .card-btn.video-btn { background: #ef6c00; }
-        .card-btn.video-btn:hover { background: #e65100; }
         
         /* No Results */
-        .no-results { text-align: center; padding: 60px; color: #7f8c8d; grid-column: 1 / -1; }
-        .no-results i { font-size: 60px; margin-bottom: 20px; color: #bdc3c7; display: block; }
+        .no-results { text-align: center; padding: 60px; color: #7f8c8d; }
+        .no-results i { font-size: 60px; margin-bottom: 20px; color: #bdc3c7; }
         
         /* Responsive */
         @media (max-width: 768px) {
             .sidebar { width: 100%; height: 60px; flex-direction: row; justify-content: center; position: relative; }
             .main-content { margin-left: 0; }
             .cards-grid { grid-template-columns: 1fr; }
-            .filter-row { flex-direction: column; align-items: flex-start; }
-            .cards-section { padding: 20px; }
-            .filter-section { padding: 20px; }
+            .filter-row { flex-direction: column; }
         }
     </style>
 </head>
@@ -150,6 +146,7 @@
             <!-- Cards Section -->
             <section class="cards-section">
                 <div class="cards-grid" id="cardsContainer">
+                    <!-- Cards จะถูกสร้างโดย JavaScript -->
                     <div class="no-results">
                         <i class="fas fa-spinner fa-spin"></i>
                         <p>กำลังโหลดข้อมูล...</p>
@@ -160,7 +157,7 @@
     </div>
 
     <script>
-        // ===== ใส่ URL Apps Script ตรงนี้ =====
+        // ===== ตั้งค่า =====
         const API_URL = 'https://script.google.com/macros/s/AKfycbxlk-7X1xIQYP9RDhP3qKKqri_UaQNN_j9dqnQqSr8bZvoJVKKmJsKBc1yVo0fyTAxIvA/exec';
         
         let allData = [];
@@ -206,7 +203,6 @@
             try {
                 const response = await fetch(API_URL);
                 allData = await response.json();
-                console.log('Loaded data:', allData);
                 filterAndDisplay();
             } catch (error) {
                 console.error('Error:', error);
@@ -214,7 +210,6 @@
                     <div class="no-results">
                         <i class="fas fa-exclamation-triangle"></i>
                         <p>ไม่สามารถโหลดข้อมูลได้</p>
-                        <p style="font-size: 12px; margin-top: 10px;">Error: ${error.message}</p>
                     </div>
                 `;
             }
@@ -223,7 +218,7 @@
         // ===== สร้าง Thumbnail URL จาก FileURL =====
         function getThumbnail(fileURL) {
             if (!fileURL) return 'https://via.placeholder.com/400x200?text=No+Image';
-            const match = String(fileURL).match(/\/d\/([a-zA-Z0-9_-]+)/);
+            const match = fileURL.match(/file\/d\/([^\/]+)/);
             if (match) {
                 return `https://drive.google.com/thumbnail?id=${match}&sz=w400`;
             }
@@ -233,8 +228,7 @@
         // ===== สร้าง Card =====
         function createCard(item) {
             const thumbnail = getThumbnail(item.FileURL);
-            const typeClass = String(item.Type).toLowerCase();
-            const isVideo = String(item.Type).toLowerCase() === 'video';
+            const typeClass = item.Type.toLowerCase();
             
             return `
                 <div class="card">
@@ -244,10 +238,9 @@
                         <h3 class="card-title">${item.FileName}</h3>
                         <p class="card-info"><strong>กระบวนการ:</strong> ${item.ProcessName}</p>
                         <p class="card-info"><strong>ปัญหา:</strong> ${item.DefectName}</p>
-                        <p class="card-info"><strong>สาเหตุ (4M):</strong> ${item.CauseCategory}</p>
-                        <a href="${item.FileURL}" target="_blank" class="card-btn ${isVideo ? 'video-btn' : ''}">
-                            <i class="fas ${isVideo ? 'fa-play' : 'fa-file-alt'}"></i>
-                            ${isVideo ? ' เปิดดูวิดีโอ' : ' เปิดเอกสาร'}
+                        <p class="card-info"><strong>สาเหตุ:</strong> ${item.CauseCategory}</p>
+                        <a href="${item.FileURL}" target="_blank" class="card-btn">
+                            ${item.Type === 'Video' ? 'เปิดดูวิดีโอ' : 'เปิดเอกสาร'}
                         </a>
                     </div>
                 </div>
@@ -266,9 +259,9 @@
             if (document.getElementById('typeExp').checked) types.push('Experience');
             
             let filtered = allData.filter(item => {
-                if (process && String(item.Process) !== process) return false;
-                if (defect && String(item.DefectCode) !== defect) return false;
-                if (!types.includes(String(item.Type))) return false;
+                if (process && item.Process != process) return false;
+                if (defect && item.DefectCode != defect) return false;
+                if (!types.includes(item.Type)) return false;
                 return true;
             });
             
