@@ -55,20 +55,23 @@ body {
 }
 
 /* ===== Header ===== */
-.header {
-    margin-bottom: 40px;
+.header { 
+    margin-bottom: 40px; 
+    text-align: center; 
 }
 
-.header h1 {
-    font-size: 32px;
-    font-weight: 700;
-    color: #2c3e50;
-    margin-bottom: 10px;
+.header h1 { 
+    font-size: 28px; 
+    font-weight: 700; 
+    color: #2c3e50; 
+    margin-bottom: 10px; 
 }
 
-.header .subtitle {
-    font-size: 16px;
-    color: #7f8c8d;
+.header .subtitle { 
+    font-size: 15px; 
+    color: #7f8c8d; 
+    max-width: 600px;
+    margin: 0 auto;
 }
 
 /* ===== Menu Cards ===== */
