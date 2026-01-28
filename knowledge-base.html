@@ -217,13 +217,14 @@
 
         // ===== สร้าง Thumbnail URL จาก FileURL =====
         function getThumbnail(fileURL) {
-            if (!fileURL) return 'https://via.placeholder.com/400x200?text=No+Image';
-            const match = fileURL.match(/file\/d\/([^\/]+)/);
-            if (match) {
-                return `https://drive.google.com/thumbnail?id=${match}&sz=w400`;
-            }
-            return 'https://via.placeholder.com/400x200?text=No+Image';
-        }
+  if (!fileURL) return 'https://via.placeholder.com/400x200?text=No+Image';
+  const match = fileURL.match(/file\/d\/([^\/]+)/);
+  if (match && match[1]) {
+    return `https://drive.google.com/thumbnail?id=${match[1]}&sz=w400`;
+  }
+  return 'https://via.placeholder.com/400x200?text=No+Image';
+}
+
 
         // ===== สร้าง Card =====
         function createCard(item) {
