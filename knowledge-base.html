@@ -320,3 +320,59 @@
     </script>
 </body>
 </html>
+/* ===== Responsive เพิ่มเติมสำหรับ Knowledge Base ===== */
+
+/* จอใหญ่: 3 คอลัมน์ */
+.cards-grid {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+/* iPad / จอกลาง: 2 คอลัมน์ */
+@media (max-width: 1200px) {
+  .cards-section { padding: 20px 24px; }
+  .filter-section { padding: 16px 24px; }
+  .cards-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* มือถือ: ปรับให้กระชับและอ่านง่าย */
+@media (max-width: 768px) {
+  /* Sidebar เป็นแถวบน */
+  .sidebar {
+    width: 100%;
+    height: 60px;
+    flex-direction: row;
+    justify-content: center;
+    padding: 10px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+
+  .main-content { margin-left: 0; }
+
+  /* Header เตี้ยลง */
+  .header { padding: 24px 16px; }
+  .header h1 { font-size: 24px; }
+  .header p { font-size: 14px; }
+
+  /* Filter: ให้กองเป็นแนวตั้ง และกว้างเต็ม */
+  .filter-section { padding: 14px 16px; }
+  .filter-row { gap: 12px; }
+  .filter-group select { min-width: 0; width: 100%; }
+
+  /* Checkbox ให้ขึ้นบรรทัดใหม่สวย ๆ */
+  .checkbox-group { gap: 10px; }
+
+  /* ปุ่มล้างตัวกรองเต็มบรรทัด */
+  .btn-clear { width: 100%; }
+
+  /* Cards: 1 คอลัมน์ + กระชับ */
+  .cards-section { padding: 16px; }
+  .cards-grid { grid-template-columns: 1fr; gap: 14px; }
+  .card-image { height: 160px; }
+  .card-content { padding: 14px; }
+  .card-title { font-size: 15px; }
+  .card-info { font-size: 12px; }
+  .card-btn { width: 100%; text-align: center; }
+}
+
