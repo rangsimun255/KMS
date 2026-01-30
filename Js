@@ -10,7 +10,7 @@ document.querySelectorAll('.sidebar-icon').forEach((icon, index) => {
         
         // Navigate to pages
         const pages = [
-            'Index.HTML',           // Home
+            'index.HTML',           // Home
             'knowledge-base.html',  // Knowledge Base
             'learning-path.html',   // Learning Path
             'quiz.html',            // Quiz
