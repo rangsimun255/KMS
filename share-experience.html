@@ -73,6 +73,7 @@
       color: #2e75b6;
       font-weight: 600;
     }
+    .hint { font-size: 12px; color: #7f8c8d; line-height: 1.4; }
 
     form { padding: 20px; }
 
@@ -97,8 +98,6 @@
     }
     textarea { min-height: 110px; resize: vertical; }
     input:focus, select:focus, textarea:focus { border-color: #5b9bd5; }
-
-    .hint { font-size: 12px; color: #7f8c8d; line-height: 1.4; }
 
     /* ===== Image Upload ===== */
     .uploader {
@@ -180,6 +179,7 @@
       display: none;
       font-size: 14px;
       line-height: 1.5;
+      word-break: break-word;
     }
     .status.show { display: block; }
     .status.info { background: #eef5ff; color: #1f4f7a; border: 1px solid #cfe1f4; }
@@ -193,10 +193,8 @@
       .header h1 { font-size: 26px; }
     }
 
-    /* ให้เหมือนหน้า Home: มือถือ Sidebar อยู่บน */
     @media (max-width: 900px) {
       .container { flex-direction: column; }
-
       .sidebar {
         width: 100%;
         height: 60px;
@@ -205,10 +203,7 @@
         padding: 10px;
         position: sticky;
         top: 0;
-        left: 0;
-        z-index: 999;
       }
-
       .main-content { margin-left: 0; width: 100%; }
     }
 
@@ -236,14 +231,14 @@
     <main class="main-content">
       <header class="header">
         <h1>Share Experience</h1>
-        <p>บันทึกปัญหาและวิธีแก้ไข (แนบรูปได้ 1–4 รูป) → ระบบจะสร้าง PDF เก็บใน Google Drive อัตโนมัติ</p>
+        <p>บันทึกปัญหาและวิธีแก้ไข เพื่อเพิ่มความรู้ให้ทีม (แนบรูปได้สูงสุด 4 รูป)</p>
       </header>
 
       <div class="wrap">
         <section class="form-card">
           <div class="form-top">
             <div class="badge"><i class="fa-solid fa-file-pen"></i> แบบฟอร์มบันทึกประสบการณ์</div>
-            <div class="hint">* กด “บันทึกข้อมูล” แล้วระบบจะส่งเข้า Google Sheet + Drive</div>
+            <div class="hint">ส่งข้อมูลเข้า Google Apps Script → บันทึกชีท + อัปโหลดรูป + สร้าง PDF</div>
           </div>
 
           <form id="shareForm">
@@ -345,178 +340,160 @@
     </main>
   </div>
 
-<script>
-  // ====== ใส่ URL ของ Web App ที่ Deploy จาก Apps Script ======
-  const WEBAPP_URL = "PUT_YOUR_WEBAPP_URL_HERE"; // <-- แก้ตรงนี้
+  <script>
+    // ✅ ใส่ Web App URL ตรงนี้ (ใส่ให้แล้ว)
+    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxMCCGwPDe1R6IoWYpHhsNUYDrdTXd-B8iw3DgTDHKVovbDPtCXYkBXA5uceDQYgPL6ag/exec";
 
-  const form = document.getElementById('shareForm');
-  const imagesInput = document.getElementById('images');
-  const btnPick = document.getElementById('btnPick');
-  const btnClearImages = document.getElementById('btnClearImages');
-  const thumbs = document.getElementById('thumbs');
-  const imgHint = document.getElementById('imgHint');
-  const btnReset = document.getElementById('btnReset');
-  const btnSubmit = document.getElementById('btnSubmit');
-  const statusBox = document.getElementById('statusBox');
+    const form = document.getElementById('shareForm');
+    const imagesInput = document.getElementById('images');
+    const btnPick = document.getElementById('btnPick');
+    const btnClearImages = document.getElementById('btnClearImages');
+    const thumbs = document.getElementById('thumbs');
+    const imgHint = document.getElementById('imgHint');
+    const btnReset = document.getElementById('btnReset');
+    const btnSubmit = document.getElementById('btnSubmit');
+    const statusBox = document.getElementById('statusBox');
 
-  let selectedFiles = [];
+    let selectedFiles = [];
 
-  function setStatus(type, msg) {
-    statusBox.className = 'status show ' + type;
-    statusBox.innerHTML = msg;
-  }
-  function clearStatus() {
-    statusBox.className = 'status';
-    statusBox.innerHTML = '';
-  }
-
-  function renderThumbs() {
-    thumbs.innerHTML = '';
-    if (selectedFiles.length === 0) {
-      imgHint.textContent = 'ยังไม่เลือกรูป';
-      return;
+    function setStatus(type, msg) {
+      statusBox.className = 'status show ' + type;
+      statusBox.innerHTML = msg;
     }
-    imgHint.textContent = `เลือกรูปแล้ว ${selectedFiles.length} รูป`;
-
-    selectedFiles.forEach((file, idx) => {
-      const url = URL.createObjectURL(file);
-      const div = document.createElement('div');
-      div.className = 'thumb';
-      div.innerHTML = `
-        <img src="${url}" alt="img-${idx+1}">
-        <button type="button" title="ลบรูปนี้"><i class="fa-solid fa-xmark"></i></button>
-      `;
-      div.querySelector('button').addEventListener('click', () => {
-        selectedFiles.splice(idx, 1);
-        renderThumbs();
-      });
-      thumbs.appendChild(div);
-    });
-  }
-
-  btnPick.addEventListener('click', () => imagesInput.click());
-
-  imagesInput.addEventListener('change', (e) => {
-    const files = Array.from(e.target.files || []);
-    if (files.length === 0) return;
-
-    const merged = selectedFiles.concat(files);
-    if (merged.length > 4) {
-      selectedFiles = merged.slice(0, 4);
-      setStatus('err', 'แนบรูปได้สูงสุด 4 รูปเท่านั้นครับ');
-    } else {
-      selectedFiles = merged;
-      clearStatus();
+    function clearStatus() {
+      statusBox.className = 'status';
+      statusBox.innerHTML = '';
     }
 
-    imagesInput.value = '';
-    renderThumbs();
-  });
+    function renderThumbs() {
+      thumbs.innerHTML = '';
+      if (selectedFiles.length === 0) {
+        imgHint.textContent = 'ยังไม่เลือกรูป';
+        return;
+      }
+      imgHint.textContent = `เลือกรูปแล้ว ${selectedFiles.length} รูป`;
 
-  btnClearImages.addEventListener('click', () => {
-    selectedFiles = [];
-    imagesInput.value = '';
-    renderThumbs();
-    clearStatus();
-  });
-
-  btnReset.addEventListener('click', () => {
-    form.reset();
-    selectedFiles = [];
-    imagesInput.value = '';
-    renderThumbs();
-    clearStatus();
-  });
-
-  function fileToBase64(file) {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onload = () => {
-        const result = String(reader.result || "");
-        // result = "data:image/png;base64,...."
-        const base64 = result.split(",")[1] || "";
-        resolve({
-          name: file.name,
-          mime: file.type || "application/octet-stream",
-          data: base64
+      selectedFiles.forEach((file, idx) => {
+        const url = URL.createObjectURL(file);
+        const div = document.createElement('div');
+        div.className = 'thumb';
+        div.innerHTML = `
+          <img src="${url}" alt="img-${idx+1}">
+          <button type="button" title="ลบรูปนี้"><i class="fa-solid fa-xmark"></i></button>
+        `;
+        div.querySelector('button').addEventListener('click', () => {
+          selectedFiles.splice(idx, 1);
+          renderThumbs();
         });
-      };
-      reader.onerror = reject;
-      reader.readAsDataURL(file);
-    });
-  }
-
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    clearStatus();
-
-    if (!WEBAPP_URL || WEBAPP_URL.includes("https://script.google.com/macros/s/AKfycbxMCCGwPDe1R6IoWYpHhsNUYDrdTXd-B8iw3DgTDHKVovbDPtCXYkBXA5uceDQYgPL6ag/exec")) {
-      setStatus('err', 'กรุณาใส่ WEBAPP_URL (ลิงก์ Web App ของ Apps Script) ก่อนใช้งาน');
-      return;
-    }
-
-    if (selectedFiles.length < 1) {
-      setStatus('err', 'กรุณาแนบรูปอย่างน้อย 1 รูป (สูงสุด 4 รูป)');
-      return;
-    }
-
-    try {
-      btnSubmit.disabled = true;
-      setStatus('info', '<i class="fa-solid fa-spinner fa-spin"></i> กำลังบันทึก... (อัปโหลดรูป + สร้าง PDF)');
-
-      const images = [];
-      for (const f of selectedFiles) {
-        images.push(await fileToBase64(f));
-      }
-
-      const payload = {
-        problemTitle: document.getElementById('problemTitle').value.trim(),
-        reporterName: document.getElementById('reporterName').value.trim(),
-        product: document.getElementById('product').value,
-        process: document.getElementById('process').value,
-        docType: document.getElementById('docType').value,
-        description: document.getElementById('problemDetail').value.trim(),
-        how: document.getElementById('solution').value.trim(),
-        result: "", // เผื่ออนาคตอยากเพิ่ม field ผลลัพธ์
-        images
-      };
-
-      const res = await fetch(WEBAPP_URL, {
-        method: "POST",
-        headers: { "Content-Type": "text/plain;charset=utf-8" }, // กันปัญหา CORS/Apps Script
-        body: JSON.stringify(payload)
+        thumbs.appendChild(div);
       });
+    }
 
-      const data = await res.json();
+    btnPick.addEventListener('click', () => imagesInput.click());
 
-      if (!data || data.ok !== true) {
-        const msg = (data && data.error) ? data.error : "บันทึกไม่สำเร็จ";
-        throw new Error(msg);
+    imagesInput.addEventListener('change', (e) => {
+      const files = Array.from(e.target.files || []);
+      if (files.length === 0) return;
+
+      const merged = selectedFiles.concat(files);
+      if (merged.length > 4) {
+        selectedFiles = merged.slice(0, 4);
+        setStatus('err', 'แนบรูปได้สูงสุด 4 รูปเท่านั้นครับ');
+      } else {
+        selectedFiles = merged;
+        clearStatus();
       }
 
-      const pdfUrl = data.pdfUrl || "";
-      const fileName = data.fileName || "PDF";
+      imagesInput.value = ''; // เลือกไฟล์เดิมซ้ำได้
+      renderThumbs();
+    });
 
-      setStatus('ok',
-        `<i class="fa-solid fa-circle-check"></i> บันทึกสำเร็จ ✅<br>
-         ไฟล์ PDF: <a href="${pdfUrl}" target="_blank" rel="noopener">${fileName}</a>`
-      );
+    btnClearImages.addEventListener('click', () => {
+      selectedFiles = [];
+      imagesInput.value = '';
+      renderThumbs();
+      clearStatus();
+    });
 
+    btnReset.addEventListener('click', () => {
       form.reset();
       selectedFiles = [];
       imagesInput.value = '';
       renderThumbs();
+      clearStatus();
+    });
 
-    } catch (err) {
-      console.error(err);
-      setStatus('err', `<i class="fa-solid fa-triangle-exclamation"></i> ${err.message}`);
-    } finally {
-      btnSubmit.disabled = false;
+    function fileToBase64(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(String(reader.result)); // data:image/png;base64,...
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
     }
-  });
 
-  renderThumbs();
-</script>
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      clearStatus();
 
+      if (selectedFiles.length < 1) {
+        setStatus('err', 'กรุณาแนบรูปอย่างน้อย 1 รูป (สูงสุด 4 รูป)');
+        return;
+      }
+
+      btnSubmit.disabled = true;
+      setStatus('info', '<i class="fa-solid fa-spinner fa-spin"></i> กำลังส่งข้อมูลไปบันทึก...');
+
+      try {
+        const imagesBase64 = await Promise.all(selectedFiles.map(fileToBase64));
+
+        const payload = {
+          problemTitle: document.getElementById('problemTitle').value.trim(),
+          reporterName: document.getElementById('reporterName').value.trim(),
+          product: document.getElementById('product').value,
+          process: document.getElementById('process').value,
+          docType: document.getElementById('docType').value,
+          description: document.getElementById('problemDetail').value.trim(),
+          how: document.getElementById('solution').value.trim(),
+          images: imagesBase64
+        };
+
+        // Apps Script บางทีตอบกลับเป็น HTML/ข้อความ → ต้องอ่านเป็น text ก่อน แล้วค่อย JSON.parse
+        const res = await fetch(WEB_APP_URL, {
+          method: "POST",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: JSON.stringify(payload)
+        });
+
+        const raw = await res.text();
+        console.log("RAW RESPONSE:", raw);
+
+        let data;
+        try {
+          data = JSON.parse(raw);
+        } catch {
+          // ถ้าได้ HTML กลับมา มักเกิดจากไม่ได้ Deploy เป็น Web App หรือสิทธิ์ผิด
+          throw new Error("ตอบกลับไม่ใช่ JSON (เช็คว่า Deploy เป็น Web App แล้วหรือยัง / URL ถูกไหม)");
+        }
+
+        if (!data.ok) throw new Error(data.error || "บันทึกไม่สำเร็จ");
+
+        const pdfLink = data.pdfUrl ? `<a href="${data.pdfUrl}" target="_blank">เปิด PDF</a>` : "(ไม่พบลิงก์ PDF)";
+        setStatus('ok', `✅ บันทึกสำเร็จ<br>${pdfLink}`);
+
+        form.reset();
+        selectedFiles = [];
+        renderThumbs();
+
+      } catch (err) {
+        console.error(err);
+        setStatus('err', `❌ ${err.message}`);
+      } finally {
+        btnSubmit.disabled = false;
+      }
+    });
+
+    renderThumbs();
+  </script>
 </body>
 </html>
