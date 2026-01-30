@@ -1,1 +1,466 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Share Experience - KMS</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Sarabun', sans-serif; background-color: #e8eef5; min-height: 100vh; overflow-x: hidden; }
+    .container { display: flex; min-height: 100vh; }
+
+    /* ===== Sidebar (Desktop) ===== */
+    .sidebar {
+      width: 70px;
+      background: linear-gradient(180deg, #5b9bd5 0%, #4a89c8 100%);
+      display: flex; flex-direction: column; align-items: center;
+      padding-top: 20px; gap: 10px;
+      position: fixed; left: 0; top: 0;
+      height: 100vh; z-index: 10;
+    }
+    .sidebar-icon {
+      width: 50px; height: 50px;
+      display: flex; align-items: center; justify-content: center;
+      color: rgba(255,255,255,0.7); font-size: 20px;
+      border-radius: 12px; cursor: pointer;
+      transition: all 0.3s ease; text-decoration: none;
+    }
+    .sidebar-icon:hover, .sidebar-icon.active { background-color: rgba(255,255,255,0.2); color: #fff; }
+
+    /* ===== Main ===== */
+    .main-content { flex: 1; margin-left: 70px; width: calc(100% - 70px); }
+
+    .header {
+      background: linear-gradient(135deg, #5b9bd5 0%, #2e75b6 100%);
+      padding: 34px 40px;
+      text-align: center;
+    }
+    .header h1 { color: #fff; font-size: 30px; font-weight: 700; margin-bottom: 8px; }
+    .header p { color: rgba(255,255,255,0.92); font-size: 15px; line-height: 1.6; }
+
+    .wrap { padding: 22px 40px 40px; }
+
+    .form-card {
+      max-width: 980px;
+      margin: 0 auto;
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+      overflow: hidden;
+    }
+
+    .form-top {
+      padding: 18px 20px;
+      border-bottom: 1px solid #eef2f6;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      background: #eef5ff;
+      color: #2e75b6;
+      font-weight: 600;
+    }
+
+    form { padding: 20px; }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px 16px;
+    }
+
+    .field { display: flex; flex-direction: column; gap: 6px; }
+    label { font-size: 14px; font-weight: 700; color: #2c3e50; }
+
+    input[type="text"], select, textarea {
+      width: 100%;
+      padding: 11px 12px;
+      border: 2px solid #e6e6e6;
+      border-radius: 10px;
+      font-size: 14px;
+      outline: none;
+      transition: 0.2s ease;
+      background: #fff;
+    }
+    textarea { min-height: 110px; resize: vertical; }
+    input:focus, select:focus, textarea:focus { border-color: #5b9bd5; }
+
+    .hint { font-size: 12px; color: #7f8c8d; line-height: 1.4; }
+
+    /* ===== Image Upload ===== */
+    .uploader {
+      border: 2px dashed #cfe1f4;
+      border-radius: 14px;
+      padding: 14px;
+      background: #f7fbff;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .uploader-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      border: none;
+      border-radius: 10px;
+      padding: 11px 14px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: 0.2s ease;
+      text-decoration: none;
+      justify-content: center;
+    }
+    .btn-primary { background: #5b9bd5; color: #fff; }
+    .btn-primary:hover { background: #4a89c8; }
+    .btn-ghost { background: #eef5ff; color: #2e75b6; }
+    .btn-ghost:hover { background: #e3efff; }
+    .btn-danger { background: #ffe8ea; color: #b3261e; }
+    .btn-danger:hover { background: #ffd7db; }
+    .btn:disabled { opacity: .6; cursor: not-allowed; }
+
+    .thumbs {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+    .thumb {
+      background: #fff;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid #eaeaea;
+      position: relative;
+      aspect-ratio: 4 / 3;
+    }
+    .thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .thumb button {
+      position: absolute;
+      top: 6px; right: 6px;
+      width: 30px; height: 30px;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      background: rgba(0,0,0,0.55);
+      color: #fff;
+    }
+
+    /* ===== Footer actions ===== */
+    .actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 18px;
+      flex-wrap: wrap;
+    }
+
+    .status {
+      margin-top: 14px;
+      padding: 12px 14px;
+      border-radius: 12px;
+      display: none;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    .status.show { display: block; }
+    .status.info { background: #eef5ff; color: #1f4f7a; border: 1px solid #cfe1f4; }
+    .status.ok { background: #e8f5e9; color: #1b5e20; border: 1px solid #c8e6c9; }
+    .status.err { background: #ffebee; color: #b71c1c; border: 1px solid #ffcdd2; }
+
+    /* ===== Responsive ===== */
+    @media (max-width: 980px) {
+      .wrap { padding: 18px 24px 30px; }
+      .header { padding: 26px 20px; }
+      .header h1 { font-size: 26px; }
+    }
+
+    @media (max-width: 900px) {
+      .container { flex-direction: column; }
+
+      .sidebar {
+        width: 100%;
+        height: 60px;
+        flex-direction: row;
+        justify-content: center;
+        padding: 10px;
+        position: sticky;
+        top: 0;
+      }
+
+      .main-content { margin-left: 0; width: 100%; }
+    }
+
+    @media (max-width: 768px) {
+      .wrap { padding: 16px; }
+      form { padding: 16px; }
+      .grid { grid-template-columns: 1fr; }
+      .thumbs { grid-template-columns: repeat(2, 1fr); }
+      .actions .btn { width: 100%; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <!-- Sidebar -->
+    <nav class="sidebar">
+      <a href="index.html" class="sidebar-icon" title="Home"><i class="fas fa-home"></i></a>
+      <a href="knowledge-base.html" class="sidebar-icon" title="Knowledge Base"><i class="fas fa-book-open"></i></a>
+      <a href="learning-path.html" class="sidebar-icon" title="Learning Path"><i class="fas fa-graduation-cap"></i></a>
+      <a href="quiz.html" class="sidebar-icon" title="Quiz"><i class="fas fa-clipboard-check"></i></a>
+      <a href="share-experience.html" class="sidebar-icon active" title="Share Experience"><i class="fas fa-comments"></i></a>
+    </nav>
+
+    <main class="main-content">
+      <header class="header">
+        <h1>Share Experience</h1>
+        <p>บันทึกปัญหาและวิธีแก้ไข เพื่อเพิ่มความรู้ให้ทีม (แนบรูปได้สูงสุด 4 รูป)</p>
+      </header>
+
+      <div class="wrap">
+        <section class="form-card">
+          <div class="form-top">
+            <div class="badge"><i class="fa-solid fa-file-pen"></i> แบบฟอร์มบันทึกประสบการณ์</div>
+            <div class="hint">* ตอนนี้ยังไม่ต่อระบบส่งเข้า Google Sheet (จะต่อให้ในขั้นถัดไป)</div>
+          </div>
+
+          <form id="shareForm">
+            <div class="grid">
+              <!-- 1) ชื่อปัญหา -->
+              <div class="field" style="grid-column: 1 / -1;">
+                <label for="problemTitle">1) ชื่อปัญหา</label>
+                <input id="problemTitle" type="text" required placeholder="พิมพ์ชื่อปัญหา" />
+              </div>
+
+              <!-- 2) ชื่อผู้กรอก -->
+              <div class="field">
+                <label for="reporterName">2) ชื่อผู้กรอก</label>
+                <input id="reporterName" type="text" required placeholder="ชื่อ-นามสกุล" />
+              </div>
+
+              <!-- 3) ผลิตภัณฑ์ -->
+              <div class="field">
+                <label for="product">3) ชื่อผลิตภัณฑ์</label>
+                <select id="product" required>
+                  <option value="">-- เลือกผลิตภัณฑ์ --</option>
+                  <option value="ยาอมมะแว้ง รสบ๊วย">ยาอมมะแว้ง รสบ๊วย</option>
+                </select>
+              </div>
+
+              <!-- 4) Process -->
+              <div class="field">
+                <label for="process">4) เลือก Process</label>
+                <select id="process" required>
+                  <option value="">-- เลือกกระบวนการ --</option>
+                  <option value="1">1. ผสมเปียก</option>
+                  <option value="2">2. แร่งเปียก</option>
+                  <option value="3">3. อบลมร้อน</option>
+                  <option value="4">4. แร่งแห้ง</option>
+                  <option value="5">5. ผสมแห้ง</option>
+                  <option value="6">6. ตอกเม็ดยา</option>
+                  <option value="7">7. บรรจุซอง</option>
+                </select>
+              </div>
+
+              <!-- 5) ประเภทเอกสาร -->
+              <div class="field">
+                <label for="docType">5) ประเภทเอกสาร</label>
+                <select id="docType" required>
+                  <option value="">-- เลือกประเภทเอกสาร --</option>
+                  <option value="OPL">OPL</option>
+                  <option value="WI">WI</option>
+                  <option value="Experience">Share Experience</option>
+                </select>
+              </div>
+
+              <!-- 6) รูป -->
+              <div class="field" style="grid-column: 1 / -1;">
+                <label>6) เพิ่มรูป (สูงสุด 1–4 รูป)</label>
+                <div class="uploader">
+                  <div class="uploader-row">
+                    <div class="hint" id="imgHint">ยังไม่เลือกรูป</div>
+                    <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                      <button type="button" class="btn btn-ghost" id="btnPick">
+                        <i class="fa-regular fa-image"></i> เลือกรูป
+                      </button>
+                      <button type="button" class="btn btn-danger" id="btnClearImages">
+                        <i class="fa-solid fa-trash"></i> ล้างรูป
+                      </button>
+                    </div>
+                  </div>
+
+                  <input id="images" type="file" accept="image/*" multiple hidden />
+                  <div class="thumbs" id="thumbs"></div>
+                </div>
+              </div>
+
+              <!-- 7) รายละเอียด -->
+              <div class="field" style="grid-column: 1 / -1;">
+                <label for="problemDetail">7) รายละเอียดของปัญหา</label>
+                <textarea id="problemDetail" required placeholder="อธิบายรายละเอียดของปัญหา"></textarea>
+              </div>
+
+              <!-- 8) วิธีการแก้ไข -->
+              <div class="field" style="grid-column: 1 / -1;">
+                <label for="solution">8) วิธีการแก้ไข</label>
+                <textarea id="solution" required placeholder="อธิบายวิธีการแก้ไข"></textarea>
+              </div>
+            </div>
+
+            <div class="actions">
+              <button class="btn btn-primary" type="submit" id="btnSubmit">
+                <i class="fa-solid fa-floppy-disk"></i> บันทึกข้อมูล
+              </button>
+              <button class="btn btn-ghost" type="button" id="btnReset">
+                <i class="fa-solid fa-rotate-right"></i> ล้างฟอร์ม
+              </button>
+            </div>
+
+            <div class="status" id="statusBox"></div>
+          </form>
+        </section>
+      </div>
+    </main>
+  </div>
+
+<script>
+  const form = document.getElementById('shareForm');
+  const imagesInput = document.getElementById('images');
+  const btnPick = document.getElementById('btnPick');
+  const btnClearImages = document.getElementById('btnClearImages');
+  const thumbs = document.getElementById('thumbs');
+  const imgHint = document.getElementById('imgHint');
+  const btnReset = document.getElementById('btnReset');
+  const btnSubmit = document.getElementById('btnSubmit');
+  const statusBox = document.getElementById('statusBox');
+
+  let selectedFiles = [];
+
+  function setStatus(type, msg) {
+    statusBox.className = 'status show ' + type;
+    statusBox.innerHTML = msg;
+  }
+  function clearStatus() {
+    statusBox.className = 'status';
+    statusBox.innerHTML = '';
+  }
+
+  function renderThumbs() {
+    thumbs.innerHTML = '';
+    if (selectedFiles.length === 0) {
+      imgHint.textContent = 'ยังไม่เลือกรูป';
+      return;
+    }
+    imgHint.textContent = `เลือกรูปแล้ว ${selectedFiles.length} รูป`;
+
+    selectedFiles.forEach((file, idx) => {
+      const url = URL.createObjectURL(file);
+      const div = document.createElement('div');
+      div.className = 'thumb';
+      div.innerHTML = `
+        <img src="${url}" alt="img-${idx+1}">
+        <button type="button" title="ลบรูปนี้"><i class="fa-solid fa-xmark"></i></button>
+      `;
+      div.querySelector('button').addEventListener('click', () => {
+        selectedFiles.splice(idx, 1);
+        renderThumbs();
+      });
+      thumbs.appendChild(div);
+    });
+  }
+
+  btnPick.addEventListener('click', () => imagesInput.click());
+
+  imagesInput.addEventListener('change', (e) => {
+    const files = Array.from(e.target.files || []);
+    if (files.length === 0) return;
+
+    const merged = selectedFiles.concat(files);
+    if (merged.length > 4) {
+      selectedFiles = merged.slice(0, 4);
+      setStatus('err', 'แนบรูปได้สูงสุด 4 รูปเท่านั้นครับ');
+    } else {
+      selectedFiles = merged;
+      clearStatus();
+    }
+
+    imagesInput.value = ''; // เลือกไฟล์เดิมซ้ำได้
+    renderThumbs();
+  });
+
+  btnClearImages.addEventListener('click', () => {
+    selectedFiles = [];
+    imagesInput.value = '';
+    renderThumbs();
+    clearStatus();
+  });
+
+  btnReset.addEventListener('click', () => {
+    form.reset();
+    selectedFiles = [];
+    imagesInput.value = '';
+    renderThumbs();
+    clearStatus();
+  });
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    clearStatus();
+
+    // บังคับรูป 1-4 รูป
+    if (selectedFiles.length < 1) {
+      setStatus('err', 'กรุณาแนบรูปอย่างน้อย 1 รูป (สูงสุด 4 รูป)');
+      return;
+    }
+
+    btnSubmit.disabled = true;
+    setStatus('info', '<i class="fa-solid fa-spinner fa-spin"></i> บันทึกข้อมูลสำเร็จ (ตัวอย่าง) — ขั้นถัดไปจะต่อ Google Sheet');
+
+    // ตัวอย่างข้อมูล (เพื่อเช็คว่าฟอร์มครบ)
+    const data = {
+      ProblemTitle: document.getElementById('problemTitle').value.trim(),
+      ReporterName: document.getElementById('reporterName').value.trim(),
+      Product: document.getElementById('product').value,
+      Process: document.getElementById('process').value,
+      DocumentType: document.getElementById('docType').value,
+      ProblemDetail: document.getElementById('problemDetail').value.trim(),
+      Solution: document.getElementById('solution').value.trim(),
+      ImagesCount: selectedFiles.length
+    };
+
+    console.log('FORM DATA:', data);
+
+    setTimeout(() => {
+      btnSubmit.disabled = false;
+      setStatus('ok', '<i class="fa-solid fa-circle-check"></i> ฟอร์มพร้อมใช้งานแล้ว ✅ ต่อไปจะเชื่อม Apps Script เพื่อบันทึกลง Google Sheet + อัปโหลดรูป + สร้าง PDF');
+      form.reset();
+      selectedFiles = [];
+      renderThumbs();
+    }, 600);
+  });
+
+  renderThumbs();
+</script>
+
+</body>
+</html>
 
