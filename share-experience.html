@@ -164,7 +164,6 @@
       color: #fff;
     }
 
-    /* ===== Footer actions ===== */
     .actions {
       display: flex;
       gap: 10px;
@@ -186,13 +185,11 @@
     .status.ok { background: #e8f5e9; color: #1b5e20; border: 1px solid #c8e6c9; }
     .status.err { background: #ffebee; color: #b71c1c; border: 1px solid #ffcdd2; }
 
-    /* ===== Responsive ===== */
     @media (max-width: 980px) {
       .wrap { padding: 18px 24px 30px; }
       .header { padding: 26px 20px; }
       .header h1 { font-size: 26px; }
     }
-
     @media (max-width: 900px) {
       .container { flex-direction: column; }
       .sidebar {
@@ -206,7 +203,6 @@
       }
       .main-content { margin-left: 0; width: 100%; }
     }
-
     @media (max-width: 768px) {
       .wrap { padding: 16px; }
       form { padding: 16px; }
@@ -219,7 +215,6 @@
 
 <body>
   <div class="container">
-    <!-- Sidebar -->
     <nav class="sidebar">
       <a href="index.html" class="sidebar-icon" title="Home"><i class="fas fa-home"></i></a>
       <a href="knowledge-base.html" class="sidebar-icon" title="Knowledge Base"><i class="fas fa-book-open"></i></a>
@@ -243,19 +238,16 @@
 
           <form id="shareForm">
             <div class="grid">
-              <!-- 1) ชื่อปัญหา -->
               <div class="field" style="grid-column: 1 / -1;">
                 <label for="problemTitle">1) ชื่อปัญหา</label>
                 <input id="problemTitle" type="text" required placeholder="พิมพ์ชื่อปัญหา" />
               </div>
 
-              <!-- 2) ชื่อผู้กรอก -->
               <div class="field">
                 <label for="reporterName">2) ชื่อผู้กรอก</label>
                 <input id="reporterName" type="text" required placeholder="ชื่อ-นามสกุล" />
               </div>
 
-              <!-- 3) ผลิตภัณฑ์ -->
               <div class="field">
                 <label for="product">3) ชื่อผลิตภัณฑ์</label>
                 <select id="product" required>
@@ -264,7 +256,6 @@
                 </select>
               </div>
 
-              <!-- 4) Process -->
               <div class="field">
                 <label for="process">4) เลือก Process</label>
                 <select id="process" required>
@@ -279,7 +270,6 @@
                 </select>
               </div>
 
-              <!-- 5) ประเภทเอกสาร -->
               <div class="field">
                 <label for="docType">5) ประเภทเอกสาร</label>
                 <select id="docType" required>
@@ -290,7 +280,6 @@
                 </select>
               </div>
 
-              <!-- 6) รูป -->
               <div class="field" style="grid-column: 1 / -1;">
                 <label>6) เพิ่มรูป (สูงสุด 1–4 รูป)</label>
                 <div class="uploader">
@@ -306,22 +295,25 @@
                     </div>
                   </div>
 
-                  <!-- ✅ รองรับคอม/มือถือ/เลือกจากคลัง/กล้อง -->
                   <input id="images" type="file" accept="image/*" multiple hidden />
                   <div class="thumbs" id="thumbs"></div>
                 </div>
               </div>
 
-              <!-- 7) รายละเอียด -->
               <div class="field" style="grid-column: 1 / -1;">
                 <label for="problemDetail">7) รายละเอียดของปัญหา</label>
                 <textarea id="problemDetail" required placeholder="อธิบายรายละเอียดของปัญหา"></textarea>
               </div>
 
-              <!-- 8) วิธีการแก้ไข -->
               <div class="field" style="grid-column: 1 / -1;">
                 <label for="solution">8) วิธีการแก้ไข</label>
                 <textarea id="solution" required placeholder="อธิบายวิธีการแก้ไข"></textarea>
+              </div>
+
+              <!-- ✅ เพิ่ม Result ตรงนี้ -->
+              <div class="field" style="grid-column: 1 / -1;">
+                <label for="result">9) ผลของการแก้ปัญหา</label>
+                <textarea id="result" placeholder="เช่น ของเสียลดลง / ทำงานได้ปกติ / ยังต้องติดตามผล"></textarea>
               </div>
             </div>
 
@@ -342,7 +334,6 @@
   </div>
 
   <script>
-    // ✅ Web App URL (ใส่ให้แล้ว)
     const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxMCCGwPDe1R6IoWYpHhsNUYDrdTXd-B8iw3DgTDHKVovbDPtCXYkBXA5uceDQYgPL6ag/exec";
 
     const form = document.getElementById('shareForm');
@@ -392,7 +383,6 @@
 
     btnPick.addEventListener('click', () => imagesInput.click());
 
-    // ✅ รองรับทั้งเลือกไฟล์จากคอม + เลือกจากมือถือ/คลังรูป
     imagesInput.addEventListener('change', (e) => {
       const files = Array.from(e.target.files || []);
       if (!files.length) return;
@@ -406,7 +396,7 @@
         clearStatus();
       }
 
-      imagesInput.value = ''; // สำคัญ: เลือกไฟล์เดิมซ้ำได้
+      imagesInput.value = '';
       renderThumbs();
     });
 
@@ -425,8 +415,6 @@
       clearStatus();
     });
 
-    // ✅ แปลงไฟล์เป็น object ที่ Apps Script ใช้อัปโหลด Drive ได้ง่าย
-    // return { name, type, data } โดย data เป็น base64 ล้วนๆ (ไม่มี "data:image/..;base64,")
     function fileToBase64Object(file) {
       return new Promise((resolve, reject) => {
         const reader = new FileReader();
@@ -462,7 +450,6 @@
       setStatus('info', '<i class="fa-solid fa-spinner fa-spin"></i> กำลังส่งข้อมูลไปบันทึก...');
 
       try {
-        // ✅ ส่งรูปเป็น [{name,type,data}, ...]
         const images = await Promise.all(selectedFiles.map(fileToBase64Object));
 
         const payload = {
@@ -473,6 +460,10 @@
           docType: document.getElementById('docType').value,
           description: document.getElementById('problemDetail').value.trim(),
           how: document.getElementById('solution').value.trim(),
+
+          // ✅ ส่ง result ไป Apps Script
+          result: document.getElementById('result').value.trim(),
+
           images
         };
 
@@ -483,13 +474,11 @@
         });
 
         const raw = await res.text();
-        console.log("RAW RESPONSE:", raw);
-
         let data;
         try {
           data = JSON.parse(raw);
         } catch {
-          throw new Error("ตอบกลับไม่ใช่ JSON (เช็คว่า Deploy เป็น Web App / URL ถูก / Anyone ได้)");
+          throw new Error("ตอบกลับไม่ใช่ JSON (เช็ค Deploy เป็น Web App / URL ถูก / Anyone ได้)");
         }
 
         if (!data.ok) throw new Error(data.error || "บันทึกไม่สำเร็จ");
@@ -505,7 +494,6 @@
         renderThumbs();
 
       } catch (err) {
-        console.error(err);
         setStatus('err', `❌ ${err.message}`);
       } finally {
         btnSubmit.disabled = false;
