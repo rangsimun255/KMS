@@ -343,6 +343,9 @@
   </div>
 
 <script>
+  // 🔴 ใส่ URL Web App ของ Apps Script (ลงท้ายด้วย /exec)
+  const SCRIPT_URL = "PUT_YOUR_WEBAPP_URL_HERE";
+
   const form = document.getElementById('shareForm');
   const imagesInput = document.getElementById('images');
   const btnPick = document.getElementById('btnPick');
@@ -387,6 +390,130 @@
       thumbs.appendChild(div);
     });
   }
+
+  btnPick.addEventListener('click', () => imagesInput.click());
+
+  imagesInput.addEventListener('change', (e) => {
+    const files = Array.from(e.target.files || []);
+    if (files.length === 0) return;
+
+    const merged = selectedFiles.concat(files);
+    if (merged.length > 4) {
+      selectedFiles = merged.slice(0, 4);
+      setStatus('err', 'แนบรูปได้สูงสุด 4 รูปเท่านั้นครับ');
+    } else {
+      selectedFiles = merged;
+      clearStatus();
+    }
+
+    imagesInput.value = '';
+    renderThumbs();
+  });
+
+  btnClearImages.addEventListener('click', () => {
+    selectedFiles = [];
+    imagesInput.value = '';
+    renderThumbs();
+    clearStatus();
+  });
+
+  btnReset.addEventListener('click', () => {
+    form.reset();
+    selectedFiles = [];
+    imagesInput.value = '';
+    renderThumbs();
+    clearStatus();
+  });
+
+  // === file -> base64 (ตัด prefix "data:image/...;base64,") ===
+  function fileToBase64(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => {
+        const res = String(reader.result || "");
+        const base64 = res.includes(",") ? res.split(",")[1] : res;
+        resolve(base64);
+      };
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  }
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    clearStatus();
+
+    if (!SCRIPT_URL || SCRIPT_URL.includes("PUT_YOUR_WEBAPP_URL_HERE")) {
+      setStatus('err', 'กรุณาใส่ SCRIPT_URL (Web App URL) ในโค้ดหน้าเว็บก่อน');
+      return;
+    }
+
+    if (selectedFiles.length < 1) {
+      setStatus('err', 'กรุณาแนบรูปอย่างน้อย 1 รูป (สูงสุด 4 รูป)');
+      return;
+    }
+
+    btnSubmit.disabled = true;
+    setStatus('info', '<i class="fa-solid fa-spinner fa-spin"></i> กำลังบันทึก + อัปโหลดรูป + สร้าง PDF ...');
+
+    try {
+      // แปลงรูปทั้งหมดเป็น base64
+      const images = [];
+      for (const f of selectedFiles) {
+        const base64 = await fileToBase64(f);
+        images.push({
+          name: f.name,
+          type: f.type,
+          base64: base64
+        });
+      }
+
+      // รวมข้อมูลฟอร์ม
+      const payload = {
+        problemTitle: document.getElementById('problemTitle').value.trim(),
+        reporterName: document.getElementById('reporterName').value.trim(),
+        product: document.getElementById('product').value,
+        process: document.getElementById('process').value,
+        docType: document.getElementById('docType').value,
+        problemDetail: document.getElementById('problemDetail').value.trim(),
+        solution: document.getElementById('solution').value.trim(),
+        images: images
+        // result: "..."   // ถ้าจะเพิ่มผลลัพธ์ในอนาคต ใส่ได้
+      };
+
+      const resp = await fetch(SCRIPT_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+
+      const json = await resp.json();
+
+      if (!json || json.status !== "success") {
+        throw new Error((json && json.message) ? json.message : "บันทึกไม่สำเร็จ");
+      }
+
+      setStatus('ok',
+        `<i class="fa-solid fa-circle-check"></i> ${json.message}<br>
+         ✅ PDF: <a href="${json.pdfUrl}" target="_blank">เปิดไฟล์ PDF</a><br>
+         ✅ Doc: <a href="${json.docUrl}" target="_blank">เปิดไฟล์ Doc</a>`
+      );
+
+      form.reset();
+      selectedFiles = [];
+      renderThumbs();
+
+    } catch (err) {
+      console.error(err);
+      setStatus('err', 'เกิดข้อผิดพลาด: ' + String(err.message || err));
+    } finally {
+      btnSubmit.disabled = false;
+    }
+  });
+
+  renderThumbs();
+</script>
+
 
   btnPick.addEventListener('click', () => imagesInput.click());
 
