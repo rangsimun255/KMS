@@ -13,7 +13,6 @@
     body { font-family: 'Sarabun', sans-serif; background-color: #e8eef5; min-height: 100vh; overflow-x: hidden; }
     .container { display: flex; min-height: 100vh; }
 
-    /* ===== Sidebar (Desktop) ===== */
     .sidebar {
       width: 70px;
       background: linear-gradient(180deg, #5b9bd5 0%, #4a89c8 100%);
@@ -31,7 +30,6 @@
     }
     .sidebar-icon:hover, .sidebar-icon.active { background-color: rgba(255,255,255,0.2); color: #fff; }
 
-    /* ===== Main ===== */
     .main-content { flex: 1; margin-left: 70px; width: calc(100% - 70px); }
 
     .header {
@@ -99,7 +97,6 @@
     textarea { min-height: 110px; resize: vertical; }
     input:focus, select:focus, textarea:focus { border-color: #5b9bd5; }
 
-    /* ===== Image Upload ===== */
     .uploader {
       border: 2px dashed #cfe1f4;
       border-radius: 14px;
@@ -190,6 +187,7 @@
       .header { padding: 26px 20px; }
       .header h1 { font-size: 26px; }
     }
+
     @media (max-width: 900px) {
       .container { flex-direction: column; }
       .sidebar {
@@ -203,6 +201,7 @@
       }
       .main-content { margin-left: 0; width: 100%; }
     }
+
     @media (max-width: 768px) {
       .wrap { padding: 16px; }
       form { padding: 16px; }
@@ -238,6 +237,7 @@
 
           <form id="shareForm">
             <div class="grid">
+
               <div class="field" style="grid-column: 1 / -1;">
                 <label for="problemTitle">1) ชื่อปัญหา</label>
                 <input id="problemTitle" type="text" required placeholder="พิมพ์ชื่อปัญหา" />
@@ -289,13 +289,24 @@
                       <button type="button" class="btn btn-ghost" id="btnPick">
                         <i class="fa-regular fa-image"></i> เลือกรูป
                       </button>
+
+                      <!-- ✅ มือถือ: ถ่ายรูป (เปิดกล้อง) -->
+                      <button type="button" class="btn btn-ghost" id="btnCamera">
+                        <i class="fa-solid fa-camera"></i> ถ่ายรูป
+                      </button>
+
                       <button type="button" class="btn btn-danger" id="btnClearImages">
                         <i class="fa-solid fa-trash"></i> ล้างรูป
                       </button>
                     </div>
                   </div>
 
+                  <!-- ✅ เลือกจากคอม/คลังรูป -->
                   <input id="images" type="file" accept="image/*" multiple hidden />
+
+                  <!-- ✅ เปิดกล้อง (มือถือ) -->
+                  <input id="camera" type="file" accept="image/*" capture="environment" hidden />
+
                   <div class="thumbs" id="thumbs"></div>
                 </div>
               </div>
@@ -310,11 +321,12 @@
                 <textarea id="solution" required placeholder="อธิบายวิธีการแก้ไข"></textarea>
               </div>
 
-              <!-- ✅ เพิ่ม Result ตรงนี้ -->
+              <!-- ✅ เพิ่ม Result -->
               <div class="field" style="grid-column: 1 / -1;">
-                <label for="result">9) ผลของการแก้ปัญหา</label>
-                <textarea id="result" placeholder="เช่น ของเสียลดลง / ทำงานได้ปกติ / ยังต้องติดตามผล"></textarea>
+                <label for="result">9) ผลจากการแก้ไข (Result)</label>
+                <textarea id="result" placeholder="เช่น ลดของเสีย / เครื่องเดินนิ่ง / ผ่าน QC ฯลฯ"></textarea>
               </div>
+
             </div>
 
             <div class="actions">
@@ -338,7 +350,10 @@
 
     const form = document.getElementById('shareForm');
     const imagesInput = document.getElementById('images');
+    const cameraInput = document.getElementById('camera');
+
     const btnPick = document.getElementById('btnPick');
+    const btnCamera = document.getElementById('btnCamera');
     const btnClearImages = document.getElementById('btnClearImages');
     const thumbs = document.getElementById('thumbs');
     const imgHint = document.getElementById('imgHint');
@@ -381,12 +396,7 @@
       });
     }
 
-    btnPick.addEventListener('click', () => imagesInput.click());
-
-    imagesInput.addEventListener('change', (e) => {
-      const files = Array.from(e.target.files || []);
-      if (!files.length) return;
-
+    function mergeFiles(files) {
       const merged = selectedFiles.concat(files);
       if (merged.length > 4) {
         selectedFiles = merged.slice(0, 4);
@@ -395,14 +405,30 @@
         selectedFiles = merged;
         clearStatus();
       }
-
-      imagesInput.value = '';
       renderThumbs();
+    }
+
+    btnPick.addEventListener('click', () => imagesInput.click());
+    btnCamera.addEventListener('click', () => cameraInput.click());
+
+    imagesInput.addEventListener('change', (e) => {
+      const files = Array.from(e.target.files || []);
+      if (!files.length) return;
+      mergeFiles(files);
+      imagesInput.value = '';
+    });
+
+    cameraInput.addEventListener('change', (e) => {
+      const files = Array.from(e.target.files || []);
+      if (!files.length) return;
+      mergeFiles(files);
+      cameraInput.value = '';
     });
 
     btnClearImages.addEventListener('click', () => {
       selectedFiles = [];
       imagesInput.value = '';
+      cameraInput.value = '';
       renderThumbs();
       clearStatus();
     });
@@ -411,19 +437,19 @@
       form.reset();
       selectedFiles = [];
       imagesInput.value = '';
+      cameraInput.value = '';
       renderThumbs();
       clearStatus();
     });
 
+    // ส่งรูปเป็น [{name,type,data}, ...] โดย data เป็น base64 "ล้วน"
     function fileToBase64Object(file) {
       return new Promise((resolve, reject) => {
         const reader = new FileReader();
-
         reader.onload = () => {
           const result = String(reader.result || "");
           const commaIndex = result.indexOf(",");
           if (commaIndex === -1) return reject(new Error("รูปไม่ถูกต้อง (base64)"));
-
           const base64 = result.slice(commaIndex + 1);
           resolve({
             name: file.name || `image_${Date.now()}.jpg`,
@@ -431,7 +457,6 @@
             data: base64
           });
         };
-
         reader.onerror = () => reject(new Error("อ่านไฟล์รูปไม่สำเร็จ"));
         reader.readAsDataURL(file);
       });
@@ -460,10 +485,7 @@
           docType: document.getElementById('docType').value,
           description: document.getElementById('problemDetail').value.trim(),
           how: document.getElementById('solution').value.trim(),
-
-          // ✅ ส่ง result ไป Apps Script
-          result: document.getElementById('result').value.trim(),
-
+          result: document.getElementById('result').value.trim(), // ✅ ส่ง Result
           images
         };
 
@@ -475,11 +497,8 @@
 
         const raw = await res.text();
         let data;
-        try {
-          data = JSON.parse(raw);
-        } catch {
-          throw new Error("ตอบกลับไม่ใช่ JSON (เช็ค Deploy เป็น Web App / URL ถูก / Anyone ได้)");
-        }
+        try { data = JSON.parse(raw); }
+        catch { throw new Error("ตอบกลับไม่ใช่ JSON (เช็ค Deploy Web App/URL/สิทธิ์ Anyone)"); }
 
         if (!data.ok) throw new Error(data.error || "บันทึกไม่สำเร็จ");
 
