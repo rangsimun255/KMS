@@ -193,6 +193,7 @@
       .header h1 { font-size: 26px; }
     }
 
+    /* ให้เหมือนหน้า Home: มือถือ Sidebar อยู่บน */
     @media (max-width: 900px) {
       .container { flex-direction: column; }
 
@@ -204,6 +205,8 @@
         padding: 10px;
         position: sticky;
         top: 0;
+        left: 0;
+        z-index: 999;
       }
 
       .main-content { margin-left: 0; width: 100%; }
@@ -233,14 +236,14 @@
     <main class="main-content">
       <header class="header">
         <h1>Share Experience</h1>
-        <p>บันทึกปัญหาและวิธีแก้ไข เพื่อเพิ่มความรู้ให้ทีม (แนบรูปได้สูงสุด 4 รูป)</p>
+        <p>บันทึกปัญหาและวิธีแก้ไข (แนบรูปได้ 1–4 รูป) → ระบบจะสร้าง PDF เก็บใน Google Drive อัตโนมัติ</p>
       </header>
 
       <div class="wrap">
         <section class="form-card">
           <div class="form-top">
             <div class="badge"><i class="fa-solid fa-file-pen"></i> แบบฟอร์มบันทึกประสบการณ์</div>
-            <div class="hint">* ตอนนี้ยังไม่ต่อระบบส่งเข้า Google Sheet (จะต่อให้ในขั้นถัดไป)</div>
+            <div class="hint">* กด “บันทึกข้อมูล” แล้วระบบจะส่งเข้า Google Sheet + Drive</div>
           </div>
 
           <form id="shareForm">
@@ -343,8 +346,8 @@
   </div>
 
 <script>
-  // 🔴 ใส่ URL Web App ของ Apps Script (ลงท้ายด้วย /exec)
-  const SCRIPT_URL = "PUT_YOUR_WEBAPP_URL_HERE";
+  // ====== ใส่ URL ของ Web App ที่ Deploy จาก Apps Script ======
+  const WEBAPP_URL = "PUT_YOUR_WEBAPP_URL_HERE"; // <-- แก้ตรงนี้
 
   const form = document.getElementById('shareForm');
   const imagesInput = document.getElementById('images');
@@ -425,14 +428,18 @@
     clearStatus();
   });
 
-  // === file -> base64 (ตัด prefix "data:image/...;base64,") ===
   function fileToBase64(file) {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
       reader.onload = () => {
-        const res = String(reader.result || "");
-        const base64 = res.includes(",") ? res.split(",")[1] : res;
-        resolve(base64);
+        const result = String(reader.result || "");
+        // result = "data:image/png;base64,...."
+        const base64 = result.split(",")[1] || "";
+        resolve({
+          name: file.name,
+          mime: file.type || "application/octet-stream",
+          data: base64
+        });
       };
       reader.onerror = reject;
       reader.readAsDataURL(file);
@@ -443,8 +450,8 @@
     e.preventDefault();
     clearStatus();
 
-    if (!SCRIPT_URL || SCRIPT_URL.includes("PUT_YOUR_WEBAPP_URL_HERE")) {
-      setStatus('err', 'กรุณาใส่ SCRIPT_URL (Web App URL) ในโค้ดหน้าเว็บก่อน');
+    if (!WEBAPP_URL || WEBAPP_URL.includes("https://script.google.com/macros/s/AKfycbxMCCGwPDe1R6IoWYpHhsNUYDrdTXd-B8iw3DgTDHKVovbDPtCXYkBXA5uceDQYgPL6ag/exec")) {
+      setStatus('err', 'กรุณาใส่ WEBAPP_URL (ลิงก์ Web App ของ Apps Script) ก่อนใช้งาน');
       return;
     }
 
@@ -453,59 +460,56 @@
       return;
     }
 
-    btnSubmit.disabled = true;
-    setStatus('info', '<i class="fa-solid fa-spinner fa-spin"></i> กำลังบันทึก + อัปโหลดรูป + สร้าง PDF ...');
-
     try {
-      // แปลงรูปทั้งหมดเป็น base64
+      btnSubmit.disabled = true;
+      setStatus('info', '<i class="fa-solid fa-spinner fa-spin"></i> กำลังบันทึก... (อัปโหลดรูป + สร้าง PDF)');
+
       const images = [];
       for (const f of selectedFiles) {
-        const base64 = await fileToBase64(f);
-        images.push({
-          name: f.name,
-          type: f.type,
-          base64: base64
-        });
+        images.push(await fileToBase64(f));
       }
 
-      // รวมข้อมูลฟอร์ม
       const payload = {
         problemTitle: document.getElementById('problemTitle').value.trim(),
         reporterName: document.getElementById('reporterName').value.trim(),
         product: document.getElementById('product').value,
         process: document.getElementById('process').value,
         docType: document.getElementById('docType').value,
-        problemDetail: document.getElementById('problemDetail').value.trim(),
-        solution: document.getElementById('solution').value.trim(),
-        images: images
-        // result: "..."   // ถ้าจะเพิ่มผลลัพธ์ในอนาคต ใส่ได้
+        description: document.getElementById('problemDetail').value.trim(),
+        how: document.getElementById('solution').value.trim(),
+        result: "", // เผื่ออนาคตอยากเพิ่ม field ผลลัพธ์
+        images
       };
 
-      const resp = await fetch(SCRIPT_URL, {
+      const res = await fetch(WEBAPP_URL, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "text/plain;charset=utf-8" }, // กันปัญหา CORS/Apps Script
         body: JSON.stringify(payload)
       });
 
-      const json = await resp.json();
+      const data = await res.json();
 
-      if (!json || json.status !== "success") {
-        throw new Error((json && json.message) ? json.message : "บันทึกไม่สำเร็จ");
+      if (!data || data.ok !== true) {
+        const msg = (data && data.error) ? data.error : "บันทึกไม่สำเร็จ";
+        throw new Error(msg);
       }
 
+      const pdfUrl = data.pdfUrl || "";
+      const fileName = data.fileName || "PDF";
+
       setStatus('ok',
-        `<i class="fa-solid fa-circle-check"></i> ${json.message}<br>
-         ✅ PDF: <a href="${json.pdfUrl}" target="_blank">เปิดไฟล์ PDF</a><br>
-         ✅ Doc: <a href="${json.docUrl}" target="_blank">เปิดไฟล์ Doc</a>`
+        `<i class="fa-solid fa-circle-check"></i> บันทึกสำเร็จ ✅<br>
+         ไฟล์ PDF: <a href="${pdfUrl}" target="_blank" rel="noopener">${fileName}</a>`
       );
 
       form.reset();
       selectedFiles = [];
+      imagesInput.value = '';
       renderThumbs();
 
     } catch (err) {
       console.error(err);
-      setStatus('err', 'เกิดข้อผิดพลาด: ' + String(err.message || err));
+      setStatus('err', `<i class="fa-solid fa-triangle-exclamation"></i> ${err.message}`);
     } finally {
       btnSubmit.disabled = false;
     }
@@ -514,80 +518,5 @@
   renderThumbs();
 </script>
 
-
-  btnPick.addEventListener('click', () => imagesInput.click());
-
-  imagesInput.addEventListener('change', (e) => {
-    const files = Array.from(e.target.files || []);
-    if (files.length === 0) return;
-
-    const merged = selectedFiles.concat(files);
-    if (merged.length > 4) {
-      selectedFiles = merged.slice(0, 4);
-      setStatus('err', 'แนบรูปได้สูงสุด 4 รูปเท่านั้นครับ');
-    } else {
-      selectedFiles = merged;
-      clearStatus();
-    }
-
-    imagesInput.value = ''; // เลือกไฟล์เดิมซ้ำได้
-    renderThumbs();
-  });
-
-  btnClearImages.addEventListener('click', () => {
-    selectedFiles = [];
-    imagesInput.value = '';
-    renderThumbs();
-    clearStatus();
-  });
-
-  btnReset.addEventListener('click', () => {
-    form.reset();
-    selectedFiles = [];
-    imagesInput.value = '';
-    renderThumbs();
-    clearStatus();
-  });
-
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
-    clearStatus();
-
-    // บังคับรูป 1-4 รูป
-    if (selectedFiles.length < 1) {
-      setStatus('err', 'กรุณาแนบรูปอย่างน้อย 1 รูป (สูงสุด 4 รูป)');
-      return;
-    }
-
-    btnSubmit.disabled = true;
-    setStatus('info', '<i class="fa-solid fa-spinner fa-spin"></i> บันทึกข้อมูลสำเร็จ (ตัวอย่าง) — ขั้นถัดไปจะต่อ Google Sheet');
-
-    // ตัวอย่างข้อมูล (เพื่อเช็คว่าฟอร์มครบ)
-    const data = {
-      ProblemTitle: document.getElementById('problemTitle').value.trim(),
-      ReporterName: document.getElementById('reporterName').value.trim(),
-      Product: document.getElementById('product').value,
-      Process: document.getElementById('process').value,
-      DocumentType: document.getElementById('docType').value,
-      ProblemDetail: document.getElementById('problemDetail').value.trim(),
-      Solution: document.getElementById('solution').value.trim(),
-      ImagesCount: selectedFiles.length
-    };
-
-    console.log('FORM DATA:', data);
-
-    setTimeout(() => {
-      btnSubmit.disabled = false;
-      setStatus('ok', '<i class="fa-solid fa-circle-check"></i> ฟอร์มพร้อมใช้งานแล้ว ✅ ต่อไปจะเชื่อม Apps Script เพื่อบันทึกลง Google Sheet + อัปโหลดรูป + สร้าง PDF');
-      form.reset();
-      selectedFiles = [];
-      renderThumbs();
-    }, 600);
-  });
-
-  renderThumbs();
-</script>
-
 </body>
 </html>
-
