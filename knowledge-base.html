@@ -9,10 +9,15 @@
 
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: 'Sarabun', sans-serif; background-color: #e8eef5; min-height: 100vh; overflow-x: hidden; }
+    body {
+      font-family: 'Sarabun', sans-serif;
+      background-color: #e8eef5;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
     .container { display: flex; min-height: 100vh; }
 
-    /* Sidebar (Desktop: ซ้าย) */
+    /* ===== Sidebar (Desktop: ซ้าย) ===== */
     .sidebar {
       width: 70px;
       background: linear-gradient(180deg, #5b9bd5 0%, #4a89c8 100%);
@@ -28,8 +33,11 @@
       z-index: 100;
     }
     .sidebar-icon {
-      width: 50px; height: 50px;
-      display: flex; align-items: center; justify-content: center;
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       color: rgba(255,255,255,0.7);
       font-size: 20px;
       border-radius: 12px;
@@ -37,54 +45,137 @@
       transition: all 0.3s ease;
       text-decoration: none;
     }
-    .sidebar-icon:hover, .sidebar-icon.active { background-color: rgba(255,255,255,0.2); color: #fff; }
+    .sidebar-icon:hover,
+    .sidebar-icon.active {
+      background-color: rgba(255,255,255,0.2);
+      color: #fff;
+    }
 
-    /* Main Content */
-    .main-content { flex: 1; padding: 0; margin-left: 70px; }
+    /* ===== Main Content ===== */
+    .main-content {
+      flex: 1;
+      padding: 0;
+      margin-left: 70px; /* เผื่อ sidebar desktop */
+      width: calc(100% - 70px);
+    }
 
-    /* Header */
-    .header { background: linear-gradient(135deg, #5b9bd5 0%, #2e75b6 100%); padding: 40px; text-align: center; }
-    .header h1 { font-size: 32px; font-weight: 700; color: #fff; margin-bottom: 10px; }
-    .header p { font-size: 16px; color: rgba(255,255,255,0.9); }
+    /* ===== Header ===== */
+    .header {
+      background: linear-gradient(135deg, #5b9bd5 0%, #2e75b6 100%);
+      padding: 40px;
+      text-align: center;
+    }
+    .header h1 {
+      font-size: 32px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 10px;
+    }
+    .header p {
+      font-size: 16px;
+      color: rgba(255,255,255,0.9);
+    }
 
-    /* Filter */
-    .filter-section { background: #fff; padding: 25px 40px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-    .filter-row { display: flex; gap: 20px; flex-wrap: wrap; align-items: center; }
-    .filter-group { display: flex; flex-direction: column; gap: 5px; }
-    .filter-group label { font-size: 14px; font-weight: 600; color: #2c3e50; }
+    /* ===== Filter Section ===== */
+    .filter-section {
+      background: #fff;
+      padding: 25px 40px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    .filter-row {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .filter-group {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+    .filter-group label {
+      font-size: 14px;
+      font-weight: 600;
+      color: #2c3e50;
+    }
     .filter-group select {
-      padding: 10px 15px; border: 2px solid #e0e0e0; border-radius: 8px;
-      font-size: 14px; min-width: 180px;
+      padding: 10px 15px;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      font-size: 14px;
+      min-width: 180px;
     }
     .filter-group select:focus { border-color: #5b9bd5; outline: none; }
 
-    .checkbox-group { display: flex; gap: 15px; align-items: center; flex-wrap: wrap; }
-    .checkbox-item { display: flex; align-items: center; gap: 5px; }
+    .checkbox-group {
+      display: flex;
+      gap: 15px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .checkbox-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
     .checkbox-item input { width: 18px; height: 18px; }
     .checkbox-item label { font-size: 14px; cursor: pointer; }
 
-    .btn-clear { padding: 10px 20px; background: #e74c3c; color: #fff; border: none; border-radius: 8px; cursor: pointer; font-size: 14px; }
+    .btn-clear {
+      padding: 10px 20px;
+      background: #e74c3c;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
+    }
     .btn-clear:hover { background: #c0392b; }
 
-    /* Cards */
+    /* ===== Cards ===== */
     .cards-section { padding: 30px 40px; }
     .cards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; }
 
-    .card { background: #fff; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.08); transition: all 0.3s ease; }
+    .card {
+      background: #fff;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+      transition: all 0.3s ease;
+    }
     .card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(91,155,213,0.2); }
     .card-image { width: 100%; height: 200px; object-fit: cover; background: #f0f0f0; }
     .card-content { padding: 20px; }
-    .card-type { display: inline-block; padding: 5px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; margin-bottom: 10px; }
+
+    .card-type {
+      display: inline-block;
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
     .card-type.opl { background: #e8f5e9; color: #2e7d32; }
     .card-type.wi { background: #e3f2fd; color: #1565c0; }
     .card-type.video { background: #fff3e0; color: #ef6c00; }
     .card-type.experience { background: #fce4ec; color: #c2185b; }
+
     .card-title { font-size: 16px; font-weight: 600; color: #2c3e50; margin-bottom: 8px; }
     .card-info { font-size: 13px; color: #7f8c8d; margin-bottom: 5px; }
-    .card-btn { display: inline-block; padding: 10px 20px; background: #5b9bd5; color: #fff; text-decoration: none; border-radius: 8px; font-size: 14px; margin-top: 10px; }
+
+    .card-btn {
+      display: inline-block;
+      padding: 10px 20px;
+      background: #5b9bd5;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 8px;
+      font-size: 14px;
+      margin-top: 10px;
+    }
     .card-btn:hover { background: #4a89c8; }
 
-    /* No Results */
+    /* ===== No Results ===== */
     .no-results { text-align: center; padding: 60px; color: #7f8c8d; }
     .no-results i { font-size: 60px; margin-bottom: 20px; color: #bdc3c7; }
 
@@ -97,27 +188,31 @@
       .filter-section { padding: 16px 24px; }
     }
 
-    /* มือถือ/แท็บเล็ตเล็ก -> เมนูบน เนื้อหาล่าง */
-    @media (max-width: 900px) {
-      .container { display: block; }
+    /* มือถือ -> เมนูอยู่บน เนื้อหาอยู่ล่าง (เหมือนหน้า Home) */
+    @media (max-width: 768px) {
+
+      .container { flex-direction: column !important; }
 
       .sidebar {
-        position: fixed;
-        top: 0; left: 0;
-        width: 100%;
-        height: 60px;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
-        padding: 10px;
-        gap: 10px;
-        z-index: 9999;
+        width: 100% !important;
+        height: 60px !important;
+        flex-direction: row !important;
+        justify-content: center !important;
+        align-items: center !important;
+
+        position: relative !important; /* สำคัญ: ไม่ใช่ fixed ซ้าย */
+        left: auto !important;
+        top: auto !important;
+        height: 60px !important;
+
+        padding-top: 0 !important;
+        padding: 10px !important;
+        gap: 12px !important;
       }
 
       .main-content {
         margin-left: 0 !important;
-        width: 100%;
-        padding-top: 60px; /* กันเมนูทับ */
+        width: 100% !important;
       }
 
       .header { padding: 24px 16px; }
@@ -125,12 +220,16 @@
       .header p { font-size: 14px; }
 
       .filter-section { padding: 14px 16px; }
-      .filter-row { flex-direction: column; align-items: stretch; gap: 12px; }
-      .filter-group select { width: 100%; min-width: 0; }
+      .filter-row {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 12px;
+      }
+      .filter-group select { width: 100% !important; min-width: 0 !important; }
       .btn-clear { width: 100%; }
 
       .cards-section { padding: 16px; }
-      .cards-grid { grid-template-columns: 1fr; gap: 14px; }
+      .cards-grid { grid-template-columns: 1fr !important; gap: 14px; }
       .card-image { height: 160px; }
       .card-content { padding: 14px; }
       .card-btn { width: 100%; text-align: center; }
@@ -217,11 +316,9 @@
   </div>
 
   <script>
-    // ===== ตั้งค่า =====
     const API_URL = 'https://script.google.com/macros/s/AKfycbwMRbnqSLTmmI4wofmNfZ5YPFGSiqg__rZUgyDlTTR03JchnQXgUj7DKDvzS4-QBmJrvw/exec';
     let allData = [];
 
-    // ===== ข้อมูลของเสียแต่ละกระบวนการ =====
     const defectsByProcess = {
       "1": [
         { code: "1.1", name: "Wet Mass แฉะเกินไป" },
@@ -236,12 +333,8 @@
         { code: "3.1", name: "ความชื้นสูงกว่ากำหนด" },
         { code: "3.2", name: "ความชื้นต่ำกว่ากำหนด" }
       ],
-      "4": [
-        { code: "4.1", name: "ผงแตกละเอียดมากเกิน" }
-      ],
-      "5": [
-        { code: "5.1", name: "ผงยาไม่สม่ำเสมอ" }
-      ],
+      "4": [{ code: "4.1", name: "ผงแตกละเอียดมากเกิน" }],
+      "5": [{ code: "5.1", name: "ผงยาไม่สม่ำเสมอ" }],
       "6": [
         { code: "6.1", name: "เม็ดยานิ่ม" },
         { code: "6.2", name: "เม็ดยาบิ่น" },
@@ -257,7 +350,6 @@
       ]
     };
 
-    // ===== โหลดข้อมูลจาก API =====
     async function loadData() {
       try {
         const response = await fetch(API_URL);
@@ -274,7 +366,6 @@
       }
     }
 
-    // ===== สร้าง Thumbnail URL จาก FileURL =====
     function getThumbnail(fileURL) {
       if (!fileURL) return 'https://via.placeholder.com/400x200?text=No+Image';
       const match = fileURL.match(/file\/d\/([^\/]+)/);
@@ -284,21 +375,20 @@
       return 'https://via.placeholder.com/400x200?text=No+Image';
     }
 
-    // ===== สร้าง Card =====
     function createCard(item) {
       const thumbnail = getThumbnail(item.FileURL);
       const typeClass = String(item.Type || '').toLowerCase();
 
       return `
         <div class="card">
-          <img src="${thumbnail}" alt="${item.FileName}" class="card-image" onerror="this.src='https://via.placeholder.com/400x200?text=No+Image'">
+          <img src="${thumbnail}" alt="${item.FileName || ''}" class="card-image" onerror="this.src='https://via.placeholder.com/400x200?text=No+Image'">
           <div class="card-content">
-            <span class="card-type ${typeClass}">${item.Type ?? ''}</span>
-            <h3 class="card-title">${item.FileName ?? ''}</h3>
-            <p class="card-info"><strong>กระบวนการ:</strong> ${item.ProcessName ?? ''}</p>
-            <p class="card-info"><strong>ปัญหา:</strong> ${item.DefectName ?? ''}</p>
-            <p class="card-info"><strong>สาเหตุ:</strong> ${item.CauseCategory ?? ''}</p>
-            <a href="${item.FileURL ?? '#'}" target="_blank" class="card-btn">
+            <span class="card-type ${typeClass}">${item.Type || ''}</span>
+            <h3 class="card-title">${item.FileName || ''}</h3>
+            <p class="card-info"><strong>กระบวนการ:</strong> ${item.ProcessName || ''}</p>
+            <p class="card-info"><strong>ปัญหา:</strong> ${item.DefectName || ''}</p>
+            <p class="card-info"><strong>สาเหตุ:</strong> ${item.CauseCategory || ''}</p>
+            <a href="${item.FileURL || '#'}" target="_blank" class="card-btn">
               ${item.Type === 'Video' ? 'เปิดดูวิดีโอ' : 'เปิดเอกสาร'}
             </a>
           </div>
@@ -306,7 +396,6 @@
       `;
     }
 
-    // ===== Filter และแสดงข้อมูล =====
     function filterAndDisplay() {
       const process = document.getElementById('filterProcess').value;
       const defect = document.getElementById('filterDefect').value;
@@ -325,7 +414,6 @@
       });
 
       const container = document.getElementById('cardsContainer');
-
       if (filtered.length === 0) {
         container.innerHTML = `
           <div class="no-results">
@@ -338,23 +426,19 @@
       }
     }
 
-    // ===== อัพเดท Dropdown ของเสีย =====
     function updateDefectDropdown() {
       const process = document.getElementById('filterProcess').value;
       const defectSelect = document.getElementById('filterDefect');
 
       defectSelect.innerHTML = '<option value="">-- ทั้งหมด --</option>';
-
       if (process && defectsByProcess[process]) {
         defectsByProcess[process].forEach(d => {
           defectSelect.innerHTML += `<option value="${d.code}">${d.code} ${d.name}</option>`;
         });
       }
-
       filterAndDisplay();
     }
 
-    // ===== ล้างตัวกรอง =====
     function clearFilters() {
       document.getElementById('filterProcess').value = '';
       document.getElementById('filterDefect').value = '';
@@ -365,7 +449,6 @@
       updateDefectDropdown();
     }
 
-    // ===== Event Listeners =====
     document.getElementById('filterProcess').addEventListener('change', updateDefectDropdown);
     document.getElementById('filterDefect').addEventListener('change', filterAndDisplay);
     document.getElementById('typeOPL').addEventListener('change', filterAndDisplay);
@@ -373,7 +456,6 @@
     document.getElementById('typeVideo').addEventListener('change', filterAndDisplay);
     document.getElementById('typeExp').addEventListener('change', filterAndDisplay);
 
-    // ===== โหลดข้อมูลเมื่อเปิดหน้า =====
     loadData();
   </script>
 </body>
