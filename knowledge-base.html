@@ -17,7 +17,6 @@
     }
     .container { display: flex; min-height: 100vh; }
 
-    /* ===== Sidebar (Desktop: ซ้าย) ===== */
     .sidebar {
       width: 70px;
       background: linear-gradient(180deg, #5b9bd5 0%, #4a89c8 100%);
@@ -51,15 +50,13 @@
       color: #fff;
     }
 
-    /* ===== Main Content ===== */
     .main-content {
       flex: 1;
       padding: 0;
-      margin-left: 70px; /* เผื่อ sidebar desktop */
+      margin-left: 70px;
       width: calc(100% - 70px);
     }
 
-    /* ===== Header ===== */
     .header {
       background: linear-gradient(135deg, #5b9bd5 0%, #2e75b6 100%);
       padding: 40px;
@@ -76,7 +73,6 @@
       color: rgba(255,255,255,0.9);
     }
 
-    /* ===== Filter Section ===== */
     .filter-section {
       background: #fff;
       padding: 25px 40px;
@@ -132,7 +128,6 @@
     }
     .btn-clear:hover { background: #c0392b; }
 
-    /* ===== Cards ===== */
     .cards-section { padding: 30px 40px; }
     .cards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; }
 
@@ -175,11 +170,9 @@
     }
     .card-btn:hover { background: #4a89c8; }
 
-    /* ===== No Results ===== */
     .no-results { text-align: center; padding: 60px; color: #7f8c8d; }
     .no-results i { font-size: 60px; margin-bottom: 20px; color: #bdc3c7; }
 
-    /* ===== Responsive ===== */
     @media (max-width: 1200px) {
       .cards-grid { grid-template-columns: repeat(2, 1fr); }
       .cards-section { padding: 20px 24px; }
@@ -195,32 +188,22 @@
         flex-direction: row !important;
         justify-content: center !important;
         align-items: center !important;
-
         position: relative !important;
         left: auto !important;
         top: auto !important;
-        height: 60px !important;
-
         padding-top: 0 !important;
         padding: 10px !important;
         gap: 12px !important;
       }
 
-      .main-content {
-        margin-left: 0 !important;
-        width: 100% !important;
-      }
+      .main-content { margin-left: 0 !important; width: 100% !important; }
 
       .header { padding: 24px 16px; }
       .header h1 { font-size: 24px; }
       .header p { font-size: 14px; }
 
       .filter-section { padding: 14px 16px; }
-      .filter-row {
-        flex-direction: column !important;
-        align-items: stretch !important;
-        gap: 12px;
-      }
+      .filter-row { flex-direction: column !important; align-items: stretch !important; gap: 12px; }
       .filter-group select { width: 100% !important; min-width: 0 !important; }
       .btn-clear { width: 100%; }
 
@@ -235,7 +218,6 @@
 
 <body>
   <div class="container">
-    <!-- Sidebar -->
     <nav class="sidebar">
       <a href="index.html" class="sidebar-icon" title="Home"><i class="fas fa-home"></i></a>
       <a href="knowledge-base.html" class="sidebar-icon active" title="Knowledge Base"><i class="fas fa-book-open"></i></a>
@@ -244,10 +226,9 @@
       <a href="share-experience.html" class="sidebar-icon" title="Share Experience"><i class="fas fa-comments"></i></a>
     </nav>
 
-    <!-- Main Content -->
     <main class="main-content">
       <header class="header">
-        <h1>Knowledge Base(TEST)</h1>
+        <h1>Knowledge Base</h1>
         <p>คลังความรู้ เทคนิค และวิธีแก้ปัญหาในกระบวนการผลิตยาสมุนไพร</p>
       </header>
 
@@ -362,37 +343,33 @@
       }
     }
 
-    // ✅ รองรับ url จาก Drive (ทั้ง file url และ thumbnail url)
     function getThumbnailFromUrl(url) {
       if (!url) return '';
-
-      // รูปแบบ file/d/{id}
       let match = String(url).match(/file\/d\/([^\/]+)/);
       if (match && match[1]) return `https://drive.google.com/thumbnail?id=${match[1]}&sz=w600`;
-
-      // รูปแบบ open?id={id}
       match = String(url).match(/[?&]id=([^&]+)/);
       if (match && match[1]) return `https://drive.google.com/thumbnail?id=${match[1]}&sz=w600`;
-
-      // ถ้าเป็นลิงก์ thumbnail อยู่แล้ว
       if (String(url).includes('drive.google.com/thumbnail')) return String(url);
-
-      // ไม่รู้รูปแบบ -> ส่งกลับเดิม (เผื่อเป็น URL รูปปกติ)
       return String(url);
     }
 
     function createCard(item) {
       const typeClass = String(item.Type || '').toLowerCase();
 
-      // ✅ ถ้า API มี ThumbnailURL ให้ใช้ก่อน (เหมาะกับ Experience)
-      //    ถ้าไม่มี ค่อย fallback ไป FileURL (เดิม)
       const thumbSource = item.ThumbnailURL || item.FileURL || '';
       const thumbnail = getThumbnailFromUrl(thumbSource) || 'https://via.placeholder.com/400x200?text=No+Image';
 
-      // ✅ ซ่อน “สาเหตุ” ถ้าเป็น Experience
-      const causeLine = (item.Type === 'Experience')
-        ? ''
-        : `<p class="card-info"><strong>สาเหตุ:</strong> ${item.CauseCategory || ''}</p>`;
+      // ✅ สำคัญ: แสดง “ปัญหา/สาเหตุ” เฉพาะเมื่อมีข้อมูลจริงเท่านั้น
+      const defectText = String(item.DefectName || '').trim();
+      const causeText  = String(item.CauseCategory || '').trim();
+
+      const problemLine = defectText
+        ? `<p class="card-info"><strong>ปัญหา:</strong> ${defectText}</p>`
+        : '';
+
+      const causeLine = causeText
+        ? `<p class="card-info"><strong>สาเหตุ:</strong> ${causeText}</p>`
+        : '';
 
       return `
         <div class="card">
@@ -402,7 +379,7 @@
             <span class="card-type ${typeClass}">${item.Type || ''}</span>
             <h3 class="card-title">${item.FileName || ''}</h3>
             <p class="card-info"><strong>กระบวนการ:</strong> ${item.ProcessName || ''}</p>
-            <p class="card-info"><strong>ปัญหา:</strong> ${item.DefectName || ''}</p>
+            ${problemLine}
             ${causeLine}
             <a href="${item.FileURL || '#'}" target="_blank" class="card-btn">
               ${item.Type === 'Video' ? 'เปิดดูวิดีโอ' : 'เปิดเอกสาร'}
