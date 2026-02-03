@@ -180,17 +180,13 @@
     .no-results i { font-size: 60px; margin-bottom: 20px; color: #bdc3c7; }
 
     /* ===== Responsive ===== */
-
-    /* iPad / จอกลาง -> 2 คอลัมน์ */
     @media (max-width: 1200px) {
       .cards-grid { grid-template-columns: repeat(2, 1fr); }
       .cards-section { padding: 20px 24px; }
       .filter-section { padding: 16px 24px; }
     }
 
-    /* มือถือ -> เมนูอยู่บน เนื้อหาอยู่ล่าง (เหมือนหน้า Home) */
     @media (max-width: 768px) {
-
       .container { flex-direction: column !important; }
 
       .sidebar {
@@ -200,7 +196,7 @@
         justify-content: center !important;
         align-items: center !important;
 
-        position: relative !important; /* สำคัญ: ไม่ใช่ fixed ซ้าย */
+        position: relative !important;
         left: auto !important;
         top: auto !important;
         height: 60px !important;
@@ -366,28 +362,48 @@
       }
     }
 
-    function getThumbnail(fileURL) {
-      if (!fileURL) return 'https://via.placeholder.com/400x200?text=No+Image';
-      const match = fileURL.match(/file\/d\/([^\/]+)/);
-      if (match && match[1]) {
-        return `https://drive.google.com/thumbnail?id=${match[1]}&sz=w400`;
-      }
-      return 'https://via.placeholder.com/400x200?text=No+Image';
+    // ✅ รองรับ url จาก Drive (ทั้ง file url และ thumbnail url)
+    function getThumbnailFromUrl(url) {
+      if (!url) return '';
+
+      // รูปแบบ file/d/{id}
+      let match = String(url).match(/file\/d\/([^\/]+)/);
+      if (match && match[1]) return `https://drive.google.com/thumbnail?id=${match[1]}&sz=w600`;
+
+      // รูปแบบ open?id={id}
+      match = String(url).match(/[?&]id=([^&]+)/);
+      if (match && match[1]) return `https://drive.google.com/thumbnail?id=${match[1]}&sz=w600`;
+
+      // ถ้าเป็นลิงก์ thumbnail อยู่แล้ว
+      if (String(url).includes('drive.google.com/thumbnail')) return String(url);
+
+      // ไม่รู้รูปแบบ -> ส่งกลับเดิม (เผื่อเป็น URL รูปปกติ)
+      return String(url);
     }
 
     function createCard(item) {
-      const thumbnail = getThumbnail(item.FileURL);
       const typeClass = String(item.Type || '').toLowerCase();
+
+      // ✅ ถ้า API มี ThumbnailURL ให้ใช้ก่อน (เหมาะกับ Experience)
+      //    ถ้าไม่มี ค่อย fallback ไป FileURL (เดิม)
+      const thumbSource = item.ThumbnailURL || item.FileURL || '';
+      const thumbnail = getThumbnailFromUrl(thumbSource) || 'https://via.placeholder.com/400x200?text=No+Image';
+
+      // ✅ ซ่อน “สาเหตุ” ถ้าเป็น Experience
+      const causeLine = (item.Type === 'Experience')
+        ? ''
+        : `<p class="card-info"><strong>สาเหตุ:</strong> ${item.CauseCategory || ''}</p>`;
 
       return `
         <div class="card">
-          <img src="${thumbnail}" alt="${item.FileName || ''}" class="card-image" onerror="this.src='https://via.placeholder.com/400x200?text=No+Image'">
+          <img src="${thumbnail}" alt="${item.FileName || ''}" class="card-image"
+               onerror="this.src='https://via.placeholder.com/400x200?text=No+Image'">
           <div class="card-content">
             <span class="card-type ${typeClass}">${item.Type || ''}</span>
             <h3 class="card-title">${item.FileName || ''}</h3>
             <p class="card-info"><strong>กระบวนการ:</strong> ${item.ProcessName || ''}</p>
             <p class="card-info"><strong>ปัญหา:</strong> ${item.DefectName || ''}</p>
-            <p class="card-info"><strong>สาเหตุ:</strong> ${item.CauseCategory || ''}</p>
+            ${causeLine}
             <a href="${item.FileURL || '#'}" target="_blank" class="card-btn">
               ${item.Type === 'Video' ? 'เปิดดูวิดีโอ' : 'เปิดเอกสาร'}
             </a>
