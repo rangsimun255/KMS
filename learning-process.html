@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Learning - Process</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family:'Sarabun',sans-serif; background:#e8eef5; min-height:100vh; overflow-x:hidden; color:#2c3e50; }
+    .container{ display:flex; min-height:100vh; }
+
+    .sidebar{
+      width:70px; background:linear-gradient(180deg,#5b9bd5 0%,#4a89c8 100%);
+      display:flex; flex-direction:column; align-items:center; padding-top:20px; gap:10px;
+      position:fixed; left:0; top:0; height:100vh; z-index:100;
+    }
+    .sidebar-icon{
+      width:50px; height:50px; display:flex; align-items:center; justify-content:center;
+      color:rgba(255,255,255,.7); font-size:20px; border-radius:12px; cursor:pointer;
+      transition:.2s ease; text-decoration:none;
+    }
+    .sidebar-icon:hover,.sidebar-icon.active{ background:rgba(255,255,255,.2); color:#fff; }
+
+    .main{ flex:1; margin-left:70px; width:calc(100% - 70px); }
+
+    .header{
+      background:linear-gradient(135deg,#5b9bd5 0%,#2e75b6 100%);
+      padding:26px 40px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      flex-wrap:wrap;
+    }
+    .h-left{ display:flex; flex-direction:column; gap:6px; }
+    .header h1{ color:#fff; font-size:24px; font-weight:900; }
+    .header p{ color:rgba(255,255,255,.92); font-size:14px; line-height:1.5; max-width:900px; }
+
+    .h-actions{ display:flex; gap:10px; flex-wrap:wrap; }
+    .btn{
+      border:none; border-radius:12px; padding:10px 12px; font-weight:900; cursor:pointer;
+      display:inline-flex; align-items:center; gap:8px;
+      background:#eef5ff; color:#2e75b6;
+      transition:.2s ease;
+    }
+    .btn:hover{ background:#e3efff; }
+    .btn.primary{ background:#fff; color:#2e75b6; }
+    .btn.primary:hover{ opacity:.92; }
+
+    .wrap{ padding:16px 40px 40px; }
+
+    .toolbar{
+      max-width:1100px; margin:0 auto 14px;
+      display:flex; gap:10px; flex-wrap:wrap; align-items:center; justify-content:space-between;
+    }
+    .mode{
+      display:flex; gap:10px; flex-wrap:wrap; align-items:center;
+      background:#fff; border:1px solid #eef2f6; border-radius:16px; padding:8px;
+      box-shadow:0 4px 14px rgba(0,0,0,.05);
+    }
+    .mode button{
+      border:none; border-radius:12px; padding:10px 12px; cursor:pointer; font-weight:900;
+      background:#f7fbff; color:#1f4f7a; border:1px solid #e6f0fb;
+    }
+    .mode button.active{ background:#5b9bd5; color:#fff; border-color:#5b9bd5; }
+
+    .pill{
+      background:#fff; border:1px solid #eef2f6; border-radius:999px; padding:10px 12px;
+      display:inline-flex; gap:8px; align-items:center; font-weight:900; color:#2e75b6;
+      box-shadow:0 4px 14px rgba(0,0,0,.05);
+    }
+
+    /* ===== Stepper + Accordion ===== */
+    .stepper{
+      max-width:1100px; margin:0 auto;
+      display:grid; grid-template-columns: 260px 1fr;
+      gap:14px;
+    }
+    .steps-list{
+      background:#fff; border:1px solid #eef2f6; border-radius:16px; padding:12px;
+      box-shadow:0 4px 14px rgba(0,0,0,.05);
+      height: fit-content;
+    }
+    .s-item{
+      display:flex; gap:10px; align-items:flex-start;
+      padding:10px; border-radius:14px; cursor:pointer;
+      transition:.15s ease;
+    }
+    .s-item:hover{ background:#f7fbff; }
+    .s-item.active{ background:#eef5ff; border:1px solid #cfe1f4; }
+    .s-no{
+      width:34px; height:34px; border-radius:12px; display:flex; align-items:center; justify-content:center;
+      font-weight:900; background:#eef5ff; color:#2e75b6; border:1px solid #cfe1f4; flex:0 0 auto;
+    }
+    .s-no.critical{ background:#ffebee; color:#b71c1c; border-color:#ffcdd2; }
+    .s-txt{ display:flex; flex-direction:column; gap:4px; }
+    .s-title{ font-weight:900; font-size:14px; color:#2c3e50; }
+    .s-short{ font-size:12.5px; color:#607d8b; line-height:1.35; }
+
+    .detail{
+      background:#fff; border:1px solid #eef2f6; border-radius:16px; padding:14px;
+      box-shadow:0 4px 14px rgba(0,0,0,.05);
+    }
+    .detail h2{ font-size:18px; font-weight:900; margin-bottom:6px; }
+    .detail .short{ font-size:13.5px; color:#546e7a; font-weight:800; margin-bottom:10px; line-height:1.5; }
+    .box{
+      background:#f8fbff; border:1px solid #e6f0fb; border-radius:14px; padding:12px;
+      font-size:13.5px; line-height:1.6; color:#34495e;
+    }
+    .meta{ margin-top:10px; display:grid; gap:8px; }
+    .meta-line{ display:flex; gap:10px; align-items:flex-start; font-size:13px; color:#607d8b; line-height:1.5; }
+    .meta-line i{ margin-top:2px; color:#7aa7d6; }
+    .meta-line strong{ color:#2c3e50; }
+    .meta-line.critical i{ color:#b71c1c; }
+    .meta-line.impact i{ color:#bf360c; }
+
+    /* ===== Checklist ===== */
+    .checklist{
+      max-width:1100px; margin:0 auto;
+      display:grid; gap:12px;
+    }
+    .c-item{
+      background:#fff; border:1px solid #eef2f6; border-radius:16px; padding:12px;
+      box-shadow:0 4px 14px rgba(0,0,0,.05);
+      display:flex; gap:12px; align-items:flex-start;
+    }
+    .c-item input{ width:22px; height:22px; margin-top:2px; }
+    .c-body{ display:flex; flex-direction:column; gap:6px; flex:1; }
+    .c-head{ display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
+    .chip{
+      font-size:12px; font-weight:900; padding:6px 10px; border-radius:999px; border:1px solid transparent;
+      background:#eef5ff; color:#2e75b6; border-color:#cfe1f4;
+      display:inline-flex; gap:8px; align-items:center;
+    }
+    .chip.critical{ background:#ffebee; color:#b71c1c; border-color:#ffcdd2; }
+    .chip.impact{ background:#fff3e0; color:#bf360c; border-color:#ffe0b2; }
+
+    /* ===== Flow ===== */
+    .flow{
+      max-width:1100px; margin:0 auto;
+      display:flex; flex-wrap:wrap; gap:12px;
+    }
+    .f-node{
+      background:#fff; border:1px solid #eef2f6; border-radius:16px; padding:12px;
+      box-shadow:0 4px 14px rgba(0,0,0,.05);
+      min-width:260px; flex:1 1 260px;
+      position:relative;
+    }
+    .f-node:after{
+      content:"";
+      position:absolute;
+      right:-12px; top:50%;
+      width:0; height:0;
+      border-top:10px solid transparent;
+      border-bottom:10px solid transparent;
+      border-left:12px solid #d6e6f7;
+      transform:translateY(-50%);
+      display:none;
+    }
+    .f-head{ display:flex; justify-content:space-between; gap:10px; align-items:center; flex-wrap:wrap; margin-bottom:6px; }
+    .f-title{ font-weight:900; }
+    .f-short{ font-size:13px; color:#546e7a; font-weight:800; line-height:1.45; }
+    .f-node.critical{ border-color:#ffcdd2; }
+
+    /* ===== responsive ===== */
+    @media (max-width:980px){
+      .wrap{ padding:14px 16px 28px; }
+      .header{ padding:20px 16px; }
+      .stepper{ grid-template-columns: 1fr; }
+      .steps-list{ display:flex; gap:10px; overflow-x:auto; }
+      .s-item{ min-width:260px; }
+      .f-node:after{ display:none; }
+    }
+    @media (max-width:768px){
+      .container{ flex-direction:column !important; }
+      .sidebar{
+        width:100% !important; height:60px !important;
+        flex-direction:row !important; justify-content:center !important;
+        position:sticky !important; top:0 !important; left:auto !important;
+        padding:10px !important; gap:12px !important;
+      }
+      .main{ margin-left:0 !important; width:100% !important; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <nav class="sidebar">
+      <a href="index.html" class="sidebar-icon" title="Home"><i class="fas fa-home"></i></a>
+      <a href="knowledge-base.html" class="sidebar-icon" title="Knowledge Base"><i class="fas fa-book-open"></i></a>
+      <a href="learning-path.html" class="sidebar-icon active" title="Learning Path"><i class="fas fa-graduation-cap"></i></a>
+      <a href="quiz.html" class="sidebar-icon" title="Quiz"><i class="fas fa-clipboard-check"></i></a>
+      <a href="share-experience.html" class="sidebar-icon" title="Share Experience"><i class="fas fa-comments"></i></a>
+    </nav>
+
+    <main class="main">
+      <header class="header">
+        <div class="h-left">
+          <h1 id="title">Learning - Process</h1>
+          <p id="subtitle">โหลดข้อมูลจาก Learning Path (Google Sheet) แล้วแสดงเป็น Step แบบกระชับ</p>
+        </div>
+        <div class="h-actions">
+          <button class="btn primary" onclick="backToList()"><i class="fa-solid fa-arrow-left"></i> กลับ</button>
+          <button class="btn" onclick="toggleCritical()"><i class="fa-solid fa-triangle-exclamation"></i> เฉพาะ Critical</button>
+        </div>
+      </header>
+
+      <div class="wrap">
+        <div class="toolbar">
+          <div class="mode">
+            <button id="mStepper" class="active" onclick="setMode('stepper')"><i class="fa-solid fa-stairs"></i> Stepper</button>
+            <button id="mChecklist" onclick="setMode('checklist')"><i class="fa-solid fa-list-check"></i> Checklist</button>
+            <button id="mFlow" onclick="setMode('flow')"><i class="fa-solid fa-diagram-project"></i> Flow</button>
+          </div>
+          <div class="pill"><i class="fa-solid fa-list-ol"></i> <span id="count">0 steps</span></div>
+        </div>
+
+        <div id="view"></div>
+
+        <div id="empty" style="display:none; text-align:center; padding:50px 12px; color:#7f8c8d;">
+          <i class="fas fa-search" style="font-size:50px; color:#bdc3c7; margin-bottom:12px;"></i>
+          <div>ไม่พบข้อมูลของกระบวนการนี้ในชีท Learning Path</div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    // ✅ ของคุณ
+    const API_URL = "https://script.google.com/macros/s/AKfycbwMRbnqSLTmmI4wofmNfZ5YPFGSiqg__rZUgyDlTTR03JchnQXgUj7DKDvzS4-QBmJrvw/exec?view=learning";
+
+    const processNames = {
+      "1":"ผสมเปียก","2":"แร่งเปียก","3":"อบลมร้อน","4":"แร่งแห้ง","5":"ผสมแห้ง","6":"ตอกเม็ดยา","7":"บรรจุซอง"
+    };
+
+    const qs = new URLSearchParams(location.search);
+    const process = (qs.get("process") || "").trim();
+
+    let data = [];
+    let mode = "stepper";
+    let onlyCritical = false;
+
+    const elTitle = document.getElementById("title");
+    const elSub = document.getElementById("subtitle");
+    const elCount = document.getElementById("count");
+    const elView = document.getElementById("view");
+    const elEmpty = document.getElementById("empty");
+
+    function backToList(){ location.href = "learning-path.html"; }
+    function toggleCritical(){ onlyCritical = !onlyCritical; render(); }
+
+    function setMode(m){
+      mode = m;
+      document.getElementById("mStepper").classList.toggle("active", m==="stepper");
+      document.getElementById("mChecklist").classList.toggle("active", m==="checklist");
+      document.getElementById("mFlow").classList.toggle("active", m==="flow");
+      render();
+    }
+
+    function norm(v){ return String(v ?? "").trim(); }
+    function isCritical(item){ return norm(item.CriticalPoint) !== ""; }
+    function stepNo(item, idx){
+      const n = parseFloat(norm(item.StepNo));
+      return Number.isFinite(n) ? n : (idx+1);
+    }
+
+    function sortByStep(a,b){ return stepNo(a,0) - stepNo(b,0); }
+
+    function escapeHtml(str){
+      return String(str || "")
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+    }
+
+    function render(){
+      if (!process){
+        elTitle.textContent = "ไม่พบ process";
+        elSub.textContent = "กรุณากลับไปเลือกกระบวนการ";
+        elView.innerHTML = "";
+        elEmpty.style.display = "block";
+        return;
+      }
+
+      const pName = processNames[process] || "";
+      elTitle.textContent = `Process ${process} : ${pName}`;
+      elSub.textContent = "ทำตาม Step แบบสั้น ๆ → เช็ค Critical Point → ลดโอกาสทำผิดซ้ำ";
+
+      const list = data
+        .filter(x => norm(x.Process) === process)
+        .filter(x => onlyCritical ? isCritical(x) : true)
+        .sort(sortByStep);
+
+      elCount.textContent = `${list.length} steps`;
+      if (list.length === 0){
+        elView.innerHTML = "";
+        elEmpty.style.display = "block";
+        return;
+      }
+      elEmpty.style.display = "none";
+
+      if (mode === "stepper") elView.innerHTML = renderStepper(list);
+      if (mode === "checklist") elView.innerHTML = renderChecklist(list);
+      if (mode === "flow") elView.innerHTML = renderFlow(list);
+
+      // bind for stepper clicks
+      if (mode === "stepper") bindStepper(list);
+      if (mode === "checklist") bindChecklist(list);
+    }
+
+    function renderStepper(list){
+      // default select first
+      const left = list.map((s, idx) => {
+        const crit = isCritical(s);
+        return `
+          <div class="s-item ${idx===0 ? "active":""}" data-idx="${idx}">
+            <div class="s-no ${crit ? "critical":""}">${escapeHtml(stepNo(s,idx))}</div>
+            <div class="s-txt">
+              <div class="s-title">${escapeHtml(norm(s.StepTitle))}</div>
+              <div class="s-short">${escapeHtml(norm(s.StepShort))}</div>
+            </div>
+          </div>
+        `;
+      }).join("");
+
+      const right = renderDetail(list[0], 0);
+
+      return `
+        <div class="stepper">
+          <div class="steps-list">${left}</div>
+          <div class="detail" id="detailBox">${right}</div>
+        </div>
+      `;
+    }
+
+    function renderDetail(s, idx){
+      const crit = norm(s.CriticalPoint);
+      const impactP = norm(s.ImpactProcess);
+      const impactD = norm(s.ImpactDefect);
+
+      const meta = [
+        crit ? `<div class="meta-line critical"><i class="fa-solid fa-triangle-exclamation"></i><div><strong>Critical:</strong> ${escapeHtml(crit)}</div></div>` : "",
+        impactP ? `<div class="meta-line impact"><i class="fa-solid fa-share-nodes"></i><div><strong>กระทบ Process:</strong> ${escapeHtml(impactP)}</div></div>` : "",
+        impactD ? `<div class="meta-line impact"><i class="fa-solid fa-bug"></i><div><strong>เสี่ยงของเสีย:</strong> ${escapeHtml(impactD)}</div></div>` : ""
+      ].filter(Boolean).join("");
+
+      return `
+        <h2>Step ${escapeHtml(stepNo(s,idx))} : ${escapeHtml(norm(s.StepTitle))}</h2>
+        ${norm(s.StepShort) ? `<div class="short">${escapeHtml(norm(s.StepShort))}</div>` : ""}
+        ${norm(s.StepDetail) ? `<div class="box">${escapeHtml(norm(s.StepDetail))}</div>` : ""}
+        ${meta ? `<div class="meta">${meta}</div>` : ""}
+      `;
+    }
+
+    function bindStepper(list){
+      const items = document.querySelectorAll(".s-item");
+      const detail = document.getElementById("detailBox");
+      items.forEach(it => {
+        it.addEventListener("click", () => {
+          items.forEach(x => x.classList.remove("active"));
+          it.classList.add("active");
+          const idx = parseInt(it.dataset.idx || "0", 10);
+          detail.innerHTML = renderDetail(list[idx], idx);
+        });
+      });
+    }
+
+    function checklistKey(step){
+      return `kms_lp_p${process}_step${norm(step.StepNo)}`;
+    }
+
+    function renderChecklist(list){
+      return `
+        <div class="checklist">
+          ${list.map((s, idx) => {
+            const crit = isCritical(s);
+            const impactP = norm(s.ImpactProcess);
+            const impactD = norm(s.ImpactDefect);
+
+            const chips = [
+              `<span class="chip"><i class="fa-solid fa-hashtag"></i> Step ${escapeHtml(stepNo(s,idx))}</span>`,
+              crit ? `<span class="chip critical"><i class="fa-solid fa-triangle-exclamation"></i> Critical</span>` : "",
+              (impactP || impactD) ? `<span class="chip impact"><i class="fa-solid fa-bolt"></i> Impact</span>` : ""
+            ].filter(Boolean).join("");
+
+            return `
+              <div class="c-item">
+                <input type="checkbox" data-key="${escapeHtml(checklistKey(s))}">
+                <div class="c-body">
+                  <div class="c-head">
+                    ${chips}
+                  </div>
+                  <div style="font-weight:900;">${escapeHtml(norm(s.StepTitle))}</div>
+                  ${norm(s.StepShort) ? `<div style="color:#546e7a;font-weight:800;">${escapeHtml(norm(s.StepShort))}</div>` : ""}
+                  ${norm(s.StepDetail) ? `<div class="box">${escapeHtml(norm(s.StepDetail))}</div>` : ""}
+                  ${norm(s.CriticalPoint) ? `<div class="meta-line critical"><i class="fa-solid fa-triangle-exclamation"></i><div><strong>Critical:</strong> ${escapeHtml(norm(s.CriticalPoint))}</div></div>` : ""}
+                  ${impactP ? `<div class="meta-line impact"><i class="fa-solid fa-share-nodes"></i><div><strong>กระทบ Process:</strong> ${escapeHtml(impactP)}</div></div>` : ""}
+                  ${impactD ? `<div class="meta-line impact"><i class="fa-solid fa-bug"></i><div><strong>เสี่ยงของเสีย:</strong> ${escapeHtml(impactD)}</div></div>` : ""}
+                </div>
+              </div>
+            `;
+          }).join("")}
+        </div>
+      `;
+    }
+
+    function bindChecklist(list){
+      const boxes = document.querySelectorAll('.c-item input[type="checkbox"]');
+      boxes.forEach(chk => {
+        const key = chk.dataset.key;
+        chk.checked = (localStorage.getItem(key) === "1");
+        chk.addEventListener("change", () => {
+          localStorage.setItem(key, chk.checked ? "1" : "0");
+        });
+      });
+    }
+
+    function renderFlow(list){
+      return `
+        <div class="flow">
+          ${list.map((s, idx) => {
+            const crit = isCritical(s);
+            const impactP = norm(s.ImpactProcess);
+            const impactD = norm(s.ImpactDefect);
+            return `
+              <div class="f-node ${crit ? "critical":""}">
+                <div class="f-head">
+                  <div class="chip ${crit ? "critical":""}">
+                    <i class="fa-solid ${crit ? "fa-triangle-exclamation":"fa-route"}"></i>
+                    Step ${escapeHtml(stepNo(s,idx))}
+                  </div>
+                </div>
+                <div class="f-title">${escapeHtml(norm(s.StepTitle))}</div>
+                ${norm(s.StepShort) ? `<div class="f-short">${escapeHtml(norm(s.StepShort))}</div>` : ""}
+                ${norm(s.StepDetail) ? `<div class="box" style="margin-top:8px;">${escapeHtml(norm(s.StepDetail))}</div>` : ""}
+                ${norm(s.CriticalPoint) ? `<div class="meta-line critical" style="margin-top:10px;"><i class="fa-solid fa-triangle-exclamation"></i><div><strong>Critical:</strong> ${escapeHtml(norm(s.CriticalPoint))}</div></div>` : ""}
+                ${impactP ? `<div class="meta-line impact"><i class="fa-solid fa-share-nodes"></i><div><strong>กระทบ Process:</strong> ${escapeHtml(impactP)}</div></div>` : ""}
+                ${impactD ? `<div class="meta-line impact"><i class="fa-solid fa-bug"></i><div><strong>เสี่ยงของเสีย:</strong> ${escapeHtml(impactD)}</div></div>` : ""}
+              </div>
+            `;
+          }).join("")}
+        </div>
+      `;
+    }
+
+    async function load(){
+      try{
+        const res = await fetch(API_URL, { cache:"no-store" });
+        const json = await res.json();
+        data = Array.isArray(json) ? json : [];
+      }catch(e){
+        console.error(e);
+        data = [];
+      }finally{
+        render();
+      }
+    }
+
+    load();
+  </script>
+</body>
+</html>
