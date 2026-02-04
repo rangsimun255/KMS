@@ -1,1 +1,369 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Learning Path - KMS</title>
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Sarabun', sans-serif; background:#e8eef5; min-height:100vh; overflow-x:hidden; }
+    .container { display:flex; min-height:100vh; }
+
+    .sidebar{
+      width:70px; background:linear-gradient(180deg,#5b9bd5 0%,#4a89c8 100%);
+      display:flex; flex-direction:column; align-items:center; padding-top:20px; gap:10px;
+      position:fixed; left:0; top:0; height:100vh; z-index:100;
+    }
+    .sidebar-icon{
+      width:50px; height:50px; display:flex; align-items:center; justify-content:center;
+      color:rgba(255,255,255,0.7); font-size:20px; border-radius:12px; cursor:pointer;
+      transition:.2s; text-decoration:none;
+    }
+    .sidebar-icon:hover,.sidebar-icon.active{ background:rgba(255,255,255,0.2); color:#fff; }
+
+    .main{ flex:1; margin-left:70px; width:calc(100% - 70px); }
+    .header{ background:linear-gradient(135deg,#5b9bd5 0%,#2e75b6 100%); padding:34px 40px; text-align:center; }
+    .header h1{ color:#fff; font-size:30px; font-weight:700; margin-bottom:8px; }
+    .header p{ color:rgba(255,255,255,.92); font-size:15px; line-height:1.6; }
+
+    .wrap{ padding:18px 40px 40px; }
+    .topbar{
+      max-width:1050px; margin:0 auto 14px; background:#fff; border-radius:16px;
+      box-shadow:0 4px 15px rgba(0,0,0,.06); padding:14px 14px;
+      display:flex; gap:12px; flex-wrap:wrap; align-items:center; justify-content:space-between;
+    }
+    .controls{ display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
+    select{
+      padding:10px 12px; border:2px solid #e0e0e0; border-radius:10px; font-size:14px; min-width:220px;
+      outline:none;
+    }
+    select:focus{ border-color:#5b9bd5; }
+
+    .pill{
+      display:inline-flex; gap:8px; align-items:center; background:#eef5ff; color:#2e75b6;
+      padding:8px 12px; border-radius:999px; font-size:12px; font-weight:700;
+    }
+
+    .grid{
+      max-width:1050px; margin:0 auto;
+      display:grid; grid-template-columns: 1fr 360px; gap:14px;
+      align-items:start;
+    }
+
+    .card{
+      background:#fff; border-radius:16px; box-shadow:0 4px 15px rgba(0,0,0,.06);
+      overflow:hidden;
+    }
+    .card-hd{
+      padding:14px 16px; border-bottom:1px solid #eef2f6;
+      display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap;
+    }
+    .card-hd h2{ font-size:16px; color:#2c3e50; }
+    .hint{ font-size:12px; color:#7f8c8d; line-height:1.4; }
+
+    .steps{ padding:14px 16px 6px; }
+    .step{
+      border:1px solid #eef2f6; border-radius:14px; padding:12px 12px; margin-bottom:10px;
+    }
+    .step-top{ display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap; align-items:center; }
+    .badge{
+      background:#f7fbff; color:#1f4f7a; border:1px solid #cfe1f4;
+      padding:6px 10px; border-radius:999px; font-size:12px; font-weight:700;
+    }
+    .step h3{ font-size:15px; color:#2c3e50; margin-top:8px; }
+    .step p{ font-size:13px; color:#4a5568; line-height:1.55; margin-top:6px; }
+    .meta{ margin-top:10px; display:grid; gap:8px; }
+    .meta div{ font-size:13px; color:#2d3748; }
+    .meta strong{ color:#2c3e50; }
+
+    .quiz{ padding:14px 16px; }
+    .q{
+      border:1px solid #eef2f6; border-radius:14px; padding:12px; margin-bottom:10px;
+      background:#fff;
+    }
+    .q .qt{ font-size:13px; color:#2c3e50; font-weight:700; margin-bottom:8px; }
+    .row{ display:flex; gap:8px; }
+    input[type="text"]{
+      flex:1; padding:10px 12px; border:2px solid #e6e6e6; border-radius:10px; outline:none;
+      font-size:14px;
+    }
+    input[type="text"]:focus{ border-color:#5b9bd5; }
+    .btn{
+      border:none; border-radius:10px; padding:10px 12px; font-size:14px; font-weight:700;
+      cursor:pointer; display:inline-flex; align-items:center; gap:8px;
+    }
+    .btn-primary{ background:#5b9bd5; color:#fff; }
+    .btn-ghost{ background:#eef5ff; color:#2e75b6; }
+    .btn-primary:hover{ background:#4a89c8; }
+    .btn-ghost:hover{ background:#e3efff; }
+
+    .res{ font-size:12px; margin-top:8px; }
+    .ok{ color:#1b5e20; }
+    .bad{ color:#b71c1c; }
+
+    .impactmap{ padding:14px 16px 18px; }
+    .mapbox{ border:1px solid #eef2f6; border-radius:14px; padding:12px; background:#fff; }
+    .maprow{ display:grid; grid-template-columns: repeat(7, 1fr); gap:6px; margin-top:10px; }
+    .pbox{
+      text-align:center; padding:10px 6px; border-radius:12px; font-size:12px; font-weight:700;
+      border:1px solid #e6eef7; background:#f7fbff; color:#1f4f7a;
+    }
+    .links{ margin-top:10px; font-size:12px; color:#4a5568; line-height:1.55; }
+    .links b{ color:#2c3e50; }
+
+    @media (max-width: 980px){
+      .wrap{ padding:16px; }
+      .grid{ grid-template-columns:1fr; }
+    }
+    @media (max-width: 768px){
+      .container{ flex-direction:column; }
+      .sidebar{
+        width:100%; height:60px; flex-direction:row; justify-content:center; padding:10px;
+        position:sticky; top:0;
+      }
+      .main{ margin-left:0; width:100%; }
+      .header{ padding:24px 16px; }
+      .header h1{ font-size:24px; }
+      .topbar{ padding:12px; }
+      select{ min-width:0; width:100%; }
+    }
+  </style>
+</head>
+
+<body>
+<div class="container">
+  <nav class="sidebar">
+    <a href="index.html" class="sidebar-icon" title="Home"><i class="fas fa-home"></i></a>
+    <a href="knowledge-base.html" class="sidebar-icon" title="Knowledge Base"><i class="fas fa-book-open"></i></a>
+    <a href="learning-path.html" class="sidebar-icon active" title="Learning Path"><i class="fas fa-graduation-cap"></i></a>
+    <a href="quiz.html" class="sidebar-icon" title="Quiz"><i class="fas fa-clipboard-check"></i></a>
+    <a href="share-experience.html" class="sidebar-icon" title="Share Experience"><i class="fas fa-comments"></i></a>
+  </nav>
+
+  <main class="main">
+    <header class="header">
+      <h1>Learning Path</h1>
+      <p>เรียนรู้ “วิธีทำที่ถูกต้องตาม WI” แบบสั้น กระชับ + รู้จุดวิกฤต และรู้ว่า ถ้าพลาดจะกระทบอะไร</p>
+    </header>
+
+    <div class="wrap">
+      <div class="topbar">
+        <div class="controls">
+          <span class="pill"><i class="fa-solid fa-route"></i> เลือกกระบวนการ</span>
+          <select id="procSelect">
+            <option value="1">1) ผสมเปียก</option>
+            <option value="2">2) แร่งเปียก</option>
+            <option value="3">3) อบลมร้อน</option>
+            <option value="4">4) แร่งแห้ง</option>
+            <option value="5">5) ผสมแห้ง</option>
+            <option value="6">6) ตอกเม็ดยา</option>
+            <option value="7">7) บรรจุซอง</option>
+          </select>
+        </div>
+        <div class="hint">โหมดสั้น: อ่าน Step + จำ Critical Point + ตอบคำถามเช็กความเข้าใจ</div>
+      </div>
+
+      <div class="grid">
+        <!-- LEFT: Steps -->
+        <section class="card">
+          <div class="card-hd">
+            <h2 id="titleLeft">ขั้นตอนการทำงาน (ตาม WI)</h2>
+            <div class="hint" id="countHint">กำลังโหลด...</div>
+          </div>
+          <div class="steps" id="stepsBox"></div>
+        </section>
+
+        <!-- RIGHT: Quiz + Impact Map -->
+        <aside class="card">
+          <div class="card-hd">
+            <h2>เช็กความเข้าใจ</h2>
+            <button class="btn btn-ghost" id="btnShowAns"><i class="fa-solid fa-eye"></i> เฉลยทั้งหมด</button>
+          </div>
+          <div class="quiz" id="quizBox"></div>
+
+          <div class="card-hd" style="border-top:1px solid #eef2f6;">
+            <h2>Impact Map</h2>
+            <div class="hint">ถ้าพลาดในกระบวนการนี้ จะไปกระทบขั้นไหนบ้าง</div>
+          </div>
+          <div class="impactmap">
+            <div class="mapbox">
+              <div class="hint">กล่อง 1–7 (ดูทิศทางจากรายการด้านล่าง)</div>
+              <div class="maprow">
+                <div class="pbox">1</div><div class="pbox">2</div><div class="pbox">3</div><div class="pbox">4</div>
+                <div class="pbox">5</div><div class="pbox">6</div><div class="pbox">7</div>
+              </div>
+              <div class="links" id="impactList">-</div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script>
+  // ✅ ใช้ WebApp เดียวกับ Knowledge Base
+  const WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbwMRbnqSLTmmI4wofmNfZ5YPFGSiqg__rZUgyDlTTR03JchnQXgUj7DKDvzS4-QBmJrvw/exec';
+  const LEARNING_API_URL = WEBAPP_URL + '?view=learning';
+
+  let lpAll = [];
+  let showAllAnswers = false;
+
+  const procSelect = document.getElementById('procSelect');
+  const stepsBox = document.getElementById('stepsBox');
+  const quizBox = document.getElementById('quizBox');
+  const impactList = document.getElementById('impactList');
+  const countHint = document.getElementById('countHint');
+  const btnShowAns = document.getElementById('btnShowAns');
+
+  const procNameMap = {
+    "1":"ผสมเปียก","2":"แร่งเปียก","3":"อบลมร้อน","4":"แร่งแห้ง","5":"ผสมแห้ง","6":"ตอกเม็ดยา","7":"บรรจุซอง"
+  };
+
+  function esc(s){ return String(s||'').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
+
+  async function loadLP(){
+    try{
+      const r = await fetch(LEARNING_API_URL);
+      lpAll = await r.json();
+      render();
+    }catch(e){
+      stepsBox.innerHTML = `<div class="step"><b>โหลดข้อมูลไม่ได้</b><p class="hint">เช็ค Deploy/URL/สิทธิ์ Anyone</p></div>`;
+      quizBox.innerHTML = '';
+      impactList.textContent = '-';
+      countHint.textContent = 'โหลดไม่สำเร็จ';
+    }
+  }
+
+  function getCurrentRows(){
+    const p = procSelect.value;
+    return lpAll
+      .filter(x => String(x.Process||'').trim() === p)
+      .sort((a,b) => Number(a.StepNo||0) - Number(b.StepNo||0));
+  }
+
+  function renderSteps(rows){
+    const p = procSelect.value;
+    const pName = procNameMap[p] || '';
+    document.getElementById('titleLeft').textContent = `กระบวนการ ${p}) ${pName} — ขั้นตอนสั้นๆ`;
+
+    if(!rows.length){
+      stepsBox.innerHTML = `<div class="step"><b>ยังไม่มีข้อมูล</b><p class="hint">เพิ่มข้อมูลในชีท Learning Path ก่อน</p></div>`;
+      countHint.textContent = '0 ขั้นตอน';
+      return;
+    }
+
+    countHint.textContent = `${rows.length} ขั้นตอน`;
+
+    stepsBox.innerHTML = rows.map(r => `
+      <div class="step">
+        <div class="step-top">
+          <span class="badge">Step ${esc(r.StepNo)}</span>
+          <span class="hint">Impact → ${esc(r.ImpactProcess || '-')}</span>
+        </div>
+        <h3>${esc(r.StepTitle)}</h3>
+        <p>${esc(r.StepDescription)}</p>
+        <div class="meta">
+          <div><strong>Critical Point:</strong> ${esc(r.CriticalPoint)}</div>
+          <div><strong>ถ้าพลาดจะกระทบ:</strong> Process ${esc(r.ImpactProcess)} — ${esc(r.ImpactDefect)}</div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  function renderQuiz(rows){
+    if(!rows.length){ quizBox.innerHTML = `<div class="q"><div class="qt">ยังไม่มีคำถาม</div></div>`; return; }
+
+    quizBox.innerHTML = rows.map((r, idx) => {
+      const q = esc(r.GateQuestion);
+      const a = esc(r.GateAnswer);
+      const step = esc(r.StepNo);
+      const key = `ans_${procSelect.value}_${idx}`;
+      const show = showAllAnswers ? `<div class="res ok"><b>เฉลย:</b> ${a}</div>` : `<div class="res hint">กด “เฉลยทั้งหมด” เพื่อดูคำตอบ</div>`;
+      return `
+        <div class="q">
+          <div class="qt">Step ${step}: ${q}</div>
+          <div class="row">
+            <input type="text" id="${key}" placeholder="พิมพ์คำตอบของคุณ..." />
+            <button class="btn btn-primary" onclick="check('${key}','${a}')"><i class="fa-solid fa-check"></i></button>
+          </div>
+          <div class="res" id="${key}_res"></div>
+          ${showAllAnswers ? show : ''}
+        </div>
+      `;
+    }).join('');
+  }
+
+  window.check = function(inputId, answer){
+    const inp = document.getElementById(inputId);
+    const res = document.getElementById(inputId + '_res');
+    const user = String(inp.value||'').trim();
+    const ans = String(answer||'').trim();
+
+    if(!user){
+      res.className = 'res bad';
+      res.textContent = 'ยังไม่ได้พิมพ์คำตอบ';
+      return;
+    }
+
+    // ตรงแบบง่ายๆ (กันยากเกิน)
+    if(user === ans){
+      res.className = 'res ok';
+      res.textContent = 'ถูกต้อง ✅';
+    }else{
+      res.className = 'res bad';
+      res.textContent = showAllAnswers ? `ยังไม่ตรง ❌ (เฉลย: ${ans})` : 'ยังไม่ตรง ❌';
+    }
+  }
+
+  function renderImpact(rows){
+    // สรุป unique impacts: ImpactProcess -> defects
+    const map = new Map();
+    rows.forEach(r => {
+      const ip = String(r.ImpactProcess||'').trim();
+      const df = String(r.ImpactDefect||'').trim();
+      if(!ip) return;
+      const list = map.get(ip) || new Set();
+      if(df) list.add(df);
+      map.set(ip, list);
+    });
+
+    if(map.size === 0){
+      impactList.textContent = '-';
+      return;
+    }
+
+    // เรียงตาม process
+    const arr = Array.from(map.entries()).sort((a,b)=>Number(a[0]) - Number(b[0]));
+    impactList.innerHTML = arr.map(([ip, set]) => {
+      const defects = Array.from(set).join(', ');
+      const name = procNameMap[ip] ? ` (${procNameMap[ip]})` : '';
+      return `• <b>Process ${esc(ip)}${esc(name)}:</b> ${esc(defects || '-')}`;
+    }).join('<br>');
+  }
+
+  function render(){
+    const rows = getCurrentRows();
+    renderSteps(rows);
+    renderQuiz(rows);
+    renderImpact(rows);
+  }
+
+  btnShowAns.addEventListener('click', () => {
+    showAllAnswers = !showAllAnswers;
+    btnShowAns.innerHTML = showAllAnswers
+      ? '<i class="fa-solid fa-eye-slash"></i> ซ่อนเฉลย'
+      : '<i class="fa-solid fa-eye"></i> เฉลยทั้งหมด';
+    render();
+  });
+
+  procSelect.addEventListener('change', render);
+
+  loadLP();
+</script>
+</body>
+</html>
 
