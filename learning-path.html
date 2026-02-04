@@ -9,386 +9,125 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      font-family: 'Sarabun', sans-serif;
-      background-color: #e8eef5;
-      min-height: 100vh;
-      overflow-x: hidden;
-      color: #2c3e50;
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family:'Sarabun',sans-serif; background:#e8eef5; min-height:100vh; overflow-x:hidden; }
+    .container{ display:flex; min-height:100vh; }
+
+    .sidebar{
+      width:70px; background:linear-gradient(180deg,#5b9bd5 0%,#4a89c8 100%);
+      display:flex; flex-direction:column; align-items:center; padding-top:20px; gap:10px;
+      position:fixed; left:0; top:0; height:100vh; z-index:100;
+    }
+    .sidebar-icon{
+      width:50px; height:50px; display:flex; align-items:center; justify-content:center;
+      color:rgba(255,255,255,.7); font-size:20px; border-radius:12px; cursor:pointer;
+      transition:.2s ease; text-decoration:none;
+    }
+    .sidebar-icon:hover,.sidebar-icon.active{ background:rgba(255,255,255,.2); color:#fff; }
+
+    .main{ flex:1; margin-left:70px; width:calc(100% - 70px); }
+
+    .header{
+      background:linear-gradient(135deg,#5b9bd5 0%,#2e75b6 100%);
+      padding:32px 40px; text-align:center;
+    }
+    .header h1{ color:#fff; font-size:30px; font-weight:800; margin-bottom:6px; }
+    .header p{ color:rgba(255,255,255,.92); font-size:15px; line-height:1.6; }
+
+    .wrap{ padding:18px 40px 40px; }
+
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap:16px;
+      max-width:1100px;
+      margin:0 auto;
     }
 
-    .container { display: flex; min-height: 100vh; }
+    .p-card{
+      background:#fff;
+      border-radius:18px;
+      overflow:hidden;
+      box-shadow:0 6px 20px rgba(0,0,0,.07);
+      border:1px solid #eef2f6;
+      transition:.2s ease;
+      cursor:pointer;
+      display:flex;
+      flex-direction:column;
+      min-height:220px;
+    }
+    .p-card:hover{ transform:translateY(-4px); box-shadow:0 10px 28px rgba(91,155,213,.18); }
 
-    /* ===== Sidebar ===== */
-    .sidebar {
-      width: 70px;
-      background: linear-gradient(180deg, #5b9bd5 0%, #4a89c8 100%);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding-top: 20px;
-      gap: 10px;
-      position: fixed;
-      height: 100vh;
-      left: 0;
-      top: 0;
-      z-index: 100;
+    .p-img{
+      height:120px;
+      background:#f7fbff;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      position:relative;
     }
-    .sidebar-icon {
-      width: 50px;
-      height: 50px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: rgba(255,255,255,0.7);
-      font-size: 20px;
-      border-radius: 12px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      text-decoration: none;
+    .p-img i{
+      font-size:46px;
+      color:#2e75b6;
+      opacity:.9;
     }
-    .sidebar-icon:hover,
-    .sidebar-icon.active { background-color: rgba(255,255,255,0.2); color: #fff; }
-
-    /* ===== Main ===== */
-    .main-content {
-      flex: 1;
-      margin-left: 70px;
-      width: calc(100% - 70px);
-    }
-
-    .header {
-      background: linear-gradient(135deg, #5b9bd5 0%, #2e75b6 100%);
-      padding: 34px 40px;
-      text-align: center;
-    }
-    .header h1 {
-      color: #fff;
-      font-size: 30px;
-      font-weight: 700;
-      margin-bottom: 8px;
-    }
-    .header p {
-      color: rgba(255,255,255,0.92);
-      font-size: 15px;
-      line-height: 1.6;
-      max-width: 980px;
-      margin: 0 auto;
+    .p-badge{
+      position:absolute;
+      left:12px; top:12px;
+      background:#eef5ff;
+      color:#2e75b6;
+      border:1px solid #cfe1f4;
+      padding:6px 10px;
+      border-radius:999px;
+      font-size:12px;
+      font-weight:900;
+      display:inline-flex;
+      gap:8px;
+      align-items:center;
     }
 
-    /* ===== Controls ===== */
-    .controls {
-      background: #fff;
-      padding: 16px 40px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.07);
-    }
-    .controls-row {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
+    .p-body{ padding:14px 14px 16px; display:flex; flex-direction:column; gap:8px; flex:1; }
+    .p-title{ font-size:16px; font-weight:900; color:#2c3e50; }
+    .p-sub{ font-size:13px; color:#607d8b; line-height:1.45; flex:1; }
+
+    .p-actions{
+      display:flex; justify-content:space-between; align-items:center;
+      padding:12px 14px 14px;
+      border-top:1px solid #eef2f6;
+      color:#2e75b6;
+      font-weight:800;
+      font-size:13px;
     }
 
-    .left-controls { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
-    .right-controls { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+    .hint{
+      max-width:1100px; margin:0 auto 14px;
+      background:#fff; border:1px solid #eef2f6; border-radius:16px;
+      padding:12px 14px;
+      display:flex; gap:10px; align-items:flex-start;
+      box-shadow:0 4px 14px rgba(0,0,0,.05);
+      color:#1f4f7a;
+    }
+    .hint i{ margin-top:2px; color:#2e75b6; }
 
-    .select, .input {
-      border: 2px solid #e0e0e0;
-      border-radius: 10px;
-      padding: 10px 12px;
-      font-size: 14px;
-      outline: none;
-      background: #fff;
-      min-width: 200px;
+    @media (max-width:1200px){
+      .grid{ grid-template-columns: repeat(3, 1fr); }
+      .wrap{ padding:16px 24px 30px; }
     }
-    .select:focus, .input:focus { border-color: #5b9bd5; }
-
-    .pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 9px 12px;
-      border-radius: 999px;
-      background: #eef5ff;
-      color: #2e75b6;
-      font-size: 13px;
-      font-weight: 700;
-      border: 1px solid #cfe1f4;
-      user-select: none;
+    @media (max-width:900px){
+      .grid{ grid-template-columns: repeat(2, 1fr); }
     }
-    .switch {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 9px 12px;
-      border-radius: 999px;
-      background: #f7fbff;
-      border: 1px solid #cfe1f4;
-      font-size: 13px;
-      font-weight: 700;
-      color: #1f4f7a;
-    }
-    .switch input { width: 18px; height: 18px; }
-
-    .btn {
-      border: none;
-      border-radius: 10px;
-      padding: 10px 12px;
-      font-weight: 700;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: #eef5ff;
-      color: #2e75b6;
-      transition: 0.2s ease;
-    }
-    .btn:hover { background: #e3efff; }
-
-    /* ===== Roadmap ===== */
-    .wrap { padding: 18px 40px 40px; }
-
-    .process-head {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 12px;
-      flex-wrap: wrap;
-      margin: 8px 0 14px;
-    }
-    .process-title {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-    .process-title h2 {
-      font-size: 20px;
-      font-weight: 800;
-      color: #2c3e50;
-    }
-    .process-title .sub {
-      font-size: 13px;
-      color: #7f8c8d;
-      line-height: 1.5;
-      max-width: 900px;
-    }
-
-    .legend {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      align-items: center;
-    }
-    .tag {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 6px 10px;
-      border-radius: 999px;
-      font-size: 12px;
-      font-weight: 800;
-      border: 1px solid transparent;
-    }
-    .tag.step { background: #eef5ff; color: #2e75b6; border-color: #cfe1f4; }
-    .tag.critical { background: #ffebee; color: #b71c1c; border-color: #ffcdd2; }
-    .tag.impact { background: #fff3e0; color: #bf360c; border-color: #ffe0b2; }
-
-    /* Desktop / iPad landscape -> horizontal roadmap */
-    .roadmap-horizontal {
-      display: none;
-      gap: 14px;
-      overflow-x: auto;
-      padding-bottom: 8px;
-      scroll-snap-type: x mandatory;
-    }
-    .roadmap-horizontal::-webkit-scrollbar { height: 10px; }
-    .roadmap-horizontal::-webkit-scrollbar-thumb { background: #d6e6f7; border-radius: 999px; }
-    .roadmap-horizontal::-webkit-scrollbar-track { background: #f3f7fb; border-radius: 999px; }
-
-    .step-card {
-      background: #fff;
-      border-radius: 16px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.07);
-      padding: 14px 14px 12px;
-      min-width: 320px;
-      max-width: 360px;
-      scroll-snap-align: start;
-      position: relative;
-      border: 1px solid #eef2f6;
-    }
-    .step-card.critical { border-color: #ffcdd2; box-shadow: 0 6px 22px rgba(183,28,28,0.08); }
-
-    .step-top {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      margin-bottom: 10px;
-    }
-    .step-no {
-      width: 40px;
-      height: 40px;
-      border-radius: 12px;
-      background: #eef5ff;
-      color: #2e75b6;
-      font-weight: 900;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border: 1px solid #cfe1f4;
-      flex: 0 0 auto;
-    }
-    .step-no.critical { background: #ffebee; color: #b71c1c; border-color: #ffcdd2; }
-    .step-badges { display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
-    .badge {
-      font-size: 11px;
-      font-weight: 900;
-      padding: 5px 9px;
-      border-radius: 999px;
-      border: 1px solid transparent;
-      background: #f7fbff;
-      color: #1f4f7a;
-    }
-    .badge.critical { background: #ffebee; color: #b71c1c; border-color: #ffcdd2; }
-    .badge.impact { background: #fff3e0; color: #bf360c; border-color: #ffe0b2; }
-
-    .step-title { font-size: 15px; font-weight: 900; margin-bottom: 6px; }
-    .step-short { font-size: 13px; color: #546e7a; font-weight: 700; margin-bottom: 8px; line-height: 1.45; }
-
-    .step-detail {
-      font-size: 13px;
-      color: #34495e;
-      line-height: 1.55;
-      background: #f8fbff;
-      border: 1px solid #e6f0fb;
-      padding: 10px 10px;
-      border-radius: 12px;
-    }
-
-    .step-meta {
-      margin-top: 10px;
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 8px;
-    }
-
-    .meta-line {
-      font-size: 12.5px;
-      color: #607d8b;
-      display: flex;
-      gap: 8px;
-      align-items: flex-start;
-      line-height: 1.45;
-    }
-    .meta-line i { margin-top: 2px; color: #7aa7d6; }
-    .meta-line strong { color: #2c3e50; }
-
-    /* Mobile -> vertical timeline */
-    .roadmap-vertical {
-      display: block;
-      position: relative;
-      padding-left: 18px;
-    }
-    .roadmap-vertical:before {
-      content: "";
-      position: absolute;
-      left: 7px;
-      top: 0;
-      bottom: 0;
-      width: 4px;
-      background: #d6e6f7;
-      border-radius: 999px;
-    }
-    .v-step {
-      position: relative;
-      margin-bottom: 14px;
-    }
-    .v-dot {
-      position: absolute;
-      left: -1px;
-      top: 14px;
-      width: 18px;
-      height: 18px;
-      border-radius: 999px;
-      background: #eef5ff;
-      border: 2px solid #5b9bd5;
-    }
-    .v-dot.critical { background: #ffebee; border-color: #b71c1c; }
-    .v-card {
-      background: #fff;
-      border-radius: 16px;
-      padding: 12px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.07);
-      border: 1px solid #eef2f6;
-    }
-    .v-card.critical { border-color: #ffcdd2; }
-
-    .v-head {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      margin-bottom: 8px;
-    }
-    .v-stepno {
-      font-weight: 900;
-      color: #2e75b6;
-      background: #eef5ff;
-      border: 1px solid #cfe1f4;
-      padding: 6px 10px;
-      border-radius: 12px;
-      font-size: 12px;
-    }
-    .v-stepno.critical { color: #b71c1c; background: #ffebee; border-color: #ffcdd2; }
-    .v-badges { display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
-
-    .empty {
-      text-align: center;
-      padding: 60px 12px;
-      color: #7f8c8d;
-    }
-    .empty i { font-size: 50px; color: #bdc3c7; margin-bottom: 12px; }
-
-    /* ===== Responsive ===== */
-    @media (max-width: 980px) {
-      .header { padding: 26px 20px; }
-      .controls { padding: 14px 16px; }
-      .wrap { padding: 14px 16px 28px; }
-      .select, .input { min-width: 160px; }
-    }
-
-    /* Mobile layout */
-    @media (max-width: 768px) {
-      .container { flex-direction: column !important; }
-
-      .sidebar {
-        width: 100% !important;
-        height: 60px !important;
-        flex-direction: row !important;
-        justify-content: center !important;
-        align-items: center !important;
-        position: sticky !important;
-        top: 0 !important;
-        left: auto !important;
-        padding: 10px !important;
-        gap: 12px !important;
+    @media (max-width:768px){
+      .container{ flex-direction:column !important; }
+      .sidebar{
+        width:100% !important; height:60px !important;
+        flex-direction:row !important; justify-content:center !important;
+        position:sticky !important; top:0 !important; left:auto !important;
+        padding:10px !important; gap:12px !important;
       }
-      .main-content { margin-left: 0 !important; width: 100% !important; }
-
-      .controls-row { flex-direction: column; align-items: stretch; }
-      .left-controls, .right-controls { width: 100%; }
-      .select, .input { width: 100%; min-width: 0; }
-
-      .roadmap-horizontal { display: none; }
-      .roadmap-vertical { display: block; }
-    }
-
-    /* Desktop / iPad landscape layout */
-    @media (min-width: 769px) {
-      .roadmap-horizontal { display: flex; }
-      .roadmap-vertical { display: none; }
+      .main{ margin-left:0 !important; width:100% !important; }
+      .header{ padding:24px 16px; }
+      .wrap{ padding:14px 16px 24px; }
+      .grid{ grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -403,290 +142,63 @@
       <a href="share-experience.html" class="sidebar-icon" title="Share Experience"><i class="fas fa-comments"></i></a>
     </nav>
 
-    <main class="main-content">
+    <main class="main">
       <header class="header">
         <h1>Learning Path</h1>
-        <p>
-          เรียนรู้ “วิธีการผลิตที่ถูกต้องตาม WI” แบบสั้น กระชับ เป็นขั้นตอน
-          พร้อมจุดวิกฤต (Critical Point) และผลกระทบถ้าทำผิด เพื่อช่วยให้ทำงานได้ถูกต้องและไม่ผิดซ้ำ
-        </p>
+        <p>เลือกกระบวนการ (1–7) เพื่อเรียนรู้ “วิธีการผลิตที่ถูกต้องตาม WI” แบบสั้น กระชับ พร้อมจุดวิกฤต</p>
       </header>
 
-      <section class="controls">
-        <div class="controls-row">
-          <div class="left-controls">
-            <select id="processSelect" class="select">
-              <option value="">-- เลือกกระบวนการ (1-7) --</option>
-              <option value="1">1. ผสมเปียก</option>
-              <option value="2">2. แร่งเปียก</option>
-              <option value="3">3. อบลมร้อน</option>
-              <option value="4">4. แร่งแห้ง</option>
-              <option value="5">5. ผสมแห้ง</option>
-              <option value="6">6. ตอกเม็ดยา</option>
-              <option value="7">7. บรรจุซอง</option>
-            </select>
-
-            <input id="searchBox" class="input" type="text" placeholder="ค้นหา เช่น 'ชั่งน้ำ', 'LOD', 'ตอกเม็ดยา'">
-          </div>
-
-          <div class="right-controls">
-            <div class="switch" title="แสดงเฉพาะขั้นตอนที่เป็นจุดวิกฤต">
-              <input type="checkbox" id="onlyCritical">
-              <label for="onlyCritical">เฉพาะ Critical</label>
-            </div>
-            <button class="btn" id="btnClear"><i class="fa-solid fa-broom"></i> ล้าง</button>
-            <span class="pill"><i class="fa-solid fa-list-check"></i> <span id="countText">0 ขั้นตอน</span></span>
-          </div>
-        </div>
-      </section>
-
       <div class="wrap">
-        <div class="process-head">
-          <div class="process-title">
-            <h2 id="processTitle">เลือกกระบวนการเพื่อเริ่มเรียนรู้</h2>
-            <div class="sub" id="processSub">
-              เลือก Process 1–7 แล้วระบบจะแสดง Roadmap ทีละขั้นตอน (อ่านเร็ว ทำตามได้จริง)
-            </div>
-          </div>
-          <div class="legend">
-            <span class="tag step"><i class="fa-solid fa-route"></i> Step</span>
-            <span class="tag critical"><i class="fa-solid fa-triangle-exclamation"></i> Critical Point</span>
-            <span class="tag impact"><i class="fa-solid fa-bolt"></i> Impact</span>
+        <div class="hint">
+          <i class="fa-solid fa-lightbulb"></i>
+          <div>
+            <strong>วิธีใช้:</strong> กดเลือกกระบวนการ → เข้าไปดู Step แบบไม่น่าเบื่อ (สลับโหมดได้: Stepper / Checklist / Flow)
           </div>
         </div>
 
-        <!-- Desktop / iPad Landscape -->
-        <div class="roadmap-horizontal" id="roadmapHorizontal"></div>
-
-        <!-- Mobile -->
-        <div class="roadmap-vertical" id="roadmapVertical"></div>
-
-        <div class="empty" id="emptyBox" style="display:none;">
-          <i class="fas fa-search"></i>
-          <p>ไม่พบข้อมูลที่ตรงกับเงื่อนไข</p>
-        </div>
+        <section class="grid" id="processGrid"></section>
       </div>
     </main>
   </div>
 
   <script>
-    // ✅ ใช้ URL ของคุณ + view=learning
-    const API_URL = "https://script.google.com/macros/s/AKfycbwMRbnqSLTmmI4wofmNfZ5YPFGSiqg__rZUgyDlTTR03JchnQXgUj7DKDvzS4-QBmJrvw/exec?view=learning";
+    // แค่หน้าเลือก process ไม่ต้องเรียก API ก็ได้ (เพราะ process คงที่ 1-7)
 
-    let rawData = [];
-    let currentProcess = "";
+    const processes = [
+      { id:"1", name:"ผสมเปียก", icon:"fa-blender" , desc:"เตรียม Wet Mass ให้พร้อมแร่ง (จุดเสี่ยง: ความชื้น/ความเหนียว)" },
+      { id:"2", name:"แร่งเปียก", icon:"fa-gears"  , desc:"แร่งให้เป็นเส้น/ตัวหนอน + เกลี่ยลงถาดให้สม่ำเสมอ" },
+      { id:"3", name:"อบลมร้อน", icon:"fa-temperature-high", desc:"ควบคุมอุณหภูมิ/เวลา + ตรวจค่า LOD ก่อนไปต่อ" },
+      { id:"4", name:"แร่งแห้ง", icon:"fa-filter", desc:"ทำให้แตกตัวเป็นผงตาม WI และเตรียมสารช่วยให้ไหลตัว" },
+      { id:"5", name:"ผสมแห้ง", icon:"fa-circle-nodes", desc:"ผสมให้สม่ำเสมอครบเวลา เพื่อลดปัญหาน้ำหนัก/ความหนา" },
+      { id:"6", name:"ตอกเม็ดยา", icon:"fa-compress", desc:"ตั้งค่าเครื่องให้ได้ น้ำหนัก/ความหนา/ความแข็ง ตามเกณฑ์" },
+      { id:"7", name:"บรรจุซอง", icon:"fa-box", desc:"ตั้งเครื่อง/ทดสอบ/ตรวจซอง เพื่อป้องกันซองรั่วและจำนวนเม็ดผิด" }
+    ];
 
-    const processNames = {
-      "1": "ผสมเปียก",
-      "2": "แร่งเปียก",
-      "3": "อบลมร้อน",
-      "4": "แร่งแห้ง",
-      "5": "ผสมแห้ง",
-      "6": "ตอกเม็ดยา",
-      "7": "บรรจุซอง"
-    };
-
-    const elProcess = document.getElementById("processSelect");
-    const elSearch = document.getElementById("searchBox");
-    const elOnlyCritical = document.getElementById("onlyCritical");
-    const elCount = document.getElementById("countText");
-
-    const elTitle = document.getElementById("processTitle");
-    const elSub = document.getElementById("processSub");
-
-    const elH = document.getElementById("roadmapHorizontal");
-    const elV = document.getElementById("roadmapVertical");
-    const emptyBox = document.getElementById("emptyBox");
-
-    function norm(v) { return String(v ?? "").trim(); }
-
-    function isCritical(item) {
-      // ถือว่า Critical ถ้ามีข้อความใน CriticalPoint
-      return norm(item.CriticalPoint) !== "";
-    }
-
-    function matchSearch(item, q) {
-      if (!q) return true;
-      const text = [
-        item.StepTitle, item.StepShort, item.StepDetail,
-        item.CriticalPoint, item.ImpactDefect, item.ImpactProcess
-      ].map(norm).join(" ").toLowerCase();
-      return text.includes(q.toLowerCase());
-    }
-
-    function sortByStepNo(a, b) {
-      const na = parseFloat(norm(a.StepNo)) || 0;
-      const nb = parseFloat(norm(b.StepNo)) || 0;
-      return na - nb;
-    }
-
-    function render() {
-      const proc = currentProcess;
-      const q = norm(elSearch.value);
-      const onlyCrit = elOnlyCritical.checked;
-
-      if (!proc) {
-        elH.innerHTML = "";
-        elV.innerHTML = "";
-        emptyBox.style.display = "none";
-        elCount.textContent = "0 ขั้นตอน";
-        elTitle.textContent = "เลือกกระบวนการเพื่อเริ่มเรียนรู้";
-        elSub.textContent = "เลือก Process 1–7 แล้วระบบจะแสดง Roadmap ทีละขั้นตอน (อ่านเร็ว ทำตามได้จริง)";
-        return;
-      }
-
-      const procName = processNames[proc] || "";
-      elTitle.textContent = `Process ${proc} : ${procName}`;
-
-      const list = rawData
-        .filter(x => norm(x.Process) === proc)
-        .filter(x => matchSearch(x, q))
-        .filter(x => onlyCrit ? isCritical(x) : true)
-        .sort(sortByStepNo);
-
-      elCount.textContent = `${list.length} ขั้นตอน`;
-      elSub.textContent = onlyCrit
-        ? "กำลังแสดงเฉพาะจุดวิกฤต (Critical Point) ที่ต้องระวังเป็นพิเศษ"
-        : "ไล่ทำตาม Step → เช็ค Critical Point → จะไม่ผิดซ้ำ และลดของเสีย";
-
-      if (list.length === 0) {
-        elH.innerHTML = "";
-        elV.innerHTML = "";
-        emptyBox.style.display = "block";
-        return;
-      }
-
-      emptyBox.style.display = "none";
-      elH.innerHTML = list.map(renderStepCard).join("");
-      elV.innerHTML = list.map(renderVStep).join("");
-    }
-
-    function renderStepCard(item, idx) {
-      const stepNo = norm(item.StepNo) || String(idx + 1);
-      const title = norm(item.StepTitle);
-      const short = norm(item.StepShort);
-      const detail = norm(item.StepDetail);
-
-      const crit = norm(item.CriticalPoint);
-      const impactP = norm(item.ImpactProcess);
-      const impactD = norm(item.ImpactDefect);
-
-      const critFlag = isCritical(item);
-      const stepNoClass = critFlag ? "step-no critical" : "step-no";
-      const cardClass = critFlag ? "step-card critical" : "step-card";
-
-      const badges = [
-        critFlag ? `<span class="badge critical"><i class="fa-solid fa-triangle-exclamation"></i> Critical</span>` : "",
-        (impactP || impactD) ? `<span class="badge impact"><i class="fa-solid fa-bolt"></i> Impact</span>` : ""
-      ].filter(Boolean).join("");
-
-      const metaLines = [
-        crit ? `<div class="meta-line"><i class="fa-solid fa-triangle-exclamation"></i><div><strong>Critical:</strong> ${escapeHtml(crit)}</div></div>` : "",
-        impactP ? `<div class="meta-line"><i class="fa-solid fa-share-nodes"></i><div><strong>กระทบ Process:</strong> ${escapeHtml(impactP)}</div></div>` : "",
-        impactD ? `<div class="meta-line"><i class="fa-solid fa-bug"></i><div><strong>เสี่ยงของเสีย:</strong> ${escapeHtml(impactD)}</div></div>` : ""
-      ].filter(Boolean).join("");
-
+    function cardHTML(p){
       return `
-        <div class="${cardClass}">
-          <div class="step-top">
-            <div class="${stepNoClass}">${escapeHtml(stepNo)}</div>
-            <div class="step-badges">${badges}</div>
+        <div class="p-card" onclick="goProcess('${p.id}')">
+          <div class="p-img">
+            <span class="p-badge"><i class="fa-solid fa-route"></i> Process ${p.id}</span>
+            <i class="fa-solid ${p.icon}"></i>
           </div>
-
-          <div class="step-title">${escapeHtml(title)}</div>
-          ${short ? `<div class="step-short">${escapeHtml(short)}</div>` : ""}
-
-          ${detail ? `<div class="step-detail">${escapeHtml(detail)}</div>` : ""}
-
-          ${metaLines ? `<div class="step-meta">${metaLines}</div>` : ""}
-        </div>
-      `;
-    }
-
-    function renderVStep(item, idx) {
-      const stepNo = norm(item.StepNo) || String(idx + 1);
-      const title = norm(item.StepTitle);
-      const short = norm(item.StepShort);
-      const detail = norm(item.StepDetail);
-
-      const crit = norm(item.CriticalPoint);
-      const impactP = norm(item.ImpactProcess);
-      const impactD = norm(item.ImpactDefect);
-
-      const critFlag = isCritical(item);
-      const dotClass = critFlag ? "v-dot critical" : "v-dot";
-      const cardClass = critFlag ? "v-card critical" : "v-card";
-      const stepClass = critFlag ? "v-stepno critical" : "v-stepno";
-
-      const badges = [
-        critFlag ? `<span class="badge critical"><i class="fa-solid fa-triangle-exclamation"></i> Critical</span>` : "",
-        (impactP || impactD) ? `<span class="badge impact"><i class="fa-solid fa-bolt"></i> Impact</span>` : ""
-      ].filter(Boolean).join("");
-
-      const metaLines = [
-        crit ? `<div class="meta-line"><i class="fa-solid fa-triangle-exclamation"></i><div><strong>Critical:</strong> ${escapeHtml(crit)}</div></div>` : "",
-        impactP ? `<div class="meta-line"><i class="fa-solid fa-share-nodes"></i><div><strong>กระทบ Process:</strong> ${escapeHtml(impactP)}</div></div>` : "",
-        impactD ? `<div class="meta-line"><i class="fa-solid fa-bug"></i><div><strong>เสี่ยงของเสีย:</strong> ${escapeHtml(impactD)}</div></div>` : ""
-      ].filter(Boolean).join("");
-
-      return `
-        <div class="v-step">
-          <div class="${dotClass}"></div>
-          <div class="${cardClass}">
-            <div class="v-head">
-              <div class="${stepClass}">Step ${escapeHtml(stepNo)}</div>
-              <div class="v-badges">${badges}</div>
-            </div>
-            <div class="step-title">${escapeHtml(title)}</div>
-            ${short ? `<div class="step-short">${escapeHtml(short)}</div>` : ""}
-            ${detail ? `<div class="step-detail">${escapeHtml(detail)}</div>` : ""}
-            ${metaLines ? `<div class="step-meta">${metaLines}</div>` : ""}
+          <div class="p-body">
+            <div class="p-title">${p.name}</div>
+            <div class="p-sub">${p.desc}</div>
+          </div>
+          <div class="p-actions">
+            <span>เริ่มเรียนรู้</span>
+            <i class="fa-solid fa-arrow-right"></i>
           </div>
         </div>
       `;
     }
 
-    function escapeHtml(str) {
-      return String(str || "")
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
+    function goProcess(id){
+      // ส่ง process ไปหน้าถัดไป
+      location.href = `learning-process.html?process=${encodeURIComponent(id)}`;
     }
 
-    async function load() {
-      try {
-        const res = await fetch(API_URL, { cache: "no-store" });
-        const data = await res.json();
-
-        // data เป็น array ตรงๆ จาก ?view=learning
-        rawData = Array.isArray(data) ? data : [];
-      } catch (err) {
-        console.error(err);
-        rawData = [];
-      } finally {
-        render();
-      }
-    }
-
-    // ===== events =====
-    elProcess.addEventListener("change", () => {
-      currentProcess = norm(elProcess.value);
-      render();
-    });
-    elSearch.addEventListener("input", () => render());
-    elOnlyCritical.addEventListener("change", () => render());
-
-    document.getElementById("btnClear").addEventListener("click", () => {
-      elProcess.value = "";
-      elSearch.value = "";
-      elOnlyCritical.checked = false;
-      currentProcess = "";
-      render();
-    });
-
-    load();
+    document.getElementById("processGrid").innerHTML = processes.map(cardHTML).join("");
   </script>
 </body>
 </html>
