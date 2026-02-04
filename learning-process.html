@@ -3,193 +3,381 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Learning - Process</title>
+  <title>Learning Process - KMS</title>
 
   <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <style>
     * { margin:0; padding:0; box-sizing:border-box; }
-    body { font-family:'Sarabun',sans-serif; background:#e8eef5; min-height:100vh; overflow-x:hidden; color:#2c3e50; }
-    .container{ display:flex; min-height:100vh; }
+    body{
+      font-family:'Sarabun',sans-serif;
+      background:#e8eef5;
+      min-height:100vh;
+      overflow-x:hidden;
+      color:#2c3e50;
+    }
+    .container { display:flex; min-height:100vh; }
 
+    /* ===== Sidebar ===== */
     .sidebar{
-      width:70px; background:linear-gradient(180deg,#5b9bd5 0%,#4a89c8 100%);
-      display:flex; flex-direction:column; align-items:center; padding-top:20px; gap:10px;
-      position:fixed; left:0; top:0; height:100vh; z-index:100;
+      width:70px;
+      background:linear-gradient(180deg,#5b9bd5 0%, #4a89c8 100%);
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      padding-top:20px;
+      gap:10px;
+      position:fixed;
+      height:100vh;
+      left:0; top:0;
+      z-index:100;
     }
     .sidebar-icon{
-      width:50px; height:50px; display:flex; align-items:center; justify-content:center;
-      color:rgba(255,255,255,.7); font-size:20px; border-radius:12px; cursor:pointer;
-      transition:.2s ease; text-decoration:none;
+      width:50px; height:50px;
+      display:flex; align-items:center; justify-content:center;
+      color:rgba(255,255,255,0.7);
+      font-size:20px;
+      border-radius:12px;
+      cursor:pointer;
+      transition:all .3s ease;
+      text-decoration:none;
     }
-    .sidebar-icon:hover,.sidebar-icon.active{ background:rgba(255,255,255,.2); color:#fff; }
+    .sidebar-icon:hover,.sidebar-icon.active{
+      background:rgba(255,255,255,0.2);
+      color:#fff;
+    }
 
-    .main{ flex:1; margin-left:70px; width:calc(100% - 70px); }
+    /* ===== Main ===== */
+    .main-content{
+      flex:1;
+      margin-left:70px;
+      width:calc(100% - 70px);
+    }
 
+    /* ===== Header ===== */
     .header{
-      background:linear-gradient(135deg,#5b9bd5 0%,#2e75b6 100%);
-      padding:26px 40px;
+      background:linear-gradient(135deg,#5b9bd5 0%, #2e75b6 100%);
+      padding:28px 20px;
+      text-align:center;
+    }
+    .header h1{
+      color:#fff;
+      font-size:28px;
+      font-weight:800;
+      margin-bottom:6px;
+    }
+    .header p{
+      color:rgba(255,255,255,0.92);
+      font-size:13px;
+      line-height:1.6;
+      margin:0 auto;
+      max-width:920px;
+    }
+
+    /* ===== Top Bar ===== */
+    .wrap{
+      max-width:1200px;
+      margin:0 auto;
+      padding:16px 20px 26px;
+    }
+    .topbar{
+      background:#fff;
+      border-radius:16px;
+      box-shadow:0 6px 18px rgba(0,0,0,0.08);
+      padding:14px 14px;
+      display:grid;
+      grid-template-columns: 1fr auto;
+      gap:12px;
+      align-items:center;
+    }
+    .top-left{
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+    }
+    .badge{
+      width:44px; height:44px;
+      border-radius:14px;
+      background:#e3f2fd;
+      color:#1565c0;
       display:flex;
       align-items:center;
-      justify-content:space-between;
-      gap:14px;
+      justify-content:center;
+      font-size:18px;
+      flex:0 0 auto;
+    }
+    .top-title{
+      display:grid;
+      gap:4px;
+    }
+    .top-title h2{
+      margin:0;
+      font-size:16px;
+      font-weight:800;
+    }
+    .top-title .sub{
+      font-size:12px;
+      color:#607d8b;
+      line-height:1.5;
+    }
+    .top-actions{
+      display:flex;
+      gap:8px;
+      justify-content:flex-end;
       flex-wrap:wrap;
     }
-    .h-left{ display:flex; flex-direction:column; gap:6px; }
-    .header h1{ color:#fff; font-size:24px; font-weight:900; }
-    .header p{ color:rgba(255,255,255,.92); font-size:14px; line-height:1.5; max-width:900px; }
-
-    .h-actions{ display:flex; gap:10px; flex-wrap:wrap; }
     .btn{
-      border:none; border-radius:12px; padding:10px 12px; font-weight:900; cursor:pointer;
-      display:inline-flex; align-items:center; gap:8px;
-      background:#eef5ff; color:#2e75b6;
-      transition:.2s ease;
+      border:none;
+      cursor:pointer;
+      border-radius:12px;
+      padding:10px 12px;
+      font-weight:800;
+      font-size:13px;
+      display:inline-flex;
+      gap:10px;
+      align-items:center;
     }
-    .btn:hover{ background:#e3efff; }
-    .btn.primary{ background:#fff; color:#2e75b6; }
-    .btn.primary:hover{ opacity:.92; }
+    .btn.back{ background:#f5f7fb; color:#2c3e50; border:1px solid #e8eef5; }
+    .btn.back:hover{ background:#eef3f8; }
+    .btn.tip{ background:#5b9bd5; color:#fff; }
+    .btn.tip:hover{ background:#4a89c8; }
 
-    .wrap{ padding:16px 40px 40px; }
-
-    .toolbar{
-      max-width:1100px; margin:0 auto 14px;
-      display:flex; gap:10px; flex-wrap:wrap; align-items:center; justify-content:space-between;
-    }
-    .mode{
-      display:flex; gap:10px; flex-wrap:wrap; align-items:center;
-      background:#fff; border:1px solid #eef2f6; border-radius:16px; padding:8px;
-      box-shadow:0 4px 14px rgba(0,0,0,.05);
-    }
-    .mode button{
-      border:none; border-radius:12px; padding:10px 12px; cursor:pointer; font-weight:900;
-      background:#f7fbff; color:#1f4f7a; border:1px solid #e6f0fb;
-    }
-    .mode button.active{ background:#5b9bd5; color:#fff; border-color:#5b9bd5; }
-
-    .pill{
-      background:#fff; border:1px solid #eef2f6; border-radius:999px; padding:10px 12px;
-      display:inline-flex; gap:8px; align-items:center; font-weight:900; color:#2e75b6;
-      box-shadow:0 4px 14px rgba(0,0,0,.05);
-    }
-
-    /* ===== Stepper + Accordion ===== */
-    .stepper{
-      max-width:1100px; margin:0 auto;
-      display:grid; grid-template-columns: 260px 1fr;
+    /* ===== Roadmap ===== */
+    .roadmap{
+      margin-top:14px;
+      display:grid;
       gap:14px;
     }
-    .steps-list{
-      background:#fff; border:1px solid #eef2f6; border-radius:16px; padding:12px;
-      box-shadow:0 4px 14px rgba(0,0,0,.05);
-      height: fit-content;
-    }
-    .s-item{
-      display:flex; gap:10px; align-items:flex-start;
-      padding:10px; border-radius:14px; cursor:pointer;
-      transition:.15s ease;
-    }
-    .s-item:hover{ background:#f7fbff; }
-    .s-item.active{ background:#eef5ff; border:1px solid #cfe1f4; }
-    .s-no{
-      width:34px; height:34px; border-radius:12px; display:flex; align-items:center; justify-content:center;
-      font-weight:900; background:#eef5ff; color:#2e75b6; border:1px solid #cfe1f4; flex:0 0 auto;
-    }
-    .s-no.critical{ background:#ffebee; color:#b71c1c; border-color:#ffcdd2; }
-    .s-txt{ display:flex; flex-direction:column; gap:4px; }
-    .s-title{ font-weight:900; font-size:14px; color:#2c3e50; }
-    .s-short{ font-size:12.5px; color:#607d8b; line-height:1.35; }
 
-    .detail{
-      background:#fff; border:1px solid #eef2f6; border-radius:16px; padding:14px;
-      box-shadow:0 4px 14px rgba(0,0,0,.05);
+    .roadmap-card{
+      background:#fff;
+      border-radius:18px;
+      box-shadow:0 8px 22px rgba(0,0,0,0.08);
+      border:1px solid rgba(91,155,213,0.14);
+      overflow:hidden;
     }
-    .detail h2{ font-size:18px; font-weight:900; margin-bottom:6px; }
-    .detail .short{ font-size:13.5px; color:#546e7a; font-weight:800; margin-bottom:10px; line-height:1.5; }
-    .box{
-      background:#f8fbff; border:1px solid #e6f0fb; border-radius:14px; padding:12px;
-      font-size:13.5px; line-height:1.6; color:#34495e;
-    }
-    .meta{ margin-top:10px; display:grid; gap:8px; }
-    .meta-line{ display:flex; gap:10px; align-items:flex-start; font-size:13px; color:#607d8b; line-height:1.5; }
-    .meta-line i{ margin-top:2px; color:#7aa7d6; }
-    .meta-line strong{ color:#2c3e50; }
-    .meta-line.critical i{ color:#b71c1c; }
-    .meta-line.impact i{ color:#bf360c; }
 
-    /* ===== Checklist ===== */
-    .checklist{
-      max-width:1100px; margin:0 auto;
-      display:grid; gap:12px;
+    .roadmap-head{
+      padding:14px 14px 10px;
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      align-items:center;
+      border-bottom:1px solid #eef3f8;
+      background:linear-gradient(180deg, rgba(91,155,213,0.08), rgba(255,255,255,0));
     }
-    .c-item{
-      background:#fff; border:1px solid #eef2f6; border-radius:16px; padding:12px;
-      box-shadow:0 4px 14px rgba(0,0,0,.05);
-      display:flex; gap:12px; align-items:flex-start;
+    .pill{
+      display:inline-flex;
+      gap:8px;
+      align-items:center;
+      background:#e3f2fd;
+      color:#1565c0;
+      font-size:12px;
+      font-weight:900;
+      padding:6px 10px;
+      border-radius:999px;
     }
-    .c-item input{ width:22px; height:22px; margin-top:2px; }
-    .c-body{ display:flex; flex-direction:column; gap:6px; flex:1; }
-    .c-head{ display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
-    .chip{
-      font-size:12px; font-weight:900; padding:6px 10px; border-radius:999px; border:1px solid transparent;
-      background:#eef5ff; color:#2e75b6; border-color:#cfe1f4;
-      display:inline-flex; gap:8px; align-items:center;
+    .mini{
+      font-size:12px;
+      color:#607d8b;
+      display:inline-flex;
+      gap:8px;
+      align-items:center;
+      white-space:nowrap;
     }
-    .chip.critical{ background:#ffebee; color:#b71c1c; border-color:#ffcdd2; }
-    .chip.impact{ background:#fff3e0; color:#bf360c; border-color:#ffe0b2; }
 
-    /* ===== Flow ===== */
-    .flow{
-      max-width:1100px; margin:0 auto;
-      display:flex; flex-wrap:wrap; gap:12px;
+    .steps{
+      padding:14px;
+      display:grid;
+      gap:12px;
     }
-    .f-node{
-      background:#fff; border:1px solid #eef2f6; border-radius:16px; padding:12px;
-      box-shadow:0 4px 14px rgba(0,0,0,.05);
-      min-width:260px; flex:1 1 260px;
+
+    /* Desktop/iPad: timeline แนวนอน */
+    .timeline{
+      display:grid;
+      grid-template-columns: repeat(var(--cols, 4), 1fr);
+      gap:12px;
       position:relative;
     }
-    .f-node:after{
+    .timeline:before{
       content:"";
       position:absolute;
-      right:-12px; top:50%;
-      width:0; height:0;
-      border-top:10px solid transparent;
-      border-bottom:10px solid transparent;
-      border-left:12px solid #d6e6f7;
-      transform:translateY(-50%);
+      left:14px;
+      right:14px;
+      top:28px;
+      height:3px;
+      background:#e8eef5;
+      border-radius:999px;
+      z-index:0;
+    }
+
+    .step{
+      position:relative;
+      z-index:1;
+      background:#fff;
+      border-radius:16px;
+      border:1px solid #eef3f8;
+      box-shadow:0 6px 16px rgba(0,0,0,0.06);
+      overflow:hidden;
+      transition:transform .2s ease, box-shadow .2s ease;
+      cursor:pointer;
+    }
+    .step:hover{
+      transform:translateY(-4px);
+      box-shadow:0 10px 22px rgba(91,155,213,0.18);
+    }
+
+    .step-top{
+      padding:12px 12px 10px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+      background:#f7fbff;
+      border-bottom:1px solid #eef3f8;
+    }
+    .step-no{
+      width:34px;
+      height:34px;
+      border-radius:12px;
+      background:#5b9bd5;
+      color:#fff;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:900;
+      font-size:14px;
+      flex:0 0 auto;
+    }
+    .step-title{
+      font-weight:900;
+      font-size:14px;
+      margin:0;
+      line-height:1.25;
+      flex:1;
+    }
+    .chev{ color:#90a4ae; }
+
+    .step-body{
+      padding:12px;
+      display:grid;
+      gap:10px;
+    }
+    .short{
+      font-size:13px;
+      color:#37474f;
+      line-height:1.55;
+      margin:0;
+    }
+    .detail{
+      font-size:12px;
+      color:#607d8b;
+      line-height:1.6;
+      margin:0;
       display:none;
     }
-    .f-head{ display:flex; justify-content:space-between; gap:10px; align-items:center; flex-wrap:wrap; margin-bottom:6px; }
-    .f-title{ font-weight:900; }
-    .f-short{ font-size:13px; color:#546e7a; font-weight:800; line-height:1.45; }
-    .f-node.critical{ border-color:#ffcdd2; }
 
-    /* ===== responsive ===== */
-    @media (max-width:980px){
-      .wrap{ padding:14px 16px 28px; }
-      .header{ padding:20px 16px; }
-      .stepper{ grid-template-columns: 1fr; }
-      .steps-list{ display:flex; gap:10px; overflow-x:auto; }
-      .s-item{ min-width:260px; }
-      .f-node:after{ display:none; }
+    .critical{
+      padding:10px 12px;
+      border-radius:14px;
+      border:1px solid rgba(231,76,60,0.18);
+      background:rgba(231,76,60,0.08);
+      color:#b71c1c;
+      font-size:12px;
+      line-height:1.5;
+      font-weight:800;
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
     }
+    .impact{
+      padding:10px 12px;
+      border-radius:14px;
+      border:1px solid rgba(46,125,50,0.18);
+      background:rgba(46,125,50,0.08);
+      color:#1b5e20;
+      font-size:12px;
+      line-height:1.5;
+      font-weight:800;
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+    }
+
+    .open .detail{ display:block; }
+    .open .chev{ transform:rotate(180deg); }
+
+    /* Mobile: timeline แนวตั้ง */
+    @media (max-width: 900px){
+      .timeline{
+        grid-template-columns:1fr;
+      }
+      .timeline:before{
+        left:24px;
+        right:auto;
+        top:14px;
+        bottom:14px;
+        width:3px;
+        height:auto;
+      }
+      .step{
+        margin-left:24px;
+      }
+      .step-top{
+        position:relative;
+      }
+      .step-top:before{
+        content:"";
+        position:absolute;
+        left:-24px;
+        top:18px;
+        width:12px;
+        height:12px;
+        border-radius:999px;
+        background:#5b9bd5;
+        box-shadow:0 0 0 4px rgba(91,155,213,0.18);
+      }
+    }
+
+    /* Sidebar mobile -> แถบบน */
     @media (max-width:768px){
       .container{ flex-direction:column !important; }
       .sidebar{
-        width:100% !important; height:60px !important;
-        flex-direction:row !important; justify-content:center !important;
-        position:sticky !important; top:0 !important; left:auto !important;
-        padding:10px !important; gap:12px !important;
+        width:100% !important;
+        height:60px !important;
+        flex-direction:row !important;
+        justify-content:center !important;
+        align-items:center !important;
+        position:relative !important;
+        left:auto !important;
+        top:auto !important;
+        padding:10px !important;
+        gap:12px !important;
       }
-      .main{ margin-left:0 !important; width:100% !important; }
+      .main-content{ margin-left:0 !important; width:100% !important; }
+      .header{ padding:20px 16px; }
+      .header h1{ font-size:22px; }
+      .wrap{ padding:14px 16px 22px; }
+      .topbar{ grid-template-columns:1fr; }
+      .top-actions{ justify-content:flex-start; }
+    }
+
+    /* Loading */
+    .loading{
+      background:#fff;
+      border-radius:18px;
+      box-shadow:0 8px 22px rgba(0,0,0,0.08);
+      padding:24px;
+      text-align:center;
+      color:#607d8b;
     }
   </style>
 </head>
 
 <body>
   <div class="container">
+    <!-- Sidebar -->
     <nav class="sidebar">
       <a href="index.html" class="sidebar-icon" title="Home"><i class="fas fa-home"></i></a>
       <a href="knowledge-base.html" class="sidebar-icon" title="Knowledge Base"><i class="fas fa-book-open"></i></a>
@@ -198,268 +386,193 @@
       <a href="share-experience.html" class="sidebar-icon" title="Share Experience"><i class="fas fa-comments"></i></a>
     </nav>
 
-    <main class="main">
+    <main class="main-content">
       <header class="header">
-        <div class="h-left">
-          <h1 id="title">Learning - Process</h1>
-          <p id="subtitle">โหลดข้อมูลจาก Learning Path (Google Sheet) แล้วแสดงเป็น Step แบบกระชับ</p>
-        </div>
-        <div class="h-actions">
-          <button class="btn primary" onclick="backToList()"><i class="fa-solid fa-arrow-left"></i> กลับ</button>
-          <button class="btn" onclick="toggleCritical()"><i class="fa-solid fa-triangle-exclamation"></i> เฉพาะ Critical</button>
-        </div>
+        <h1 id="pageTitle">Learning Process</h1>
+        <p id="pageSub">Roadmap สั้น ๆ + Critical Point + ถ้าพลาดจะกระทบอะไร</p>
       </header>
 
       <div class="wrap">
-        <div class="toolbar">
-          <div class="mode">
-            <button id="mStepper" class="active" onclick="setMode('stepper')"><i class="fa-solid fa-stairs"></i> Stepper</button>
-            <button id="mChecklist" onclick="setMode('checklist')"><i class="fa-solid fa-list-check"></i> Checklist</button>
-            <button id="mFlow" onclick="setMode('flow')"><i class="fa-solid fa-diagram-project"></i> Flow</button>
+        <div class="topbar">
+          <div class="top-left">
+            <div class="badge"><i class="fa-solid fa-route"></i></div>
+            <div class="top-title">
+              <h2 id="procTitle">กำลังโหลด...</h2>
+              <div class="sub" id="procSub">อ่าน Step แบบสั้น ๆ แล้วกดแต่ละ Step เพื่อดูรายละเอียดเพิ่ม</div>
+            </div>
           </div>
-          <div class="pill"><i class="fa-solid fa-list-ol"></i> <span id="count">0 steps</span></div>
+          <div class="top-actions">
+            <button class="btn back" onclick="window.location.href='learning-path.html'">
+              <i class="fa-solid fa-arrow-left"></i> กลับ
+            </button>
+            <button class="btn tip" onclick="expandAll()">
+              <i class="fa-solid fa-list-check"></i> เปิดรายละเอียดทั้งหมด
+            </button>
+          </div>
         </div>
 
-        <div id="view"></div>
-
-        <div id="empty" style="display:none; text-align:center; padding:50px 12px; color:#7f8c8d;">
-          <i class="fas fa-search" style="font-size:50px; color:#bdc3c7; margin-bottom:12px;"></i>
-          <div>ไม่พบข้อมูลของกระบวนการนี้ในชีท Learning Path</div>
+        <div class="roadmap" id="roadmap">
+          <div class="loading">
+            <i class="fas fa-spinner fa-spin"></i>
+            <p style="margin-top:10px">กำลังโหลดข้อมูลจาก Learning Path...</p>
+          </div>
         </div>
       </div>
     </main>
   </div>
 
   <script>
-    // ✅ ของคุณ
-    const API_URL = "https://script.google.com/macros/s/AKfycbwMRbnqSLTmmI4wofmNfZ5YPFGSiqg__rZUgyDlTTR03JchnQXgUj7DKDvzS4-QBmJrvw/exec?view=learning";
+    // ✅ ใช้ Apps Script เดิม (แค่เติม ?view=learning)
+    const API_BASE = 'https://script.google.com/macros/s/AKfycbwMRbnqSLTmmI4wofmNfZ5YPFGSiqg__rZUgyDlTTR03JchnQXgUj7DKDvzS4-QBmJrvw/exec';
 
-    const processNames = {
-      "1":"ผสมเปียก","2":"แร่งเปียก","3":"อบลมร้อน","4":"แร่งแห้ง","5":"ผสมแห้ง","6":"ตอกเม็ดยา","7":"บรรจุซอง"
+    // Process name fallback (ถ้าในชีทไม่ส่งมา)
+    const PROCESS_NAME_MAP = {
+      "1": "ผสมเปียก",
+      "2": "แร่งเปียก",
+      "3": "อบลมร้อน",
+      "4": "แร่งแห้ง",
+      "5": "ผสมแห้ง",
+      "6": "ตอกเม็ดยา",
+      "7": "บรรจุซอง"
     };
 
-    const qs = new URLSearchParams(location.search);
-    const process = (qs.get("process") || "").trim();
-
-    let data = [];
-    let mode = "stepper";
-    let onlyCritical = false;
-
-    const elTitle = document.getElementById("title");
-    const elSub = document.getElementById("subtitle");
-    const elCount = document.getElementById("count");
-    const elView = document.getElementById("view");
-    const elEmpty = document.getElementById("empty");
-
-    function backToList(){ location.href = "learning-path.html"; }
-    function toggleCritical(){ onlyCritical = !onlyCritical; render(); }
-
-    function setMode(m){
-      mode = m;
-      document.getElementById("mStepper").classList.toggle("active", m==="stepper");
-      document.getElementById("mChecklist").classList.toggle("active", m==="checklist");
-      document.getElementById("mFlow").classList.toggle("active", m==="flow");
-      render();
+    function getParam(name){
+      const u = new URL(window.location.href);
+      return u.searchParams.get(name);
     }
 
-    function norm(v){ return String(v ?? "").trim(); }
-    function isCritical(item){ return norm(item.CriticalPoint) !== ""; }
-    function stepNo(item, idx){
-      const n = parseFloat(norm(item.StepNo));
-      return Number.isFinite(n) ? n : (idx+1);
+    function safeText(v){
+      return String(v ?? '').trim();
     }
 
-    function sortByStep(a,b){ return stepNo(a,0) - stepNo(b,0); }
-
-    function escapeHtml(str){
-      return String(str || "")
-        .replaceAll("&","&amp;")
-        .replaceAll("<","&lt;")
-        .replaceAll(">","&gt;")
-        .replaceAll('"',"&quot;")
-        .replaceAll("'","&#039;");
+    function parseImpactProcess(v){
+      const s = safeText(v);
+      if(!s) return "";
+      return s.replace(/\s+/g,'');
     }
 
-    function render(){
-      if (!process){
-        elTitle.textContent = "ไม่พบ process";
-        elSub.textContent = "กรุณากลับไปเลือกกระบวนการ";
-        elView.innerHTML = "";
-        elEmpty.style.display = "block";
-        return;
-      }
+    function stepCard(s){
+      const stepNo = safeText(s.StepNo) || "-";
+      const title = safeText(s.StepTitle) || "";
+      const short = safeText(s.StepShort) || "";
+      const detail = safeText(s.StepDetail) || "";
+      const cp = safeText(s.CriticalPoint) || "";
+      const ip = parseImpactProcess(s.ImpactProcess);
+      const idefect = safeText(s.ImpactDefect) || "";
 
-      const pName = processNames[process] || "";
-      elTitle.textContent = `Process ${process} : ${pName}`;
-      elSub.textContent = "ทำตาม Step แบบสั้น ๆ → เช็ค Critical Point → ลดโอกาสทำผิดซ้ำ";
+      const impactLine = [
+        ip ? `Process ${ip}` : "",
+        idefect ? idefect : ""
+      ].filter(Boolean).join(" — ");
 
-      const list = data
-        .filter(x => norm(x.Process) === process)
-        .filter(x => onlyCritical ? isCritical(x) : true)
-        .sort(sortByStep);
+      return `
+        <div class="step" onclick="toggleStep(this)">
+          <div class="step-top">
+            <div class="step-no">${stepNo}</div>
+            <h4 class="step-title">${title}</h4>
+            <i class="fa-solid fa-chevron-down chev"></i>
+          </div>
+          <div class="step-body">
+            <p class="short">${short}</p>
 
-      elCount.textContent = `${list.length} steps`;
-      if (list.length === 0){
-        elView.innerHTML = "";
-        elEmpty.style.display = "block";
-        return;
-      }
-      elEmpty.style.display = "none";
+            ${detail ? `<p class="detail"><strong>รายละเอียด:</strong> ${detail}</p>` : ``}
 
-      if (mode === "stepper") elView.innerHTML = renderStepper(list);
-      if (mode === "checklist") elView.innerHTML = renderChecklist(list);
-      if (mode === "flow") elView.innerHTML = renderFlow(list);
+            ${cp ? `
+              <div class="critical">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+                <div>Critical Point: ${cp}</div>
+              </div>` : ``}
 
-      // bind for stepper clicks
-      if (mode === "stepper") bindStepper(list);
-      if (mode === "checklist") bindChecklist(list);
+            ${impactLine ? `
+              <div class="impact">
+                <i class="fa-solid fa-share-nodes"></i>
+                <div>ถ้าพลาดจะกระทบ: ${impactLine}</div>
+              </div>` : ``}
+          </div>
+        </div>
+      `;
     }
 
-    function renderStepper(list){
-      // default select first
-      const left = list.map((s, idx) => {
-        const crit = isCritical(s);
-        return `
-          <div class="s-item ${idx===0 ? "active":""}" data-idx="${idx}">
-            <div class="s-no ${crit ? "critical":""}">${escapeHtml(stepNo(s,idx))}</div>
-            <div class="s-txt">
-              <div class="s-title">${escapeHtml(norm(s.StepTitle))}</div>
-              <div class="s-short">${escapeHtml(norm(s.StepShort))}</div>
+    function toggleStep(el){
+      el.classList.toggle('open');
+    }
+
+    function expandAll(){
+      document.querySelectorAll('.step').forEach(el => el.classList.add('open'));
+    }
+
+    function render(processId, rows){
+      const procName = safeText(rows[0]?.ProcessName) || PROCESS_NAME_MAP[String(processId)] || `Process ${processId}`;
+      const steps = rows
+        .slice()
+        .sort((a,b) => (Number(a.StepNo)||0) - (Number(b.StepNo)||0));
+
+      document.getElementById('pageTitle').textContent = `Learning Process ${processId}`;
+      document.getElementById('procTitle').textContent = `กระบวนการ ${processId}) ${procName}`;
+      document.getElementById('procSub').textContent = `กดแต่ละ Step เพื่อดู “รายละเอียด + Critical Point + ผลกระทบ” (สั้น กระชับ)`;
+
+      const cols = Math.max(2, Math.min(steps.length, 5));
+
+      const html = `
+        <div class="roadmap-card">
+          <div class="roadmap-head">
+            <div class="pill"><i class="fa-solid fa-gear"></i> Process ${processId}</div>
+            <div class="mini"><i class="fa-solid fa-bolt"></i> ${steps.length} ขั้นตอน</div>
+          </div>
+          <div class="steps">
+            <div class="timeline" style="--cols:${cols}">
+              ${steps.map(stepCard).join('')}
             </div>
           </div>
-        `;
-      }).join("");
-
-      const right = renderDetail(list[0], 0);
-
-      return `
-        <div class="stepper">
-          <div class="steps-list">${left}</div>
-          <div class="detail" id="detailBox">${right}</div>
         </div>
       `;
-    }
 
-    function renderDetail(s, idx){
-      const crit = norm(s.CriticalPoint);
-      const impactP = norm(s.ImpactProcess);
-      const impactD = norm(s.ImpactDefect);
-
-      const meta = [
-        crit ? `<div class="meta-line critical"><i class="fa-solid fa-triangle-exclamation"></i><div><strong>Critical:</strong> ${escapeHtml(crit)}</div></div>` : "",
-        impactP ? `<div class="meta-line impact"><i class="fa-solid fa-share-nodes"></i><div><strong>กระทบ Process:</strong> ${escapeHtml(impactP)}</div></div>` : "",
-        impactD ? `<div class="meta-line impact"><i class="fa-solid fa-bug"></i><div><strong>เสี่ยงของเสีย:</strong> ${escapeHtml(impactD)}</div></div>` : ""
-      ].filter(Boolean).join("");
-
-      return `
-        <h2>Step ${escapeHtml(stepNo(s,idx))} : ${escapeHtml(norm(s.StepTitle))}</h2>
-        ${norm(s.StepShort) ? `<div class="short">${escapeHtml(norm(s.StepShort))}</div>` : ""}
-        ${norm(s.StepDetail) ? `<div class="box">${escapeHtml(norm(s.StepDetail))}</div>` : ""}
-        ${meta ? `<div class="meta">${meta}</div>` : ""}
-      `;
-    }
-
-    function bindStepper(list){
-      const items = document.querySelectorAll(".s-item");
-      const detail = document.getElementById("detailBox");
-      items.forEach(it => {
-        it.addEventListener("click", () => {
-          items.forEach(x => x.classList.remove("active"));
-          it.classList.add("active");
-          const idx = parseInt(it.dataset.idx || "0", 10);
-          detail.innerHTML = renderDetail(list[idx], idx);
-        });
-      });
-    }
-
-    function checklistKey(step){
-      return `kms_lp_p${process}_step${norm(step.StepNo)}`;
-    }
-
-    function renderChecklist(list){
-      return `
-        <div class="checklist">
-          ${list.map((s, idx) => {
-            const crit = isCritical(s);
-            const impactP = norm(s.ImpactProcess);
-            const impactD = norm(s.ImpactDefect);
-
-            const chips = [
-              `<span class="chip"><i class="fa-solid fa-hashtag"></i> Step ${escapeHtml(stepNo(s,idx))}</span>`,
-              crit ? `<span class="chip critical"><i class="fa-solid fa-triangle-exclamation"></i> Critical</span>` : "",
-              (impactP || impactD) ? `<span class="chip impact"><i class="fa-solid fa-bolt"></i> Impact</span>` : ""
-            ].filter(Boolean).join("");
-
-            return `
-              <div class="c-item">
-                <input type="checkbox" data-key="${escapeHtml(checklistKey(s))}">
-                <div class="c-body">
-                  <div class="c-head">
-                    ${chips}
-                  </div>
-                  <div style="font-weight:900;">${escapeHtml(norm(s.StepTitle))}</div>
-                  ${norm(s.StepShort) ? `<div style="color:#546e7a;font-weight:800;">${escapeHtml(norm(s.StepShort))}</div>` : ""}
-                  ${norm(s.StepDetail) ? `<div class="box">${escapeHtml(norm(s.StepDetail))}</div>` : ""}
-                  ${norm(s.CriticalPoint) ? `<div class="meta-line critical"><i class="fa-solid fa-triangle-exclamation"></i><div><strong>Critical:</strong> ${escapeHtml(norm(s.CriticalPoint))}</div></div>` : ""}
-                  ${impactP ? `<div class="meta-line impact"><i class="fa-solid fa-share-nodes"></i><div><strong>กระทบ Process:</strong> ${escapeHtml(impactP)}</div></div>` : ""}
-                  ${impactD ? `<div class="meta-line impact"><i class="fa-solid fa-bug"></i><div><strong>เสี่ยงของเสีย:</strong> ${escapeHtml(impactD)}</div></div>` : ""}
-                </div>
-              </div>
-            `;
-          }).join("")}
-        </div>
-      `;
-    }
-
-    function bindChecklist(list){
-      const boxes = document.querySelectorAll('.c-item input[type="checkbox"]');
-      boxes.forEach(chk => {
-        const key = chk.dataset.key;
-        chk.checked = (localStorage.getItem(key) === "1");
-        chk.addEventListener("change", () => {
-          localStorage.setItem(key, chk.checked ? "1" : "0");
-        });
-      });
-    }
-
-    function renderFlow(list){
-      return `
-        <div class="flow">
-          ${list.map((s, idx) => {
-            const crit = isCritical(s);
-            const impactP = norm(s.ImpactProcess);
-            const impactD = norm(s.ImpactDefect);
-            return `
-              <div class="f-node ${crit ? "critical":""}">
-                <div class="f-head">
-                  <div class="chip ${crit ? "critical":""}">
-                    <i class="fa-solid ${crit ? "fa-triangle-exclamation":"fa-route"}"></i>
-                    Step ${escapeHtml(stepNo(s,idx))}
-                  </div>
-                </div>
-                <div class="f-title">${escapeHtml(norm(s.StepTitle))}</div>
-                ${norm(s.StepShort) ? `<div class="f-short">${escapeHtml(norm(s.StepShort))}</div>` : ""}
-                ${norm(s.StepDetail) ? `<div class="box" style="margin-top:8px;">${escapeHtml(norm(s.StepDetail))}</div>` : ""}
-                ${norm(s.CriticalPoint) ? `<div class="meta-line critical" style="margin-top:10px;"><i class="fa-solid fa-triangle-exclamation"></i><div><strong>Critical:</strong> ${escapeHtml(norm(s.CriticalPoint))}</div></div>` : ""}
-                ${impactP ? `<div class="meta-line impact"><i class="fa-solid fa-share-nodes"></i><div><strong>กระทบ Process:</strong> ${escapeHtml(impactP)}</div></div>` : ""}
-                ${impactD ? `<div class="meta-line impact"><i class="fa-solid fa-bug"></i><div><strong>เสี่ยงของเสีย:</strong> ${escapeHtml(impactD)}</div></div>` : ""}
-              </div>
-            `;
-          }).join("")}
-        </div>
-      `;
+      document.getElementById('roadmap').innerHTML = html;
     }
 
     async function load(){
+      const processId = getParam('process');
+      if(!processId){
+        document.getElementById('roadmap').innerHTML = `
+          <div class="loading">
+            <i class="fa-solid fa-circle-xmark" style="font-size:40px; color:#e74c3c;"></i>
+            <p style="margin-top:10px">ไม่พบ process ใน URL</p>
+            <p style="margin-top:6px; font-size:13px;">ตัวอย่าง: learning-process.html?process=1</p>
+          </div>
+        `;
+        return;
+      }
+
       try{
-        const res = await fetch(API_URL, { cache:"no-store" });
-        const json = await res.json();
-        data = Array.isArray(json) ? json : [];
-      }catch(e){
-        console.error(e);
-        data = [];
-      }finally{
-        render();
+        const res = await fetch(`${API_BASE}?view=learning`);
+        const all = await res.json();
+
+        // กรองเฉพาะ process ที่เลือก
+        const rows = (Array.isArray(all) ? all : []).filter(r => String(r.Process) === String(processId));
+
+        if(!rows.length){
+          document.getElementById('roadmap').innerHTML = `
+            <div class="loading">
+              <i class="fa-solid fa-triangle-exclamation" style="font-size:40px; color:#f39c12;"></i>
+              <p style="margin-top:10px">ยังไม่มีข้อมูลในชีท Learning Path สำหรับ Process ${processId}</p>
+              <p style="margin-top:6px; font-size:13px;">
+                ต้องมีคอลัมน์: Process, ProcessName, StepNo, StepTitle, StepShort, StepDetail, CriticalPoint, ImpactProcess, ImpactDefect
+              </p>
+            </div>
+          `;
+          return;
+        }
+
+        render(processId, rows);
+      }catch(err){
+        console.error(err);
+        document.getElementById('roadmap').innerHTML = `
+          <div class="loading">
+            <i class="fa-solid fa-circle-xmark" style="font-size:40px; color:#e74c3c;"></i>
+            <p style="margin-top:10px">โหลดข้อมูลไม่สำเร็จ</p>
+            <p style="margin-top:6px; font-size:13px;">เช็คว่า Apps Script เปิดใช้งานและลิงก์ API ถูกต้อง</p>
+          </div>
+        `;
       }
     }
 
