@@ -9,574 +9,326 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <style>
-    * { margin:0; padding:0; box-sizing:border-box; }
+    *{margin:0;padding:0;box-sizing:border-box}
     body{
       font-family:'Sarabun',sans-serif;
       background:#e8eef5;
       min-height:100vh;
       overflow-x:hidden;
-      color:#2c3e50;
     }
-    .container { display:flex; min-height:100vh; }
+    .container{display:flex;min-height:100vh}
 
-    /* ===== Sidebar ===== */
+    /* Sidebar */
     .sidebar{
       width:70px;
-      background:linear-gradient(180deg,#5b9bd5 0%, #4a89c8 100%);
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      padding-top:20px;
-      gap:10px;
-      position:fixed;
-      height:100vh;
-      left:0; top:0;
-      z-index:100;
+      background:linear-gradient(180deg,#5b9bd5 0%,#4a89c8 100%);
+      display:flex;flex-direction:column;align-items:center;
+      padding-top:20px;gap:10px;
+      position:fixed;height:100vh;left:0;top:0;z-index:100;
     }
     .sidebar-icon{
-      width:50px; height:50px;
-      display:flex; align-items:center; justify-content:center;
-      color:rgba(255,255,255,0.7);
-      font-size:20px;
-      border-radius:12px;
-      cursor:pointer;
-      transition:all .3s ease;
-      text-decoration:none;
+      width:50px;height:50px;display:flex;align-items:center;justify-content:center;
+      color:rgba(255,255,255,.7);font-size:20px;border-radius:12px;
+      cursor:pointer;transition:.2s;text-decoration:none;
     }
-    .sidebar-icon:hover,.sidebar-icon.active{
-      background:rgba(255,255,255,0.2);
-      color:#fff;
-    }
+    .sidebar-icon:hover,.sidebar-icon.active{background:rgba(255,255,255,.2);color:#fff}
 
-    /* ===== Main ===== */
     .main-content{
-      flex:1;
-      margin-left:70px;
-      width:calc(100% - 70px);
+      flex:1;margin-left:70px;width:calc(100% - 70px);
+      padding:0;
     }
 
-    /* ===== Header ===== */
+    /* Header */
     .header{
-      background:linear-gradient(135deg,#5b9bd5 0%, #2e75b6 100%);
-      padding:28px 20px;
+      background:linear-gradient(135deg,#5b9bd5 0%,#2e75b6 100%);
+      padding:34px 20px;
       text-align:center;
     }
-    .header h1{
-      color:#fff;
-      font-size:28px;
-      font-weight:800;
-      margin-bottom:6px;
-    }
-    .header p{
-      color:rgba(255,255,255,0.92);
-      font-size:13px;
-      line-height:1.6;
-      margin:0 auto;
-      max-width:920px;
-    }
+    .header h1{color:#fff;font-size:30px;font-weight:700;margin-bottom:6px}
+    .header p{color:rgba(255,255,255,.92);font-size:14px}
 
-    /* ===== Top Bar ===== */
-    .wrap{
-      max-width:1200px;
-      margin:0 auto;
-      padding:16px 20px 26px;
-    }
+    /* Page wrapper */
+    .wrap{padding:18px 22px 34px}
+
     .topbar{
       background:#fff;
       border-radius:16px;
-      box-shadow:0 6px 18px rgba(0,0,0,0.08);
-      padding:14px 14px;
-      display:grid;
-      grid-template-columns: 1fr auto;
-      gap:12px;
-      align-items:center;
-    }
-    .top-left{
-      display:flex;
-      gap:10px;
-      align-items:flex-start;
-    }
-    .badge{
-      width:44px; height:44px;
-      border-radius:14px;
-      background:#e3f2fd;
-      color:#1565c0;
+      padding:14px 16px;
+      box-shadow:0 2px 10px rgba(0,0,0,.08);
       display:flex;
       align-items:center;
-      justify-content:center;
-      font-size:18px;
-      flex:0 0 auto;
-    }
-    .top-title{
-      display:grid;
-      gap:4px;
-    }
-    .top-title h2{
-      margin:0;
-      font-size:16px;
-      font-weight:800;
-    }
-    .top-title .sub{
-      font-size:12px;
-      color:#607d8b;
-      line-height:1.5;
-    }
-    .top-actions{
-      display:flex;
-      gap:8px;
-      justify-content:flex-end;
-      flex-wrap:wrap;
-    }
-    .btn{
-      border:none;
-      cursor:pointer;
-      border-radius:12px;
-      padding:10px 12px;
-      font-weight:800;
-      font-size:13px;
-      display:inline-flex;
-      gap:10px;
-      align-items:center;
-    }
-    .btn.back{ background:#f5f7fb; color:#2c3e50; border:1px solid #e8eef5; }
-    .btn.back:hover{ background:#eef3f8; }
-    .btn.tip{ background:#5b9bd5; color:#fff; }
-    .btn.tip:hover{ background:#4a89c8; }
-
-    /* ===== Roadmap ===== */
-    .roadmap{
-      margin-top:14px;
-      display:grid;
-      gap:14px;
-    }
-
-    .roadmap-card{
-      background:#fff;
-      border-radius:18px;
-      box-shadow:0 8px 22px rgba(0,0,0,0.08);
-      border:1px solid rgba(91,155,213,0.14);
-      overflow:hidden;
-    }
-
-    .roadmap-head{
-      padding:14px 14px 10px;
-      display:flex;
       justify-content:space-between;
-      gap:10px;
-      align-items:center;
-      border-bottom:1px solid #eef3f8;
-      background:linear-gradient(180deg, rgba(91,155,213,0.08), rgba(255,255,255,0));
+      gap:12px;
+      flex-wrap:wrap;
+      margin-bottom:14px;
     }
     .pill{
-      display:inline-flex;
-      gap:8px;
-      align-items:center;
-      background:#e3f2fd;
-      color:#1565c0;
-      font-size:12px;
-      font-weight:900;
-      padding:6px 10px;
-      border-radius:999px;
+      display:inline-flex;align-items:center;gap:8px;
+      padding:8px 12px;border-radius:999px;
+      background:#e3f2fd;color:#1565c0;font-weight:700;font-size:13px;
     }
-    .mini{
-      font-size:12px;
-      color:#607d8b;
-      display:inline-flex;
-      gap:8px;
-      align-items:center;
-      white-space:nowrap;
+    .meta{color:#607d8b;font-size:13px}
+    .btn-back{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:10px 12px;border-radius:10px;
+      background:#5b9bd5;color:#fff;text-decoration:none;font-weight:700;
     }
+    .btn-back:hover{background:#4a89c8}
 
-    .steps{
-      padding:14px;
-      display:grid;
-      gap:12px;
-    }
-
-    /* Desktop/iPad: timeline แนวนอน */
+    /* ======= GRID TIMELINE (แก้ให้สวยเมื่อ step เยอะ) ======= */
     .timeline{
       display:grid;
-      grid-template-columns: repeat(var(--cols, 4), 1fr);
-      gap:12px;
-      position:relative;
+      grid-template-columns: repeat(4, minmax(240px, 1fr));
+      gap:14px;
+      align-items:stretch;
     }
-    .timeline:before{
-      content:"";
-      position:absolute;
-      left:14px;
-      right:14px;
-      top:28px;
-      height:3px;
-      background:#e8eef5;
-      border-radius:999px;
-      z-index:0;
+    @media (max-width: 1100px){
+      .timeline{ grid-template-columns: repeat(2, minmax(240px, 1fr)); }
     }
+    @media (max-width: 700px){
+      .timeline{ grid-template-columns: 1fr; }
+    }
+    .timeline:before{display:none !important;}
 
+    /* Card */
     .step{
-      position:relative;
-      z-index:1;
       background:#fff;
-      border-radius:16px;
-      border:1px solid #eef3f8;
-      box-shadow:0 6px 16px rgba(0,0,0,0.06);
+      border-radius:18px;
+      box-shadow:0 4px 14px rgba(0,0,0,.08);
       overflow:hidden;
-      transition:transform .2s ease, box-shadow .2s ease;
-      cursor:pointer;
-    }
-    .step:hover{
-      transform:translateY(-4px);
-      box-shadow:0 10px 22px rgba(91,155,213,0.18);
-    }
-
-    .step-top{
-      padding:12px 12px 10px;
       display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:10px;
-      background:#f7fbff;
+      flex-direction:column;
+      height:100%;
+      transition:.2s;
+    }
+    .step:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(91,155,213,.18)}
+    .step-head{
+      padding:14px 14px 10px;
+      display:flex;align-items:flex-start;justify-content:space-between;gap:10px;
       border-bottom:1px solid #eef3f8;
     }
-    .step-no{
-      width:34px;
-      height:34px;
-      border-radius:12px;
-      background:#5b9bd5;
-      color:#fff;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      font-weight:900;
-      font-size:14px;
+    .badge{
+      width:34px;height:34px;border-radius:12px;
+      background:#5b9bd5;color:#fff;
+      display:flex;align-items:center;justify-content:center;
+      font-weight:800;
       flex:0 0 auto;
     }
-    .step-title{
-      font-weight:900;
-      font-size:14px;
-      margin:0;
-      line-height:1.25;
-      flex:1;
+    .head-text{flex:1}
+    .title{font-weight:800;color:#1f2d3d;font-size:16px;line-height:1.2}
+    .short{
+      margin-top:6px;
+      color:#607d8b;font-size:13px;line-height:1.35;
+      min-height:42px; /* ช่วยบาลานซ์ */
     }
-    .chev{ color:#90a4ae; }
+    .impact-mini{
+      font-size:12px;font-weight:800;color:#4a89c8;
+      background:#e3f2fd;border-radius:999px;padding:6px 10px;
+      white-space:nowrap;align-self:flex-start;
+    }
 
     .step-body{
-      padding:12px;
-      display:grid;
+      padding:12px 14px 14px;
+      display:flex;
+      flex-direction:column;
+      flex:1;
       gap:10px;
     }
-    .short{
-      font-size:13px;
-      color:#37474f;
-      line-height:1.55;
-      margin:0;
-    }
     .detail{
-      font-size:12px;
-      color:#607d8b;
-      line-height:1.6;
-      margin:0;
-      display:none;
+      color:#34495e;font-size:13px;line-height:1.45;
     }
 
     .critical{
+      border-radius:12px;
       padding:10px 12px;
-      border-radius:14px;
-      border:1px solid rgba(231,76,60,0.18);
-      background:rgba(231,76,60,0.08);
+      background:#fdecea;
+      border:1px solid #f6c7c2;
       color:#b71c1c;
-      font-size:12px;
-      line-height:1.5;
-      font-weight:800;
-      display:flex;
-      gap:10px;
-      align-items:flex-start;
+      font-size:13px;
+      font-weight:700;
+      display:flex;gap:8px;align-items:flex-start;
+      margin-top:auto; /* ดันลงล่างให้เรียงสวย */
     }
+    .critical i{margin-top:2px}
+
     .impact{
+      border-radius:12px;
       padding:10px 12px;
-      border-radius:14px;
-      border:1px solid rgba(46,125,50,0.18);
-      background:rgba(46,125,50,0.08);
+      background:#eaf7ee;
+      border:1px solid #bfe6c9;
       color:#1b5e20;
-      font-size:12px;
-      line-height:1.5;
-      font-weight:800;
-      display:flex;
-      gap:10px;
-      align-items:flex-start;
+      font-size:13px;
+      font-weight:700;
+      display:flex;gap:8px;align-items:flex-start;
     }
+    .impact i{margin-top:2px}
 
-    .open .detail{ display:block; }
-    .open .chev{ transform:rotate(180deg); }
-
-    /* Mobile: timeline แนวตั้ง */
-    @media (max-width: 900px){
-      .timeline{
-        grid-template-columns:1fr;
-      }
-      .timeline:before{
-        left:24px;
-        right:auto;
-        top:14px;
-        bottom:14px;
-        width:3px;
-        height:auto;
-      }
-      .step{
-        margin-left:24px;
-      }
-      .step-top{
-        position:relative;
-      }
-      .step-top:before{
-        content:"";
-        position:absolute;
-        left:-24px;
-        top:18px;
-        width:12px;
-        height:12px;
-        border-radius:999px;
-        background:#5b9bd5;
-        box-shadow:0 0 0 4px rgba(91,155,213,0.18);
-      }
+    .loading, .error{
+      background:#fff;border-radius:16px;
+      padding:30px;
+      box-shadow:0 2px 10px rgba(0,0,0,.08);
+      text-align:center;color:#607d8b;
     }
+    .loading i{font-size:46px;margin-bottom:10px;color:#90a4ae}
+    .error i{font-size:46px;margin-bottom:10px;color:#e57373}
 
-    /* Sidebar mobile -> แถบบน */
-    @media (max-width:768px){
-      .container{ flex-direction:column !important; }
+    /* Mobile sidebar bottom */
+    @media (max-width: 768px){
+      .container{flex-direction:column}
       .sidebar{
-        width:100% !important;
-        height:60px !important;
-        flex-direction:row !important;
-        justify-content:center !important;
-        align-items:center !important;
-        position:relative !important;
-        left:auto !important;
-        top:auto !important;
-        padding:10px !important;
-        gap:12px !important;
+        width:100%;height:60px;flex-direction:row;justify-content:center;
+        position:relative;left:auto;top:auto;padding:10px;gap:12px;
       }
-      .main-content{ margin-left:0 !important; width:100% !important; }
-      .header{ padding:20px 16px; }
-      .header h1{ font-size:22px; }
-      .wrap{ padding:14px 16px 22px; }
-      .topbar{ grid-template-columns:1fr; }
-      .top-actions{ justify-content:flex-start; }
-    }
-
-    /* Loading */
-    .loading{
-      background:#fff;
-      border-radius:18px;
-      box-shadow:0 8px 22px rgba(0,0,0,0.08);
-      padding:24px;
-      text-align:center;
-      color:#607d8b;
+      .main-content{margin-left:0;width:100%}
+      .header{padding:24px 16px}
+      .header h1{font-size:22px}
+      .wrap{padding:14px 14px 26px}
     }
   </style>
 </head>
 
 <body>
-  <div class="container">
-    <!-- Sidebar -->
-    <nav class="sidebar">
-      <a href="index.html" class="sidebar-icon" title="Home"><i class="fas fa-home"></i></a>
-      <a href="knowledge-base.html" class="sidebar-icon" title="Knowledge Base"><i class="fas fa-book-open"></i></a>
-      <a href="learning-path.html" class="sidebar-icon active" title="Learning Path"><i class="fas fa-graduation-cap"></i></a>
-      <a href="quiz.html" class="sidebar-icon" title="Quiz"><i class="fas fa-clipboard-check"></i></a>
-      <a href="share-experience.html" class="sidebar-icon" title="Share Experience"><i class="fas fa-comments"></i></a>
-    </nav>
+<div class="container">
 
-    <main class="main-content">
-      <header class="header">
-        <h1 id="pageTitle">Learning Process</h1>
-        <p id="pageSub">Roadmap สั้น ๆ + Critical Point + ถ้าพลาดจะกระทบอะไร</p>
-      </header>
+  <!-- Sidebar -->
+  <nav class="sidebar">
+    <a href="index.html" class="sidebar-icon" title="Home"><i class="fas fa-home"></i></a>
+    <a href="knowledge-base.html" class="sidebar-icon" title="Knowledge Base"><i class="fas fa-book-open"></i></a>
+    <a href="learning-path.html" class="sidebar-icon active" title="Learning Path"><i class="fas fa-graduation-cap"></i></a>
+    <a href="quiz.html" class="sidebar-icon" title="Quiz"><i class="fas fa-clipboard-check"></i></a>
+    <a href="share-experience.html" class="sidebar-icon" title="Share Experience"><i class="fas fa-comments"></i></a>
+  </nav>
 
-      <div class="wrap">
-        <div class="topbar">
-          <div class="top-left">
-            <div class="badge"><i class="fa-solid fa-route"></i></div>
-            <div class="top-title">
-              <h2 id="procTitle">กำลังโหลด...</h2>
-              <div class="sub" id="procSub">อ่าน Step แบบสั้น ๆ แล้วกดแต่ละ Step เพื่อดูรายละเอียดเพิ่ม</div>
-            </div>
+  <main class="main-content">
+    <header class="header">
+      <h1>Learning Process</h1>
+      <p>Roadmap ขั้นตอนการผลิตแบบสั้น กระชับ + จุดวิกฤต + ถ้าพลาดจะกระทบอะไร</p>
+    </header>
+
+    <div class="wrap">
+      <div class="topbar">
+        <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+          <span class="pill"><i class="fas fa-gear"></i> <span id="procTitle">Process</span></span>
+          <span class="meta" id="procMeta">-</span>
+        </div>
+        <a class="btn-back" href="learning-path.html"><i class="fas fa-arrow-left"></i> กลับหน้า Learning Path</a>
+      </div>
+
+      <div id="content">
+        <div class="loading">
+          <i class="fas fa-spinner fa-spin"></i>
+          <div>กำลังโหลดข้อมูล...</div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+</div>
+
+<script>
+  // ✅ ใช้ API เดิมของคุณ (view=learning)
+  const API_URL = "https://script.google.com/macros/s/AKfycbwMRbnqSLTmmI4wofmNfZ5YPFGSiqg__rZUgyDlTTR03JchnQXgUj7DKDvzS4-QBmJrvw/exec?view=learning";
+
+  const procMap = {
+    "1":"ผสมเปียก","2":"แร่งเปียก","3":"อบลมร้อน","4":"แร่งแห้ง","5":"ผสมแห้ง","6":"ตอกเม็ดยา","7":"บรรจุซอง"
+  };
+
+  function getQueryParam(name){
+    const url = new URL(window.location.href);
+    return url.searchParams.get(name);
+  }
+
+  function esc(s){
+    return String(s ?? "")
+      .replaceAll("&","&amp;").replaceAll("<","&lt;")
+      .replaceAll(">","&gt;").replaceAll('"',"&quot;")
+      .replaceAll("'","&#039;");
+  }
+
+  function stepCard(item){
+    const stepNo = esc(item.StepNo);
+    const title  = esc(item.StepTitle);
+    const short  = esc(item.StepShort);
+    const detail = esc(item.StepDetail);
+    const cp     = esc(item.CriticalPoint);
+    const impactP= esc(item.ImpactProcess);
+    const impactD= esc(item.ImpactDefect);
+
+    const impactText = (impactP || impactD)
+      ? `Process ${impactP}${impactD ? " — " + impactD : ""}`
+      : "-";
+
+    return `
+      <div class="step">
+        <div class="step-head">
+          <div class="badge">${stepNo || "-"}</div>
+          <div class="head-text">
+            <div class="title">${title || "-"}</div>
+            <div class="short">${short || ""}</div>
           </div>
-          <div class="top-actions">
-            <button class="btn back" onclick="window.location.href='learning-path.html'">
-              <i class="fa-solid fa-arrow-left"></i> กลับ
-            </button>
-            <button class="btn tip" onclick="expandAll()">
-              <i class="fa-solid fa-list-check"></i> เปิดรายละเอียดทั้งหมด
-            </button>
-          </div>
+          <div class="impact-mini">Impact</div>
         </div>
 
-        <div class="roadmap" id="roadmap">
-          <div class="loading">
-            <i class="fas fa-spinner fa-spin"></i>
-            <p style="margin-top:10px">กำลังโหลดข้อมูลจาก Learning Path...</p>
+        <div class="step-body">
+          <div class="detail">${detail || ""}</div>
+
+          <div class="critical">
+            <i class="fas fa-triangle-exclamation"></i>
+            <div>Critical Point: ${cp || "-"}</div>
+          </div>
+
+          <div class="impact">
+            <i class="fas fa-share-nodes"></i>
+            <div>ถ้าพลาดจะกระทบ: ${impactText}</div>
           </div>
         </div>
       </div>
-    </main>
-  </div>
+    `;
+  }
 
-  <script>
-    // ✅ ใช้ Apps Script เดิม (แค่เติม ?view=learning)
-    const API_BASE = 'https://script.google.com/macros/s/AKfycbwMRbnqSLTmmI4wofmNfZ5YPFGSiqg__rZUgyDlTTR03JchnQXgUj7DKDvzS4-QBmJrvw/exec';
+  async function load(){
+    const proc = String(getQueryParam("process") || "1").trim();
 
-    // Process name fallback (ถ้าในชีทไม่ส่งมา)
-    const PROCESS_NAME_MAP = {
-      "1": "ผสมเปียก",
-      "2": "แร่งเปียก",
-      "3": "อบลมร้อน",
-      "4": "แร่งแห้ง",
-      "5": "ผสมแห้ง",
-      "6": "ตอกเม็ดยา",
-      "7": "บรรจุซอง"
-    };
+    document.getElementById("procTitle").textContent = `Process ${proc}`;
+    document.getElementById("procMeta").textContent  = procMap[proc] ? `กระบวนการ: ${procMap[proc]}` : "-";
 
-    function getParam(name){
-      const u = new URL(window.location.href);
-      return u.searchParams.get(name);
-    }
+    try{
+      const res = await fetch(API_URL);
+      const data = await res.json();
 
-    function safeText(v){
-      return String(v ?? '').trim();
-    }
+      // กรองเฉพาะ process นี้ + เรียงตาม StepNo
+      const steps = (Array.isArray(data) ? data : [])
+        .filter(x => String(x.Process).trim() === proc)
+        .sort((a,b)=> Number(a.StepNo)-Number(b.StepNo));
 
-    function parseImpactProcess(v){
-      const s = safeText(v);
-      if(!s) return "";
-      return s.replace(/\s+/g,'');
-    }
-
-    function stepCard(s){
-      const stepNo = safeText(s.StepNo) || "-";
-      const title = safeText(s.StepTitle) || "";
-      const short = safeText(s.StepShort) || "";
-      const detail = safeText(s.StepDetail) || "";
-      const cp = safeText(s.CriticalPoint) || "";
-      const ip = parseImpactProcess(s.ImpactProcess);
-      const idefect = safeText(s.ImpactDefect) || "";
-
-      const impactLine = [
-        ip ? `Process ${ip}` : "",
-        idefect ? idefect : ""
-      ].filter(Boolean).join(" — ");
-
-      return `
-        <div class="step" onclick="toggleStep(this)">
-          <div class="step-top">
-            <div class="step-no">${stepNo}</div>
-            <h4 class="step-title">${title}</h4>
-            <i class="fa-solid fa-chevron-down chev"></i>
-          </div>
-          <div class="step-body">
-            <p class="short">${short}</p>
-
-            ${detail ? `<p class="detail"><strong>รายละเอียด:</strong> ${detail}</p>` : ``}
-
-            ${cp ? `
-              <div class="critical">
-                <i class="fa-solid fa-triangle-exclamation"></i>
-                <div>Critical Point: ${cp}</div>
-              </div>` : ``}
-
-            ${impactLine ? `
-              <div class="impact">
-                <i class="fa-solid fa-share-nodes"></i>
-                <div>ถ้าพลาดจะกระทบ: ${impactLine}</div>
-              </div>` : ``}
-          </div>
-        </div>
-      `;
-    }
-
-    function toggleStep(el){
-      el.classList.toggle('open');
-    }
-
-    function expandAll(){
-      document.querySelectorAll('.step').forEach(el => el.classList.add('open'));
-    }
-
-    function render(processId, rows){
-      const procName = safeText(rows[0]?.ProcessName) || PROCESS_NAME_MAP[String(processId)] || `Process ${processId}`;
-      const steps = rows
-        .slice()
-        .sort((a,b) => (Number(a.StepNo)||0) - (Number(b.StepNo)||0));
-
-      document.getElementById('pageTitle').textContent = `Learning Process ${processId}`;
-      document.getElementById('procTitle').textContent = `กระบวนการ ${processId}) ${procName}`;
-      document.getElementById('procSub').textContent = `กดแต่ละ Step เพื่อดู “รายละเอียด + Critical Point + ผลกระทบ” (สั้น กระชับ)`;
-
-      const cols = Math.max(2, Math.min(steps.length, 5));
-
-      const html = `
-        <div class="roadmap-card">
-          <div class="roadmap-head">
-            <div class="pill"><i class="fa-solid fa-gear"></i> Process ${processId}</div>
-            <div class="mini"><i class="fa-solid fa-bolt"></i> ${steps.length} ขั้นตอน</div>
-          </div>
-          <div class="steps">
-            <div class="timeline" style="--cols:${cols}">
-              ${steps.map(stepCard).join('')}
-            </div>
-          </div>
-        </div>
-      `;
-
-      document.getElementById('roadmap').innerHTML = html;
-    }
-
-    async function load(){
-      const processId = getParam('process');
-      if(!processId){
-        document.getElementById('roadmap').innerHTML = `
-          <div class="loading">
-            <i class="fa-solid fa-circle-xmark" style="font-size:40px; color:#e74c3c;"></i>
-            <p style="margin-top:10px">ไม่พบ process ใน URL</p>
-            <p style="margin-top:6px; font-size:13px;">ตัวอย่าง: learning-process.html?process=1</p>
+      if(!steps.length){
+        document.getElementById("content").innerHTML = `
+          <div class="error">
+            <i class="fas fa-circle-exclamation"></i>
+            <div>ไม่พบข้อมูลของ Process ${esc(proc)} ในชีท Learning Path</div>
           </div>
         `;
         return;
       }
 
-      try{
-        const res = await fetch(`${API_BASE}?view=learning`);
-        const all = await res.json();
-
-        // กรองเฉพาะ process ที่เลือก
-        const rows = (Array.isArray(all) ? all : []).filter(r => String(r.Process) === String(processId));
-
-        if(!rows.length){
-          document.getElementById('roadmap').innerHTML = `
-            <div class="loading">
-              <i class="fa-solid fa-triangle-exclamation" style="font-size:40px; color:#f39c12;"></i>
-              <p style="margin-top:10px">ยังไม่มีข้อมูลในชีท Learning Path สำหรับ Process ${processId}</p>
-              <p style="margin-top:6px; font-size:13px;">
-                ต้องมีคอลัมน์: Process, ProcessName, StepNo, StepTitle, StepShort, StepDetail, CriticalPoint, ImpactProcess, ImpactDefect
-              </p>
-            </div>
-          `;
-          return;
-        }
-
-        render(processId, rows);
-      }catch(err){
-        console.error(err);
-        document.getElementById('roadmap').innerHTML = `
-          <div class="loading">
-            <i class="fa-solid fa-circle-xmark" style="font-size:40px; color:#e74c3c;"></i>
-            <p style="margin-top:10px">โหลดข้อมูลไม่สำเร็จ</p>
-            <p style="margin-top:6px; font-size:13px;">เช็คว่า Apps Script เปิดใช้งานและลิงก์ API ถูกต้อง</p>
-          </div>
-        `;
-      }
+      document.getElementById("content").innerHTML = `
+        <div class="timeline">
+          ${steps.map(stepCard).join("")}
+        </div>
+      `;
+    }catch(err){
+      console.error(err);
+      document.getElementById("content").innerHTML = `
+        <div class="error">
+          <i class="fas fa-exclamation-triangle"></i>
+          <div>โหลดข้อมูลไม่สำเร็จ</div>
+        </div>
+      `;
     }
+  }
 
-    load();
-  </script>
+  load();
+</script>
+
 </body>
 </html>
