@@ -4,38 +4,35 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Login - KMS</title>
+
   <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;700&display=swap" rel="stylesheet">
+
   <style>
+    *{box-sizing:border-box}
     body{
       font-family:Sarabun,sans-serif;
       background:#eef3f8;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      min-height:100vh;
-      margin:0;
-      padding:18px;
+      display:flex;align-items:center;justify-content:center;
+      min-height:100vh;margin:0;padding:16px;
     }
     .card{
-      width:min(360px, 100%);
+      width:min(420px,100%);
       background:#fff;
       padding:24px;
       border-radius:16px;
-      box-shadow:0 10px 30px rgba(0,0,0,.15);
+      box-shadow:0 10px 30px rgba(0,0,0,.12);
     }
-    h2{text-align:center;margin-bottom:6px}
-    p{text-align:center;color:#666;margin-bottom:20px;font-size:13px}
+    h2{text-align:center;margin:0 0 6px}
+    p{text-align:center;color:#666;margin:0 0 18px;font-size:13px}
     input{
       width:100%;
-      padding:12px;
+      padding:12px 12px;
       margin-bottom:12px;
       border-radius:10px;
-      border:1px solid #ccc;
+      border:1px solid #d6dde6;
       font-size:14px;
-      font-family:Sarabun,sans-serif;
       outline:none;
     }
-    input:focus{ border-color:#5b9bd5; box-shadow:0 0 0 3px rgba(91,155,213,.15); }
     button{
       width:100%;
       padding:12px;
@@ -45,22 +42,20 @@
       color:#fff;
       font-weight:700;
       cursor:pointer;
-      font-family:Sarabun,sans-serif;
-      transition:.2s;
     }
-    button:hover{ background:#4a89c8; }
-    button:disabled{ opacity:.6; cursor:not-allowed; }
+    button:active{transform:scale(.99)}
     .msg{
       margin-top:10px;
       text-align:center;
       font-size:13px;
       color:#c62828;
-      padding:0 10px;            /* ✅ กันตกขอบ */
-      word-break: break-word;     /* ✅ กันข้อความล้น */
-      overflow-wrap: anywhere;    /* ✅ กันข้อความล้น */
       min-height:18px;
+
+      /* ✅ กันตกขอบ */
+      word-break: break-word;
+      overflow-wrap: anywhere;
     }
-    .ok{ color:#2e7d32; }
+    .ok{color:#2e7d32}
   </style>
 </head>
 <body>
@@ -72,69 +67,72 @@
   <input id="u" placeholder="Username" autocomplete="username">
   <input id="p" type="password" placeholder="Password" autocomplete="current-password">
 
-  <button id="btn" onclick="login()">Sign in</button>
+  <button id="btn">Sign in</button>
   <div class="msg" id="msg"></div>
 </div>
 
 <script>
-const API_URL =
-  "https://script.google.com/macros/s/AKfycbwMRbnqSLTmmI4wofmNfZ5YPFGSiqg__rZUgyDlTTR03JchnQXgUj7DKDvzS4-QBmJrvw/exec";
+  // ✅ ใส่ URL /exec ที่ Deploy ล่าสุด (ห้ามซ้อน 2 อันติดกัน)
+  const API_URL = "https://script.google.com/macros/s/AKfycbwMRbnqSLTmmI4wofmNfZ5YPFGSiqg__rZUgyDlTTR03JchnQXgUj7DKDvzS4-QBmJrvw/exec";
 
-// ถ้า login แล้ว ไม่ต้องเข้าหน้านี้อีก
-if(localStorage.getItem("kms_token")){
-  location.href = "index.html";
-}
+  // ถ้าเคย login แล้ว ให้เข้า home เลย
+  if (localStorage.getItem("kms_token")) location.href = "index.html";
 
-async function login(){
-  const username = u.value.trim();
-  const password = p.value.trim();
-  msg.className = "msg";
-  msg.textContent = "";
+  const $u = document.getElementById("u");
+  const $p = document.getElementById("p");
+  const $msg = document.getElementById("msg");
+  const $btn = document.getElementById("btn");
 
-  if(!username || !password){
-    msg.textContent = "กรุณากรอกข้อมูลให้ครบ";
-    return;
+  function setMsg(t, ok=false){
+    $msg.textContent = t || "";
+    $msg.className = "msg" + (ok ? " ok" : "");
   }
 
-  btn.disabled = true;
-  btn.textContent = "กำลังเข้าสู่ระบบ...";
+  async function login(){
+    setMsg("");
+    const username = $u.value.trim();
+    const password = $p.value.trim();
 
-  try{
-    // ✅ ส่งแบบ x-www-form-urlencoded เพื่อเลี่ยง CORS preflight
-    const form = new URLSearchParams();
-    form.append("action", "login");
-    form.append("username", username);
-    form.append("password", password);
-
-    const res = await fetch(API_URL,{
-      method:"POST",
-      headers:{ "Content-Type":"application/x-www-form-urlencoded;charset=UTF-8" },
-      body: form.toString()
-    });
-
-    const data = await res.json();
-
-    if(data && data.ok){
-      localStorage.setItem("kms_token", data.token);
-      msg.className = "msg ok";
-      msg.textContent = "Login สำเร็จ";
-      location.href = "index.html";
-    }else{
-      msg.textContent = (data && data.error) ? data.error : "Login ไม่สำเร็จ";
+    if(!username || !password){
+      setMsg("กรุณากรอก Username และ Password");
+      return;
     }
-  }catch(e){
-    console.error(e);
-    msg.textContent = "เชื่อมต่อ API ไม่ได้ (ตรวจ Deploy/URL/สิทธิ์)";
-  }finally{
-    btn.disabled = false;
-    btn.textContent = "Sign in";
-  }
-}
 
-// Enter เพื่อ login
-document.addEventListener("keydown", (e)=>{
-  if(e.key === "Enter") login();
-});
+    try{
+      $btn.disabled = true;
+
+      // ✅ ส่งแบบ form-urlencoded (Apps Script อ่านจาก e.parameter ได้เลย)
+      const body = new URLSearchParams({
+        action: "login",
+        username,
+        password
+      });
+
+      const res = await fetch(API_URL, {
+        method: "POST",
+        body
+      });
+
+      const data = await res.json();
+
+      if(data && data.ok){
+        localStorage.setItem("kms_token", data.token);
+        setMsg("Login สำเร็จ", true);
+        location.href = "index.html";
+      }else{
+        setMsg(data?.error || "Login ไม่สำเร็จ");
+      }
+    }catch(err){
+      console.error(err);
+      setMsg("เชื่อมต่อ API ไม่ได้ (ตรวจ Deploy / URL / สิทธิ์ Anyone)");
+    }finally{
+      $btn.disabled = false;
+    }
+  }
+
+  $btn.addEventListener("click", login);
+  document.addEventListener("keydown", (e)=>{ if(e.key==="Enter") login(); });
 </script>
+
 </body>
 </html>
