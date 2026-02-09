@@ -1,188 +1,108 @@
-function doGet(e) {
-  const SPREADSHEET_ID = '17Jmfe32Q_ymoqoSBG2tK_8RDb64aoEdff-Wm7dfl7Sg';
-
-  const BASE_SHEET = 'KMS Base';
-  const SHARE_SHEET = 'KMS Share';
-  const WI_SHEET = 'WI Process';
-  const LEARNING_SHEET = 'Learning Path';
-  const DEFECT4M_SHEET = 'Defect 4M';
-  const DEFECT_LEARNING_SHEET = 'Defect Learning';
-
-  const view = (e && e.parameter && e.parameter.view)
-    ? String(e.parameter.view).toLowerCase()
-    : '';
-
-  const ss = SpreadsheetApp.openById(SPREADSHEET_ID);
-
-  if (view === 'learning') {
-    const sh = ss.getSheetByName(LEARNING_SHEET);
-    return json_(sh ? sheetToObjects_(sh) : []);
-  }
-
-  if (view === 'defectlearning') {
-    const sh = ss.getSheetByName(DEFECT_LEARNING_SHEET);
-    return json_(sh ? sheetToObjects_(sh) : []);
-  }
-
-  if (view === 'defect4m') {
-    const sh = ss.getSheetByName(DEFECT4M_SHEET);
-    return json_(sh ? sheetToObjects_(sh) : []);
-  }
-
-  // default knowledge base
-  const baseSheet = ss.getSheetByName(BASE_SHEET);
-  const shareSheet = ss.getSheetByName(SHARE_SHEET);
-  const wiSheet = ss.getSheetByName(WI_SHEET);
-
-  if (!baseSheet) return json_([]);
-
-  const baseData = sheetToObjects_(baseSheet);
-
-  const shareDataRaw = shareSheet ? sheetToObjects_(shareSheet) : [];
-  const shareData = shareDataRaw.map(mapShareToBaseSchema_);
-
-  const wiDataRaw = wiSheet ? sheetToObjects_(wiSheet) : [];
-  const wiData = wiDataRaw.map(mapWiToBaseSchema_);
-
-  return json_(baseData.concat(shareData).concat(wiData));
-}
-
-/** ✅ สำคัญ: login ต้องใช้ doPost และรับแบบ form-urlencoded เพื่อเลี่ยง CORS preflight */
-function doPost(e) {
-  try {
-    const SPREADSHEET_ID = '17Jmfe32Q_ymoqoSBG2tK_8RDb64aoEdff-Wm7dfl7Sg';
-    const USERS_SHEET = 'Users';
-
-    const action = (e && e.parameter && e.parameter.action) ? String(e.parameter.action) : '';
-    if (action !== 'login') return json_({ ok:false, error:'Unknown action' });
-
-    const username = (e.parameter.username || '').trim();
-    const password = (e.parameter.password || '').trim();
-    if (!username || !password) return json_({ ok:false, error:'Missing username/password' });
-
-    const ss = SpreadsheetApp.openById(SPREADSHEET_ID);
-    const sh = ss.getSheetByName(USERS_SHEET);
-    if (!sh) return json_({ ok:false, error:'Users sheet not found' });
-
-    const rows = sh.getDataRange().getValues();
-    const headers = rows[0].map(h => String(h).trim());
-    const idxUser = headers.indexOf('Username');
-    const idxPass = headers.indexOf('PasswordHash');
-    const idxActive = headers.indexOf('IsActive');
-    const idxLast = headers.indexOf('LastLogin');
-
-    if (idxUser < 0 || idxPass < 0) return json_({ ok:false, error:'Users headers wrong' });
-
-    // คุณกำลังเก็บ PasswordHash เป็นตัวเลข/ข้อความตรง ๆ (เช่น 12345) -> เทียบตรง ๆ ไปก่อน
-    let foundRow = -1;
-    for (let i = 1; i < rows.length; i++) {
-      const u = String(rows[i][idxUser] || '').trim();
-      const p = String(rows[i][idxPass] || '').trim();
-      const active = (idxActive >= 0) ? String(rows[i][idxActive]).toUpperCase() !== 'FALSE' : true;
-
-      if (u === username && p === password && active) {
-        foundRow = i + 1; // sheet row (1-index)
-        break;
-      }
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <title>Login - KMS</title>
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body{
+      font-family:Sarabun,sans-serif;
+      background:#eef3f8;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      height:100vh;
     }
-
-    if (foundRow === -1) return json_({ ok:false, error:'Username/Password ไม่ถูกต้อง หรือถูกปิดใช้งาน' });
-
-    // อัปเดต LastLogin
-    if (idxLast >= 0) sh.getRange(foundRow, idxLast + 1).setValue(new Date());
-
-    // สร้าง token และเก็บใน Cache 6 ชั่วโมง
-    const token = Utilities.getUuid();
-    CacheService.getScriptCache().put('KMS_TOKEN_' + token, username, 21600);
-
-    return json_({ ok:true, token });
-
-  } catch (err) {
-    return json_({ ok:false, error: String(err) });
-  }
-}
-
-/* ===== helpers ===== */
-function json_(obj){
-  return ContentService
-    .createTextOutput(JSON.stringify(obj))
-    .setMimeType(ContentService.MimeType.JSON);
-}
-
-function sheetToObjects_(sheet) {
-  const data = sheet.getDataRange().getValues();
-  if (!data || data.length < 2) return [];
-
-  const headers = data[0].map(h => String(h).trim());
-  const out = [];
-
-  for (let i = 1; i < data.length; i++) {
-    const joinAll = data[i].map(v => String(v || '').trim()).join('');
-    if (joinAll === '') continue;
-
-    const row = {};
-    for (let j = 0; j < headers.length; j++) {
-      const key = headers[j];
-      if (!key) continue;
-      row[key] = data[i][j];
+    .card{
+      width:360px;
+      background:#fff;
+      padding:24px;
+      border-radius:16px;
+      box-shadow:0 10px 30px rgba(0,0,0,.15);
     }
-    out.push(row);
+    h2{text-align:center;margin-bottom:6px}
+    p{text-align:center;color:#666;margin-bottom:20px;font-size:13px}
+    input{
+      width:100%;
+      padding:12px;
+      margin-bottom:12px;
+      border-radius:10px;
+      border:1px solid #ccc;
+      font-size:14px;
+    }
+    button{
+      width:100%;
+      padding:12px;
+      border:none;
+      border-radius:12px;
+      background:#5b9bd5;
+      color:#fff;
+      font-weight:700;
+      cursor:pointer;
+    }
+    .msg{
+      margin-top:10px;
+      text-align:center;
+      font-size:13px;
+      color:#c62828;
+    }
+  </style>
+</head>
+<body>
+
+<div class="card">
+  <h2>KMS Admin Login</h2>
+  <p>เข้าสู่ระบบผู้ดูแล</p>
+
+  <input id="u" placeholder="Username">
+  <input id="p" type="password" placeholder="Password">
+
+  <button onclick="login()">Sign in</button>
+  <div class="msg" id="msg"></div>
+</div>
+
+<script>
+const API_URL =
+  "https://script.google.com/macros/s/AKfycbwMRbnqSLTmmI4wofmNfZ5YPFGSiqg__rZUgyDlTTR03JchnQXgUj7DKDvzS4-QBmJrvw/exec";
+
+// ถ้า login แล้ว ไม่ต้องเข้าหน้านี้อีก
+if(localStorage.getItem("kms_token")){
+  location.href = "index.html";
+}
+
+async function login(){
+  const username = u.value.trim();
+  const password = p.value.trim();
+  msg.textContent = "";
+
+  if(!username || !password){
+    msg.textContent = "กรุณากรอกข้อมูลให้ครบ";
+    return;
   }
-  return out;
+
+  try{
+    const res = await fetch(API_URL,{
+      method:"POST",
+      headers:{ "Content-Type":"application/json" },
+      body: JSON.stringify({
+        action:"login",
+        username,
+        password
+      })
+    });
+
+    const data = await res.json();
+
+    if(data.ok){
+      localStorage.setItem("kms_token", data.token);
+      location.href = "index.html";
+    }else{
+      msg.textContent = data.error || "Login ไม่สำเร็จ";
+    }
+  }catch(e){
+    msg.textContent = "เชื่อมต่อ API ไม่ได้";
+  }
 }
-
-function mapShareToBaseSchema_(s) {
-  const proc = String(s.Process || "").trim();
-  const procName = processToName_(proc);
-  const thumb = pickFirstUrl_(s.Image1URL);
-
-  return {
-    FileName: s.ProblemTitle || "Share Experience",
-    Type: "Experience",
-    Process: proc,
-    ProcessName: procName,
-    DefectCode: "",
-    DefectName: s.ProblemTitle || "",
-    CauseCategory: "",
-    ThumbnailURL: thumb,
-    FileURL: s.DocURL || ""
-  };
-}
-
-function mapWiToBaseSchema_(w) {
-  return {
-    FileName: w.FileName || "WI Process",
-    Type: w.Type || "WI",
-    Process: String(w.Process || "").trim(),
-    ProcessName: w.ProcessName || "",
-    DefectCode: "",
-    DefectName: "",
-    CauseCategory: "",
-    ThumbnailURL: w.ThumbnailURL || "",
-    FileURL: w.FileURL || ""
-  };
-}
-
-function processToName_(p) {
-  const map = {
-    "1": "ผสมเปียก",
-    "2": "แร่งเปียก",
-    "3": "อบลมร้อน",
-    "4": "แร่งแห้ง",
-    "5": "ผสมแห้ง",
-    "6": "ตอกเม็ดยา",
-    "7": "บรรจุซอง"
-  };
-  return map[String(p || "").trim()] || "";
-}
-
-function pickFirstUrl_(v) {
-  if (!v) return "";
-  if (Array.isArray(v)) return String(v[0] || "");
-
-  const s = String(v).trim();
-  if (!s) return "";
-
-  const parts = s.split(/[\s,|]+/).filter(Boolean);
-  return parts.length ? parts[0] : s;
-}
+</script>
+</body>
+</html>
