@@ -212,6 +212,24 @@
     .btn-next{background:#5b9bd5;color:#fff}
     .btn-next:hover{background:#4a89c8}
 
+    /* ✅ ปุ่มไปหน้า Defect */
+    .btn-defect{
+      margin-top:10px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      padding:14px;
+      border-radius:14px;
+      background:#2ecc71;
+      color:#fff;
+      font-weight:900;
+      text-decoration:none;
+      transition:.2s;
+    }
+    .btn-defect:hover{filter:brightness(.95)}
+    .btn-defect small{opacity:.9;font-weight:700}
+
     .mini-list{
       border:1px solid #eef3f8;
       border-radius:16px;
@@ -312,6 +330,7 @@
 
   let steps = [];
   let index = 0;
+  let currentProc = "1";
 
   function getQueryParam(name){
     const url = new URL(window.location.href);
@@ -343,6 +362,14 @@
     })();
 
     const percent = total ? Math.round(((index+1)/total)*100) : 0;
+
+    // ✅ ปุ่มไปหน้า Defect (โชว์เฉพาะ Step สุดท้าย)
+    const defectBtn = (index === total - 1) ? `
+      <a class="btn-defect" href="defect-learning.html?process=${encodeURIComponent(currentProc)}">
+        <i class="fas fa-triangle-exclamation"></i>
+        เรียนรู้ลักษณะของเสีย (4M)
+      </a>
+    ` : ``;
 
     document.getElementById("content").innerHTML = `
       <div class="stage">
@@ -388,6 +415,8 @@
             </button>
           </div>
 
+          ${defectBtn}
+
           <div class="mini-list">
             ${steps.map((x,idx)=>`
               <div class="mini-item ${idx===index?"active":""}" data-idx="${idx}">
@@ -422,6 +451,8 @@
 
   async function load(){
     const proc = String(getQueryParam("process") || "1").trim();
+    currentProc = proc;
+
     document.getElementById("procTitle").textContent = `Process ${proc}`;
     document.getElementById("procMeta").textContent  = procMap[proc] ? `กระบวนการ: ${procMap[proc]}` : "-";
 
