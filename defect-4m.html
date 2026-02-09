@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Defect 4M - KMS</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Sarabun',sans-serif;background:#e8eef5;min-height:100vh}
+    .container{display:flex;min-height:100vh}
+
+    .sidebar{
+      width:70px;background:linear-gradient(180deg,#5b9bd5 0%,#4a89c8 100%);
+      display:flex;flex-direction:column;align-items:center;padding-top:20px;gap:10px;
+      position:fixed;height:100vh;left:0;top:0;z-index:100;
+    }
+    .sidebar-icon{
+      width:50px;height:50px;display:flex;align-items:center;justify-content:center;
+      color:rgba(255,255,255,.7);font-size:20px;border-radius:12px;
+      cursor:pointer;transition:.2s;text-decoration:none;
+    }
+    .sidebar-icon:hover,.sidebar-icon.active{background:rgba(255,255,255,.2);color:#fff}
+    .main-content{flex:1;margin-left:70px;width:calc(100% - 70px);padding:0}
+
+    .header{
+      background:linear-gradient(135deg,#5b9bd5 0%,#2e75b6 100%);
+      padding:34px 20px;text-align:center;
+    }
+    .header h1{color:#fff;font-size:30px;font-weight:700;margin-bottom:6px}
+    .header p{color:rgba(255,255,255,.92);font-size:14px}
+
+    .wrap{padding:16px 18px 24px}
+    .topbar{
+      background:#fff;border-radius:16px;padding:14px 16px;
+      box-shadow:0 2px 10px rgba(0,0,0,.08);
+      display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;
+      margin-bottom:14px;
+    }
+    .pill{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:8px 12px;border-radius:999px;
+      background:#e3f2fd;color:#1565c0;font-weight:800;font-size:13px;
+    }
+    .meta{color:#607d8b;font-size:13px}
+
+    .btn-back{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:10px 12px;border-radius:10px;
+      background:#5b9bd5;color:#fff;text-decoration:none;font-weight:800;
+    }
+    .btn-back:hover{background:#4a89c8}
+
+    .card{
+      background:#fff;border-radius:18px;box-shadow:0 6px 18px rgba(0,0,0,.10);
+      overflow:hidden;
+    }
+    .card-head{
+      padding:16px;border-bottom:1px solid #eef3f8;
+      display:flex;gap:12px;align-items:flex-start;
+    }
+    .badge{
+      width:44px;height:44px;border-radius:16px;background:#2ecc71;color:#fff;
+      display:flex;align-items:center;justify-content:center;font-weight:900;font-size:16px;
+      flex:0 0 auto;
+    }
+    .title{font-weight:900;color:#1f2d3d;font-size:20px;line-height:1.15;margin-top:2px}
+    .sub{margin-top:6px;color:#607d8b;font-size:13px}
+
+    .body{padding:16px;display:grid;gap:12px}
+    .sec{
+      background:#f7fbff;border:1px solid #e8f1fb;border-radius:16px;overflow:hidden;
+    }
+    .sec-h{
+      padding:12px;border-bottom:1px solid #e8f1fb;
+      display:flex;justify-content:space-between;align-items:center;gap:10px;
+      font-weight:900;color:#1f2d3d;
+    }
+    .tag{
+      display:inline-flex;align-items:center;gap:6px;
+      padding:6px 10px;border-radius:999px;font-weight:900;font-size:12px;
+      background:#e8fff1;color:#1b5e20;
+    }
+    .list{padding:12px;display:grid;gap:10px}
+    .item{
+      background:#fff;border:1px solid #eef3f8;border-radius:14px;
+      padding:10px 12px;color:#34495e;font-size:14px;line-height:1.45;
+    }
+
+    .loading,.error{
+      background:#fff;border-radius:16px;padding:30px;box-shadow:0 2px 10px rgba(0,0,0,.08);
+      text-align:center;color:#607d8b;
+    }
+    .loading i{font-size:46px;margin-bottom:10px;color:#90a4ae}
+    .error i{font-size:46px;margin-bottom:10px;color:#e57373}
+
+    @media (max-width: 768px){
+      .container{flex-direction:column}
+      .sidebar{
+        width:100%;height:60px;flex-direction:row;justify-content:center;
+        position:relative;left:auto;top:auto;padding:10px;gap:12px;
+      }
+      .main-content{margin-left:0;width:100%}
+      .header{padding:24px 16px}
+      .header h1{font-size:22px}
+      .wrap{padding:12px 12px 20px}
+    }
+  </style>
+</head>
+
+<body>
+<div class="container">
+  <nav class="sidebar">
+    <a href="index.html" class="sidebar-icon" title="Home"><i class="fas fa-home"></i></a>
+    <a href="knowledge-base.html" class="sidebar-icon" title="Knowledge Base"><i class="fas fa-book-open"></i></a>
+    <a href="learning-path.html" class="sidebar-icon active" title="Learning Path"><i class="fas fa-graduation-cap"></i></a>
+    <a href="share-experience.html" class="sidebar-icon" title="Share Experience"><i class="fas fa-comments"></i></a>
+  </nav>
+
+  <main class="main-content">
+    <header class="header">
+      <h1>Defect 4M</h1>
+      <p>สาเหตุจาก Man / Machine / Material / Method (แยกหน้า)</p>
+    </header>
+
+    <div class="wrap">
+      <div class="topbar">
+        <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+          <span class="pill"><i class="fas fa-users-gear"></i> <span id="topTitle">4M</span></span>
+          <span class="meta" id="topMeta">-</span>
+        </div>
+        <a class="btn-back" id="btnBackDefect" href="#"><i class="fas fa-arrow-left"></i> กลับไปหน้าของเสีย</a>
+      </div>
+
+      <div id="content">
+        <div class="loading">
+          <i class="fas fa-spinner fa-spin"></i>
+          <div>กำลังโหลดข้อมูล...</div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script>
+  const BASE_EXEC = "https://script.google.com/macros/s/AKfycbwMRbnqSLTmmI4wofmNfZ5YPFGSiqg__rZUgyDlTTR03JchnQXgUj7DKDvzS4-QBmJrvw/exec";
+  const API_DEFECT = `${BASE_EXEC}?view=defectlearning`;
+  const API_4M     = `${BASE_EXEC}?view=defect4m`;
+
+  const procMap = {"1":"ผสมเปียก","2":"แร่งเปียก","3":"อบลมร้อน","4":"แร่งแห้ง","5":"ผสมแห้ง","6":"ตอกเม็ดยา","7":"บรรจุซอง"};
+
+  function getQueryParam(name){
+    const url = new URL(window.location.href);
+    return url.searchParams.get(name);
+  }
+  function esc(s){
+    return String(s ?? "")
+      .replaceAll("&","&amp;").replaceAll("<","&lt;")
+      .replaceAll(">","&gt;").replaceAll('"',"&quot;")
+      .replaceAll("'","&#039;");
+  }
+
+  function group4m(rows){
+    const order = ["Man","Machine","Material","Method"];
+    const grouped = {};
+    for(const o of order) grouped[o] = [];
+    rows.forEach(r=>{
+      const t = String(r.M_Type || "").trim();
+      const c = String(r.CauseDescription || "").trim();
+      if(!t || !c) return;
+      if(!grouped[t]) grouped[t] = [];
+      grouped[t].push(c);
+    });
+    return grouped;
+  }
+
+  async function load(){
+    const proc = String(getQueryParam("process") || "1").trim();
+    const defectCode = String(getQueryParam("defect") || "").trim();
+
+    document.getElementById("btnBackDefect").href =
+      `defect-learning.html?process=${encodeURIComponent(proc)}&defect=${encodeURIComponent(defectCode)}`;
+
+    try{
+      const [resD, resM] = await Promise.all([ fetch(API_DEFECT), fetch(API_4M) ]);
+      const dataD = await resD.json();
+      const dataM = await resM.json();
+
+      const allDefects = Array.isArray(dataD) ? dataD : [];
+      const all4m = Array.isArray(dataM) ? dataM : [];
+
+      const defectRow = allDefects.find(x =>
+        String(x.Process).trim() === proc && String(x.DefectCode).trim() === defectCode
+      );
+
+      const defectName = defectRow ? String(defectRow.DefectName || "").trim() : "";
+
+      document.getElementById("topTitle").textContent = `${defectCode} 4M`;
+      document.getElementById("topMeta").textContent =
+        `Process ${proc} — ${procMap[proc] || ""}${defectName ? " | " + defectName : ""}`;
+
+      const rows = all4m.filter(x =>
+        String(x.Process).trim() === proc && String(x.DefectCode).trim() === defectCode
+      );
+
+      if(!rows.length){
+        document.getElementById("content").innerHTML = `
+          <div class="error">
+            <i class="fas fa-circle-exclamation"></i>
+            <div>ยังไม่มีข้อมูล 4M สำหรับ ${esc(defectCode)} (Process ${esc(proc)})</div>
+          </div>`;
+        return;
+      }
+
+      const grouped = group4m(rows);
+
+      document.getElementById("content").innerHTML = `
+        <div class="card">
+          <div class="card-head">
+            <div class="badge">${esc(defectCode)}</div>
+            <div>
+              <div class="title">สาเหตุ 4M ของ: ${esc(defectCode)} ${esc(defectName || "")}</div>
+              <div class="sub">Process ${esc(proc)} — ${esc(procMap[proc] || "")}</div>
+            </div>
+          </div>
+
+          <div class="body">
+            ${["Man","Machine","Material","Method"].map(t=>{
+              const arr = grouped[t] || [];
+              if(!arr.length) return "";
+              return `
+                <div class="sec">
+                  <div class="sec-h">
+                    <div>${esc(t)}</div>
+                    <span class="tag">${arr.length} รายการ</span>
+                  </div>
+                  <div class="list">
+                    ${arr.map(x=>`<div class="item">${esc(x)}</div>`).join("")}
+                  </div>
+                </div>
+              `;
+            }).join("")}
+          </div>
+        </div>
+      `;
+    }catch(err){
+      console.error(err);
+      document.getElementById("content").innerHTML = `
+        <div class="error">
+          <i class="fas fa-exclamation-triangle"></i>
+          <div>โหลดข้อมูลไม่สำเร็จ</div>
+        </div>`;
+    }
+  }
+
+  load();
+</script>
+</body>
+</html>
