@@ -1,185 +1,188 @@
-<!DOCTYPE html>
-<html lang="th">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Login - KMS</title>
+function doGet(e) {
+  const SPREADSHEET_ID = '17Jmfe32Q_ymoqoSBG2tK_8RDb64aoEdff-Wm7dfl7Sg';
 
-  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  const BASE_SHEET = 'KMS Base';
+  const SHARE_SHEET = 'KMS Share';
+  const WI_SHEET = 'WI Process';
+  const LEARNING_SHEET = 'Learning Path';
+  const DEFECT4M_SHEET = 'Defect 4M';
+  const DEFECT_LEARNING_SHEET = 'Defect Learning';
 
-  <style>
-    *{margin:0;padding:0;box-sizing:border-box}
-    body{
-      font-family:'Sarabun',sans-serif;
-      background:#e8eef5;
-      min-height:100vh;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding:18px;
-    }
-    .card{
-      width:min(420px,100%);
-      background:#fff;
-      border-radius:18px;
-      box-shadow:0 10px 30px rgba(0,0,0,.10);
-      overflow:hidden;
-    }
-    .head{
-      background:linear-gradient(135deg,#5b9bd5 0%,#2e75b6 100%);
-      padding:26px 20px;
-      text-align:center;
-      color:#fff;
-    }
-    .head h1{font-size:22px;font-weight:800;margin-bottom:6px}
-    .head p{font-size:13px;opacity:.95}
-    .body{padding:18px}
-    .row{margin-bottom:12px}
-    label{font-size:13px;color:#2c3e50;font-weight:800}
-    .input{
-      margin-top:6px;
-      display:flex;
-      align-items:center;
-      gap:10px;
-      border:2px solid #e6eef7;
-      border-radius:14px;
-      padding:12px 12px;
-    }
-    .input i{color:#90a4ae}
-    .input input{
-      border:none;outline:none;
-      width:100%;
-      font-size:14px;
-      font-family:'Sarabun',sans-serif;
-    }
-    .btns{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:10px;
-      margin-top:10px;
-    }
-    button{
-      border:none;
-      border-radius:14px;
-      padding:12px;
-      font-weight:900;
-      font-family:'Sarabun',sans-serif;
-      cursor:pointer;
-      transition:.2s;
-    }
-    .btn-login{background:#5b9bd5;color:#fff}
-    .btn-login:hover{background:#4a89c8}
-    .btn-clear{background:#eef3f8;color:#2c3e50}
-    .btn-clear:hover{background:#e4ecf5}
-    .msg{
-      margin-top:12px;
-      font-size:13px;
-      color:#c62828;
-      min-height:18px;
-      text-align:center;
-      font-weight:800;
-    }
-    .ok{color:#2e7d32}
-  </style>
-</head>
-<body>
+  const view = (e && e.parameter && e.parameter.view)
+    ? String(e.parameter.view).toLowerCase()
+    : '';
 
-<div class="card">
-  <div class="head">
-    <h1>KMS Admin Login</h1>
-    <p>สำหรับผู้ดูแลระบบ (Admin เท่านั้น)</p>
-  </div>
+  const ss = SpreadsheetApp.openById(SPREADSHEET_ID);
 
-  <div class="body">
-    <div class="row">
-      <label>Username</label>
-      <div class="input">
-        <i class="fas fa-user"></i>
-        <input id="username" placeholder="เช่น admin" autocomplete="username" />
-      </div>
-    </div>
-
-    <div class="row">
-      <label>Password</label>
-      <div class="input">
-        <i class="fas fa-lock"></i>
-        <input id="password" type="password" placeholder="รหัสผ่าน" autocomplete="current-password" />
-      </div>
-    </div>
-
-    <div class="btns">
-      <button class="btn-login" id="btnLogin"><i class="fas fa-right-to-bracket"></i> Sign in</button>
-      <button class="btn-clear" id="btnClear"><i class="fas fa-eraser"></i> ล้างค่า</button>
-    </div>
-
-    <div class="msg" id="msg"></div>
-  </div>
-</div>
-
-<script>
-  // ✅ ใส่ URL Web App ของคุณ
-  const API_URL = "https://script.google.com/macros/s/AKfycbwMRbnqSLTmmI4wofmNfZ5YPFGSiqg__rZUgyDlTTR03JchnQXgUj7DKDvzS4-QBmJrvw/exec";
-
-  // ถ้ามี token อยู่แล้ว -> เข้าเลย
-  if (localStorage.getItem("kms_token")) {
-    window.location.href = "index.html";
+  if (view === 'learning') {
+    const sh = ss.getSheetByName(LEARNING_SHEET);
+    return json_(sh ? sheetToObjects_(sh) : []);
   }
 
-  const $u = document.getElementById("username");
-  const $p = document.getElementById("password");
-  const $msg = document.getElementById("msg");
-
-  function setMsg(text, ok=false){
-    $msg.textContent = text || "";
-    $msg.className = "msg" + (ok ? " ok" : "");
+  if (view === 'defectlearning') {
+    const sh = ss.getSheetByName(DEFECT_LEARNING_SHEET);
+    return json_(sh ? sheetToObjects_(sh) : []);
   }
 
-  async function login(){
-    setMsg("");
+  if (view === 'defect4m') {
+    const sh = ss.getSheetByName(DEFECT4M_SHEET);
+    return json_(sh ? sheetToObjects_(sh) : []);
+  }
 
-    const username = ($u.value || "").trim();
-    const password = ($p.value || "").trim();
+  // default knowledge base
+  const baseSheet = ss.getSheetByName(BASE_SHEET);
+  const shareSheet = ss.getSheetByName(SHARE_SHEET);
+  const wiSheet = ss.getSheetByName(WI_SHEET);
 
-    if(!username || !password){
-      setMsg("กรุณากรอก Username และ Password");
-      return;
-    }
+  if (!baseSheet) return json_([]);
 
-    try{
-      const res = await fetch(API_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ action: "login", username, password })
-      });
+  const baseData = sheetToObjects_(baseSheet);
 
-      const data = await res.json();
+  const shareDataRaw = shareSheet ? sheetToObjects_(shareSheet) : [];
+  const shareData = shareDataRaw.map(mapShareToBaseSchema_);
 
-      if(data && data.ok){
-        localStorage.setItem("kms_token", data.token);
-        setMsg("Login สำเร็จ", true);
-        window.location.href = "index.html";
-      }else{
-        setMsg((data && data.error) ? data.error : "Login ไม่สำเร็จ");
+  const wiDataRaw = wiSheet ? sheetToObjects_(wiSheet) : [];
+  const wiData = wiDataRaw.map(mapWiToBaseSchema_);
+
+  return json_(baseData.concat(shareData).concat(wiData));
+}
+
+/** ✅ สำคัญ: login ต้องใช้ doPost และรับแบบ form-urlencoded เพื่อเลี่ยง CORS preflight */
+function doPost(e) {
+  try {
+    const SPREADSHEET_ID = '17Jmfe32Q_ymoqoSBG2tK_8RDb64aoEdff-Wm7dfl7Sg';
+    const USERS_SHEET = 'Users';
+
+    const action = (e && e.parameter && e.parameter.action) ? String(e.parameter.action) : '';
+    if (action !== 'login') return json_({ ok:false, error:'Unknown action' });
+
+    const username = (e.parameter.username || '').trim();
+    const password = (e.parameter.password || '').trim();
+    if (!username || !password) return json_({ ok:false, error:'Missing username/password' });
+
+    const ss = SpreadsheetApp.openById(SPREADSHEET_ID);
+    const sh = ss.getSheetByName(USERS_SHEET);
+    if (!sh) return json_({ ok:false, error:'Users sheet not found' });
+
+    const rows = sh.getDataRange().getValues();
+    const headers = rows[0].map(h => String(h).trim());
+    const idxUser = headers.indexOf('Username');
+    const idxPass = headers.indexOf('PasswordHash');
+    const idxActive = headers.indexOf('IsActive');
+    const idxLast = headers.indexOf('LastLogin');
+
+    if (idxUser < 0 || idxPass < 0) return json_({ ok:false, error:'Users headers wrong' });
+
+    // คุณกำลังเก็บ PasswordHash เป็นตัวเลข/ข้อความตรง ๆ (เช่น 12345) -> เทียบตรง ๆ ไปก่อน
+    let foundRow = -1;
+    for (let i = 1; i < rows.length; i++) {
+      const u = String(rows[i][idxUser] || '').trim();
+      const p = String(rows[i][idxPass] || '').trim();
+      const active = (idxActive >= 0) ? String(rows[i][idxActive]).toUpperCase() !== 'FALSE' : true;
+
+      if (u === username && p === password && active) {
+        foundRow = i + 1; // sheet row (1-index)
+        break;
       }
-    }catch(err){
-      console.error(err);
-      setMsg("เชื่อมต่อไม่ได้ / Deploy Web App หรือสิทธิ์ไม่ถูกต้อง");
     }
+
+    if (foundRow === -1) return json_({ ok:false, error:'Username/Password ไม่ถูกต้อง หรือถูกปิดใช้งาน' });
+
+    // อัปเดต LastLogin
+    if (idxLast >= 0) sh.getRange(foundRow, idxLast + 1).setValue(new Date());
+
+    // สร้าง token และเก็บใน Cache 6 ชั่วโมง
+    const token = Utilities.getUuid();
+    CacheService.getScriptCache().put('KMS_TOKEN_' + token, username, 21600);
+
+    return json_({ ok:true, token });
+
+  } catch (err) {
+    return json_({ ok:false, error: String(err) });
   }
+}
 
-  document.getElementById("btnLogin").addEventListener("click", login);
-  document.getElementById("btnClear").addEventListener("click", ()=>{
-    $u.value = "";
-    $p.value = "";
-    setMsg("");
-  });
+/* ===== helpers ===== */
+function json_(obj){
+  return ContentService
+    .createTextOutput(JSON.stringify(obj))
+    .setMimeType(ContentService.MimeType.JSON);
+}
 
-  // Enter เพื่อ login
-  document.addEventListener("keydown", (e)=>{
-    if(e.key === "Enter") login();
-  });
-</script>
+function sheetToObjects_(sheet) {
+  const data = sheet.getDataRange().getValues();
+  if (!data || data.length < 2) return [];
 
-</body>
-</html>
+  const headers = data[0].map(h => String(h).trim());
+  const out = [];
+
+  for (let i = 1; i < data.length; i++) {
+    const joinAll = data[i].map(v => String(v || '').trim()).join('');
+    if (joinAll === '') continue;
+
+    const row = {};
+    for (let j = 0; j < headers.length; j++) {
+      const key = headers[j];
+      if (!key) continue;
+      row[key] = data[i][j];
+    }
+    out.push(row);
+  }
+  return out;
+}
+
+function mapShareToBaseSchema_(s) {
+  const proc = String(s.Process || "").trim();
+  const procName = processToName_(proc);
+  const thumb = pickFirstUrl_(s.Image1URL);
+
+  return {
+    FileName: s.ProblemTitle || "Share Experience",
+    Type: "Experience",
+    Process: proc,
+    ProcessName: procName,
+    DefectCode: "",
+    DefectName: s.ProblemTitle || "",
+    CauseCategory: "",
+    ThumbnailURL: thumb,
+    FileURL: s.DocURL || ""
+  };
+}
+
+function mapWiToBaseSchema_(w) {
+  return {
+    FileName: w.FileName || "WI Process",
+    Type: w.Type || "WI",
+    Process: String(w.Process || "").trim(),
+    ProcessName: w.ProcessName || "",
+    DefectCode: "",
+    DefectName: "",
+    CauseCategory: "",
+    ThumbnailURL: w.ThumbnailURL || "",
+    FileURL: w.FileURL || ""
+  };
+}
+
+function processToName_(p) {
+  const map = {
+    "1": "ผสมเปียก",
+    "2": "แร่งเปียก",
+    "3": "อบลมร้อน",
+    "4": "แร่งแห้ง",
+    "5": "ผสมแห้ง",
+    "6": "ตอกเม็ดยา",
+    "7": "บรรจุซอง"
+  };
+  return map[String(p || "").trim()] || "";
+}
+
+function pickFirstUrl_(v) {
+  if (!v) return "";
+  if (Array.isArray(v)) return String(v[0] || "");
+
+  const s = String(v).trim();
+  if (!s) return "";
+
+  const parts = s.split(/[\s,|]+/).filter(Boolean);
+  return parts.length ? parts[0] : s;
+}
