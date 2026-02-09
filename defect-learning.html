@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Defect Learning</title>
+
+<style>
+body {
+  font-family: 'Sarabun', sans-serif;
+  background:#f4f7fb;
+  margin:0;
+}
+.container {
+  max-width: 420px;
+  margin:auto;
+  padding:20px;
+}
+.card {
+  background:#fff;
+  border-radius:16px;
+  padding:20px;
+  box-shadow:0 6px 20px rgba(0,0,0,.1);
+}
+.badge {
+  display:inline-block;
+  background:#fdecea;
+  color:#c0392b;
+  padding:4px 12px;
+  border-radius:20px;
+  font-size:13px;
+  margin-bottom:10px;
+}
+h2 {
+  margin:10px 0;
+}
+p {
+  color:#555;
+  font-size:15px;
+}
+.hint {
+  background:#f1f5ff;
+  padding:12px;
+  border-radius:10px;
+  margin-top:12px;
+  font-size:14px;
+}
+.actions {
+  display:flex;
+  gap:10px;
+  margin-top:20px;
+}
+button {
+  flex:1;
+  padding:12px;
+  border:none;
+  border-radius:10px;
+  font-size:15px;
+  cursor:pointer;
+}
+.btn-prev { background:#ecf0f1; }
+.btn-next { background:#5b9bd5; color:#fff; }
+.btn-4m {
+  margin-top:12px;
+  background:#2ecc71;
+  color:#fff;
+  width:100%;
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+
+  <div class="card" id="card">
+    <div class="badge">Process 1 · ผสมเปียก</div>
+
+    <h2>1.1 Wet Mass แฉะเกินไป</h2>
+
+    <p>
+      เนื้อ Wet Mass มีความชื้นสูงเกิน  
+      บีบแล้วไม่จับตัว ทำให้ไม่สามารถแร่งได้
+    </p>
+
+    <div class="hint">
+      💡 มักเกิดจากการชั่งน้ำหรือจังหวะการเทน้ำผิด
+    </div>
+
+    <button class="btn-4m" onclick="go4M()">
+      ดูสาเหตุแบบ 4M
+    </button>
+
+    <div class="actions">
+      <button class="btn-prev">ก่อนหน้า</button>
+      <button class="btn-next">ถัดไป</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function go4M(){
+  // ลิงก์ไปหน้า 4M (ทำต่อทีหลังได้)
+  alert("ไปหน้า 4M");
+}
+</script>
+
+</body>
+</html>
