@@ -10,13 +10,21 @@
 
   <style>
     *{margin:0;padding:0;box-sizing:border-box}
-    body{font-family:'Sarabun',sans-serif;background:#e8eef5;min-height:100vh;overflow-x:hidden}
+    body{
+      font-family:'Sarabun',sans-serif;
+      background:#e8eef5;
+      min-height:100vh;
+      overflow-x:hidden;
+    }
     .container{display:flex;min-height:100vh}
 
+    /* Sidebar */
     .sidebar{
-      width:70px;background:linear-gradient(180deg,#5b9bd5 0%,#4a89c8 100%);
+      width:70px;
+      background:linear-gradient(180deg,#5b9bd5 0%,#4a89c8 100%);
       display:flex;flex-direction:column;align-items:center;
-      padding-top:20px;gap:10px;position:fixed;height:100vh;left:0;top:0;z-index:100;
+      padding-top:20px;gap:10px;
+      position:fixed;height:100vh;left:0;top:0;z-index:100;
     }
     .sidebar-icon{
       width:50px;height:50px;display:flex;align-items:center;justify-content:center;
@@ -24,86 +32,219 @@
       cursor:pointer;transition:.2s;text-decoration:none;
     }
     .sidebar-icon:hover,.sidebar-icon.active{background:rgba(255,255,255,.2);color:#fff}
-    .main-content{flex:1;margin-left:70px;width:calc(100% - 70px);padding:0}
 
+    .main-content{
+      flex:1;margin-left:70px;width:calc(100% - 70px);
+      padding:0;
+    }
+
+    /* Header */
     .header{
       background:linear-gradient(135deg,#5b9bd5 0%,#2e75b6 100%);
-      padding:34px 20px;text-align:center;
+      padding:34px 20px;
+      text-align:center;
     }
     .header h1{color:#fff;font-size:30px;font-weight:700;margin-bottom:6px}
     .header p{color:rgba(255,255,255,.92);font-size:14px}
 
     .wrap{padding:16px 18px 24px}
+
     .topbar{
-      background:#fff;border-radius:16px;padding:14px 16px;box-shadow:0 2px 10px rgba(0,0,0,.08);
-      display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:14px;
+      background:#fff;
+      border-radius:16px;
+      padding:14px 16px;
+      box-shadow:0 2px 10px rgba(0,0,0,.08);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
+      margin-bottom:14px;
     }
     .pill{
-      display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;
-      background:#fce4ec;color:#c2185b;font-weight:800;font-size:13px;
+      display:inline-flex;align-items:center;gap:8px;
+      padding:8px 12px;border-radius:999px;
+      background:#e3f2fd;color:#1565c0;font-weight:800;font-size:13px;
     }
     .meta{color:#607d8b;font-size:13px}
     .btn-back{
-      display:inline-flex;align-items:center;gap:8px;padding:10px 12px;border-radius:10px;
+      display:inline-flex;align-items:center;gap:8px;
+      padding:10px 12px;border-radius:10px;
       background:#5b9bd5;color:#fff;text-decoration:none;font-weight:800;
     }
     .btn-back:hover{background:#4a89c8}
 
-    .stage{display:grid;grid-template-columns:1fr 340px;gap:14px;align-items:stretch}
-    @media (max-width: 980px){.stage{grid-template-columns:1fr}}
+    /* Layout */
+    .stage{
+      display:grid;
+      grid-template-columns: 1fr 340px;
+      gap:14px;
+      align-items:stretch;
+    }
+    @media (max-width: 980px){
+      .stage{grid-template-columns:1fr}
+    }
 
     .slide{
-      background:#fff;border-radius:18px;box-shadow:0 6px 18px rgba(0,0,0,.10);overflow:hidden;
-      display:flex;flex-direction:column;min-height:540px;
+      background:#fff;
+      border-radius:18px;
+      box-shadow:0 6px 18px rgba(0,0,0,.10);
+      overflow:hidden;
+      display:flex;
+      flex-direction:column;
+      min-height:520px;
     }
+
     .slide-head{
-      padding:16px;border-bottom:1px solid #eef3f8;display:flex;gap:12px;align-items:flex-start;
+      padding:16px 16px 12px;
+      border-bottom:1px solid #eef3f8;
+      display:flex;
+      gap:12px;
+      align-items:flex-start;
     }
     .badge{
-      width:54px;height:54px;border-radius:18px;background:#c2185b;color:#fff;
-      display:flex;align-items:center;justify-content:center;font-weight:900;font-size:14px;flex:0 0 auto;
-      line-height:1.05;text-align:center;padding:6px;
+      width:52px;height:52px;border-radius:18px;
+      background:#c2185b;color:#fff;
+      display:flex;align-items:center;justify-content:center;
+      font-weight:900;font-size:14px;
+      flex:0 0 auto;
     }
-    .title{font-weight:900;color:#1f2d3d;font-size:20px;line-height:1.15;margin-top:2px}
-    .short{margin-top:8px;color:#607d8b;font-size:14px;line-height:1.45}
+    .head-text{flex:1}
+    .title{
+      font-weight:900;color:#1f2d3d;font-size:20px;line-height:1.15;
+      margin-top:2px;
+    }
+    .short{
+      margin-top:8px;color:#607d8b;font-size:14px;line-height:1.45;
+    }
 
-    .slide-body{padding:14px 16px 16px;display:flex;flex-direction:column;gap:12px;flex:1}
+    .slide-body{
+      padding:14px 16px 16px;
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+      flex:1;
+    }
 
     .imgbox{
-      width:100%;height:210px;border-radius:16px;overflow:hidden;
-      background:#f3f6fb;border:1px solid #e8eef5;display:flex;align-items:center;justify-content:center;
-      color:#90a4ae;font-weight:800;
+      background:#f3f6fb;
+      border:1px dashed #cfd8e3;
+      border-radius:16px;
+      height:220px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:#90a4ae;
+      font-weight:800;
     }
-    .imgbox img{width:100%;height:100%;object-fit:cover;display:block}
 
-    .detail{
-      color:#34495e;font-size:14px;line-height:1.55;background:#fff7f9;border:1px solid #ffe3ec;
-      padding:12px;border-radius:14px;
+    .box{
+      border-radius:14px;
+      padding:12px 12px;
+      font-size:14px;
+      font-weight:800;
+      display:flex;gap:10px;align-items:flex-start;
     }
-    .critical{
-      border-radius:14px;padding:12px;background:#fdecea;border:1px solid #f6c7c2;color:#b71c1c;
-      font-size:14px;font-weight:800;display:flex;gap:10px;align-items:flex-start;
-    }
-    .critical i{margin-top:3px}
-    .impact{
-      border-radius:14px;padding:12px;background:#eaf7ee;border:1px solid #bfe6c9;color:#1b5e20;
-      font-size:14px;font-weight:800;display:flex;gap:10px;align-items:flex-start;
-    }
-    .impact i{margin-top:3px}
+    .box i{margin-top:3px}
+    .danger{background:#fdecea;border:1px solid #f6c7c2;color:#b71c1c;}
+    .good{background:#eaf7ee;border:1px solid #bfe6c9;color:#1b5e20;}
 
+    .btn4m{
+      border:none;
+      border-radius:14px;
+      padding:12px 12px;
+      font-family:'Sarabun',sans-serif;
+      font-weight:900;
+      cursor:pointer;
+      display:flex;align-items:center;justify-content:center;gap:8px;
+      transition:.2s;
+      background:#2ecc71;
+      color:#fff;
+    }
+    .btn4m:hover{filter:brightness(.95)}
+
+    .causeWrap{
+      border:1px solid #eef3f8;
+      border-radius:16px;
+      overflow:hidden;
+    }
+    .causeHead{
+      background:#f7fbff;
+      padding:12px 12px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      border-bottom:1px solid #eef3f8;
+      font-weight:900;
+      color:#1f2d3d;
+    }
+    .causeList{padding:10px 12px;display:grid;gap:10px;}
+    .causeItem{
+      border-radius:14px;
+      padding:10px 10px;
+      background:#fff;
+      border:1px solid #eef3f8;
+    }
+    .tag{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:6px 10px;
+      border-radius:999px;
+      font-weight:900;
+      font-size:12px;
+      background:#fce4ec;
+      color:#c2185b;
+    }
+    .causeText{margin-top:8px;color:#34495e;font-size:14px;line-height:1.5}
+
+    /* Right panel */
     .panel{
-      background:#fff;border-radius:18px;box-shadow:0 2px 10px rgba(0,0,0,.08);
-      padding:14px;display:flex;flex-direction:column;gap:12px;
+      background:#fff;
+      border-radius:18px;
+      box-shadow:0 2px 10px rgba(0,0,0,.08);
+      padding:14px;
+      display:flex;
+      flex-direction:column;
+      gap:12px;
     }
-    .progress{background:#f2f7fd;border:1px solid #e3edf8;border-radius:16px;padding:12px}
-    .progress-top{display:flex;justify-content:space-between;align-items:center;gap:10px;color:#294b6a;font-weight:800}
-    .bar{height:10px;border-radius:999px;background:#dbe7f6;margin-top:10px;overflow:hidden}
-    .bar>div{height:100%;width:0%;background:#c2185b;border-radius:999px;transition:width .25s ease}
+    .progress{
+      background:#f2f7fd;
+      border:1px solid #e3edf8;
+      border-radius:16px;
+      padding:12px;
+    }
+    .progress-top{
+      display:flex;justify-content:space-between;align-items:center;gap:10px;
+      color:#294b6a;font-weight:900;
+    }
+    .bar{
+      height:10px;border-radius:999px;background:#dbe7f6;
+      margin-top:10px;overflow:hidden;
+    }
+    .bar > div{
+      height:100%;
+      width:0%;
+      background:#c2185b;
+      border-radius:999px;
+      transition:width .25s ease;
+    }
 
-    .nav-btns{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .nav-btns{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:10px;
+    }
     .btn{
-      border:none;border-radius:14px;padding:12px 12px;font-family:'Sarabun',sans-serif;font-weight:900;
-      cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:.2s;
+      border:none;
+      border-radius:14px;
+      padding:12px 12px;
+      font-family:'Sarabun',sans-serif;
+      font-weight:900;
+      cursor:pointer;
+      display:flex;align-items:center;justify-content:center;gap:8px;
+      transition:.2s;
     }
     .btn:disabled{opacity:.45;cursor:not-allowed}
     .btn-prev{background:#eef3f8;color:#2c3e50}
@@ -111,35 +252,47 @@
     .btn-next{background:#c2185b;color:#fff}
     .btn-next:hover{filter:brightness(.95)}
 
-    .btn-4m{
-      display:flex;align-items:center;justify-content:center;gap:8px;
-      padding:14px;border-radius:14px;background:#2ecc71;color:#fff;font-weight:900;text-decoration:none;
-      transition:.2s;
+    .mini-list{
+      border:1px solid #eef3f8;
+      border-radius:16px;
+      overflow:auto;
+      max-height:420px;
     }
-    .btn-4m:hover{filter:brightness(.95)}
-
-    .mini-list{border:1px solid #eef3f8;border-radius:16px;overflow:hidden}
     .mini-item{
-      padding:10px 12px;display:flex;gap:10px;align-items:flex-start;border-bottom:1px solid #eef3f8;
-      cursor:pointer;background:#fff;
+      padding:10px 12px;
+      display:flex;gap:10px;align-items:flex-start;
+      border-bottom:1px solid #eef3f8;
+      cursor:pointer;
+      background:#fff;
     }
     .mini-item:last-child{border-bottom:none}
     .mini-no{
-      width:34px;height:34px;border-radius:12px;background:#fce4ec;color:#c2185b;
-      display:flex;align-items:center;justify-content:center;font-weight:900;font-size:12px;flex:0 0 auto;
+      width:34px;height:34px;border-radius:14px;
+      background:#fce4ec;color:#c2185b;
+      display:flex;align-items:center;justify-content:center;
+      font-weight:900;font-size:12px;
+      flex:0 0 auto;
       margin-top:1px;
     }
-    .mini-t{font-size:13px;font-weight:900;color:#1f2d3d;line-height:1.25}
-    .mini-s{font-size:12px;color:#607d8b;margin-top:4px;line-height:1.3}
-    .mini-item.active{background:#fff3f7;outline:2px solid #ffd0df;outline-offset:-2px}
+    .mini-t{
+      font-size:13px;font-weight:900;color:#1f2d3d;line-height:1.25;
+    }
+    .mini-item.active{
+      background:#fff0f5;
+      outline:2px solid #ffd1e3;
+      outline-offset:-2px;
+    }
 
     .loading,.error{
-      background:#fff;border-radius:16px;padding:30px;box-shadow:0 2px 10px rgba(0,0,0,.08);
+      background:#fff;border-radius:16px;
+      padding:30px;
+      box-shadow:0 2px 10px rgba(0,0,0,.08);
       text-align:center;color:#607d8b;
     }
     .loading i{font-size:46px;margin-bottom:10px;color:#90a4ae}
     .error i{font-size:46px;margin-bottom:10px;color:#e57373}
 
+    /* Mobile */
     @media (max-width: 768px){
       .container{flex-direction:column}
       .sidebar{
@@ -151,13 +304,14 @@
       .header h1{font-size:22px}
       .wrap{padding:12px 12px 20px}
       .slide{min-height:unset}
-      .imgbox{height:170px}
+      .mini-list{max-height:260px}
     }
   </style>
 </head>
 
 <body>
 <div class="container">
+
   <nav class="sidebar">
     <a href="index.html" class="sidebar-icon" title="Home"><i class="fas fa-home"></i></a>
     <a href="knowledge-base.html" class="sidebar-icon" title="Knowledge Base"><i class="fas fa-book-open"></i></a>
@@ -169,7 +323,7 @@
   <main class="main-content">
     <header class="header">
       <h1>Defect Learning</h1>
-      <p>ลักษณะของเสียในกระบวนการนี้ — ดูทีละใบ แล้วกด “ดูสาเหตุ 4M”</p>
+      <p>ของเสียของกระบวนการนี้ — 1 ของเสีย = 1 สไลด์ (รวม 4M ไว้ในหน้าเดียว)</p>
     </header>
 
     <div class="wrap">
@@ -178,13 +332,13 @@
           <span class="pill"><i class="fas fa-triangle-exclamation"></i> <span id="procTitle">Process</span></span>
           <span class="meta" id="procMeta">-</span>
         </div>
-        <a class="btn-back" id="btnBackToWI" href="#"><i class="fas fa-arrow-left"></i> กลับหน้า WI (Step)</a>
+        <a class="btn-back" id="btnBack"><i class="fas fa-arrow-left"></i> กลับไปหน้า WI</a>
       </div>
 
       <div id="content">
         <div class="loading">
           <i class="fas fa-spinner fa-spin"></i>
-          <div>กำลังโหลดข้อมูล...</div>
+          <div>กำลังโหลดข้อมูลของเสีย...</div>
         </div>
       </div>
     </div>
@@ -192,14 +346,16 @@
 </div>
 
 <script>
-  const API_BASE = "https://script.google.com/macros/s/AKfycbwMRbnqSLTmmI4wofmNfZ5YPFGSiqg__rZUgyDlTTR03JchnQXgUj7DKDvzS4-QBmJrvw/exec";
-  const API_URL = API_BASE + "?view=defect";
+  // ✅ แก้บรรทัดนี้ให้ตรงกับ view ใน Apps Script ของคุณ
+  // ตัวอย่าง: .../exec?view=defect4m
+  const DEFECT_4M_API_URL =
+    "https://script.google.com/macros/s/AKfycbwMRbnqSLTmmI4wofmNfZ5YPFGSiqg__rZUgyDlTTR03JchnQXgUj7DKDvzS4-QBmJrvw/exec?view=defect4m";
 
   const procMap = {"1":"ผสมเปียก","2":"แร่งเปียก","3":"อบลมร้อน","4":"แร่งแห้ง","5":"ผสมแห้ง","6":"ตอกเม็ดยา","7":"บรรจุซอง"};
 
-  let rows = [];
+  let defects = [];
   let index = 0;
-  let currentProc = "1";
+  let show4m = true;
 
   function getQueryParam(name){
     const url = new URL(window.location.href);
@@ -211,56 +367,82 @@
       .replaceAll(">","&gt;").replaceAll('"',"&quot;")
       .replaceAll("'","&#039;");
   }
-
+  function sortDefectCode(a,b){
+    // รองรับ 1.1 / 6.10 ฯลฯ
+    const pa = String(a).split(".").map(x=>Number(x));
+    const pb = String(b).split(".").map(x=>Number(x));
+    const a1 = pa[0]||0, a2 = pa[1]||0;
+    const b1 = pb[0]||0, b2 = pb[1]||0;
+    if (a1 !== b1) return a1 - b1;
+    return a2 - b2;
+  }
   function setIndex(i){
-    index = Math.max(0, Math.min(i, rows.length - 1));
+    index = Math.max(0, Math.min(i, defects.length - 1));
     render();
   }
 
   function render(){
-    const s = rows[index];
-    const total = rows.length;
+    const d = defects[index];
+    const total = defects.length;
     const percent = total ? Math.round(((index+1)/total)*100) : 0;
 
-    const img = String(s.ImageURL || "").trim();
-    const imgHtml = img
-      ? `<img src="${esc(img)}" alt="${esc(s.DefectName)}" onerror="this.parentNode.innerHTML='ไม่มีรูปตัวอย่าง'">`
-      : `ไม่มีรูปตัวอย่าง`;
+    const man = d.causes.find(x=>x.type==="Man");
+    const machine = d.causes.find(x=>x.type==="Machine");
+    const material = d.causes.find(x=>x.type==="Material");
+    const method = d.causes.find(x=>x.type==="Method");
 
-    const impactText = (() => {
-      const p = String(s.ImpactProcess ?? "").trim();
-      const d = String(s.ImpactDefect ?? "").trim();
-      if(!p && !d) return "-";
-      if(p && d) return `Process ${esc(p)} — ${esc(d)}`;
-      if(p) return `Process ${esc(p)}`;
-      return esc(d);
-    })();
+    const causesHtml = `
+      <div class="causeWrap" style="${show4m ? "" : "display:none;"}">
+        <div class="causeHead">
+          <div><i class="fas fa-people-group"></i> สาเหตุ 4M ของ: ${esc(d.code)} ${esc(d.name)}</div>
+          <div style="color:#90a4ae;font-weight:800;font-size:12px;">Man / Machine / Material / Method</div>
+        </div>
+        <div class="causeList">
+          <div class="causeItem">
+            <span class="tag">Man</span>
+            <div class="causeText">${esc(man?.desc || "-")}</div>
+          </div>
+          <div class="causeItem">
+            <span class="tag">Machine</span>
+            <div class="causeText">${esc(machine?.desc || "-")}</div>
+          </div>
+          <div class="causeItem">
+            <span class="tag">Material</span>
+            <div class="causeText">${esc(material?.desc || "-")}</div>
+          </div>
+          <div class="causeItem">
+            <span class="tag">Method</span>
+            <div class="causeText">${esc(method?.desc || "-")}</div>
+          </div>
+        </div>
+      </div>
+    `;
 
     document.getElementById("content").innerHTML = `
       <div class="stage">
         <div class="slide">
           <div class="slide-head">
-            <div class="badge">${esc(s.DefectCode || s.DefectNo || "")}</div>
-            <div style="flex:1">
-              <div class="title">${esc(s.DefectName || "")}</div>
-              <div class="short">${esc(s.DefectShort || "")}</div>
+            <div class="badge">${esc(d.code)}</div>
+            <div class="head-text">
+              <div class="title">${esc(d.name)}</div>
+              <div class="short">ของเสียของ Process ${esc(d.process)} — ${esc(procMap[d.process] || "")}</div>
             </div>
           </div>
 
           <div class="slide-body">
-            <div class="imgbox">${imgHtml}</div>
+            <div class="imgbox">ไม่มีรูปตัวอย่าง (จะเพิ่มทีหลัง)</div>
 
-            <div class="detail">${esc(s.DefectDetail || "")}</div>
-
-            <div class="critical">
+            <div class="box danger">
               <i class="fas fa-circle-exclamation"></i>
-              <div>Critical Point: ${esc(s.CriticalPoint || "-")}</div>
+              <div><b>แนวคิด:</b> ถ้าทำตาม WI ไม่ครบ/ผิดเงื่อนไข → มีโอกาสเกิดของเสียนี้</div>
             </div>
 
-            <div class="impact">
-              <i class="fas fa-share-nodes"></i>
-              <div>ถ้าพลาดจะกระทบ: ${impactText}</div>
-            </div>
+            <button class="btn4m" id="btnToggle4m">
+              <i class="fas fa-people-group"></i>
+              ${show4m ? "ซ่อนสาเหตุ 4M" : "ดูสาเหตุ 4M ของข้อนี้"}
+            </button>
+
+            ${causesHtml}
           </div>
         </div>
 
@@ -282,18 +464,11 @@
             </button>
           </div>
 
-          <a class="btn-4m" href="defect-4m.html?process=${encodeURIComponent(currentProc)}&defect=${encodeURIComponent(String(s.DefectCode||''))}">
-            <i class="fas fa-sitemap"></i> ดูสาเหตุ 4M ของข้อนี้
-          </a>
-
           <div class="mini-list">
-            ${rows.map((x,idx)=>`
+            ${defects.map((x,idx)=>`
               <div class="mini-item ${idx===index?"active":""}" data-idx="${idx}">
-                <div class="mini-no">${esc(x.DefectCode || x.DefectNo || "")}</div>
-                <div>
-                  <div class="mini-t">${esc(x.DefectName || "")}</div>
-                  <div class="mini-s">${esc(x.DefectShort || "")}</div>
-                </div>
+                <div class="mini-no">${esc(x.code)}</div>
+                <div class="mini-t">${esc(x.name)}</div>
               </div>
             `).join("")}
           </div>
@@ -303,6 +478,11 @@
 
     document.getElementById("btnPrev").onclick = ()=> setIndex(index-1);
     document.getElementById("btnNext").onclick = ()=> setIndex(index+1);
+
+    document.getElementById("btnToggle4m").onclick = ()=>{
+      show4m = !show4m;
+      render();
+    };
 
     document.querySelectorAll(".mini-item").forEach(el=>{
       el.addEventListener("click", ()=>{
@@ -317,32 +497,77 @@
     };
   }
 
+  function groupDefects(rows, proc){
+    // rows: [{Process, DefectCode, DefectName, M_Type, CauseDescription}, ...]
+    const map = new Map();
+
+    rows.forEach(r=>{
+      const p = String(r.Process ?? "").trim();
+      if(p !== proc) return;
+
+      const code = String(r.DefectCode ?? "").trim();
+      const name = String(r.DefectName ?? "").trim();
+      const type = String(r.M_Type ?? "").trim();
+      const desc = String(r.CauseDescription ?? "").trim();
+
+      if(!code) return;
+
+      if(!map.has(code)){
+        map.set(code, { process:p, code, name, causes: [] });
+      }
+      const item = map.get(code);
+
+      // กันซ้ำ: ถ้ามี type เดิมแล้ว ไม่ต้องใส่ซ้ำ
+      if(type){
+        const exists = item.causes.find(x=>x.type===type);
+        if(!exists){
+          item.causes.push({ type, desc });
+        }
+      }
+      // ถ้า name ว่าง แต่เจอ name ในแถวอื่น ให้เติม
+      if(!item.name && name) item.name = name;
+    });
+
+    const out = Array.from(map.values());
+    out.sort((a,b)=> sortDefectCode(a.code,b.code));
+    // เรียง causes ตาม Man/Machine/Material/Method
+    const order = ["Man","Machine","Material","Method"];
+    out.forEach(d=>{
+      d.causes.sort((a,b)=> order.indexOf(a.type) - order.indexOf(b.type));
+    });
+    return out;
+  }
+
   async function load(){
     const proc = String(getQueryParam("process") || "1").trim();
-    currentProc = proc;
-
     document.getElementById("procTitle").textContent = `Process ${proc}`;
     document.getElementById("procMeta").textContent  = procMap[proc] ? `กระบวนการ: ${procMap[proc]}` : "-";
 
-    // ปุ่มกลับไปหน้า WI สุดท้าย (หน้า Learning Process)
-    document.getElementById("btnBackToWI").href = `learning-process.html?process=${encodeURIComponent(proc)}`;
+    // ปุ่มกลับไปหน้า WI (learning-process)
+    const back = document.getElementById("btnBack");
+    back.href = `learning-process.html?process=${encodeURIComponent(proc)}`;
 
     try{
-      const res = await fetch(API_URL);
+      const res = await fetch(DEFECT_4M_API_URL);
       const data = await res.json();
 
-      rows = (Array.isArray(data) ? data : [])
-        .filter(x => String(x.Process).trim() === proc)
-        .sort((a,b)=> Number(a.DefectNo)-Number(b.DefectNo));
+      defects = groupDefects(Array.isArray(data) ? data : [], proc);
 
-      if(!rows.length){
+      if(!defects.length){
         document.getElementById("content").innerHTML = `
           <div class="error">
             <i class="fas fa-circle-exclamation"></i>
-            <div>ไม่พบข้อมูลของ Process ${esc(proc)} ในชีท Defect Learning</div>
+            <div><b>ไม่พบข้อมูลของเสียของ Process ${esc(proc)}</b></div>
+            <div style="margin-top:8px;">ตรวจว่า API view=defect4m คืนข้อมูลจากชีท “Defect 4M” แล้วหรือยัง</div>
           </div>
         `;
         return;
+      }
+
+      // เริ่มที่ ?item=2 (ตัวเลือก)
+      const start = Number(getQueryParam("item"));
+      if(!Number.isNaN(start) && start>0){
+        index = Math.max(0, Math.min(start-1, defects.length-1));
       }
 
       render();
@@ -351,7 +576,8 @@
       document.getElementById("content").innerHTML = `
         <div class="error">
           <i class="fas fa-exclamation-triangle"></i>
-          <div>โหลดข้อมูลไม่สำเร็จ</div>
+          <div><b>โหลดข้อมูลไม่สำเร็จ</b></div>
+          <div style="margin-top:8px;">เช็คว่า DEFECT_4M_API_URL ถูกต้อง และ Apps Script อนุญาต public แล้ว</div>
         </div>
       `;
     }
