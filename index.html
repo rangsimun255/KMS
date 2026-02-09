@@ -181,15 +181,7 @@
         </main>
     </div>
 
-    <!-- ✅ (เพิ่มใหม่) กันคนยังไม่ login -->
-    <script>
-      (function () {
-        // ถ้าไม่มี token -> เด้งไปหน้า login
-        if (!localStorage.getItem("kms_token")) {
-          window.location.href = "login.html";
-        }
-      })();
-    </script>
+    
 
     <!-- ✅ ทำ active อัตโนมัติ ตามชื่อไฟล์ -->
     <script>
