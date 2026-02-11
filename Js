@@ -1,34 +1,63 @@
 // ===== KMS Main JavaScript =====
 
-// Sidebar Navigation
-document.querySelectorAll('.sidebar-icon').forEach((icon, index) => {
-    icon.addEventListener('click', function() {
-        // Remove active class from all icons
-        document.querySelectorAll('.sidebar-icon').forEach(i => i.classList.remove('active'));
-        // Add active class to clicked icon
-        this.classList.add('active');
-        
-        // Navigate to pages
-        const pages = [
-            'index.html',           // Home
-            'knowledge-base.html',  // Knowledge Base
-            'learning-path.html',   // Learning Path
-            'quiz.html',            // Quiz
-            'share-experience.html' // Share Experience
-        ];
-        
-        if (pages[index]) {
-            window.location.href = pages[index];
+// ==================== AUTH SYSTEM ====================
+(function() {
+    // ถ้าเป็นหน้า login ไม่ต้องเช็ค
+    if (window.location.pathname.includes('login.html')) {
+        return;
+    }
+    
+    // เช็คว่า login แล้วหรือยัง
+    var user = localStorage.getItem('currentUser') || sessionStorage.getItem('currentUser');
+    if (!user) {
+        window.location.href = 'login.html';
+    }
+})();
+
+// Logout Function
+function logout() {
+    if (confirm('ต้องการออกจากระบบหรือไม่?')) {
+        localStorage.removeItem('currentUser');
+        sessionStorage.removeItem('currentUser');
+        window.location.href = 'login.html';
+    }
+}
+
+// ==================== SIDEBAR NAVIGATION ====================
+// Set Active Page
+(function() {
+    var currentFile = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
+    var pageMap = {
+        'index.html': 'index',
+        'knowledge-base.html': 'kb',
+        'learning-path.html': 'lp',
+        'quiz.html': 'quiz',
+        'share-experience.html': 'share'
+    };
+    var currentPage = pageMap[currentFile] || 'index';
+    
+    document.querySelectorAll('.sidebar-icon').forEach(function(icon) {
+        if (icon.dataset.page === currentPage) {
+            icon.classList.add('active');
+        } else {
+            icon.classList.remove('active');
         }
+    });
+})();
+
+// Logout Button Click
+document.querySelectorAll('.sidebar-icon.logout').forEach(function(btn) {
+    btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        logout();
     });
 });
 
-// Card hover effect (optional enhancement)
-document.querySelectorAll('.card').forEach(card => {
+// ==================== CARD HOVER ====================
+document.querySelectorAll('.card').forEach(function(card) {
     card.addEventListener('mouseenter', function() {
         this.style.transform = 'translateY(-5px)';
     });
-    
     card.addEventListener('mouseleave', function() {
         this.style.transform = 'translateY(0)';
     });
