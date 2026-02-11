@@ -1,143 +1,38 @@
-<!DOCTYPE html>
-<html lang="th">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>KMS - Knowledge Management System</title>
+Js 
+// ===== KMS Main JavaScript =====
 
-<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+// Sidebar Navigation
+document.querySelectorAll('.sidebar-icon').forEach((icon, index) => {
+    icon.addEventListener('click', function() {
+        // Remove active class from all icons
+        document.querySelectorAll('.sidebar-icon').forEach(i => i.classList.remove('active'));
+        // Add active class to clicked icon
+        this.classList.add('active');
+        
+        // Navigate to pages
+        const pages = [
+            'index.html',           // Home
+            'knowledge-base.html',  // Knowledge Base
+            'learning-path.html',   // Learning Path
+            'quiz.html',            // Quiz
+            'share-experience.html' // Share Experience
+        ];
+        
+        if (pages[index]) {
+            window.location.href = pages[index];
+        }
+    });
+});
 
-<style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Sarabun',sans-serif;background:#e8eef5;min-height:100vh}
-.container{display:flex;min-height:100vh}
+// Card hover effect (optional enhancement)
+document.querySelectorAll('.card').forEach(card => {
+    card.addEventListener('mouseenter', function() {
+        this.style.transform = 'translateY(-5px)';
+    });
+    
+    card.addEventListener('mouseleave', function() {
+        this.style.transform = 'translateY(0)';
+    });
+});
 
-/* Sidebar */
-.sidebar{
-  width:70px;
-  background:linear-gradient(180deg,#5b9bd5 0%,#4a89c8 100%);
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  padding-top:20px;
-  gap:10px;
-  position:fixed;
-  height:100vh;
-}
-.sidebar-icon{
-  width:50px;height:50px;
-  display:flex;align-items:center;justify-content:center;
-  color:rgba(255,255,255,.7);
-  font-size:20px;
-  border-radius:12px;
-  text-decoration:none;
-  transition:.3s;
-}
-.sidebar-icon:hover,
-.sidebar-icon.active{
-  background:rgba(255,255,255,.2);
-  color:#fff;
-}
-
-/* Main */
-.main-content{flex:1;margin-left:70px}
-
-.header{
-  background:linear-gradient(135deg,#5b9bd5 0%,#2e75b6 100%);
-  padding:60px 40px;
-  text-align:center;
-  color:#fff;
-}
-.header h1{font-size:38px;margin-bottom:10px}
-.header p{opacity:.95}
-
-.menu-cards{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:20px;
-  padding:30px 40px;
-}
-.card{
-  background:#fff;
-  border-radius:16px;
-  padding:30px 20px;
-  text-align:center;
-  text-decoration:none;
-  color:#2c3e50;
-  box-shadow:0 4px 15px rgba(0,0,0,.05);
-  transition:.3s;
-}
-.card:hover{
-  transform:translateY(-5px);
-  box-shadow:0 8px 25px rgba(91,155,213,.2);
-}
-.card-icon{
-  width:60px;height:60px;
-  margin:0 auto 15px;
-  background:#e8f4fc;
-  border-radius:14px;
-  display:flex;align-items:center;justify-content:center;
-  font-size:26px;color:#5b9bd5;
-}
-.footer{text-align:center;padding:20px;color:#95a5a6;font-size:13px}
-
-@media(max-width:768px){
-  .sidebar{width:100%;height:60px;flex-direction:row;justify-content:center}
-  .main-content{margin-left:0}
-  .menu-cards{grid-template-columns:1fr;padding:20px}
-}
-</style>
-</head>
-
-<body>
-<div class="container">
-
-<!-- Sidebar -->
-<nav class="sidebar">
-  <a href="index.html" class="sidebar-icon" data-page="index"><i class="fas fa-home"></i></a>
-  <a href="knowledge-base.html" class="sidebar-icon" data-page="kb"><i class="fas fa-book-open"></i></a>
-  <a href="learning-path.html" class="sidebar-icon" data-page="lp"><i class="fas fa-graduation-cap"></i></a>
-  <a href="quiz.html" class="sidebar-icon" data-page="quiz"><i class="fas fa-clipboard-check"></i></a>
-  <a href="share-experience.html" class="sidebar-icon" data-page="share"><i class="fas fa-comments"></i></a>
-</nav>
-
-<main class="main-content">
-
-<header class="header">
-  <h1>Knowledge Management System</h1>
-  <p>ศูนย์รวมความรู้ เทคนิค และจุดสำคัญในการผลิต</p>
-</header>
-
-<section class="menu-cards">
-  <a href="knowledge-base.html" class="card">
-    <div class="card-icon"><i class="fas fa-book-open"></i></div>
-    <h2>Knowledge Base</h2>
-  </a>
-
-  <a href="learning-path.html" class="card">
-    <div class="card-icon"><i class="fas fa-graduation-cap"></i></div>
-    <h2>Learning Path</h2>
-  </a>
-
-  <a href="quiz.html" class="card">
-    <div class="card-icon"><i class="fas fa-clipboard-check"></i></div>
-    <h2>Quiz</h2>
-  </a>
-
-  <a href="share-experience.html" class="card">
-    <div class="card-icon"><i class="fas fa-comments"></i></div>
-    <h2>Share Experience</h2>
-  </a>
-</section>
-
-<footer class="footer">
-  Knowledge Management System | Internal Use Only
-</footer>
-
-</main>
-</div>
-
-<script src="main.js"></script>
-</body>
-</html>
+console.log('KMS System Loaded Successfully!');
