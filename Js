@@ -2,25 +2,21 @@
 
 // ==================== AUTH SYSTEM ====================
 (function() {
-    // ถ้าเป็นหน้า login ไม่ต้องเช็ค
     if (window.location.pathname.includes('login.html')) {
         return;
     }
     
-    // เช็คว่า login แล้วหรือยัง
     const user = localStorage.getItem('currentUser') || sessionStorage.getItem('currentUser');
     if (!user) {
         window.location.href = 'login.html';
     }
 })();
 
-// ดึงข้อมูล user ปัจจุบัน
 function getCurrentUser() {
     const user = localStorage.getItem('currentUser') || sessionStorage.getItem('currentUser');
     return user ? JSON.parse(user) : null;
 }
 
-// Logout
 function logout() {
     if (confirm('ต้องการออกจากระบบหรือไม่?')) {
         localStorage.removeItem('currentUser');
@@ -34,39 +30,32 @@ document.addEventListener('DOMContentLoaded', function() {
     
     const sidebarIcons = document.querySelectorAll('.sidebar-icon');
     
-    // Navigate to pages
     const pages = [
-        'index.html',           // 0 - Home
-        'knowledge-base.html',  // 1 - Knowledge Base
-        'learning-path.html',   // 2 - Learning Path
-        'quiz.html',            // 3 - Quiz
-        'share-experience.html' // 4 - Share Experience
-        // 5 - Logout
+        'index.html',
+        'knowledge-base.html',
+        'learning-path.html',
+        'quiz.html',
+        'share-experience.html'
     ];
     
     sidebarIcons.forEach((icon, index) => {
         icon.addEventListener('click', function() {
             
-            // ถ้าเป็นปุ่ม Logout (ตัวที่ 6 / index = 5)
             if (this.classList.contains('logout') || index === 5) {
                 logout();
                 return;
             }
             
-            // Remove active class from all icons
             sidebarIcons.forEach(i => i.classList.remove('active'));
-            
-            // Add active class to clicked icon
             this.classList.add('active');
             
-            // Navigate to page
             if (pages[index]) {
                 window.location.href = pages[index];
             }
         });
     });
     
-    // ==================== HIGHLIGHT CURRENT PAGE ====================
+    // Highlight current page
     const currentPage = window.location.pathname.split('/').pop() || 'index.html';
     const pageIndex = pages.indexOf(currentPage);
     
@@ -75,26 +64,15 @@ document.addEventListener('DOMContentLoaded', function() {
         sidebarIcons[pageIndex].classList.add('active');
     }
     
-    // ==================== CARD HOVER EFFECT ====================
+    // Card hover effect
     document.querySelectorAll('.card').forEach(card => {
         card.addEventListener('mouseenter', function() {
             this.style.transform = 'translateY(-5px)';
         });
-        
         card.addEventListener('mouseleave', function() {
             this.style.transform = 'translateY(0)';
         });
     });
-    
-    // ==================== DISPLAY USER INFO (ถ้ามี element) ====================
-    const user = getCurrentUser();
-    if (user) {
-        const userNameEl = document.getElementById('userName');
-        const userRoleEl = document.getElementById('userRole');
-        
-        if (userNameEl) userNameEl.textContent = user.name;
-        if (userRoleEl) userRoleEl.textContent = user.role;
-    }
     
     console.log('KMS System Loaded Successfully!');
 });
