@@ -246,50 +246,20 @@
             font-size: 0.85rem;
         }
 
-        /* Responsive */
         @media (max-width: 768px) {
-            body {
-                padding: 16px;
-            }
-            
-            .login-container {
-                border-radius: 20px;
-            }
-            
-            .login-header {
-                padding: 30px 20px;
-            }
-            
-            .logo-icon {
-                width: 70px;
-                height: 70px;
-            }
-            
-            .logo-icon i {
-                font-size: 2rem;
-            }
-            
-            .login-header h1 {
-                font-size: 1.3rem;
-            }
-            
-            .login-form {
-                padding: 25px 20px;
-            }
+            body { padding: 16px; }
+            .login-container { border-radius: 20px; }
+            .login-header { padding: 30px 20px; }
+            .logo-icon { width: 70px; height: 70px; }
+            .logo-icon i { font-size: 2rem; }
+            .login-header h1 { font-size: 1.3rem; }
+            .login-form { padding: 25px 20px; }
         }
 
         @media (max-width: 380px) {
-            .login-header {
-                padding: 25px 15px;
-            }
-            
-            .login-form {
-                padding: 20px 15px;
-            }
-            
-            .login-header h1 {
-                font-size: 1.2rem;
-            }
+            .login-header { padding: 25px 15px; }
+            .login-form { padding: 20px 15px; }
+            .login-header h1 { font-size: 1.2rem; }
         }
     </style>
 </head>
@@ -356,10 +326,9 @@
     </div>
 
     <script>
-        // Google Apps Script API URL
-        const API_URL = 'https://script.google.com/macros/s/AKfycbzgjnJArSiRb0d9KDaF7NMChDYmjXkMlGQkedlqY_vkyJ5v4dskg1gu87TteNOGu6ifiw/exec';
+        // ✅ URL ใหม่สำหรับ Login API
+        const API_URL = 'https://script.google.com/macros/s/AKfycby4zX4D6zxAotFGIbWTXyeJ6DCRCHTKokFVxKMio4RlZEq8ANq5wW_K-pTK5wWOszRz_Q/exec';
 
-        // Toggle Password
         function togglePassword() {
             const passwordInput = document.getElementById('password');
             const toggleIcon = document.getElementById('toggleIcon');
@@ -375,7 +344,6 @@
             }
         }
 
-        // Show Error
         function showError(message) {
             const errorDiv = document.getElementById('errorMessage');
             const errorText = document.getElementById('errorText');
@@ -390,7 +358,6 @@
             }, 5000);
         }
 
-        // Show Success
         function showSuccess() {
             const errorDiv = document.getElementById('errorMessage');
             const successDiv = document.getElementById('successMessage');
@@ -399,7 +366,6 @@
             successDiv.classList.add('show');
         }
 
-        // Handle Login
         async function handleLogin(event) {
             event.preventDefault();
             
@@ -413,17 +379,15 @@
                 return;
             }
 
-            // Show loading
             btnLogin.classList.add('loading');
             btnLogin.innerHTML = '<i class="fas fa-spinner fa-spin"></i><span>กำลังเข้าสู่ระบบ...</span>';
 
             try {
-                // เรียก API
-                const response = await fetch(API_URL + '?action=login&employeeId=' + encodeURIComponent(employeeId) + '&password=' + encodeURIComponent(password));
+                const url = API_URL + '?action=login&employeeId=' + encodeURIComponent(employeeId) + '&password=' + encodeURIComponent(password);
+                const response = await fetch(url);
                 const result = await response.json();
                 
                 if (result.success) {
-                    // Login สำเร็จ
                     const userData = {
                         employeeId: result.user.employeeId,
                         name: result.user.name,
@@ -432,7 +396,6 @@
                         loginTime: new Date().toISOString()
                     };
 
-                    // บันทึกข้อมูล
                     if (rememberMe) {
                         localStorage.setItem('currentUser', JSON.stringify(userData));
                         localStorage.setItem('savedEmployeeId', employeeId);
@@ -443,7 +406,6 @@
 
                     showSuccess();
 
-                    // ไปหน้าหลัก
                     setTimeout(function() {
                         window.location.href = 'index.html';
                     }, 1000);
@@ -460,7 +422,6 @@
             }
         }
 
-        // Reset Button
         function resetButton() {
             const btnLogin = document.getElementById('btnLogin');
             btnLogin.classList.remove('loading');
@@ -469,14 +430,12 @@
             document.getElementById('password').focus();
         }
 
-        // Check if already logged in
         window.onload = function() {
             const user = localStorage.getItem('currentUser') || sessionStorage.getItem('currentUser');
             if (user) {
                 window.location.href = 'index.html';
             }
 
-            // Load saved employee ID
             const savedId = localStorage.getItem('savedEmployeeId');
             if (savedId) {
                 document.getElementById('employeeId').value = savedId;
@@ -487,7 +446,6 @@
             }
         };
 
-        // Enter key handler
         document.getElementById('employeeId').addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
                 e.preventDefault();
