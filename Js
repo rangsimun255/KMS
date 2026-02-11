@@ -1,73 +1,37 @@
 // ===== KMS Main JavaScript =====
 
-// ==================== AUTH SYSTEM ====================
-(function() {
-    if (window.location.pathname.includes('login.html')) {
-        return;
-    }
-    const user = localStorage.getItem('currentUser') || sessionStorage.getItem('currentUser');
-    if (!user) {
-        window.location.href = 'login.html';
-    }
-})();
-
-function logout() {
-    if (confirm('ต้องการออกจากระบบหรือไม่?')) {
-        localStorage.removeItem('currentUser');
-        sessionStorage.removeItem('currentUser');
-        window.location.href = 'login.html';
-    }
-}
-
-// ==================== SIDEBAR NAVIGATION ====================
-// ✅ รอให้ HTML โหลดเสร็จก่อน
-document.addEventListener('DOMContentLoaded', function() {
-    
-    console.log('DOM Loaded!'); // เช็คว่าทำงานไหม
-    
-    const sidebarIcons = document.querySelectorAll('.sidebar-icon');
-    console.log('Found icons:', sidebarIcons.length); // เช็คจำนวน
-    
-    sidebarIcons.forEach((icon, index) => {
-        icon.addEventListener('click', function() {
-            
-            console.log('Clicked index:', index); // เช็คว่ากดได้ไหม
-            
-            // ถ้าเป็นปุ่ม Logout
-            if (this.classList.contains('logout')) {
-                logout();
-                return;
-            }
-            
-            // Remove active class from all icons
-            sidebarIcons.forEach(i => i.classList.remove('active'));
-            // Add active class to clicked icon
-            this.classList.add('active');
-            
-            // Navigate to pages
-            const pages = [
-                'index.html',
-                'knowledge-base.html',
-                'learning-path.html',
-                'quiz.html',
-                'share-experience.html'
-            ];
-            
-            if (pages[index]) {
-                window.location.href = pages[index];
-            }
-        });
+// Sidebar Navigation
+document.querySelectorAll('.sidebar-icon').forEach((icon, index) => {
+    icon.addEventListener('click', function() {
+        // Remove active class from all icons
+        document.querySelectorAll('.sidebar-icon').forEach(i => i.classList.remove('active'));
+        // Add active class to clicked icon
+        this.classList.add('active');
+        
+        // Navigate to pages
+        const pages = [
+            'Index.HTML',           // Home
+            'knowledge-base.html',  // Knowledge Base
+            'learning-path.html',   // Learning Path
+            'quiz.html',            // Quiz
+            'share-experience.html' // Share Experience
+        ];
+        
+        if (pages[index]) {
+            window.location.href = pages[index];
+        }
     });
-    
-    // Card hover effect
-    document.querySelectorAll('.card').forEach(card => {
-        card.addEventListener('mouseenter', function() {
-            this.style.transform = 'translateY(-5px)';
-        });
-        card.addEventListener('mouseleave', function() {
-            this.style.transform = 'translateY(0)';
-        });
-    });
-    
-    console.log('KMS System Loaded Successfully!');
 });
+
+// Card hover effect (optional enhancement)
+document.querySelectorAll('.card').forEach(card => {
+    card.addEventListener('mouseenter', function() {
+        this.style.transform = 'translateY(-5px)';
+    });
+    
+    card.addEventListener('mouseleave', function() {
+        this.style.transform = 'translateY(0)';
+    });
+});
+
+console.log('KMS System Loaded Successfully!');
