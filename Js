@@ -1,37 +1,100 @@
 // ===== KMS Main JavaScript =====
 
-// Sidebar Navigation
-document.querySelectorAll('.sidebar-icon').forEach((icon, index) => {
-    icon.addEventListener('click', function() {
-        // Remove active class from all icons
-        document.querySelectorAll('.sidebar-icon').forEach(i => i.classList.remove('active'));
-        // Add active class to clicked icon
-        this.classList.add('active');
-        
-        // Navigate to pages
-        const pages = [
-            'Index.HTML',           // Home
-            'knowledge-base.html',  // Knowledge Base
-            'learning-path.html',   // Learning Path
-            'quiz.html',            // Quiz
-            'share-experience.html' // Share Experience
-        ];
-        
-        if (pages[index]) {
-            window.location.href = pages[index];
-        }
-    });
-});
+// ==================== AUTH SYSTEM ====================
+(function() {
+    // ถ้าเป็นหน้า login ไม่ต้องเช็ค
+    if (window.location.pathname.includes('login.html')) {
+        return;
+    }
+    
+    // เช็คว่า login แล้วหรือยัง
+    const user = localStorage.getItem('currentUser') || sessionStorage.getItem('currentUser');
+    if (!user) {
+        window.location.href = 'login.html';
+    }
+})();
 
-// Card hover effect (optional enhancement)
-document.querySelectorAll('.card').forEach(card => {
-    card.addEventListener('mouseenter', function() {
-        this.style.transform = 'translateY(-5px)';
+// ดึงข้อมูล user ปัจจุบัน
+function getCurrentUser() {
+    const user = localStorage.getItem('currentUser') || sessionStorage.getItem('currentUser');
+    return user ? JSON.parse(user) : null;
+}
+
+// Logout
+function logout() {
+    if (confirm('ต้องการออกจากระบบหรือไม่?')) {
+        localStorage.removeItem('currentUser');
+        sessionStorage.removeItem('currentUser');
+        window.location.href = 'login.html';
+    }
+}
+
+// ==================== SIDEBAR NAVIGATION ====================
+document.addEventListener('DOMContentLoaded', function() {
+    
+    const sidebarIcons = document.querySelectorAll('.sidebar-icon');
+    
+    // Navigate to pages
+    const pages = [
+        'index.html',           // 0 - Home
+        'knowledge-base.html',  // 1 - Knowledge Base
+        'learning-path.html',   // 2 - Learning Path
+        'quiz.html',            // 3 - Quiz
+        'share-experience.html' // 4 - Share Experience
+        // 5 - Logout
+    ];
+    
+    sidebarIcons.forEach((icon, index) => {
+        icon.addEventListener('click', function() {
+            
+            // ถ้าเป็นปุ่ม Logout (ตัวที่ 6 / index = 5)
+            if (this.classList.contains('logout') || index === 5) {
+                logout();
+                return;
+            }
+            
+            // Remove active class from all icons
+            sidebarIcons.forEach(i => i.classList.remove('active'));
+            
+            // Add active class to clicked icon
+            this.classList.add('active');
+            
+            // Navigate to page
+            if (pages[index]) {
+                window.location.href = pages[index];
+            }
+        });
     });
     
-    card.addEventListener('mouseleave', function() {
-        this.style.transform = 'translateY(0)';
+    // ==================== HIGHLIGHT CURRENT PAGE ====================
+    const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+    const pageIndex = pages.indexOf(currentPage);
+    
+    if (pageIndex !== -1 && sidebarIcons[pageIndex]) {
+        sidebarIcons.forEach(i => i.classList.remove('active'));
+        sidebarIcons[pageIndex].classList.add('active');
+    }
+    
+    // ==================== CARD HOVER EFFECT ====================
+    document.querySelectorAll('.card').forEach(card => {
+        card.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-5px)';
+        });
+        
+        card.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0)';
+        });
     });
+    
+    // ==================== DISPLAY USER INFO (ถ้ามี element) ====================
+    const user = getCurrentUser();
+    if (user) {
+        const userNameEl = document.getElementById('userName');
+        const userRoleEl = document.getElementById('userRole');
+        
+        if (userNameEl) userNameEl.textContent = user.name;
+        if (userRoleEl) userRoleEl.textContent = user.role;
+    }
+    
+    console.log('KMS System Loaded Successfully!');
 });
-
-console.log('KMS System Loaded Successfully!');
