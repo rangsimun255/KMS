@@ -1,416 +1,225 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-    <script>
-(function () {
-  const user = localStorage.getItem('currentUser') || sessionStorage.getItem('currentUser');
-  if (!user) {
-    window.location.replace('login.html');
-  }
-})();
-</script>
+  <script>
+    (function () {
+      const user = localStorage.getItem('currentUser') || sessionStorage.getItem('currentUser');
+      if (!user) {
+        window.location.replace('login.html');
+      }
+    })();
+  </script>
 
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KMS - Knowledge Management System</title>
-    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Sarabun', sans-serif; background-color: #e8eef5; min-height: 100vh; }
-        .container { display: flex; min-height: 100vh; }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KMS - Knowledge Management System</title>
 
-        /* Sidebar */
-        .sidebar {
-            width: 70px;
-            background: linear-gradient(180deg, #5b9bd5 0%, #4a89c8 100%);
-            display: flex; flex-direction: column; align-items: center;
-            padding-top: 20px; gap: 10px;
-            position: fixed; height: 100vh;
-            z-index: 10;
-        }
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-        /* ✅ เปลี่ยนเป็นลิงก์กดได้ */
-        .sidebar-icon {
-            width: 50px; height: 50px;
-            display: flex; align-items: center; justify-content: center;
-            color: rgba(255,255,255,0.7);
-            font-size: 20px;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;         /* ✅ ไม่ให้มีขีดเส้นใต้ */
-            user-select: none;
-            -webkit-tap-highlight-color: transparent;
-        }
-        .sidebar-icon:hover,
-        .sidebar-icon.active {
-            background-color: rgba(255,255,255,0.2);
-            color: #fff;
-        }
-        .sidebar-icon:active { transform: scale(0.96); }
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Sarabun', sans-serif; background-color: #e8eef5; min-height: 100vh; }
+    .container { display: flex; min-height: 100vh; }
 
-        /* Main Content */
-        .main-content { flex: 1; padding: 0; margin-left: 70px; }
+    /* Sidebar */
+    .sidebar {
+      width: 70px;
+      background: linear-gradient(180deg, #5b9bd5 0%, #4a89c8 100%);
+      display: flex; flex-direction: column; align-items: center;
+      padding-top: 20px; gap: 10px;
+      position: fixed; height: 100vh;
+      z-index: 10;
+    }
 
-        /* Header */
-        .header {
-            background: linear-gradient(135deg, #5b9bd5 0%, #2e75b6 100%);
-            border-radius: 0;
-            padding: 60px 40px;
-            margin: 0;
-            text-align: center;
-            box-shadow: 0 4px 15px rgba(91, 155, 213, 0.3);
-        }
-        .header h1 {
-            font-size: 42px; font-weight: 700; color: #ffffff;
-            margin-bottom: 15px;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-            letter-spacing: 1px;
-        }
-        .header .subtitle {
-            font-size: 18px; color: rgba(255, 255, 255, 0.95);
-            max-width: 650px; margin: 0 auto; line-height: 1.7;
-        }
+    .sidebar-icon {
+      width: 50px; height: 50px;
+      display: flex; align-items: center; justify-content: center;
+      color: rgba(255,255,255,0.7);
+      font-size: 20px;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .sidebar-icon:hover,
+    .sidebar-icon.active {
+      background-color: rgba(255,255,255,0.2);
+      color: #fff;
+    }
+    .sidebar-icon:active { transform: scale(0.96); }
 
-        /* Menu Cards */
-        .menu-cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; padding: 30px 40px; }
-        .card {
-            background: #fff;
-            border-radius: 16px;
-            padding: 28px 20px;
-            text-align: center;
-            text-decoration: none;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            transition: all 0.3s ease;
-            border: 2px solid transparent;
-        }
-        .card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(91,155,213,0.2); border-color: #5b9bd5; }
-        .card-icon {
-            width: 60px; height: 60px;
-            margin: 0 auto 15px;
-            background: linear-gradient(135deg, #e8f4fc 0%, #d4e9f7 100%);
-            border-radius: 14px;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 26px; color: #5b9bd5;
-        }
-        .card-title { font-size: 17px; font-weight: 600; color: #2c3e50; margin-bottom: 8px; }
-        .card-desc { font-size: 13px; color: #7f8c8d; line-height: 1.5; }
+    /* Main Content */
+    .main-content { flex: 1; padding: 0; margin-left: 70px; }
 
-        /* New Employee */
-        .new-employee {
-            background: #fff;
-            border-radius: 16px;
-            padding: 22px 28px;
-            margin: 0 40px 20px 40px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-        }
-        .new-employee h3 { font-size: 16px; font-weight: 600; color: #2c3e50; margin-bottom: 12px; }
-        .new-employee h3 i { color: #5b9bd5; margin-right: 10px; }
-        .new-employee ol { margin-left: 22px; color: #555; line-height: 1.9; font-size: 14px; }
-        .new-employee strong { color: #5b9bd5; }
+    /* Header */
+    .header {
+      background: linear-gradient(135deg, #5b9bd5 0%, #2e75b6 100%);
+      border-radius: 0;
+      padding: 60px 40px;
+      margin: 0;
+      text-align: center;
+      box-shadow: 0 4px 15px rgba(91, 155, 213, 0.3);
+    }
+    .header h1 {
+      font-size: 42px; font-weight: 700; color: #ffffff;
+      margin-bottom: 15px;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      letter-spacing: 1px;
+    }
+    .header .subtitle {
+      font-size: 18px; color: rgba(255, 255, 255, 0.95);
+      max-width: 650px; margin: 0 auto; line-height: 1.7;
+    }
 
-        /* Footer */
-        .footer { text-align: center; padding: 15px 40px; color: #95a5a6; font-size: 13px; }
+    /* Menu Cards */
+    .menu-cards {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      padding: 30px 40px;
+    }
+    .card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 28px 20px;
+      text-align: center;
+      text-decoration: none;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+      transition: all 0.3s ease;
+      border: 2px solid transparent;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px rgba(91,155,213,0.2);
+      border-color: #5b9bd5;
+    }
+    .card-icon {
+      width: 60px; height: 60px;
+      margin: 0 auto 15px;
+      background: linear-gradient(135deg, #e8f4fc 0%, #d4e9f7 100%);
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 26px; color: #5b9bd5;
+    }
+    .card-title { font-size: 17px; font-weight: 600; color: #2c3e50; margin-bottom: 8px; }
+    .card-desc { font-size: 13px; color: #7f8c8d; line-height: 1.5; }
 
-        /* Responsive */
-        @media (max-width: 768px) {
-            .container { flex-direction: column; }
-            .sidebar {
-                width: 100%;
-                height: 60px;
-                flex-direction: row;
-                justify-content: center;
-                padding: 10px;
-                position: sticky;
-                top: 0;
-            }
-            .main-content { margin-left: 0; }
-            .menu-cards { grid-template-columns: 1fr; padding: 20px; }
-            .new-employee { margin: 0 20px 20px 20px; }
-            .header { padding: 40px 20px; }
-            .header h1 { font-size: 28px; }
-            .header .subtitle { font-size: 15px; }
-        }
-    </style>
+    /* New Employee */
+    .new-employee {
+      background: #fff;
+      border-radius: 16px;
+      padding: 22px 28px;
+      margin: 0 40px 20px 40px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    }
+    .new-employee h3 { font-size: 16px; font-weight: 600; color: #2c3e50; margin-bottom: 12px; }
+    .new-employee h3 i { color: #5b9bd5; margin-right: 10px; }
+    .new-employee ol { margin-left: 22px; color: #555; line-height: 1.9; font-size: 14px; }
+    .new-employee strong { color: #5b9bd5; }
+
+    /* Footer */
+    .footer { text-align: center; padding: 15px 40px; color: #95a5a6; font-size: 13px; }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .container { flex-direction: column; }
+      .sidebar {
+        width: 100%;
+        height: 60px;
+        flex-direction: row;
+        justify-content: center;
+        padding: 10px;
+        position: sticky;
+        top: 0;
+      }
+      .main-content { margin-left: 0; }
+      .menu-cards { grid-template-columns: 1fr; padding: 20px; }
+      .new-employee { margin: 0 20px 20px 20px; }
+      .header { padding: 40px 20px; }
+      .header h1 { font-size: 28px; }
+      .header .subtitle { font-size: 15px; }
+    }
+  </style>
 </head>
+
 <body>
-    <div class="container">
-       <nav class="sidebar">
-  <a class="sidebar-icon" data-page="index" href="index.html"><i class="fas fa-home"></i></a>
-  <a class="sidebar-icon" data-page="kb" href="knowledge-base.html"><i class="fas fa-book"></i></a>
-  <a class="sidebar-icon" data-page="lp" href="learning-path.html"><i class="fas fa-graduation-cap"></i></a>
-  <a class="sidebar-icon" data-page="quiz" href="quiz.html"><i class="fas fa-clipboard-check"></i></a>
-  <a class="sidebar-icon" data-page="share" href="share-experience.html"><i class="fas fa-comments"></i></a>
-  <a class="sidebar-icon logout" href="logout.html"><i class="fas fa-sign-out-alt"></i></a>
-</nav>
+  <div class="container">
+    <nav class="sidebar">
+      <a class="sidebar-icon" data-page="index" href="index.html"><i class="fas fa-home"></i></a>
+      <a class="sidebar-icon" data-page="kb" href="knowledge-base.html"><i class="fas fa-book"></i></a>
+      <a class="sidebar-icon" data-page="lp" href="learning-path.html"><i class="fas fa-graduation-cap"></i></a>
+      <a class="sidebar-icon" data-page="quiz" href="quiz.html"><i class="fas fa-clipboard-check"></i></a>
+      <a class="sidebar-icon" data-page="share" href="share-experience.html"><i class="fas fa-comments"></i></a>
+      <a class="sidebar-icon logout" href="logout.html"><i class="fas fa-sign-out-alt"></i></a>
+    </nav>
 
+    <main class="main-content">
+      <header class="header">
+        <h1>Knowledge Management System</h1>
+        <p class="subtitle">ศูนย์รวมความรู้ เทคนิค และจุดสำคัญในการผลิต เพื่อป้องกันการเกิดเสีย</p>
+      </header>
 
-        <main class="main-content">
-            <header class="header">
-                <h1>Knowledge Management System</h1>
-                <p class="subtitle">ศูนย์รวมความรู้ เทคนิค และจุดสำคัญในการผลิต เพื่อป้องกันการเกิดเสีย</p>
-            </header>
+      <section class="menu-cards">
+        <a href="knowledge-base.html" class="card">
+          <div class="card-icon"><i class="fas fa-book-open"></i></div>
+          <h2 class="card-title">Knowledge Base</h2>
+          <p class="card-desc">ค้นหาความรู้ เทคนิค และวิธีแก้ปัญหา</p>
+        </a>
 
-            <section class="menu-cards">
-                <a href="knowledge-base.html" class="card">
-                    <div class="card-icon"><i class="fas fa-book-open"></i></div>
-                    <h2 class="card-title">Knowledge Base</h2>
-                    <p class="card-desc">ค้นหาความรู้ เทคนิค และวิธีแก้ปัญหา</p>
-                </a>
-                <a href="learning-path.html" class="card">
-                    <div class="card-icon"><i class="fas fa-graduation-cap"></i></div>
-                    <h2 class="card-title">Learning Path</h2>
-                    <p class="card-desc">เรียนรู้กระบวนการผลิตและจุดสำคัญ</p>
-                </a>
-                <a href="quiz.html" class="card">
-                    <div class="card-icon"><i class="fas fa-clipboard-check"></i></div>
-                    <h2 class="card-title">Quiz / Check Point</h2>
-                    <p class="card-desc">ตรวจสอบความเข้าใจในจุดสำคัญ</p>
-                </a>
-                <a href="share-experience.html" class="card">
-                    <div class="card-icon"><i class="fas fa-comments"></i></div>
-                    <h2 class="card-title">Share Experience</h2>
-                    <p class="card-desc">แชร์ประสบการณ์และวิธีแก้ปัญหา</p>
-                </a>
-            </section>
+        <a href="learning-path.html" class="card">
+          <div class="card-icon"><i class="fas fa-graduation-cap"></i></div>
+          <h2 class="card-title">Learning Path</h2>
+          <p class="card-desc">เรียนรู้กระบวนการผลิตและจุดสำคัญ</p>
+        </a>
 
-            <section class="new-employee">
-                <h3><i class="fas fa-user-plus"></i> สำหรับพนักงานใหม่</h3>
-                <ol>
-                    <li>เข้า <strong>Learning Path</strong></li>
-                    <li>เลือกกระบวนการที่รับผิดชอบ</li>
-                    <li>ศึกษา Critical Point</li>
-                    <li>เปิดดูเอกสารใน <strong>Knowledge Base</strong></li>
-                </ol>
-            </section>
+        <a href="quiz.html" class="card">
+          <div class="card-icon"><i class="fas fa-clipboard-check"></i></div>
+          <h2 class="card-title">Quiz / Check Point</h2>
+          <p class="card-desc">ตรวจสอบความเข้าใจในจุดสำคัญ</p>
+        </a>
 
-            <footer class="footer">
-                <p>Knowledge Management System | ใช้ภายในองค์กรเท่านั้น</p>
-            </footer>
-        </main>
-    </div>
+        <a href="share-experience.html" class="card">
+          <div class="card-icon"><i class="fas fa-comments"></i></div>
+          <h2 class="card-title">Share Experience</h2>
+          <p class="card-desc">แชร์ประสบการณ์และวิธีแก้ปัญหา</p>
+        </a>
+      </section>
 
-    <!-- ✅ ทำ active อัตโนมัติ ตามชื่อไฟล์ -->
-    <script>
-      (function () {
-        const file = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
-        const map = {
-          'index.html': 'index',
-          'knowledge-base.html': 'kb',
-          'learning-path.html': 'lp',
-          'quiz.html': 'quiz',
-          'share-experience.html': 'share'
-        };
-        const current = map[file] || 'index';
+      <section class="new-employee">
+        <h3><i class="fas fa-user-plus"></i> สำหรับพนักงานใหม่</h3>
+        <ol>
+          <li>เข้า <strong>Learning Path</strong></li>
+          <li>เลือกกระบวนการที่รับผิดชอบ</li>
+          <li>ศึกษา Critical Point</li>
+          <li>เปิดดูเอกสารใน <strong>Knowledge Base</strong></li>
+        </ol>
+      </section>
 
-        document.querySelectorAll('.sidebar-icon').forEach(a => {
-          a.classList.toggle('active', a.dataset.page === current);
-        });
-      })();
-    </script>
-</body>
-</html><!DOCTYPE html>
-<html lang="th">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KMS - Knowledge Management System</title>
-    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Sarabun', sans-serif; background-color: #e8eef5; min-height: 100vh; }
-        .container { display: flex; min-height: 100vh; }
+      <footer class="footer">
+        <p>Knowledge Management System | ใช้ภายในองค์กรเท่านั้น</p>
+      </footer>
+    </main>
+  </div>
 
-        /* Sidebar */
-        .sidebar {
-            width: 70px;
-            background: linear-gradient(180deg, #5b9bd5 0%, #4a89c8 100%);
-            display: flex; flex-direction: column; align-items: center;
-            padding-top: 20px; gap: 10px;
-            position: fixed; height: 100vh;
-            z-index: 10;
-        }
+  <script>
+    (function () {
+      const file = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
+      const map = {
+        'index.html': 'index',
+        'knowledge-base.html': 'kb',
+        'learning-path.html': 'lp',
+        'quiz.html': 'quiz',
+        'share-experience.html': 'share'
+      };
+      const current = map[file] || 'index';
 
-        /* ✅ เปลี่ยนเป็นลิงก์กดได้ */
-        .sidebar-icon {
-            width: 50px; height: 50px;
-            display: flex; align-items: center; justify-content: center;
-            color: rgba(255,255,255,0.7);
-            font-size: 20px;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;         /* ✅ ไม่ให้มีขีดเส้นใต้ */
-            user-select: none;
-            -webkit-tap-highlight-color: transparent;
-        }
-        .sidebar-icon:hover,
-        .sidebar-icon.active {
-            background-color: rgba(255,255,255,0.2);
-            color: #fff;
-        }
-        .sidebar-icon:active { transform: scale(0.96); }
-
-        /* Main Content */
-        .main-content { flex: 1; padding: 0; margin-left: 70px; }
-
-        /* Header */
-        .header {
-            background: linear-gradient(135deg, #5b9bd5 0%, #2e75b6 100%);
-            border-radius: 0;
-            padding: 60px 40px;
-            margin: 0;
-            text-align: center;
-            box-shadow: 0 4px 15px rgba(91, 155, 213, 0.3);
-        }
-        .header h1 {
-            font-size: 42px; font-weight: 700; color: #ffffff;
-            margin-bottom: 15px;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-            letter-spacing: 1px;
-        }
-        .header .subtitle {
-            font-size: 18px; color: rgba(255, 255, 255, 0.95);
-            max-width: 650px; margin: 0 auto; line-height: 1.7;
-        }
-
-        /* Menu Cards */
-        .menu-cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; padding: 30px 40px; }
-        .card {
-            background: #fff;
-            border-radius: 16px;
-            padding: 28px 20px;
-            text-align: center;
-            text-decoration: none;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            transition: all 0.3s ease;
-            border: 2px solid transparent;
-        }
-        .card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(91,155,213,0.2); border-color: #5b9bd5; }
-        .card-icon {
-            width: 60px; height: 60px;
-            margin: 0 auto 15px;
-            background: linear-gradient(135deg, #e8f4fc 0%, #d4e9f7 100%);
-            border-radius: 14px;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 26px; color: #5b9bd5;
-        }
-        .card-title { font-size: 17px; font-weight: 600; color: #2c3e50; margin-bottom: 8px; }
-        .card-desc { font-size: 13px; color: #7f8c8d; line-height: 1.5; }
-
-        /* New Employee */
-        .new-employee {
-            background: #fff;
-            border-radius: 16px;
-            padding: 22px 28px;
-            margin: 0 40px 20px 40px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-        }
-        .new-employee h3 { font-size: 16px; font-weight: 600; color: #2c3e50; margin-bottom: 12px; }
-        .new-employee h3 i { color: #5b9bd5; margin-right: 10px; }
-        .new-employee ol { margin-left: 22px; color: #555; line-height: 1.9; font-size: 14px; }
-        .new-employee strong { color: #5b9bd5; }
-
-        /* Footer */
-        .footer { text-align: center; padding: 15px 40px; color: #95a5a6; font-size: 13px; }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .container { flex-direction: column; }
-            .sidebar {
-                width: 100%;
-                height: 60px;
-                flex-direction: row;
-                justify-content: center;
-                padding: 10px;
-                position: sticky;
-                top: 0;
-            }
-            .main-content { margin-left: 0; }
-            .menu-cards { grid-template-columns: 1fr; padding: 20px; }
-            .new-employee { margin: 0 20px 20px 20px; }
-            .header { padding: 40px 20px; }
-            .header h1 { font-size: 28px; }
-            .header .subtitle { font-size: 15px; }
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <!-- Sidebar -->
- <nav class="sidebar">
-     <div class="sidebar-icon active"><i class="fas fa-home"></i></div>
-     <div class="sidebar-icon"><i class="fas fa-book"></i></div>
-     <div class="sidebar-icon"><i class="fas fa-graduation-cap"></i></div>
-     <div class="sidebar-icon"><i class="fas fa-clipboard-check"></i></div>
-     <div class="sidebar-icon"><i class="fas fa-comments"></i></div>
-     <div class="sidebar-icon logout"><i class="fas fa-sign-out-alt"></i></div>
- </nav>
-
-        <main class="main-content">
-            <header class="header">
-                <h1>Knowledge Management System</h1>
-                <p class="subtitle">ศูนย์รวมความรู้ เทคนิค และจุดสำคัญในการผลิต เพื่อป้องกันการเกิดเสีย</p>
-            </header>
-
-            <section class="menu-cards">
-                <a href="knowledge-base.html" class="card">
-                    <div class="card-icon"><i class="fas fa-book-open"></i></div>
-                    <h2 class="card-title">Knowledge Base</h2>
-                    <p class="card-desc">ค้นหาความรู้ เทคนิค และวิธีแก้ปัญหา</p>
-                </a>
-                <a href="learning-path.html" class="card">
-                    <div class="card-icon"><i class="fas fa-graduation-cap"></i></div>
-                    <h2 class="card-title">Learning Path</h2>
-                    <p class="card-desc">เรียนรู้กระบวนการผลิตและจุดสำคัญ</p>
-                </a>
-                <a href="quiz.html" class="card">
-                    <div class="card-icon"><i class="fas fa-clipboard-check"></i></div>
-                    <h2 class="card-title">Quiz / Check Point</h2>
-                    <p class="card-desc">ตรวจสอบความเข้าใจในจุดสำคัญ</p>
-                </a>
-                <a href="share-experience.html" class="card">
-                    <div class="card-icon"><i class="fas fa-comments"></i></div>
-                    <h2 class="card-title">Share Experience</h2>
-                    <p class="card-desc">แชร์ประสบการณ์และวิธีแก้ปัญหา</p>
-                </a>
-            </section>
-
-            <section class="new-employee">
-                <h3><i class="fas fa-user-plus"></i> สำหรับพนักงานใหม่</h3>
-                <ol>
-                    <li>เข้า <strong>Learning Path</strong></li>
-                    <li>เลือกกระบวนการที่รับผิดชอบ</li>
-                    <li>ศึกษา Critical Point</li>
-                    <li>เปิดดูเอกสารใน <strong>Knowledge Base</strong></li>
-                </ol>
-            </section>
-
-            <footer class="footer">
-                <p>Knowledge Management System | ใช้ภายในองค์กรเท่านั้น</p>
-            </footer>
-        </main>
-    </div>
-
-    <!-- ✅ ทำ active อัตโนมัติ ตามชื่อไฟล์ -->
-    <script>
-      (function () {
-        const file = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
-        const map = {
-          'index.html': 'index',
-          'knowledge-base.html': 'kb',
-          'learning-path.html': 'lp',
-          'quiz.html': 'quiz',
-          'share-experience.html': 'share'
-        };
-        const current = map[file] || 'index';
-
-        document.querySelectorAll('.sidebar-icon').forEach(a => {
-          a.classList.toggle('active', a.dataset.page === current);
-        });
-      })();
-    </script>
+      document.querySelectorAll('.sidebar-icon').forEach(a => {
+        a.classList.toggle('active', a.dataset.page === current);
+      });
+    })();
+  </script>
 </body>
 </html>
