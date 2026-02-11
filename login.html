@@ -358,302 +358,83 @@
             font-size: 0.9rem;
         }
 
-        /* ==================== RESPONSIVE - iPad / Tablet ==================== */
+        /* Tablet */
         @media (max-width: 1024px) and (min-width: 769px) {
-            body {
-                padding: 40px;
-            }
-
-            .login-container {
-                max-width: 480px;
-            }
-
-            .login-header {
-                padding: 50px 45px;
-            }
-
-            .logo-icon {
-                width: 95px;
-                height: 95px;
-            }
-
-            .logo-icon i {
-                font-size: 3rem;
-            }
-
-            .login-header h1 {
-                font-size: 1.7rem;
-            }
-
-            .login-form {
-                padding: 40px 45px 50px;
-            }
-
-            .input-wrapper input {
-                padding: 18px 20px;
-                padding-left: 55px;
-                font-size: 1.1rem;
-            }
-
-            .btn-login {
-                padding: 20px;
-                font-size: 1.2rem;
-            }
+            body { padding: 40px; }
+            .login-container { max-width: 480px; }
+            .login-header { padding: 50px 45px; }
+            .logo-icon { width: 95px; height: 95px; }
+            .logo-icon i { font-size: 3rem; }
+            .login-header h1 { font-size: 1.7rem; }
+            .login-form { padding: 40px 45px 50px; }
+            .input-wrapper input { padding: 18px 20px 18px 55px; font-size: 1.1rem; }
+            .btn-login { padding: 20px; font-size: 1.2rem; }
         }
 
-        /* ==================== RESPONSIVE - Mobile ==================== */
+        /* Mobile */
         @media (max-width: 768px) {
-            body {
-                padding: 16px;
-                align-items: flex-start;
-                padding-top: 40px;
-            }
-
-            .floating-icons i {
-                font-size: 1.5rem !important;
-            }
-
-            .floating-icons i:nth-child(3),
-            .floating-icons i:nth-child(5),
-            .floating-icons i:nth-child(6) { 
-                display: none; 
-            }
-
-            .login-container {
-                border-radius: 20px;
-                max-width: 100%;
-            }
-
-            .login-header {
-                padding: 35px 25px;
-            }
-
-            .login-header::after {
-                bottom: -15px;
-                height: 30px;
-            }
-
-            .logo-icon {
-                width: 75px;
-                height: 75px;
-                border-radius: 18px;
-                margin-bottom: 16px;
-            }
-
-            .logo-icon i {
-                font-size: 2.2rem;
-            }
-
-            .login-header h1 {
-                font-size: 1.35rem;
-            }
-
-            .login-header p {
-                font-size: 0.9rem;
-            }
-
-            .login-form {
-                padding: 25px 25px 35px;
-            }
-
-            .form-group {
-                margin-bottom: 18px;
-            }
-
-            .form-group label {
-                font-size: 0.95rem;
-                margin-bottom: 8px;
-            }
-
-            .input-wrapper input {
-                padding: 14px 16px;
-                padding-left: 48px;
-                font-size: 1rem;
-                border-radius: 12px;
-            }
-
-            .input-wrapper .input-icon {
-                left: 16px;
-                font-size: 1.1rem;
-            }
-
-            .input-wrapper .toggle-password {
-                right: 14px;
-                font-size: 1.1rem;
-            }
-
-            .form-options {
-                margin-bottom: 24px;
-            }
-
-            .checkmark {
-                width: 20px;
-                height: 20px;
-            }
-
-            .remember-me span {
-                font-size: 0.9rem;
-            }
-
-            .btn-login {
-                padding: 16px;
-                font-size: 1.1rem;
-                border-radius: 12px;
-            }
-
-            .btn-login i {
-                font-size: 1.2rem;
-            }
-
-            .error-message,
-            .success-message {
-                padding: 12px 14px;
-                font-size: 0.9rem;
-                border-radius: 10px;
-            }
-
-            .login-footer {
-                padding: 18px 20px;
-            }
-
-            .login-footer p {
-                font-size: 0.8rem;
-            }
+            body { padding: 16px; align-items: flex-start; padding-top: 40px; }
+            .floating-icons i { font-size: 1.5rem !important; }
+            .floating-icons i:nth-child(3), .floating-icons i:nth-child(5), .floating-icons i:nth-child(6) { display: none; }
+            .login-container { border-radius: 20px; max-width: 100%; }
+            .login-header { padding: 35px 25px; }
+            .login-header::after { bottom: -15px; height: 30px; }
+            .logo-icon { width: 75px; height: 75px; border-radius: 18px; margin-bottom: 16px; }
+            .logo-icon i { font-size: 2.2rem; }
+            .login-header h1 { font-size: 1.35rem; }
+            .login-header p { font-size: 0.9rem; }
+            .login-form { padding: 25px 25px 35px; }
+            .form-group { margin-bottom: 18px; }
+            .form-group label { font-size: 0.95rem; margin-bottom: 8px; }
+            .input-wrapper input { padding: 14px 16px 14px 48px; font-size: 1rem; border-radius: 12px; }
+            .input-wrapper .input-icon { left: 16px; font-size: 1.1rem; }
+            .input-wrapper .toggle-password { right: 14px; font-size: 1.1rem; }
+            .form-options { margin-bottom: 24px; }
+            .checkmark { width: 20px; height: 20px; }
+            .remember-me span { font-size: 0.9rem; }
+            .btn-login { padding: 16px; font-size: 1.1rem; border-radius: 12px; }
+            .btn-login i { font-size: 1.2rem; }
+            .error-message, .success-message { padding: 12px 14px; font-size: 0.9rem; border-radius: 10px; }
+            .login-footer { padding: 18px 20px; }
+            .login-footer p { font-size: 0.8rem; }
         }
 
-        /* ==================== RESPONSIVE - Small Mobile ==================== */
+        /* Small Mobile */
         @media (max-width: 380px) {
-            body {
-                padding: 12px;
-                padding-top: 30px;
-            }
-
-            .login-header {
-                padding: 30px 20px;
-            }
-
-            .logo-icon {
-                width: 65px;
-                height: 65px;
-                border-radius: 16px;
-            }
-
-            .logo-icon i {
-                font-size: 1.9rem;
-            }
-
-            .login-header h1 {
-                font-size: 1.2rem;
-            }
-
-            .login-header p {
-                font-size: 0.85rem;
-            }
-
-            .login-form {
-                padding: 20px 20px 30px;
-            }
-
-            .form-group label {
-                font-size: 0.9rem;
-            }
-
-            .input-wrapper input {
-                padding: 12px 14px;
-                padding-left: 44px;
-                font-size: 0.95rem;
-            }
-
-            .input-wrapper .input-icon {
-                left: 14px;
-                font-size: 1rem;
-            }
-
-            .btn-login {
-                padding: 14px;
-                font-size: 1rem;
-            }
-
-            .login-footer p {
-                font-size: 0.75rem;
-            }
+            body { padding: 12px; padding-top: 30px; }
+            .login-header { padding: 30px 20px; }
+            .logo-icon { width: 65px; height: 65px; border-radius: 16px; }
+            .logo-icon i { font-size: 1.9rem; }
+            .login-header h1 { font-size: 1.2rem; }
+            .login-header p { font-size: 0.85rem; }
+            .login-form { padding: 20px 20px 30px; }
+            .form-group label { font-size: 0.9rem; }
+            .input-wrapper input { padding: 12px 14px 12px 44px; font-size: 0.95rem; }
+            .input-wrapper .input-icon { left: 14px; font-size: 1rem; }
+            .btn-login { padding: 14px; font-size: 1rem; }
+            .login-footer p { font-size: 0.75rem; }
         }
 
-        /* ==================== Landscape Mobile ==================== */
+        /* Landscape */
         @media (max-height: 600px) and (orientation: landscape) {
-            body {
-                padding: 15px;
-                align-items: center;
-            }
-
-            .login-container {
-                display: flex;
-                max-width: 700px;
-            }
-
-            .login-header {
-                flex: 0 0 40%;
-                padding: 30px 25px;
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                border-radius: 24px 0 0 24px;
-            }
-
-            .login-header::after {
-                display: none;
-            }
-
-            .logo-icon {
-                width: 60px;
-                height: 60px;
-                margin-bottom: 12px;
-            }
-
-            .logo-icon i {
-                font-size: 1.8rem;
-            }
-
-            .login-header h1 {
-                font-size: 1.1rem;
-            }
-
-            .login-header p {
-                font-size: 0.8rem;
-            }
-
-            .login-form {
-                flex: 1;
-                padding: 25px 30px;
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-            }
-
-            .form-group {
-                margin-bottom: 14px;
-            }
-
-            .form-options {
-                margin-bottom: 18px;
-            }
-
-            .input-wrapper input {
-                padding: 12px 14px 12px 44px;
-            }
-
-            .btn-login {
-                padding: 14px;
-            }
-
-            .login-footer {
-                display: none;
-            }
+            body { padding: 15px; align-items: center; }
+            .login-container { display: flex; max-width: 700px; }
+            .login-header { flex: 0 0 40%; padding: 30px 25px; display: flex; flex-direction: column; justify-content: center; border-radius: 24px 0 0 24px; }
+            .login-header::after { display: none; }
+            .logo-icon { width: 60px; height: 60px; margin-bottom: 12px; }
+            .logo-icon i { font-size: 1.8rem; }
+            .login-header h1 { font-size: 1.1rem; }
+            .login-header p { font-size: 0.8rem; }
+            .login-form { flex: 1; padding: 25px 30px; display: flex; flex-direction: column; justify-content: center; }
+            .form-group { margin-bottom: 14px; }
+            .form-options { margin-bottom: 18px; }
+            .input-wrapper input { padding: 12px 14px 12px 44px; }
+            .btn-login { padding: 14px; }
+            .login-footer { display: none; }
         }
     </style>
 </head>
 <body>
-    <!-- Floating Background Icons -->
     <div class="floating-icons">
         <i class="fas fa-cogs"></i>
         <i class="fas fa-industry"></i>
@@ -663,9 +444,7 @@
         <i class="fas fa-lightbulb"></i>
     </div>
 
-    <!-- Login Container -->
     <div class="login-container">
-        <!-- Header -->
         <div class="login-header">
             <div class="logo-icon">
                 <i class="fas fa-industry"></i>
@@ -674,52 +453,33 @@
             <p>ระบบจัดการความรู้สายการผลิต</p>
         </div>
 
-        <!-- Form -->
         <form class="login-form" id="loginForm" onsubmit="handleLogin(event)">
-            <!-- Error Message -->
             <div class="error-message" id="errorMessage">
                 <i class="fas fa-exclamation-circle"></i>
                 <span id="errorText">รหัสพนักงานหรือรหัสผ่านไม่ถูกต้อง</span>
             </div>
 
-            <!-- Success Message -->
             <div class="success-message" id="successMessage">
                 <i class="fas fa-check-circle"></i>
                 <span>เข้าสู่ระบบสำเร็จ กำลังนำท่านไปยังหน้าหลัก...</span>
             </div>
 
-            <!-- Employee ID -->
             <div class="form-group">
                 <label for="employeeId">
                     <i class="fas fa-id-card"></i>รหัสพนักงาน
                 </label>
                 <div class="input-wrapper">
-                    <input 
-                        type="text" 
-                        id="employeeId" 
-                        name="employeeId"
-                        placeholder="กรอกรหัสพนักงาน"
-                        autocomplete="username"
-                        required
-                    >
+                    <input type="text" id="employeeId" name="employeeId" placeholder="กรอกรหัสพนักงาน" autocomplete="username" required>
                     <i class="fas fa-user input-icon"></i>
                 </div>
             </div>
 
-            <!-- Password -->
             <div class="form-group">
                 <label for="password">
                     <i class="fas fa-lock"></i>รหัสผ่าน
                 </label>
                 <div class="input-wrapper">
-                    <input 
-                        type="password" 
-                        id="password" 
-                        name="password"
-                        placeholder="กรอกรหัสผ่าน"
-                        autocomplete="current-password"
-                        required
-                    >
+                    <input type="password" id="password" name="password" placeholder="กรอกรหัสผ่าน" autocomplete="current-password" required>
                     <i class="fas fa-key input-icon"></i>
                     <button type="button" class="toggle-password" onclick="togglePassword()">
                         <i class="fas fa-eye" id="toggleIcon"></i>
@@ -727,7 +487,6 @@
                 </div>
             </div>
 
-            <!-- Options -->
             <div class="form-options">
                 <label class="remember-me">
                     <input type="checkbox" id="rememberMe">
@@ -736,37 +495,24 @@
                 </label>
             </div>
 
-            <!-- Login Button -->
             <button type="submit" class="btn-login" id="btnLogin">
                 <i class="fas fa-sign-in-alt"></i>
                 <span>เข้าสู่ระบบ</span>
             </button>
         </form>
 
-        <!-- Footer -->
         <div class="login-footer">
             <p>© 2024 Production Line - Knowledge Management System</p>
         </div>
     </div>
 
     <script>
-        // ==================== Google Apps Script URL ====================
-        // ⚠️ เปลี่ยน URL นี้เป็น URL ที่ได้จากการ Deploy Apps Script
-        const API_URL = 'https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec';
-        
-        // ==================== Fallback User Data (ใช้ถ้า API ไม่ทำงาน) ====================
-        const fallbackUsers = {
-            "admin": { password: "admin123", name: "ผู้ดูแลระบบ", role: "admin", department: "IT" },
-            "EMP001": { password: "1234", name: "สมชาย ใจดี", role: "operator", department: "Production" },
-            "EMP002": { password: "1234", name: "สมหญิง รักงาน", role: "operator", department: "QC" },
-            "SUP001": { password: "super123", name: "วิชัย หัวหน้างาน", role: "supervisor", department: "Production" }
-        };
+        // ✅ URL ของ Google Apps Script API
+        const API_URL = 'https://script.google.com/macros/s/AKfycbzgjnJArSiRb0d9KDaF7NMChDYmjXkMlGQkedlqY_vkyJ5v4dskg1gu87TteNOGu6ifiw/exec';
 
-        // ==================== Toggle Password ====================
         function togglePassword() {
             const passwordInput = document.getElementById('password');
             const toggleIcon = document.getElementById('toggleIcon');
-            
             if (passwordInput.type === 'password') {
                 passwordInput.type = 'text';
                 toggleIcon.classList.remove('fa-eye');
@@ -778,31 +524,23 @@
             }
         }
 
-        // ==================== Show Error ====================
         function showError(message) {
             const errorDiv = document.getElementById('errorMessage');
             const errorText = document.getElementById('errorText');
             const successDiv = document.getElementById('successMessage');
-            
             successDiv.classList.remove('show');
             errorText.textContent = message;
             errorDiv.classList.add('show');
-            
-            setTimeout(() => {
-                errorDiv.classList.remove('show');
-            }, 5000);
+            setTimeout(() => { errorDiv.classList.remove('show'); }, 5000);
         }
 
-        // ==================== Show Success ====================
         function showSuccess() {
             const errorDiv = document.getElementById('errorMessage');
             const successDiv = document.getElementById('successMessage');
-            
             errorDiv.classList.remove('show');
             successDiv.classList.add('show');
         }
 
-        // ==================== Handle Login ====================
         async function handleLogin(event) {
             event.preventDefault();
             
@@ -816,92 +554,64 @@
                 return;
             }
 
-            // Show loading
             btnLogin.classList.add('loading');
             btnLogin.innerHTML = '<i class="fas fa-spinner"></i><span>กำลังเข้าสู่ระบบ...</span>';
 
             try {
-                // ลองเรียก API จาก Google Sheet
                 const response = await fetch(API_URL, {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         action: 'login',
                         employeeId: employeeId,
                         password: password
                     })
                 });
-                
-                const result = await response.json();
+
+                // เนื่องจาก no-cors จะไม่ได้ response กลับมา
+                // ใช้วิธี fetch แบบ GET แทน
+                const getResponse = await fetch(`${API_URL}?action=login&employeeId=${encodeURIComponent(employeeId)}&password=${encodeURIComponent(password)}`);
+                const result = await getResponse.json();
                 
                 if (result.success) {
-                    handleLoginSuccess(result.user, rememberMe);
+                    const userData = {
+                        ...result.user,
+                        loginTime: new Date().toISOString()
+                    };
+
+                    if (rememberMe) {
+                        localStorage.setItem('currentUser', JSON.stringify(userData));
+                        localStorage.setItem('savedEmployeeId', employeeId);
+                    } else {
+                        sessionStorage.setItem('currentUser', JSON.stringify(userData));
+                        localStorage.removeItem('savedEmployeeId');
+                    }
+
+                    showSuccess();
+                    setTimeout(() => { window.location.href = 'index.html'; }, 1000);
                 } else {
                     showError(result.message || 'รหัสพนักงานหรือรหัสผ่านไม่ถูกต้อง');
-                    resetLoginButton(btnLogin);
+                    resetButton();
                 }
-                
             } catch (error) {
-                console.log('API Error, using fallback:', error);
-                // ถ้า API ไม่ทำงาน ใช้ fallback data
-                handleFallbackLogin(employeeId, password, rememberMe, btnLogin);
+                console.error('Login error:', error);
+                showError('ไม่สามารถเชื่อมต่อระบบได้ กรุณาลองใหม่');
+                resetButton();
             }
         }
 
-        // ==================== Fallback Login ====================
-        function handleFallbackLogin(employeeId, password, rememberMe, btnLogin) {
-            setTimeout(() => {
-                if (fallbackUsers[employeeId] && fallbackUsers[employeeId].password === password) {
-                    const userData = {
-                        employeeId: employeeId,
-                        name: fallbackUsers[employeeId].name,
-                        role: fallbackUsers[employeeId].role,
-                        department: fallbackUsers[employeeId].department
-                    };
-                    handleLoginSuccess(userData, rememberMe);
-                } else {
-                    showError('รหัสพนักงานหรือรหัสผ่านไม่ถูกต้อง');
-                    resetLoginButton(btnLogin);
-                }
-            }, 1000);
-        }
-
-        // ==================== Login Success ====================
-        function handleLoginSuccess(userData, rememberMe) {
-            userData.loginTime = new Date().toISOString();
-            
-            if (rememberMe) {
-                localStorage.setItem('currentUser', JSON.stringify(userData));
-                localStorage.setItem('savedEmployeeId', userData.employeeId);
-            } else {
-                sessionStorage.setItem('currentUser', JSON.stringify(userData));
-                localStorage.removeItem('savedEmployeeId');
-            }
-
-            showSuccess();
-
-            setTimeout(() => {
-                window.location.href = 'index.html';
-            }, 1000);
-        }
-
-        // ==================== Reset Login Button ====================
-        function resetLoginButton(btnLogin) {
+        function resetButton() {
+            const btnLogin = document.getElementById('btnLogin');
             btnLogin.classList.remove('loading');
             btnLogin.innerHTML = '<i class="fas fa-sign-in-alt"></i><span>เข้าสู่ระบบ</span>';
-            
             document.getElementById('password').value = '';
             document.getElementById('password').focus();
         }
 
-        // ==================== Check if already logged in ====================
         window.onload = function() {
             const user = localStorage.getItem('currentUser') || sessionStorage.getItem('currentUser');
-            if (user) {
-                window.location.href = 'index.html';
-            }
+            if (user) { window.location.href = 'index.html'; }
 
             const savedId = localStorage.getItem('savedEmployeeId');
             if (savedId) {
@@ -913,7 +623,6 @@
             }
         };
 
-        // ==================== Enter Key Handler ====================
         document.getElementById('employeeId').addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
                 e.preventDefault();
