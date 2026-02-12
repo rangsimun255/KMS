@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KMS - Quiz</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Sarabun',sans-serif;background:#e8eef5;min-height:100vh}
+
+    .container{max-width:1100px;margin:32px auto;padding:0 18px}
+    .header{
+      background:linear-gradient(135deg,#5b9bd5 0%,#4a89c8 100%);
+      color:#fff;border-radius:18px;padding:22px 22px;box-shadow:0 10px 24px rgba(0,0,0,.08);
+    }
+    .header h1{font-size:22px;margin-bottom:6px}
+    .header p{opacity:.95;line-height:1.5}
+
+    .row{display:flex;gap:12px;flex-wrap:wrap;margin-top:14px}
+    .pill{
+      background:rgba(255,255,255,.18);
+      border:1px solid rgba(255,255,255,.25);
+      padding:8px 12px;border-radius:999px;font-size:13px;
+    }
+    .pill a{color:#fff;text-decoration:underline}
+
+    .steps{
+      margin-top:18px;background:#fff;border-radius:18px;padding:16px 18px;
+      box-shadow:0 10px 24px rgba(0,0,0,.06)
+    }
+    .steps h2{font-size:16px;margin-bottom:10px;color:#1f2d3d}
+    .steps ol{padding-left:18px;line-height:1.7;color:#34495e}
+    .steps li{margin:4px 0}
+
+    .grid{
+      display:grid;gap:16px;margin-top:18px;
+      grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+    }
+
+    .card{
+      background:#fff;border-radius:18px;padding:16px 16px;
+      box-shadow:0 10px 24px rgba(0,0,0,.06);
+      transition:.18s ease;
+      display:flex;flex-direction:column;justify-content:space-between;
+      min-height:180px;
+      border:1px solid rgba(0,0,0,.04);
+    }
+    .card:hover{transform:translateY(-4px)}
+    .badge{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:6px 10px;border-radius:999px;font-size:12px;font-weight:700;
+      width:fit-content;margin-bottom:10px;
+      color:#0f172a;background:#eef6ff;border:1px solid #d7eaff;
+    }
+    .title{font-size:16px;font-weight:700;color:#0f172a;margin-bottom:6px}
+    .desc{font-size:13px;color:#475569;line-height:1.55}
+
+    .btn{
+      margin-top:14px;
+      display:inline-flex;align-items:center;justify-content:center;gap:10px;
+      padding:11px 12px;border-radius:14px;
+      text-decoration:none;font-weight:700;font-size:14px;color:#fff;
+      box-shadow:0 10px 20px rgba(0,0,0,.10);
+      transition:.15s ease;
+      user-select:none;
+    }
+    .btn:hover{transform:translateY(-2px)}
+    .btn:active{transform:translateY(0px)}
+
+    /* สีแต่ละกระบวนการ (ฟีล Kahoot) */
+    .c1{background:#2F80ED}
+    .c2{background:#27AE60}
+    .c3{background:#F2994A}
+    .c4{background:#9B51E0}
+    .c5{background:#EB5757}
+    .c6{background:#1ABC9C}
+    .c7{background:#34495E}
+
+    .footerNote{
+      margin:18px 0 30px;
+      color:#64748b;font-size:13px;line-height:1.6;
+      text-align:center;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+
+    <!-- Intro -->
+    <div class="header">
+      <h1>🎯 แบบทดสอบกระบวนการผลิตยาอมมะแว้ง (Quiz)</h1>
+      <p>
+        หน้านี้มีไว้สำหรับทดสอบความเข้าใจหลังเรียนรู้จาก Learning Path<br>
+        กรุณาเริ่มทำจาก <b>Quiz 1</b> และทำตามลำดับจนถึง <b>Quiz 7</b> โดยเตรียม <b>ชื่อ/รหัสพนักงาน</b> สำหรับกรอกใน Kahoot
+      </p>
+
+      <div class="row">
+        <div class="pill">แนะนำ: ทำตามลำดับ 1 → 7</div>
+        <div class="pill">ต้องกรอกชื่อ/รหัสใน Kahoot</div>
+        <div class="pill"><a href="learning-path.html">กลับไป Learning Path</a></div>
+      </div>
+    </div>
+
+    <!-- Steps -->
+    <div class="steps">
+      <h2>ขั้นตอนการทำแบบทดสอบ</h2>
+      <ol>
+        <li>ทบทวนเนื้อหาจาก Learning Path ของกระบวนการนั้น</li>
+        <li>กดเข้า Quiz ตามลำดับ (เริ่มจาก Quiz 1)</li>
+        <li>กรอกชื่อ/รหัสพนักงานใน Kahoot</li>
+        <li>ทำแบบทดสอบให้ครบทุกข้อ</li>
+        <li>บันทึก/ส่งคะแนนตามที่หัวหน้างานกำหนด</li>
+      </ol>
+    </div>
+
+    <!-- Cards auto render -->
+    <div class="grid" id="quizContainer"></div>
+
+    <div class="footerNote">
+      หมายเหตุ: หากทำคะแนนต่ำกว่าเกณฑ์ แนะนำให้กลับไปทบทวน Learning Path และเอกสารใน Knowledge Base ก่อนทำซ้ำ
+    </div>
+
+  </div>
+
+  <script>
+    // ✅ แก้แค่ตรงนี้: ใส่ Kahoot ID ของทั้ง 7 ชุด
+    // (Kahoot ID จะเป็นชุดตัวอักษร/ตัวเลข/ขีด เช่น "abc12345-xxxx-xxxx-xxxx-xxxxxxxxxxxx")
+    const quizzes = [
+      { no: 1, title: "กระบวนการผสมเปียก",   id: "KAHOOT_ID_1", desc: "ทดสอบความเข้าใจ Wet Mass / ความชื้น / ความสม่ำเสมอ", colorClass: "c1" },
+      { no: 2, title: "กระบวนการแร่งเปียก",  id: "KAHOOT_ID_2", desc: "ทดสอบขนาดเม็ดเปียกและผลกระทบต่อขั้นตอนถัดไป",     colorClass: "c2" },
+      { no: 3, title: "กระบวนการอบลมร้อน",  id: "KAHOOT_ID_3", desc: "ทดสอบการควบคุมความชื้นตกค้างและความเสี่ยงเมื่ออบไม่พอ", colorClass: "c3" },
+      { no: 4, title: "กระบวนการแร่งแห้ง",  id: "KAHOOT_ID_4", desc: "ทดสอบการคัดขนาดหลังอบ และผลต่อการไหล/น้ำหนักเม็ด",     colorClass: "c4" },
+      { no: 5, title: "กระบวนการผสมแห้ง",   id: "KAHOOT_ID_5", desc: "ทดสอบความสม่ำเสมอของสูตรและความเสี่ยงจากการผสมไม่ทั่ว",  colorClass: "c5" },
+      { no: 6, title: "กระบวนการตอกเม็ดยา", id: "KAHOOT_ID_6", desc: "ทดสอบ defect จาก compression (แตก/บิ่น/ติดพั้นช์ ฯลฯ)",    colorClass: "c6" },
+      { no: 7, title: "กระบวนการบรรจุซอง",  id: "KAHOOT_ID_7", desc: "ทดสอบการตรวจขั้นสุดท้ายและการตัดสินใจเมื่อพบ NG ระหว่างบรรจุ", colorClass: "c7" },
+    ];
+
+    const container = document.getElementById("quizContainer");
+
+    quizzes.forEach(q => {
+      const card = document.createElement("div");
+      card.className = "card";
+
+      const idMissing = !q.id || q.id.startsWith("KAHOOT_ID_");
+
+      card.innerHTML = `
+        <div>
+          <div class="badge">Quiz ${q.no}</div>
+          <div class="title">${q.title}</div>
+          <div class="desc">${q.desc}</div>
+        </div>
+
+        <a class="btn ${q.colorClass}"
+           href="quiz-play.html?k=${encodeURIComponent(q.id)}&title=${encodeURIComponent(q.title)}"
+           ${idMissing ? 'onclick="alert(`ยังไม่ได้ใส่ Kahoot ID ของ Quiz ${q.no}`); return false;"' : ""}>
+          ▶ เริ่มทำแบบทดสอบ
+        </a>
+      `;
+
+      container.appendChild(card);
+    });
+  </script>
+</body>
+</html>
