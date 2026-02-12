@@ -67,8 +67,12 @@
 
     /* Quiz Cards */
     .quiz-grid{
-      display:grid;grid-template-columns:repeat(2,1fr);gap:20px;margin-top:12px;
-    }
+  display:grid;
+  grid-template-columns:1fr; /* ✅ แถวเดียว */
+  gap:20px;
+  margin-top:12px;
+}
+
     .quiz-card{
       background:#fff;border-radius:16px;padding:18px 18px;
       box-shadow:0 4px 15px rgba(0,0,0,.05);
