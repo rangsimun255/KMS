@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KMS - Quiz Play</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Sarabun',sans-serif;background:#e8eef5}
+
+    .topbar{
+      height:64px;
+      background:linear-gradient(135deg,#5b9bd5 0%,#4a89c8 100%);
+      color:#fff;
+      display:flex;align-items:center;justify-content:space-between;
+      padding:0 18px;
+      box-shadow:0 10px 24px rgba(0,0,0,.10);
+    }
+    .title{font-weight:800;font-size:15px}
+    .actions{display:flex;gap:10px;align-items:center}
+    .linkBtn{
+      color:#fff;text-decoration:none;
+      padding:8px 12px;border-radius:12px;
+      background:rgba(255,255,255,.16);
+      border:1px solid rgba(255,255,255,.22);
+      font-weight:700;font-size:13px;
+    }
+    .linkBtn:hover{background:rgba(255,255,255,.22)}
+
+    .wrap{
+      width:100%;
+      height:calc(100vh - 64px);
+      padding:14px;
+    }
+    .frameBox{
+      width:100%;
+      height:100%;
+      border-radius:18px;
+      overflow:hidden;
+      box-shadow:0 12px 30px rgba(0,0,0,.10);
+      background:#fff;
+    }
+    iframe{
+      width:100%;
+      height:100%;
+      border:0;
+    }
+    .error{
+      padding:18px;
+      color:#b91c1c;
+      background:#fff;
+      border-radius:18px;
+      box-shadow:0 12px 30px rgba(0,0,0,.08);
+      line-height:1.6;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="topbar">
+    <div class="title" id="quizTitle">🎯 Quiz</div>
+    <div class="actions">
+      <a class="linkBtn" href="quiz.html">⬅ กลับหน้า Quiz</a>
+      <a class="linkBtn" href="learning-path.html">📘 Learning Path</a>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="frameBox" id="box">
+      <iframe id="kahootFrame" allowfullscreen></iframe>
+    </div>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const kahootId = params.get("k");
+    const title = params.get("title") || "";
+
+    document.getElementById("quizTitle").innerText = "🎯 " + (title ? `Quiz: ${title}` : "Quiz");
+
+    if (!kahootId || kahootId.startsWith("KAHOOT_ID_")) {
+      // แสดงข้อความถ้าไม่มี ID
+      const box = document.getElementById("box");
+      box.innerHTML = `
+        <div class="error">
+          <b>ยังไม่พบ Kahoot ID</b><br>
+          กรุณากลับไปหน้า Quiz แล้วใส่ Kahoot ID ให้ครบทั้ง 7 ชุดในไฟล์ <b>quiz.html</b> (ตัวแปร quizzes)<br><br>
+          หากใส่ ID แล้วแต่ยังไม่ขึ้น อาจเป็นเพราะ Kahoot ชุดนั้นไม่อนุญาตให้ Embed ใน iframe
+        </div>
+      `;
+    } else {
+      document.getElementById("kahootFrame").src = "https://embed.kahoot.it/" + encodeURIComponent(kahootId);
+    }
+  </script>
+</body>
+</html>
