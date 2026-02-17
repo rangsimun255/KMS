@@ -163,14 +163,12 @@
     }
     .impact i{margin-top:3px}
 
-    /* ✅ ใหม่: จัดให้หัวข้ออยู่บรรทัดเดียวกับ icon */
+    /* ✅ ใหม่: Impact ตามรูปแบบที่ต้องการ */
     .impact-text{flex:1}
-    .impact-title{font-weight:900; margin-bottom:8px}
-    .impact-section{
-      white-space: pre-line;
-      font-weight:800;
-      margin-top:10px;
-    }
+    .impact-title{font-weight:900;margin-bottom:6px}
+    .impact-line{white-space:pre-line;font-weight:900}
+    .impact-subtitle{font-weight:900;margin-top:12px;margin-bottom:6px}
+    .impact-list{white-space:pre-line;font-weight:800}
 
     /* Right panel */
     .panel{
@@ -394,13 +392,15 @@
               <div>Critical Point:\n${esc(s.CriticalPoint || "-")}</div>
             </div>
 
-            <!-- ✅ แก้ให้หัวข้ออยู่บรรทัดเดียวกับ icon -->
+            <!-- ✅ Impact รูปแบบใหม่ตามที่ต้องการ -->
             <div class="impact">
               <i class="fas fa-share-nodes"></i>
               <div class="impact-text">
-                <div class="impact-title">ถ้าพลาดจะกระทบ:</div>
-                <div class="impact-section"><b>(Process)</b>\n${impactProc}</div>
-                <div class="impact-section"><b>(Defect)</b>\n${impactDef}</div>
+                <div class="impact-title">ถ้าพลาดจะกระทบกระบวนการ</div>
+                <div class="impact-line">${impactProc}</div>
+
+                <div class="impact-subtitle">ทำให้เกิดของเสีย</div>
+                <div class="impact-list">${impactDef}</div>
               </div>
             </div>
           </div>
