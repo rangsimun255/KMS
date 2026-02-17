@@ -135,7 +135,7 @@
       border:1px solid #e8f1fb;
       padding:12px 12px;
       border-radius:14px;
-      white-space: pre-line;   /* ✅ สำคัญ */
+      white-space: pre-line;
     }
 
     .critical{
@@ -149,7 +149,6 @@
       display:flex;gap:10px;align-items:flex-start;
     }
     .critical i{margin-top:3px}
-    /* ✅ CriticalPoint ขึ้นบรรทัดใหม่ */
     .critical div{ white-space: pre-line; }
 
     .impact{
@@ -163,8 +162,15 @@
       display:flex;gap:10px;align-items:flex-start;
     }
     .impact i{margin-top:3px}
-    /* ✅ ImpactProcess / ImpactDefect ขึ้นบรรทัดใหม่ */
-    .impact div{ white-space: pre-line; }
+
+    /* ✅ ใหม่: จัดให้หัวข้ออยู่บรรทัดเดียวกับ icon */
+    .impact-text{flex:1}
+    .impact-title{font-weight:900; margin-bottom:8px}
+    .impact-section{
+      white-space: pre-line;
+      font-weight:800;
+      margin-top:10px;
+    }
 
     /* Right panel */
     .panel{
@@ -219,7 +225,6 @@
     .btn-next{background:#5b9bd5;color:#fff}
     .btn-next:hover{background:#4a89c8}
 
-    /* ✅ ปุ่มไปหน้า Defect */
     .btn-defect{
       margin-top:10px;
       display:flex;
@@ -235,7 +240,6 @@
       transition:.2s;
     }
     .btn-defect:hover{filter:brightness(.95)}
-    .btn-defect small{opacity:.9;font-weight:700}
 
     .mini-list{
       border:1px solid #eef3f8;
@@ -279,7 +283,6 @@
     .loading i{font-size:46px;margin-bottom:10px;color:#90a4ae}
     .error i{font-size:46px;margin-bottom:10px;color:#e57373}
 
-    /* Mobile sidebar bottom */
     @media (max-width: 768px){
       .container{flex-direction:column}
       .sidebar{
@@ -306,7 +309,6 @@
   <a class="sidebar-icon" data-page="share" href="share-experience.html"><i class="fas fa-comments"></i></a>
   <a class="sidebar-icon logout" href="#"><i class="fas fa-sign-out-alt"></i></a>
 </nav>
-
 
   <main class="main-content">
     <header class="header">
@@ -361,7 +363,6 @@
     const s = steps[index];
     const total = steps.length;
 
-    // ✅ แยก ImpactProcess / ImpactDefect แบบหลายบรรทัด (ตามที่พิมพ์ในชีต)
     const impactProc = esc(String(s.ImpactProcess ?? "").trim()) || "-";
     const impactDef  = esc(String(s.ImpactDefect ?? "").trim()) || "-";
 
@@ -393,11 +394,13 @@
               <div>Critical Point:\n${esc(s.CriticalPoint || "-")}</div>
             </div>
 
+            <!-- ✅ แก้ให้หัวข้ออยู่บรรทัดเดียวกับ icon -->
             <div class="impact">
               <i class="fas fa-share-nodes"></i>
-              <div>
-ถ้าพลาดจะกระทบ (Process):\n${impactProc}\n
-ของเสียที่เกี่ยวข้อง (Defect):\n${impactDef}
+              <div class="impact-text">
+                <div class="impact-title">ถ้าพลาดจะกระทบ:</div>
+                <div class="impact-section"><b>(Process)</b>\n${impactProc}</div>
+                <div class="impact-section"><b>(Defect)</b>\n${impactDef}</div>
               </div>
             </div>
           </div>
