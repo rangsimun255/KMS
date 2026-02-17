@@ -125,6 +125,8 @@
       gap:12px;
       flex:1;
     }
+
+    /* ✅ StepDetail ขึ้นบรรทัดใหม่ */
     .detail{
       color:#34495e;
       font-size:14px;
@@ -133,6 +135,7 @@
       border:1px solid #e8f1fb;
       padding:12px 12px;
       border-radius:14px;
+      white-space: pre-line;   /* ✅ สำคัญ */
     }
 
     .critical{
@@ -146,6 +149,8 @@
       display:flex;gap:10px;align-items:flex-start;
     }
     .critical i{margin-top:3px}
+    /* ✅ CriticalPoint ขึ้นบรรทัดใหม่ */
+    .critical div{ white-space: pre-line; }
 
     .impact{
       border-radius:14px;
@@ -158,6 +163,8 @@
       display:flex;gap:10px;align-items:flex-start;
     }
     .impact i{margin-top:3px}
+    /* ✅ ImpactProcess / ImpactDefect ขึ้นบรรทัดใหม่ */
+    .impact div{ white-space: pre-line; }
 
     /* Right panel */
     .panel{
@@ -354,18 +361,12 @@
     const s = steps[index];
     const total = steps.length;
 
-    const impactText = (() => {
-      const p = String(s.ImpactProcess ?? "").trim();
-      const d = String(s.ImpactDefect ?? "").trim();
-      if(!p && !d) return "-";
-      if(p && d) return `Process ${esc(p)} — ${esc(d)}`;
-      if(p) return `Process ${esc(p)}`;
-      return esc(d);
-    })();
+    // ✅ แยก ImpactProcess / ImpactDefect แบบหลายบรรทัด (ตามที่พิมพ์ในชีต)
+    const impactProc = esc(String(s.ImpactProcess ?? "").trim()) || "-";
+    const impactDef  = esc(String(s.ImpactDefect ?? "").trim()) || "-";
 
     const percent = total ? Math.round(((index+1)/total)*100) : 0;
 
-    // ✅ ปุ่มไปหน้า Defect (โชว์เฉพาะ Step สุดท้าย)
     const defectBtn = (index === total - 1) ? `
       <a class="btn-defect" href="defect-learning.html?process=${encodeURIComponent(currentProc)}">
         <i class="fas fa-triangle-exclamation"></i>
@@ -389,12 +390,15 @@
 
             <div class="critical">
               <i class="fas fa-triangle-exclamation"></i>
-              <div>Critical Point: ${esc(s.CriticalPoint || "-")}</div>
+              <div>Critical Point:\n${esc(s.CriticalPoint || "-")}</div>
             </div>
 
             <div class="impact">
               <i class="fas fa-share-nodes"></i>
-              <div>ถ้าพลาดจะกระทบ: ${impactText}</div>
+              <div>
+ถ้าพลาดจะกระทบ (Process):\n${impactProc}\n
+ของเสียที่เกี่ยวข้อง (Defect):\n${impactDef}
+              </div>
             </div>
           </div>
         </div>
@@ -444,7 +448,6 @@
       });
     });
 
-    // คีย์บอร์ดซ้าย/ขวา
     document.onkeydown = (e)=>{
       if(e.key === "ArrowLeft") setIndex(index-1);
       if(e.key === "ArrowRight") setIndex(index+1);
@@ -476,7 +479,6 @@
         return;
       }
 
-      // ถ้ามี ?step=3 ให้เริ่มที่ step นั้น
       const startStep = Number(getQueryParam("step"));
       if(!Number.isNaN(startStep) && startStep>0){
         const idx = steps.findIndex(x => Number(x.StepNo) === startStep);
