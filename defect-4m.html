@@ -166,7 +166,7 @@
     }
 
     try{
-      const url = `${API_BASE}?view=4m&process=${encodeURIComponent(proc)}&defect=${encodeURIComponent(defect)}`;
+      const url = `${API_BASE}?view=defect4m&process=${encodeURIComponent(proc)}&defect=${encodeURIComponent(defect)}`;
       const res = await fetch(url);
       const rows = await res.json();
 
