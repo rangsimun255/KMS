@@ -40,6 +40,15 @@
     .box h3{font-size:13px;color:#2e75b6;font-weight:900;margin-bottom:6px}
     .box p{font-size:14px;color:#34495e;line-height:1.55}
 
+    .media-wrap{display:flex;flex-wrap:wrap;gap:8px}
+    .media-btn{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:10px 12px;border-radius:12px;
+      background:#2e75b6;color:#fff;text-decoration:none;
+      font-weight:900;font-size:13px;
+    }
+    .media-btn:hover{background:#1f5f97}
+
     .loading,.error{background:#fff;border-radius:16px;padding:30px;box-shadow:0 2px 10px rgba(0,0,0,.08);text-align:center;color:#607d8b}
     .error{color:#c62828}
 
@@ -54,19 +63,18 @@
 <body>
 <div class="container">
   <nav class="sidebar">
-  <a class="sidebar-icon" data-page="index" href="index.html"><i class="fas fa-home"></i></a>
-  <a class="sidebar-icon" data-page="kb" href="knowledge-base.html"><i class="fas fa-book"></i></a>
-  <a class="sidebar-icon" data-page="lp" href="learning-path.html"><i class="fas fa-graduation-cap"></i></a>
-  <a class="sidebar-icon" data-page="quiz" href="quiz.html"><i class="fas fa-clipboard-check"></i></a>
-  <a class="sidebar-icon" data-page="share" href="share-experience.html"><i class="fas fa-comments"></i></a>
-  <a class="sidebar-icon logout" href="#"><i class="fas fa-sign-out-alt"></i></a>
-</nav>
-
+    <a class="sidebar-icon" data-page="index" href="index.html"><i class="fas fa-home"></i></a>
+    <a class="sidebar-icon" data-page="kb" href="knowledge-base.html"><i class="fas fa-book"></i></a>
+    <a class="sidebar-icon" data-page="lp" href="learning-path.html"><i class="fas fa-graduation-cap"></i></a>
+    <a class="sidebar-icon" data-page="quiz" href="quiz.html"><i class="fas fa-clipboard-check"></i></a>
+    <a class="sidebar-icon" data-page="share" href="share-experience.html"><i class="fas fa-comments"></i></a>
+    <a class="sidebar-icon logout" href="#"><i class="fas fa-sign-out-alt"></i></a>
+  </nav>
 
   <main class="main-content">
     <header class="header">
       <h1>สาเหตุ (4M)</h1>
-      <p>1 สาเหตุ + 2 แนวทางป้องกัน/แก้ไข ต่อ 1 หมวด</p>
+      <p>1 สาเหตุ + 1 แนวทางป้องกัน/แก้ไข ต่อ 1 หมวด</p>
     </header>
 
     <div class="wrap">
@@ -84,6 +92,7 @@
 
 <script>
   const API_BASE = "https://script.google.com/macros/s/AKfycbwMRbnqSLTmmI4wofmNfZ5YPFGSiqg__rZUgyDlTTR03JchnQXgUj7DKDvzS4-QBmJrvw/exec";
+
   const iconMap = {
     "Man": "fa-user",
     "Machine": "fa-gears",
@@ -107,22 +116,43 @@
       .replaceAll(">","&gt;").replaceAll('"',"&quot;")
       .replaceAll("'","&#039;");
   }
-
   function pickFirstRowByType(rows, type){
     return rows.find(r => String(r.M_Type).trim() === type) || null;
   }
 
-  function renderCard(type, row){
+  async function fetchShortcuts(defect, cat){
+    const url = `${API_BASE}?view=shortcuts&defect=${encodeURIComponent(defect)}&cat=${encodeURIComponent(cat)}`;
+    const res = await fetch(url);
+    const data = await res.json();
+    return Array.isArray(data) ? data : [];
+  }
+
+  function renderCard(type, row, shortcuts){
     const icon = iconMap[type] || "fa-circle";
     const t = titleMap[type] || type;
 
     const cause = row ? String(row.CauseDescription || "").trim() : "";
     const p1 = row ? String(row.Prevention1 || "").trim() : "";
-    const p2 = row ? String(row.Prevention2 || "").trim() : "";
 
     const safeCause = cause || "ยังไม่มีข้อมูลสาเหตุ (ใส่เพิ่มในชีท Defect 4M)";
-    const safeP1 = p1 || "ยังไม่มีแนวทางป้องกัน/แก้ไข #1";
-    const safeP2 = p2 || "ยังไม่มีแนวทางป้องกัน/แก้ไข #2";
+    const safeP1 = p1 || "ยังไม่มีแนวทางป้องกัน/แก้ไข";
+
+    const btns = (shortcuts || []).map((s, idx) => {
+      const label = `เปิดไฟล์ #${idx+1}`;
+      return `<a class="media-btn" target="_blank" rel="noopener" href="${esc(s.FileURL)}">
+                <i class="fas fa-bolt"></i> ${esc(label)}
+              </a>`;
+    }).join("");
+
+    const shortcutBlock = btns
+      ? `<div class="box">
+           <h3><i class="fas fa-link"></i> สื่อทางลัด (จาก KMS Base)</h3>
+           <div class="media-wrap">${btns}</div>
+         </div>`
+      : `<div class="box">
+           <h3><i class="fas fa-link"></i> สื่อทางลัด (จาก KMS Base)</h3>
+           <p>ยังไม่มีไฟล์สำหรับ DefectCode นี้ในหมวด ${esc(type)}</p>
+         </div>`;
 
     return `
       <section class="card">
@@ -139,11 +169,13 @@
             <h3><i class="fas fa-bug"></i> สาเหตุ (1 ข้อ)</h3>
             <p>${esc(safeCause)}</p>
           </div>
+
           <div class="box">
-            <h3><i class="fas fa-shield-halved"></i> การป้องกัน/แก้ไข </h3>
-            <p>1) ${esc(safeP1)}</p>
-            <p>2) ${esc(safeP2)}</p>
+            <h3><i class="fas fa-shield-halved"></i> การป้องกัน/แก้ไข (1 ข้อ)</h3>
+            <p>${esc(safeP1)}</p>
           </div>
+
+          ${shortcutBlock}
         </div>
       </section>
     `;
@@ -153,10 +185,7 @@
     const proc = String(getQueryParam("process") || "").trim();
     const defect = String(getQueryParam("defect") || "").trim();
 
-    // ปุ่มกลับไป defect-learning
     document.getElementById("backBtn").href = `defect-learning.html?process=${encodeURIComponent(proc)}`;
-
-    // หัวข้อ
     document.getElementById("titleText").textContent = `Process ${proc} • Defect ${defect}`;
 
     if(!proc || !defect){
@@ -166,10 +195,10 @@
     }
 
     try{
-      const url = `${API_BASE}?view=defect4m&process=${encodeURIComponent(proc)}&defect=${encodeURIComponent(defect)}`;
-      const res = await fetch(url);
-      const rows = await res.json();
-
+      // ✅ ดึง 4M เฉพาะ process+defect
+      const url4m = `${API_BASE}?view=defect4m&process=${encodeURIComponent(proc)}&defect=${encodeURIComponent(defect)}`;
+      const res4m = await fetch(url4m);
+      const rows = await res4m.json();
       const list = Array.isArray(rows) ? rows : [];
 
       const man = pickFirstRowByType(list, "Man");
@@ -177,13 +206,21 @@
       const material = pickFirstRowByType(list, "Material");
       const method = pickFirstRowByType(list, "Method");
 
+      // ✅ ดึงปุ่มทางลัดจาก KMS Base ตาม defect + CauseCategory
+      const [manLinks, machineLinks, materialLinks, methodLinks] = await Promise.all([
+        fetchShortcuts(defect, "Man"),
+        fetchShortcuts(defect, "Machine"),
+        fetchShortcuts(defect, "Material"),
+        fetchShortcuts(defect, "Method"),
+      ]);
+
       document.getElementById("content").className = "";
       document.getElementById("content").innerHTML = `
         <div class="grid">
-          ${renderCard("Man", man)}
-          ${renderCard("Machine", machine)}
-          ${renderCard("Material", material)}
-          ${renderCard("Method", method)}
+          ${renderCard("Man", man, manLinks)}
+          ${renderCard("Machine", machine, machineLinks)}
+          ${renderCard("Material", material, materialLinks)}
+          ${renderCard("Method", method, methodLinks)}
         </div>
       `;
     }catch(err){
@@ -195,7 +232,6 @@
 
   load();
 </script>
-<script src="Js"></script>
 
 </body>
 </html>
