@@ -40,17 +40,38 @@
     .box h3{font-size:13px;color:#2e75b6;font-weight:900;margin-bottom:6px}
     .box p{font-size:14px;color:#34495e;line-height:1.55}
 
-    .media-wrap{display:flex;flex-wrap:wrap;gap:8px}
-    .media-btn{
-      display:inline-flex;align-items:center;gap:8px;
-      padding:10px 12px;border-radius:12px;
-      background:#2e75b6;color:#fff;text-decoration:none;
-      font-weight:900;font-size:13px;
-    }
-    .media-btn:hover{background:#1f5f97}
-
     .loading,.error{background:#fff;border-radius:16px;padding:30px;box-shadow:0 2px 10px rgba(0,0,0,.08);text-align:center;color:#607d8b}
     .error{color:#c62828}
+
+    /* ===== Dropdown ===== */
+    .dropdown{position:relative}
+    .drop-btn{
+      width:100%;
+      display:flex;align-items:center;justify-content:space-between;
+      gap:10px;
+      padding:10px 12px;border-radius:12px;
+      background:#2e75b6;color:#fff;
+      font-weight:900;font-size:13px;
+      border:none;cursor:pointer;
+    }
+    .drop-btn:hover{background:#1f5f97}
+    .drop-menu{
+      display:none;
+      position:absolute;left:0;right:0;top:calc(100% + 8px);
+      background:#fff;border:1px solid #e9eef6;border-radius:12px;
+      box-shadow:0 10px 24px rgba(0,0,0,.12);
+      overflow:hidden;
+      z-index:50;
+    }
+    .dropdown.open .drop-menu{display:block}
+    .drop-item{
+      display:flex;align-items:center;gap:10px;
+      padding:10px 12px;
+      color:#1f2d3d;text-decoration:none;
+      font-weight:800;font-size:13px;
+    }
+    .drop-item:hover{background:#f3f7ff}
+    .drop-item i{color:#2e75b6}
 
     @media(max-width:768px){
       .container{flex-direction:column}
@@ -63,11 +84,11 @@
 <body>
 <div class="container">
   <nav class="sidebar">
-    <a class="sidebar-icon" data-page="index" href="index.html"><i class="fas fa-home"></i></a>
-    <a class="sidebar-icon" data-page="kb" href="knowledge-base.html"><i class="fas fa-book"></i></a>
-    <a class="sidebar-icon" data-page="lp" href="learning-path.html"><i class="fas fa-graduation-cap"></i></a>
-    <a class="sidebar-icon" data-page="quiz" href="quiz.html"><i class="fas fa-clipboard-check"></i></a>
-    <a class="sidebar-icon" data-page="share" href="share-experience.html"><i class="fas fa-comments"></i></a>
+    <a class="sidebar-icon" href="index.html"><i class="fas fa-home"></i></a>
+    <a class="sidebar-icon" href="knowledge-base.html"><i class="fas fa-book"></i></a>
+    <a class="sidebar-icon" href="learning-path.html"><i class="fas fa-graduation-cap"></i></a>
+    <a class="sidebar-icon" href="quiz.html"><i class="fas fa-clipboard-check"></i></a>
+    <a class="sidebar-icon" href="share-experience.html"><i class="fas fa-comments"></i></a>
     <a class="sidebar-icon logout" href="#"><i class="fas fa-sign-out-alt"></i></a>
   </nav>
 
@@ -114,7 +135,8 @@
   function esc(s){
     return String(s ?? "")
       .replaceAll("&","&amp;").replaceAll("<","&lt;")
-      .replaceAll(">","&gt;").replaceAll('"',"&quot;")
+      .replaceAll(">","&gt;")
+      .replaceAll('"',"&quot;")
       .replaceAll("'","&#039;");
   }
 
@@ -141,23 +163,38 @@
 
     const list = Array.isArray(shortcuts) ? shortcuts : [];
 
-    // ปุ่ม: ถ้ามี 1 ไฟล์ ให้เขียน “เปิดไฟล์” ถ้ามีหลายไฟล์ ค่อยขึ้นเลข
-    const btns = list.map((s, idx) => {
-      const label = (list.length <= 1) ? "เปิดไฟล์" : `เปิดไฟล์ #${idx+1}`;
-      return `<a class="media-btn" target="_blank" rel="noopener" href="${esc(s.FileURL)}">
-                <i class="fas fa-bolt"></i> ${esc(label)}
-              </a>`;
-    }).join("");
+    let shortcutBlock = `
+      <div class="box">
+        <h3><i class="fas fa-link"></i> สื่อทางลัด (จาก KMS Base)</h3>
+        <p>ยังไม่มีไฟล์สำหรับ DefectCode นี้ในหมวด ${esc(type)}</p>
+      </div>
+    `;
 
-    const shortcutBlock = btns
-      ? `<div class="box">
-           <h3><i class="fas fa-link"></i> สื่อทางลัด (จาก KMS Base)</h3>
-           <div class="media-wrap">${btns}</div>
-         </div>`
-      : `<div class="box">
-           <h3><i class="fas fa-link"></i> สื่อทางลัด (จาก KMS Base)</h3>
-           <p>ยังไม่มีไฟล์สำหรับ DefectCode นี้ในหมวด ${esc(type)}</p>
-         </div>`;
+    if(list.length){
+      const items = list.map((s) => {
+        const name = (s.FileName && String(s.FileName).trim()) ? String(s.FileName).trim() : "เอกสาร";
+        return `
+          <a class="drop-item" target="_blank" rel="noopener" href="${esc(s.FileURL)}">
+            <i class="fas fa-file-lines"></i> ${esc(name)}
+          </a>
+        `;
+      }).join("");
+
+      shortcutBlock = `
+        <div class="box">
+          <h3><i class="fas fa-link"></i> สื่อทางลัด (จาก KMS Base)</h3>
+          <div class="dropdown" data-dropdown>
+            <button class="drop-btn" type="button">
+              <span><i class="fas fa-bolt"></i> เปิดไฟล์</span>
+              <i class="fas fa-caret-down"></i>
+            </button>
+            <div class="drop-menu">
+              ${items}
+            </div>
+          </div>
+        </div>
+      `;
+    }
 
     return `
       <section class="card">
@@ -200,7 +237,6 @@
     }
 
     try{
-      // ✅ 4M เฉพาะ process+defect
       const url4m = `${API_BASE}?view=defect4m&process=${encodeURIComponent(proc)}&defect=${encodeURIComponent(defect)}`;
       const res4m = await fetch(url4m);
       const rows = await res4m.json();
@@ -211,7 +247,6 @@
       const material = pickFirstRowByType(list, "Material");
       const method = pickFirstRowByType(list, "Method");
 
-      // ✅ shortcuts ล็อก process+defect+category (แก้ปัญหาดึงเยอะ)
       const [manLinks, machineLinks, materialLinks, methodLinks] = await Promise.all([
         fetchShortcuts(proc, defect, "Man"),
         fetchShortcuts(proc, defect, "Machine"),
@@ -236,6 +271,22 @@
   }
 
   load();
+
+  // ===== Dropdown toggle (close on outside click) =====
+  document.addEventListener("click", (e) => {
+    const btn = e.target.closest(".drop-btn");
+    const dropdown = e.target.closest("[data-dropdown]");
+
+    if(btn && dropdown){
+      document.querySelectorAll("[data-dropdown].open").forEach(d => {
+        if(d !== dropdown) d.classList.remove("open");
+      });
+      dropdown.classList.toggle("open");
+      return;
+    }
+
+    document.querySelectorAll("[data-dropdown].open").forEach(d => d.classList.remove("open"));
+  });
 </script>
 
 </body>
