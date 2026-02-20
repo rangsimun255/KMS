@@ -110,18 +110,20 @@
     const url = new URL(window.location.href);
     return url.searchParams.get(name);
   }
+
   function esc(s){
     return String(s ?? "")
       .replaceAll("&","&amp;").replaceAll("<","&lt;")
       .replaceAll(">","&gt;").replaceAll('"',"&quot;")
       .replaceAll("'","&#039;");
   }
+
   function pickFirstRowByType(rows, type){
     return rows.find(r => String(r.M_Type).trim() === type) || null;
   }
 
-  async function fetchShortcuts(defect, cat){
-    const url = `${API_BASE}?view=shortcuts&defect=${encodeURIComponent(defect)}&cat=${encodeURIComponent(cat)}`;
+  async function fetchShortcuts(proc, defect, cat){
+    const url = `${API_BASE}?view=shortcuts&process=${encodeURIComponent(proc)}&defect=${encodeURIComponent(defect)}&cat=${encodeURIComponent(cat)}`;
     const res = await fetch(url);
     const data = await res.json();
     return Array.isArray(data) ? data : [];
@@ -137,8 +139,11 @@
     const safeCause = cause || "ยังไม่มีข้อมูลสาเหตุ (ใส่เพิ่มในชีท Defect 4M)";
     const safeP1 = p1 || "ยังไม่มีแนวทางป้องกัน/แก้ไข";
 
-    const btns = (shortcuts || []).map((s, idx) => {
-      const label = `เปิดไฟล์ #${idx+1}`;
+    const list = Array.isArray(shortcuts) ? shortcuts : [];
+
+    // ปุ่ม: ถ้ามี 1 ไฟล์ ให้เขียน “เปิดไฟล์” ถ้ามีหลายไฟล์ ค่อยขึ้นเลข
+    const btns = list.map((s, idx) => {
+      const label = (list.length <= 1) ? "เปิดไฟล์" : `เปิดไฟล์ #${idx+1}`;
       return `<a class="media-btn" target="_blank" rel="noopener" href="${esc(s.FileURL)}">
                 <i class="fas fa-bolt"></i> ${esc(label)}
               </a>`;
@@ -195,7 +200,7 @@
     }
 
     try{
-      // ✅ ดึง 4M เฉพาะ process+defect
+      // ✅ 4M เฉพาะ process+defect
       const url4m = `${API_BASE}?view=defect4m&process=${encodeURIComponent(proc)}&defect=${encodeURIComponent(defect)}`;
       const res4m = await fetch(url4m);
       const rows = await res4m.json();
@@ -206,12 +211,12 @@
       const material = pickFirstRowByType(list, "Material");
       const method = pickFirstRowByType(list, "Method");
 
-      // ✅ ดึงปุ่มทางลัดจาก KMS Base ตาม defect + CauseCategory
+      // ✅ shortcuts ล็อก process+defect+category (แก้ปัญหาดึงเยอะ)
       const [manLinks, machineLinks, materialLinks, methodLinks] = await Promise.all([
-        fetchShortcuts(defect, "Man"),
-        fetchShortcuts(defect, "Machine"),
-        fetchShortcuts(defect, "Material"),
-        fetchShortcuts(defect, "Method"),
+        fetchShortcuts(proc, defect, "Man"),
+        fetchShortcuts(proc, defect, "Machine"),
+        fetchShortcuts(proc, defect, "Material"),
+        fetchShortcuts(proc, defect, "Method"),
       ]);
 
       document.getElementById("content").className = "";
