@@ -31,6 +31,9 @@ document.addEventListener('DOMContentLoaded', function () {
     'index.html': 'index',
     'knowledge-base.html': 'kb',
     'learning-path.html': 'lp',
+    'learning-process.html': 'lp',   
+    'defect-learning.html': 'lp',  
+    'defect-4m.html': 'lp',         
     'quiz.html': 'quiz',
     'share-experience.html': 'share'
   };
