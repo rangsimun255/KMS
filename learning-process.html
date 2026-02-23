@@ -138,6 +138,21 @@
       white-space: pre-line;
     }
 
+    /* ===== WI Button ===== */
+    .wi-actions{ margin-top: 10px; }
+    .btn-wi{
+      display:inline-flex;align-items:center;justify-content:center;gap:10px;
+      padding:12px 14px;border-radius:12px;
+      background:#2f80ed;color:#fff;text-decoration:none;font-weight:900;
+      transition:.2s;
+      box-shadow:0 6px 16px rgba(47,128,237,0.22);
+      width: fit-content;
+    }
+    .btn-wi:hover{ transform: translateY(-1px); filter:brightness(.98); }
+    .btn-wi.disabled{
+      background:#c9d6e3;color:#5b6b7a;box-shadow:none;pointer-events:none;
+    }
+
     .critical{
       border-radius:14px;
       padding:12px 12px;
@@ -334,12 +349,20 @@
 </div>
 
 <script>
-  const API_URL = "https://script.google.com/macros/s/AKfycbwMRbnqSLTmmI4wofmNfZ5YPFGSiqg__rZUgyDlTTR03JchnQXgUj7DKDvzS4-QBmJrvw/exec?view=learning";
+  // ✅ เปลี่ยนเป็น API_BASE เพื่อเรียกได้ทั้ง learning และ wi_process
+  const API_BASE = "https://script.google.com/macros/s/AKfycbwMRbnqSLTmmI4wofmNfZ5YPFGSiqg__rZUgyDlTTR03JchnQXgUj7DKDvzS4-QBmJrvw/exec";
+  const LEARNING_API = API_BASE + "?view=learning";
+  const WI_API = (proc)=> API_BASE + "?view=wi_process&process=" + encodeURIComponent(proc);
+
   const procMap = {"1":"ผสมเปียก","2":"แร่งเปียก","3":"อบลมร้อน","4":"แร่งแห้ง","5":"ผสมแห้ง","6":"ตอกเม็ดยา","7":"บรรจุซอง"};
 
   let steps = [];
   let index = 0;
   let currentProc = "1";
+
+  // ✅ เก็บลิงก์ WI ของ Process ปัจจุบัน
+  let wiLink = "";
+  let wiName = "";
 
   function getQueryParam(name){
     const url = new URL(window.location.href);
@@ -373,6 +396,21 @@
       </a>
     ` : ``;
 
+    const wiBtnHtml = `
+      <div class="wi-actions">
+        <a id="wiProcessBtn"
+           class="btn-wi ${wiLink ? "" : "disabled"}"
+           href="${wiLink ? esc(wiLink) : "#"}"
+           target="_blank" rel="noopener">
+          <i class="fas fa-file-lines"></i>
+          ${wiLink
+            ? `เปิดไฟล์ WI: ${esc(wiName || ("Process " + currentProc))}`
+            : `ยังไม่มีไฟล์ WI สำหรับ Process ${esc(currentProc)}`
+          }
+        </a>
+      </div>
+    `;
+
     document.getElementById("content").innerHTML = `
       <div class="stage">
         <div class="slide">
@@ -386,6 +424,8 @@
 
           <div class="slide-body">
             <div class="detail">${esc(s.StepDetail || "")}</div>
+
+            ${wiBtnHtml}
 
             <div class="critical">
               <i class="fas fa-triangle-exclamation"></i>
@@ -464,8 +504,21 @@
     document.getElementById("procTitle").textContent = `Process ${proc}`;
     document.getElementById("procMeta").textContent  = procMap[proc] ? `กระบวนการ: ${procMap[proc]}` : "-";
 
+    // ✅ โหลด WI Process ของ Process นี้ก่อน
     try{
-      const res = await fetch(API_URL);
+      const wiRes = await fetch(WI_API(proc));
+      const wiData = await wiRes.json(); // ได้ [] หรือ [row]
+      const wiRow = Array.isArray(wiData) ? wiData[0] : null;
+
+      wiLink = wiRow && wiRow.FileURL ? String(wiRow.FileURL).trim() : "";
+      wiName = wiRow && wiRow.FileName ? String(wiRow.FileName).trim() : "";
+    }catch(e){
+      wiLink = "";
+      wiName = "";
+    }
+
+    try{
+      const res = await fetch(LEARNING_API);
       const data = await res.json();
 
       steps = (Array.isArray(data) ? data : [])
@@ -502,6 +555,8 @@
 
   load();
 </script>
+
+<!-- ของเดิมคุณมีอยู่ ผมไม่แตะ -->
 <script src="Js"></script>
 
 </body>
