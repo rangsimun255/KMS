@@ -349,10 +349,12 @@
 </div>
 
 <script>
-  // ✅ เปลี่ยนเป็น API_BASE เพื่อเรียกได้ทั้ง learning และ wi_process
+  // ✅ API_BASE
   const API_BASE = "https://script.google.com/macros/s/AKfycbwMRbnqSLTmmI4wofmNfZ5YPFGSiqg__rZUgyDlTTR03JchnQXgUj7DKDvzS4-QBmJrvw/exec";
   const LEARNING_API = API_BASE + "?view=learning";
-  const WI_API = (proc)=> API_BASE + "?view=wi_process&process=" + encodeURIComponent(proc);
+
+  // ✅✅✅ สำคัญ: ต้องใช้ view=wi (ตรงกับ Apps Script)
+  const WI_API = (proc)=> API_BASE + "?view=wi&process=" + encodeURIComponent(proc);
 
   const procMap = {"1":"ผสมเปียก","2":"แร่งเปียก","3":"อบลมร้อน","4":"แร่งแห้ง","5":"ผสมแห้ง","6":"ตอกเม็ดยา","7":"บรรจุซอง"};
 
@@ -432,7 +434,6 @@
               <div>Critical Point:\n${esc(s.CriticalPoint || "-")}</div>
             </div>
 
-            <!-- ✅ Impact รูปแบบใหม่ตามที่ต้องการ -->
             <div class="impact">
               <i class="fas fa-share-nodes"></i>
               <div class="impact-text">
@@ -507,16 +508,21 @@
     // ✅ โหลด WI Process ของ Process นี้ก่อน
     try{
       const wiRes = await fetch(WI_API(proc));
-      const wiData = await wiRes.json(); // ได้ [] หรือ [row]
-      const wiRow = Array.isArray(wiData) ? wiData[0] : null;
+      const wiData = await wiRes.json(); // [] หรือ [row]
 
-      wiLink = wiRow && wiRow.FileURL ? String(wiRow.FileURL).trim() : "";
-      wiName = wiRow && wiRow.FileName ? String(wiRow.FileName).trim() : "";
+      // robust: ถ้า array เอาตัวแรก, ถ้า object ก็ใช้ได้
+      const wiRow =
+        Array.isArray(wiData) ? wiData[0] :
+        (wiData && wiData.FileURL ? wiData : null);
+
+      wiLink = wiRow?.FileURL ? String(wiRow.FileURL).trim() : "";
+      wiName = wiRow?.FileName ? String(wiRow.FileName).trim() : "";
     }catch(e){
       wiLink = "";
       wiName = "";
     }
 
+    // ✅ โหลด Learning Path
     try{
       const res = await fetch(LEARNING_API);
       const data = await res.json();
