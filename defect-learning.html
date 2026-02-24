@@ -10,42 +10,63 @@
 
   <style>
     *{margin:0;padding:0;box-sizing:border-box}
+
     body{
       font-family:'Sarabun',sans-serif;
-      background:#e8eef5;
+      background:#F4F7FB;          /* ✅ ให้ตรงธีมใหม่ */
       min-height:100vh;
       overflow-x:hidden;
+      color:#2E3A59;               /* ✅ ให้โทนตัวอักษรเหมือนหน้าอื่น */
+      font-size:14px;
+      line-height:1.7;
     }
+
     .container{display:flex;min-height:100vh}
 
     /* Sidebar */
     .sidebar{
       width:70px;
-      background:linear-gradient(180deg,#5b9bd5 0%,#4a89c8 100%);
+      background:linear-gradient(180deg,#4A89C8 0%,#2E75B6 100%); /* ✅ ธีมใหม่ */
       display:flex;flex-direction:column;align-items:center;
       padding-top:20px;gap:10px;
       position:fixed;height:100vh;left:0;top:0;z-index:100;
     }
     .sidebar-icon{
       width:50px;height:50px;display:flex;align-items:center;justify-content:center;
-      color:rgba(255,255,255,.7);font-size:20px;border-radius:12px;
+      color:rgba(255,255,255,.85);  /* ✅ ธีมใหม่ */
+      font-size:20px;border-radius:12px;
       cursor:pointer;transition:.2s;text-decoration:none;
+      user-select:none;-webkit-tap-highlight-color:transparent;
     }
-    .sidebar-icon:hover,.sidebar-icon.active{background:rgba(255,255,255,.2);color:#fff}
+    .sidebar-icon:hover,.sidebar-icon.active{background:rgba(255,255,255,.18);color:#fff}
 
     .main-content{
       flex:1;margin-left:70px;width:calc(100% - 70px);
       padding:0;
     }
 
-    /* Header */
+    /* Header (ให้เท่ากับหน้า Home) */
     .header{
-      background:linear-gradient(135deg,#5b9bd5 0%,#2e75b6 100%);
-      padding:34px 20px;
+      background:linear-gradient(135deg,#4A89C8 0%,#2E75B6 100%); /* ✅ ธีมใหม่ */
+      padding:60px 40px;                 /* ✅ เท่าหน้า Home */
       text-align:center;
+      box-shadow:0 4px 15px rgba(74,137,200,.25); /* ✅ ธีมใหม่ */
     }
-    .header h1{color:#fff;font-size:30px;font-weight:800;margin-bottom:6px}
-    .header p{color:rgba(255,255,255,.92);font-size:14px}
+    .header h1{
+      color:#fff;
+      font-size:42px;                    /* ✅ เท่าหน้า Home */
+      font-weight:700;                   /* ✅ เท่าหน้า Home */
+      margin-bottom:15px;
+      letter-spacing:1px;
+      text-shadow:0 2px 4px rgba(0,0,0,.2);
+    }
+    .header p{
+      color:rgba(255,255,255,.95);
+      font-size:18px;                    /* ✅ เท่าหน้า Home */
+      max-width:650px;
+      margin:0 auto;
+      line-height:1.7;
+    }
 
     .wrap{padding:16px 18px 24px}
 
@@ -53,7 +74,7 @@
       background:#fff;
       border-radius:16px;
       padding:14px 16px;
-      box-shadow:0 2px 10px rgba(0,0,0,.08);
+      box-shadow:0 2px 10px rgba(46,58,89,.08); /* ✅ ธีมใหม่ */
       display:flex;
       align-items:center;
       justify-content:space-between;
@@ -61,18 +82,22 @@
       flex-wrap:wrap;
       margin-bottom:14px;
     }
+
     .pill{
       display:inline-flex;align-items:center;gap:8px;
       padding:8px 12px;border-radius:999px;
-      background:#e3f2fd;color:#1565c0;font-weight:900;font-size:13px;
+      background:#E3F2FD;color:#1565C0;font-weight:900;font-size:13px;
     }
-    .meta{color:#607d8b;font-size:13px}
+
+    .meta{color:#6B7A90;font-size:13px}  /* ✅ ธีมใหม่ */
+
     .btn-back{
       display:inline-flex;align-items:center;gap:8px;
       padding:10px 12px;border-radius:10px;
-      background:#5b9bd5;color:#fff;text-decoration:none;font-weight:900;
+      background:#4A89C8;                /* ✅ ธีมใหม่ */
+      color:#fff;text-decoration:none;font-weight:900;
     }
-    .btn-back:hover{background:#4a89c8}
+    .btn-back:hover{background:#2E75B6}  /* ✅ ธีมใหม่ */
 
     /* ===== Layout ===== */
     .stage{
@@ -88,7 +113,7 @@
     .card{
       background:#fff;
       border-radius:18px;
-      box-shadow:0 6px 18px rgba(0,0,0,.10);
+      box-shadow:0 6px 18px rgba(46,58,89,.10); /* ✅ ธีมใหม่ */
       overflow:hidden;
       display:flex;
       flex-direction:column;
@@ -98,13 +123,13 @@
     /* ✅ โครง header ให้เหมือนกันทุกที่ */
     .defect-header{
       padding:16px 16px 12px;
-      border-bottom:1px solid #eef3f8;
+      border-bottom:1px solid #EEF3F8;
       display:flex;
-      align-items:flex-start; /* 🔴 กันเลขลอยกลาง */
+      align-items:flex-start;
       gap:14px;
     }
 
-    /* ✅ Badge ใช้ตัวเดียวกันทั้งหน้า */
+    /* ✅ Badge (คงเดิม แต่โทนเข้าธีม) */
     .defect-badge{
       width:56px;
       min-width:56px;
@@ -117,20 +142,20 @@
       font-size:14px;
       line-height:1;
       flex:0 0 56px;
-      background:#e3f2fd;
-      color:#1565c0;
+      background:#E3F2FD;
+      color:#1565C0;
     }
 
     .defect-title{
       font-weight:900;
-      color:#1f2d3d;
+      color:#1F2D3D;
       font-size:20px;
       line-height:1.2;
-      margin:2px 0 0 0; /* ✅ ไม่ดันเลข */
+      margin:2px 0 0 0;
     }
     .defect-sub{
       margin:8px 0 0 0;
-      color:#607d8b;
+      color:#6B7A90;         /* ✅ ธีมใหม่ */
       font-size:14px;
       line-height:1.45;
     }
@@ -145,61 +170,61 @@
 
     .img-box{
       flex:0 0 auto;
-      background:#f7fbff;
-      border:1px solid #e8f1fb;
+      background:#F7FBFF;
+      border:1px solid #E8F1FB;
       border-radius:16px;
       height:220px;
       display:flex;
       align-items:center;
       justify-content:center;
-      color:#90a4ae;
+      color:#8A98AD;        /* ✅ ธีมใหม่ */
       font-weight:800;
     }
 
     .box{
-      background:#f7fbff;
-      border:1px solid #e8f1fb;
+      background:#F7FBFF;
+      border:1px solid #E8F1FB;
       border-radius:16px;
       padding:12px 12px;
     }
     .box .label{
       font-weight:900;
-      color:#1565c0;
+      color:#1565C0;
       display:flex;
       align-items:center;
       gap:8px;
       margin-bottom:6px;
     }
-    .box .txt{color:#34495e;font-size:14px;line-height:1.55}
+    .box .txt{color:#2E3A59;font-size:14px;line-height:1.55} /* ✅ ธีมใหม่ */
 
     /* Right panel */
     .panel{
       background:#fff;
       border-radius:18px;
-      box-shadow:0 2px 10px rgba(0,0,0,.08);
+      box-shadow:0 2px 10px rgba(46,58,89,.08); /* ✅ ธีมใหม่ */
       padding:14px;
       display:flex;
       flex-direction:column;
       gap:12px;
     }
     .progress{
-      background:#f2f7fd;
-      border:1px solid #e3edf8;
+      background:#F2F7FD;
+      border:1px solid #E3EDF8;
       border-radius:16px;
       padding:12px;
     }
     .progress-top{
       display:flex;justify-content:space-between;align-items:center;gap:10px;
-      color:#294b6a;font-weight:900;
+      color:#294B6A;font-weight:900;
     }
     .bar{
-      height:10px;border-radius:999px;background:#dbe7f6;
+      height:10px;border-radius:999px;background:#DBE7F6;
       margin-top:10px;overflow:hidden;
     }
     .bar > div{
       height:100%;
       width:0%;
-      background:#5b9bd5;
+      background:#4A89C8;   /* ✅ ธีมใหม่ */
       border-radius:999px;
       transition:width .25s ease;
     }
@@ -220,10 +245,10 @@
       transition:.2s;
     }
     .btn:disabled{opacity:.45;cursor:not-allowed}
-    .btn-prev{background:#eef3f8;color:#2c3e50}
-    .btn-prev:hover{background:#e4ecf5}
-    .btn-next{background:#5b9bd5;color:#fff}
-    .btn-next:hover{background:#4a89c8}
+    .btn-prev{background:#EEF3F8;color:#2E3A59}
+    .btn-prev:hover{background:#E4ECF5}
+    .btn-next{background:#4A89C8;color:#fff}   /* ✅ ธีมใหม่ */
+    .btn-next:hover{background:#2E75B6}        /* ✅ ธีมใหม่ */
 
     .btn-4m{
       border:none;
@@ -234,48 +259,47 @@
       cursor:pointer;
       display:flex;align-items:center;justify-content:center;gap:10px;
       transition:.2s;
-      background:#2e75b6;color:#fff;
+      background:#2E75B6;color:#fff;           /* ✅ ธีมใหม่ */
     }
-    .btn-4m:hover{background:#286aa6}
+    .btn-4m:hover{background:#286AA6}
 
     .mini-list{
-      border:1px solid #eef3f8;
+      border:1px solid #EEF3F8;
       border-radius:16px;
       overflow:hidden;
     }
 
-    /* ✅ รายการด้านขวา ใช้ align แบบเดียวกัน */
     .mini-item{
       padding:10px 12px;
       display:flex;
-      align-items:flex-start; /* 🔴 กันเลขลอยกลาง */
+      align-items:flex-start;
       gap:12px;
-      border-bottom:1px solid #eef3f8;
+      border-bottom:1px solid #EEF3F8;
       cursor:pointer;
       background:#fff;
     }
     .mini-item:last-child{border-bottom:none}
     .mini-item.active{
-      background:#f3f9ff;
-      outline:2px solid #cfe4ff;
+      background:#F3F9FF;
+      outline:2px solid #CFE4FF;
       outline-offset:-2px;
     }
 
     .mini-text .t{
-      font-size:13px;font-weight:900;color:#1f2d3d;line-height:1.25;margin:0;
+      font-size:13px;font-weight:900;color:#1F2D3D;line-height:1.25;margin:0;
     }
     .mini-text .s{
-      font-size:12px;color:#607d8b;margin-top:4px;line-height:1.3;
+      font-size:12px;color:#6B7A90;margin-top:4px;line-height:1.3; /* ✅ ธีมใหม่ */
     }
 
     .loading,.error{
       background:#fff;border-radius:16px;
       padding:30px;
-      box-shadow:0 2px 10px rgba(0,0,0,.08);
-      text-align:center;color:#607d8b;
+      box-shadow:0 2px 10px rgba(46,58,89,.08); /* ✅ ธีมใหม่ */
+      text-align:center;color:#6B7A90;          /* ✅ ธีมใหม่ */
     }
-    .loading i{font-size:46px;margin-bottom:10px;color:#90a4ae}
-    .error i{font-size:46px;margin-bottom:10px;color:#e57373}
+    .loading i{font-size:46px;margin-bottom:10px;color:#8A98AD}
+    .error i{font-size:46px;margin-bottom:10px;color:#E57373}
 
     @media (max-width: 768px){
       .container{flex-direction:column}
@@ -284,8 +308,12 @@
         position:relative;left:auto;top:auto;padding:10px;gap:12px;
       }
       .main-content{margin-left:0;width:100%}
-      .header{padding:24px 16px}
-      .header h1{font-size:22px}
+
+      /* ✅ Mobile header ให้เท่าหน้า Home */
+      .header{padding:40px 20px}
+      .header h1{font-size:28px}
+      .header p{font-size:15px}
+
       .wrap{padding:12px 12px 20px}
       .card{min-height:unset}
     }
