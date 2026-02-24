@@ -1,550 +1,213 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Defect Learning - KMS</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Learning Process - KMS</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-  <style>
-    *{margin:0;padding:0;box-sizing:border-box}
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
 
-    /* ✅ Theme เดียวกับหน้า Home */
-    :root{
-      --blue1:#4A89C8;
-      --blue2:#2E75B6;
-      --bg:#F4F7FB;
-      --text:#2E3A59;
-      --muted:#6B7A90;
-      --card:#ffffff;
-      --line:#EEF3F8;
-      --soft:#F7FBFF;
-      --soft-line:#E8F1FB;
-    }
+body{
+  font-family:'Sarabun',sans-serif;
+  background:#F4F7FB;
+  min-height:100vh;
+  color:#2E3A59;
+  font-size:14px;
+  line-height:1.7;
+}
 
-    body{
-      font-family:'Sarabun',sans-serif;
-      background:var(--bg);
-      min-height:100vh;
-      overflow-x:hidden;
-      color:var(--text);
-      font-size:14px;
-      line-height:1.7;
-    }
+.container{display:flex;min-height:100vh}
 
-    .container{display:flex;min-height:100vh}
+/* Sidebar */
+.sidebar{
+  width:70px;
+  background:linear-gradient(180deg,#4A89C8 0%,#2E75B6 100%);
+  display:flex;flex-direction:column;align-items:center;
+  padding-top:20px;gap:10px;
+  position:fixed;height:100vh;left:0;top:0;
+}
+.sidebar-icon{
+  width:50px;height:50px;
+  display:flex;align-items:center;justify-content:center;
+  color:#fff;font-size:20px;border-radius:12px;
+  text-decoration:none;
+}
+.sidebar-icon:hover{background:rgba(255,255,255,.2)}
 
-    /* Sidebar */
-    .sidebar{
-      width:70px;
-      background:linear-gradient(180deg,var(--blue1) 0%,var(--blue2) 100%);
-      display:flex;flex-direction:column;align-items:center;
-      padding-top:20px;gap:10px;
-      position:fixed;height:100vh;left:0;top:0;z-index:100;
-    }
-    .sidebar-icon{
-      width:50px;height:50px;display:flex;align-items:center;justify-content:center;
-      color:rgba(255,255,255,.85);
-      font-size:20px;border-radius:12px;
-      cursor:pointer;transition:.2s;text-decoration:none;
-      user-select:none;-webkit-tap-highlight-color:transparent;
-    }
-    .sidebar-icon:hover,.sidebar-icon.active{background:rgba(255,255,255,.18);color:#fff}
+.main-content{flex:1;margin-left:70px}
 
-    .main-content{
-      flex:1;margin-left:70px;width:calc(100% - 70px);
-      padding:0;
-    }
+/* Header */
+.header{
+  background:linear-gradient(135deg,#4A89C8 0%,#2E75B6 100%);
+  padding:60px 40px;
+  min-height:240px;
+  text-align:center;
+  display:flex;flex-direction:column;justify-content:center;
+}
+.header h1{
+  color:#fff;
+  font-size:42px;
+  font-weight:700;
+  margin-bottom:15px;
+}
+.header p{
+  color:#fff;
+  font-size:18px;
+}
 
-    /* ✅ Header ให้เท่าหน้า Home */
-    .header{
-      background:linear-gradient(135deg,var(--blue1) 0%,var(--blue2) 100%);
-      padding:60px 40px;
-      text-align:center;
-      box-shadow:0 4px 15px rgba(74,137,200,.25);
-    }
-    .header h1{
-      color:#fff;
-      font-size:42px;
-      font-weight:700;
-      margin-bottom:15px;
-      letter-spacing:1px;
-      text-shadow:0 2px 4px rgba(0,0,0,.2);
-    }
-    .header p{
-      color:rgba(255,255,255,.95);
-      font-size:18px;
-      max-width:650px;
-      margin:0 auto;
-      line-height:1.7;
-    }
+.wrap{padding:20px}
 
-    .wrap{padding:16px 18px 24px}
+/* Layout */
+.stage{
+  display:grid;
+  grid-template-columns:1fr 340px;
+  gap:20px;
+}
+@media(max-width:980px){
+  .stage{grid-template-columns:1fr}
+}
 
-    .topbar{
-      background:var(--card);
-      border-radius:16px;
-      padding:14px 16px;
-      box-shadow:0 2px 10px rgba(46,58,89,.08);
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-      flex-wrap:wrap;
-      margin-bottom:14px;
-    }
-    .pill{
-      display:inline-flex;align-items:center;gap:8px;
-      padding:8px 12px;border-radius:999px;
-      background:#E6F0FA;color:var(--blue2);
-      font-weight:900;font-size:13px;
-    }
-    .meta{color:var(--muted);font-size:13px}
+/* Slide */
+.slide{
+  background:#fff;
+  border-radius:18px;
+  box-shadow:0 6px 18px rgba(0,0,0,.08);
+  padding:20px;
+}
 
-    .btn-back{
-      display:inline-flex;align-items:center;gap:8px;
-      padding:10px 12px;border-radius:10px;
-      background:var(--blue1);color:#fff;text-decoration:none;font-weight:900;
-    }
-    .btn-back:hover{background:var(--blue2)}
+/* detail ไม่มีกรอบซ้อน */
+.detail{
+  background:#ffffff;
+  border:none;
+  padding:14px;
+  border-radius:12px;
+  white-space:pre-line;
+}
 
-    /* ===== Layout ===== */
-    .stage{
-      display:grid;
-      grid-template-columns: 1fr 360px;
-      gap:14px;
-      align-items:stretch;
-    }
-    @media (max-width: 980px){
-      .stage{grid-template-columns:1fr}
-    }
+/* ===== ลายเฉียง ===== */
+.stripe-frame{
+  --border:12px;
+  border-radius:20px;
+  padding:calc(var(--border) + 14px);
+  border:var(--border) solid transparent;
+}
 
-    .card{
-      background:var(--card);
-      border-radius:18px;
-      box-shadow:0 6px 18px rgba(46,58,89,.10);
-      overflow:hidden;
-      display:flex;
-      flex-direction:column;
-      min-height:520px;
-      border:1px solid rgba(74,137,200,0.12);
-    }
+/* ดำ-แดง */
+.stripe-red{
+  background:
+    linear-gradient(#FDECEA,#FDECEA) padding-box,
+    repeating-linear-gradient(
+      45deg,
+      #111 0 14px,
+      #D32F2F 14px 28px
+    ) border-box;
+}
 
-    .defect-header{
-      padding:16px 16px 12px;
-      border-bottom:1px solid var(--line);
-      display:flex;
-      align-items:flex-start;
-      gap:14px;
-    }
+/* ดำ-เหลือง */
+.stripe-yellow{
+  background:
+    linear-gradient(#FFF8E1,#FFF8E1) padding-box,
+    repeating-linear-gradient(
+      45deg,
+      #111 0 14px,
+      #F7D400 14px 28px
+    ) border-box;
+}
 
-    .defect-badge{
-      width:56px;
-      min-width:56px;
-      height:40px;
-      border-radius:14px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      font-weight:900;
-      font-size:14px;
-      line-height:1;
-      flex:0 0 56px;
-      background:#E3F2FD;
-      color:#1565C0;
-    }
+/* ===== กล่องข้างใน (ไม่มีกรอบซ้อน) ===== */
 
-    .defect-title{
-      font-weight:900;
-      color:#1F2D3D;
-      font-size:20px;
-      line-height:1.2;
-      margin:2px 0 0 0;
-    }
-    .defect-sub{
-      margin:8px 0 0 0;
-      color:var(--muted);
-      font-size:14px;
-      line-height:1.45;
-    }
+.critical{
+  background:#FDECEA;
+  border:none;             /* เอากรอบในออก */
+  border-radius:16px;
+  padding:20px;
+  color:#B71C1C;
+  font-weight:800;
+  font-size:15px;
+}
 
-    .body{
-      padding:14px 16px 16px;
-      display:flex;
-      flex-direction:column;
-      gap:12px;
-      flex:1;
-    }
+.impact{
+  background:#FFF8E1;
+  border:none;             /* เอากรอบในออก */
+  border-radius:16px;
+  padding:20px;
+  color:#7A4F00;
+  font-weight:800;
+  font-size:15px;
+}
 
-    .img-box{
-      flex:0 0 auto;
-      background:var(--soft);
-      border:1px solid var(--soft-line);
-      border-radius:16px;
-      height:220px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      color:#8A98AD;
-      font-weight:800;
-    }
-
-    .box{
-      background:var(--soft);
-      border:1px solid var(--soft-line);
-      border-radius:16px;
-      padding:12px 12px;
-    }
-    .box .label{
-      font-weight:900;
-      color:var(--blue2);
-      display:flex;
-      align-items:center;
-      gap:8px;
-      margin-bottom:6px;
-    }
-    .box .txt{color:var(--text);font-size:14px;line-height:1.55}
-
-    /* Right panel */
-    .panel{
-      background:var(--card);
-      border-radius:18px;
-      box-shadow:0 2px 10px rgba(46,58,89,.08);
-      padding:14px;
-      display:flex;
-      flex-direction:column;
-      gap:12px;
-      border:1px solid rgba(74,137,200,0.10);
-    }
-    .progress{
-      background:#F2F7FD;
-      border:1px solid #E3EDF8;
-      border-radius:16px;
-      padding:12px;
-    }
-    .progress-top{
-      display:flex;justify-content:space-between;align-items:center;gap:10px;
-      color:#294B6A;font-weight:900;
-    }
-    .bar{
-      height:10px;border-radius:999px;background:#DBE7F6;
-      margin-top:10px;overflow:hidden;
-    }
-    .bar > div{
-      height:100%;
-      width:0%;
-      background:var(--blue1);
-      border-radius:999px;
-      transition:width .25s ease;
-    }
-
-    .nav-btns{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:10px;
-    }
-    .btn{
-      border:none;
-      border-radius:14px;
-      padding:12px 12px;
-      font-family:'Sarabun',sans-serif;
-      font-weight:900;
-      cursor:pointer;
-      display:flex;align-items:center;justify-content:center;gap:8px;
-      transition:.2s;
-    }
-    .btn:disabled{opacity:.45;cursor:not-allowed}
-    .btn-prev{background:#EEF3F8;color:var(--text)}
-    .btn-prev:hover{background:#E4ECF5}
-    .btn-next{background:var(--blue1);color:#fff}
-    .btn-next:hover{background:var(--blue2)}
-
-    .btn-4m{
-      border:none;
-      border-radius:14px;
-      padding:12px 12px;
-      font-family:'Sarabun',sans-serif;
-      font-weight:900;
-      cursor:pointer;
-      display:flex;align-items:center;justify-content:center;gap:10px;
-      transition:.2s;
-      background:var(--blue2);color:#fff;
-    }
-    .btn-4m:hover{filter:brightness(.95)}
-
-    .mini-list{
-      border:1px solid var(--line);
-      border-radius:16px;
-      overflow:hidden;
-    }
-
-    .mini-item{
-      padding:10px 12px;
-      display:flex;
-      align-items:flex-start;
-      gap:12px;
-      border-bottom:1px solid var(--line);
-      cursor:pointer;
-      background:#fff;
-    }
-    .mini-item:last-child{border-bottom:none}
-    .mini-item.active{
-      background:#F3F9FF;
-      outline:2px solid #CFE4FF;
-      outline-offset:-2px;
-    }
-
-    .mini-text .t{
-      font-size:13px;font-weight:900;color:#1F2D3D;line-height:1.25;margin:0;
-    }
-    .mini-text .s{
-      font-size:12px;color:var(--muted);margin-top:4px;line-height:1.3;
-    }
-
-    .loading,.error{
-      background:#fff;border-radius:16px;
-      padding:30px;
-      box-shadow:0 2px 10px rgba(46,58,89,.08);
-      text-align:center;color:var(--muted);
-    }
-    .loading i{font-size:46px;margin-bottom:10px;color:#8A98AD}
-    .error i{font-size:46px;margin-bottom:10px;color:#E57373}
-
-    @media (max-width: 768px){
-      .container{flex-direction:column}
-      .sidebar{
-        width:100%;height:60px;flex-direction:row;justify-content:center;
-        position:relative;left:auto;top:auto;padding:10px;gap:12px;
-      }
-      .main-content{margin-left:0;width:100%}
-
-      /* ✅ Mobile header เท่าหน้า Home */
-      .header{padding:40px 20px}
-      .header h1{font-size:28px}
-      .header p{font-size:15px}
-
-      .wrap{padding:12px 12px 20px}
-      .card{min-height:unset}
-    }
-  </style>
+.panel{
+  background:#fff;
+  border-radius:18px;
+  padding:16px;
+  box-shadow:0 6px 18px rgba(0,0,0,.08);
+}
+</style>
 </head>
 
 <body>
 <div class="container">
 
- <nav class="sidebar">
-  <a class="sidebar-icon" data-page="index" href="index.html"><i class="fas fa-home"></i></a>
-  <a class="sidebar-icon" data-page="kb" href="knowledge-base.html"><i class="fas fa-book"></i></a>
-  <a class="sidebar-icon" data-page="lp" href="learning-path.html"><i class="fas fa-graduation-cap"></i></a>
-  <a class="sidebar-icon" data-page="quiz" href="quiz.html"><i class="fas fa-clipboard-check"></i></a>
-  <a class="sidebar-icon" data-page="share" href="share-experience.html"><i class="fas fa-comments"></i></a>
-  <a class="sidebar-icon logout" href="#"><i class="fas fa-sign-out-alt"></i></a>
+<nav class="sidebar">
+  <a class="sidebar-icon" href="index.html"><i class="fas fa-home"></i></a>
+  <a class="sidebar-icon" href="knowledge-base.html"><i class="fas fa-book"></i></a>
+  <a class="sidebar-icon" href="learning-path.html"><i class="fas fa-graduation-cap"></i></a>
 </nav>
 
-  <main class="main-content">
-    <header class="header">
-      <h1>Defect Learning</h1>
-      <p>เรียนรู้ “ลักษณะของเสีย” ของแต่ละ Process แล้วกดไปดูสาเหตุจาก 4M </p>
-    </header>
+<main class="main-content">
+<header class="header">
+  <h1>Learning Process</h1>
+  <p>เรียนทีละ Step แบบสไลด์</p>
+</header>
 
-    <div class="wrap">
-      <div class="topbar">
-        <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
-          <span class="pill"><i class="fas fa-triangle-exclamation"></i> <span id="procTitle">Process</span></span>
-          <span class="meta" id="procMeta">-</span>
-        </div>
-        <a class="btn-back" href="learning-path.html"><i class="fas fa-arrow-left"></i> กลับหน้าเลือกกระบวนการ</a>
+<div class="wrap">
+  <div class="stage">
+
+    <div class="slide">
+
+      <div class="detail">
+1. ชั่งน้ำ DI ใส่หม้อ Water Jacket  
+2. เติมสารสกัด  
+3. รอ 4 ชั่วโมง
       </div>
 
-      <div id="content">
-        <div class="loading">
-          <i class="fas fa-spinner fa-spin"></i>
-          <div>กำลังโหลดข้อมูล...</div>
+      <br>
+
+      <!-- ดำ-แดง -->
+      <div class="stripe-frame stripe-red">
+        <div class="critical">
+          <i class="fas fa-triangle-exclamation"></i>
+          Critical Point:
+          ชั่งผิดจะทำให้ความชื้นผิดพลาด
         </div>
       </div>
+
+      <br>
+
+      <!-- ดำ-เหลือง -->
+      <div class="stripe-frame stripe-yellow">
+        <div class="impact">
+          <i class="fas fa-share-nodes"></i>
+          ถ้าพลาดจะกระทบกระบวนการ  
+          ทำให้เกิดของเสีย
+        </div>
+      </div>
+
     </div>
-  </main>
+
+    <aside class="panel">
+      Panel ด้านขวา
+    </aside>
+
+  </div>
 </div>
 
-<script>
-  // ✅ ดึงจากชีท Defect Learning เท่านั้น
-  const API_URL = "https://script.google.com/macros/s/AKfycbwMRbnqSLTmmI4wofmNfZ5YPFGSiqg__rZUgyDlTTR03JchnQXgUj7DKDvzS4-QBmJrvw/exec?view=defectlearning";
-
-  const procMap = {"1":"ผสมเปียก","2":"แร่งเปียก","3":"อบลมร้อน","4":"แร่งแห้ง","5":"ผสมแห้ง","6":"ตอกเม็ดยา","7":"บรรจุซอง"};
-
-  let defects = [];
-  let index = 0;
-
-  function getQueryParam(name){
-    const url = new URL(window.location.href);
-    return url.searchParams.get(name);
-  }
-  function esc(s){
-    return String(s ?? "")
-      .replaceAll("&","&amp;").replaceAll("<","&lt;")
-      .replaceAll(">","&gt;").replaceAll('"',"&quot;")
-      .replaceAll("'","&#039;");
-  }
-
-  function setIndex(i){
-    index = Math.max(0, Math.min(i, defects.length - 1));
-    render();
-  }
-
-  function go4M(){
-    const d = defects[index];
-    const proc = String(d.Process || "").trim();
-    const code = String(d.DefectCode || "").trim();
-    window.location.href = `defect-4m.html?process=${encodeURIComponent(proc)}&defect=${encodeURIComponent(code)}`;
-  }
-
-  function render(){
-    const d = defects[index];
-    const total = defects.length;
-    const percent = total ? Math.round(((index+1)/total)*100) : 0;
-    const isLast = (index === total - 1);
-
-    document.getElementById("content").innerHTML = `
-      <div class="stage">
-        <div class="card">
-          <div class="defect-header">
-            <div class="defect-badge">${esc(d.DefectCode)}</div>
-            <div>
-              <div class="defect-title">${esc(d.DefectName)}</div>
-              <div class="defect-sub">${esc(d.DefectSummary || "")}</div>
-            </div>
-          </div>
-
-          <div class="body">
-            <div class="img-box">ยังไม่มีรูปของเสีย (จะเพิ่มทีหลัง)</div>
-
-            <div class="box">
-              <div class="label"><i class="fas fa-lightbulb"></i> Learning Hint</div>
-              <div class="txt">${esc(d.LearningHint || "-")}</div>
-            </div>
-
-            <div class="box">
-              <div class="label"><i class="fas fa-flag-checkered"></i> Next Action</div>
-              <div class="txt">${esc(d.NextAction || "ดูสาเหตุจาก 4M")}</div>
-            </div>
-          </div>
-        </div>
-
-        <aside class="panel">
-          <div class="progress">
-            <div class="progress-top">
-              <div>รายการ ${index+1} / ${total}</div>
-              <div>${percent}%</div>
-            </div>
-            <div class="bar"><div style="width:${percent}%"></div></div>
-          </div>
-
-          <div class="nav-btns">
-            <button class="btn btn-prev" id="btnPrev" ${index===0 ? "disabled":""}>
-              <i class="fas fa-arrow-left"></i> ก่อนหน้า
-            </button>
-
-            ${
-              isLast
-              ? `<button class="btn btn-next" id="btnNext">กลับหน้าเลือกกระบวนการ <i class="fas fa-arrow-right"></i></button>`
-              : `<button class="btn btn-next" id="btnNext">ถัดไป <i class="fas fa-arrow-right"></i></button>`
-            }
-          </div>
-
-          <button class="btn-4m" id="btn4m">
-            <i class="fas fa-users-gear"></i> ดูสาเหตุจาก 4M <i class="fas fa-arrow-right"></i>
-          </button>
-
-          <div class="mini-list">
-            ${defects.map((x,idx)=>`
-              <div class="mini-item ${idx===index?"active":""}" data-idx="${idx}">
-                <div class="defect-badge">${esc(x.DefectCode)}</div>
-                <div class="mini-text">
-                  <div class="t">${esc(x.DefectName)}</div>
-                  <div class="s">${esc(x.DefectSummary || "")}</div>
-                </div>
-              </div>
-            `).join("")}
-          </div>
-        </aside>
-      </div>
-    `;
-
-    document.getElementById("btnPrev").onclick = ()=> setIndex(index-1);
-
-    const btnNext = document.getElementById("btnNext");
-    btnNext.onclick = ()=>{
-      if(isLast){
-        window.location.href = "learning-path.html";
-      }else{
-        setIndex(index+1);
-      }
-    };
-
-    document.getElementById("btn4m").onclick = ()=> go4M();
-
-    document.querySelectorAll(".mini-item").forEach(el=>{
-      el.addEventListener("click", ()=>{
-        const idx = Number(el.getAttribute("data-idx"));
-        if(!Number.isNaN(idx)) setIndex(idx);
-      });
-    });
-
-    document.onkeydown = (e)=>{
-      if(e.key === "ArrowLeft") setIndex(index-1);
-      if(e.key === "ArrowRight"){
-        if(isLast) window.location.href = "learning-path.html";
-        else setIndex(index+1);
-      }
-    };
-  }
-
-  async function load(){
-    const proc = String(getQueryParam("process") || "1").trim();
-    document.getElementById("procTitle").textContent = `Process ${proc}`;
-    document.getElementById("procMeta").textContent  = procMap[proc] ? `กระบวนการ: ${procMap[proc]}` : "-";
-
-    try{
-      const res = await fetch(API_URL);
-      const data = await res.json();
-
-      defects = (Array.isArray(data) ? data : [])
-        .filter(x => String(x.Process).trim() === proc)
-        .sort((a,b)=> String(a.DefectCode).localeCompare(String(b.DefectCode), 'th'));
-
-      if(!defects.length){
-        document.getElementById("content").innerHTML = `
-          <div class="error">
-            <i class="fas fa-circle-exclamation"></i>
-            <div>ไม่พบข้อมูล Defect ของ Process ${esc(proc)} ในชีท Defect Learning</div>
-          </div>
-        `;
-        return;
-      }
-
-      const startDef = String(getQueryParam("defect") || "").trim();
-      if(startDef){
-        const idx = defects.findIndex(x => String(x.DefectCode).trim() === startDef);
-        if(idx >= 0) index = idx;
-      }
-
-      render();
-    }catch(err){
-      console.error(err);
-      document.getElementById("content").innerHTML = `
-        <div class="error">
-          <i class="fas fa-exclamation-triangle"></i>
-          <div>โหลดข้อมูลไม่สำเร็จ</div>
-        </div>
-      `;
-    }
-  }
-
-  load();
-</script>
-<script src="Js"></script>
+</main>
+</div>
 
 </body>
 </html>
