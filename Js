@@ -35,6 +35,7 @@ document.addEventListener('DOMContentLoaded', function () {
     'defect-learning.html': 'lp',  
     'defect-4m.html': 'lp',         
     'quiz.html': 'quiz',
+    'quiz-play.html': 'quiz',
     'share-experience.html': 'share'
   };
   const currentPage = pageMap[currentFile] || 'index';
