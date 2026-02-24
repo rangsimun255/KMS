@@ -195,13 +195,26 @@
     .critical i{margin-top:3px}
     .critical div{ white-space: pre-line; }
 
-    /* ✅ เปลี่ยนกล่อง Impact จากเขียว -> เหลือง */
+    /* ====== CHEVRON (ลูกศร) FRAME สำหรับ Impact ====== */
+    .chevron-frame{
+      --border:10px;
+      border-radius:16px;
+      padding: calc(var(--border) + 8px);
+      border: var(--border) solid transparent;
+      background:
+        linear-gradient(#FFF8E1,#FFF8E1) padding-box,
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='22' viewBox='0 0 44 22'%3E%3Crect width='44' height='22' fill='%23ffffff'/%3E%3Cpath d='M0 11 L12 0 H22 L10 11 L22 22 H12 Z' fill='%23f7d400'/%3E%3Cpath d='M22 11 L34 0 H44 L32 11 L44 22 H34 Z' fill='%23111'/%3E%3C/svg%3E") border-box;
+      background-size:44px 22px;
+      box-shadow:0 6px 18px rgba(46,58,89,.12);
+    }
+
+    /* กล่อง Impact (พื้นเหลือง) */
     .impact{
       border-radius:14px;
       padding:12px 12px;
-      background:#FFF8E1;     /* เหลืองอ่อน */
-      border:1px solid #FFE082;/* เหลืองเข้ม */
-      color:#7A4F00;          /* น้ำตาล/เหลืองเข้ม อ่านง่าย */
+      background:#FFF8E1;
+      border:1px solid #FFE082;
+      color:#7A4F00;
       font-size:14px;
       font-weight:800;
       display:flex;gap:10px;align-items:flex-start;
@@ -463,14 +476,17 @@
               <div>Critical Point:\n${esc(s.CriticalPoint || "-")}</div>
             </div>
 
-            <div class="impact">
-              <i class="fas fa-share-nodes"></i>
-              <div class="impact-text">
-                <div class="impact-title">ถ้าพลาดจะกระทบกระบวนการ</div>
-                <div class="impact-line">${impactProc}</div>
+            <!-- ✅ ใส่กรอบลายลูกศรครอบ impact -->
+            <div class="chevron-frame">
+              <div class="impact">
+                <i class="fas fa-share-nodes"></i>
+                <div class="impact-text">
+                  <div class="impact-title">ถ้าพลาดจะกระทบกระบวนการ</div>
+                  <div class="impact-line">${impactProc}</div>
 
-                <div class="impact-subtitle">ทำให้เกิดของเสีย</div>
-                <div class="impact-list">${impactDef}</div>
+                  <div class="impact-subtitle">ทำให้เกิดของเสีย</div>
+                  <div class="impact-list">${impactDef}</div>
+                </div>
               </div>
             </div>
           </div>
