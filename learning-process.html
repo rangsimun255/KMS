@@ -10,42 +10,68 @@
 
   <style>
     *{margin:0;padding:0;box-sizing:border-box}
+
     body{
       font-family:'Sarabun',sans-serif;
-      background:#e8eef5;
+      background:#F4F7FB;                /* ✅ ธีมเดียวกัน */
       min-height:100vh;
       overflow-x:hidden;
+      color:#2E3A59;                     /* ✅ ธีมเดียวกัน */
+      font-size:14px;
+      line-height:1.7;
     }
     .container{display:flex;min-height:100vh}
 
     /* Sidebar */
     .sidebar{
       width:70px;
-      background:linear-gradient(180deg,#5b9bd5 0%,#4a89c8 100%);
+      background:linear-gradient(180deg,#4A89C8 0%,#2E75B6 100%); /* ✅ ธีมเดียวกัน */
       display:flex;flex-direction:column;align-items:center;
       padding-top:20px;gap:10px;
       position:fixed;height:100vh;left:0;top:0;z-index:100;
     }
     .sidebar-icon{
       width:50px;height:50px;display:flex;align-items:center;justify-content:center;
-      color:rgba(255,255,255,.7);font-size:20px;border-radius:12px;
+      color:rgba(255,255,255,.85);       /* ✅ ธีมเดียวกัน */
+      font-size:20px;border-radius:12px;
       cursor:pointer;transition:.2s;text-decoration:none;
+      user-select:none;-webkit-tap-highlight-color:transparent;
     }
-    .sidebar-icon:hover,.sidebar-icon.active{background:rgba(255,255,255,.2);color:#fff}
+    .sidebar-icon:hover,.sidebar-icon.active{background:rgba(255,255,255,.18);color:#fff} /* ✅ ธีมเดียวกัน */
 
     .main-content{
       flex:1;margin-left:70px;width:calc(100% - 70px);
       padding:0;
     }
 
-    /* Header */
+    /* ✅ HEADER STANDARD: เท่ากันทุกหน้า */
     .header{
-      background:linear-gradient(135deg,#5b9bd5 0%,#2e75b6 100%);
-      padding:34px 20px;
+      background:linear-gradient(135deg,#4A89C8 0%,#2E75B6 100%); /* ✅ ธีมเดียวกัน */
+      padding:60px 40px;                                         /* ✅ เท่าหน้าอื่น */
+      min-height:240px;                                          /* ✅ ล็อกความสูง */
       text-align:center;
+      box-shadow:0 4px 15px rgba(74,137,200,.25);                /* ✅ ธีมเดียวกัน */
+
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      align-items:center;
     }
-    .header h1{color:#fff;font-size:30px;font-weight:700;margin-bottom:6px}
-    .header p{color:rgba(255,255,255,.92);font-size:14px}
+    .header h1{
+      color:#fff;
+      font-size:42px;                                            /* ✅ เท่าหน้าอื่น */
+      font-weight:700;
+      margin-bottom:15px;                                        /* ✅ เท่าหน้าอื่น */
+      letter-spacing:1px;
+      text-shadow:0 2px 4px rgba(0,0,0,.2);
+    }
+    .header p{
+      color:rgba(255,255,255,.95);
+      font-size:18px;                                            /* ✅ เท่าหน้าอื่น */
+      max-width:650px;                                           /* ✅ เท่าหน้าอื่น */
+      margin:0 auto;
+      line-height:1.7;
+    }
 
     .wrap{padding:16px 18px 24px}
 
@@ -53,7 +79,7 @@
       background:#fff;
       border-radius:16px;
       padding:14px 16px;
-      box-shadow:0 2px 10px rgba(0,0,0,.08);
+      box-shadow:0 2px 10px rgba(46,58,89,.08);                  /* ✅ ธีมเดียวกัน */
       display:flex;
       align-items:center;
       justify-content:space-between;
@@ -64,15 +90,18 @@
     .pill{
       display:inline-flex;align-items:center;gap:8px;
       padding:8px 12px;border-radius:999px;
-      background:#e3f2fd;color:#1565c0;font-weight:800;font-size:13px;
+      background:#E6F0FA;                                        /* ✅ ธีมเดียวกัน */
+      color:#2E75B6;                                             /* ✅ ธีมเดียวกัน */
+      font-weight:800;font-size:13px;
     }
-    .meta{color:#607d8b;font-size:13px}
+    .meta{color:#6B7A90;font-size:13px}                          /* ✅ ธีมเดียวกัน */
     .btn-back{
       display:inline-flex;align-items:center;gap:8px;
       padding:10px 12px;border-radius:10px;
-      background:#5b9bd5;color:#fff;text-decoration:none;font-weight:800;
+      background:#4A89C8;                                        /* ✅ ธีมเดียวกัน */
+      color:#fff;text-decoration:none;font-weight:800;
     }
-    .btn-back:hover{background:#4a89c8}
+    .btn-back:hover{background:#2E75B6}                          /* ✅ ธีมเดียวกัน */
 
     /* ===== Slide Layout ===== */
     .stage{
@@ -88,7 +117,7 @@
     .slide{
       background:#fff;
       border-radius:18px;
-      box-shadow:0 6px 18px rgba(0,0,0,.10);
+      box-shadow:0 6px 18px rgba(46,58,89,.10);                  /* ✅ ธีมเดียวกัน */
       overflow:hidden;
       display:flex;
       flex-direction:column;
@@ -104,7 +133,8 @@
     }
     .badge{
       width:44px;height:44px;border-radius:16px;
-      background:#5b9bd5;color:#fff;
+      background:#4A89C8;                                        /* ✅ ธีมเดียวกัน */
+      color:#fff;
       display:flex;align-items:center;justify-content:center;
       font-weight:900;font-size:16px;
       flex:0 0 auto;
@@ -115,7 +145,7 @@
       margin-top:2px;
     }
     .short{
-      margin-top:8px;color:#607d8b;font-size:14px;line-height:1.45;
+      margin-top:8px;color:#6B7A90;font-size:14px;line-height:1.45; /* ✅ ธีมเดียวกัน */
     }
 
     .slide-body{
@@ -128,7 +158,7 @@
 
     /* ✅ StepDetail ขึ้นบรรทัดใหม่ */
     .detail{
-      color:#34495e;
+      color:#2E3A59;                                             /* ✅ ธีมเดียวกัน */
       font-size:14px;
       line-height:1.55;
       background:#f7fbff;
@@ -143,7 +173,7 @@
     .btn-wi{
       display:inline-flex;align-items:center;justify-content:center;gap:10px;
       padding:12px 14px;border-radius:12px;
-      background:#2f80ed;color:#fff;text-decoration:none;font-weight:900;
+      background:#2F80ED;color:#fff;text-decoration:none;font-weight:900;
       transition:.2s;
       box-shadow:0 6px 16px rgba(47,128,237,0.22);
       width: fit-content;
@@ -189,7 +219,7 @@
     .panel{
       background:#fff;
       border-radius:18px;
-      box-shadow:0 2px 10px rgba(0,0,0,.08);
+      box-shadow:0 2px 10px rgba(46,58,89,.08);                  /* ✅ ธีมเดียวกัน */
       padding:14px;
       display:flex;
       flex-direction:column;
@@ -212,7 +242,7 @@
     .bar > div{
       height:100%;
       width:0%;
-      background:#5b9bd5;
+      background:#4A89C8;                                        /* ✅ ธีมเดียวกัน */
       border-radius:999px;
       transition:width .25s ease;
     }
@@ -235,8 +265,8 @@
     .btn:disabled{opacity:.45;cursor:not-allowed}
     .btn-prev{background:#eef3f8;color:#2c3e50}
     .btn-prev:hover{background:#e4ecf5}
-    .btn-next{background:#5b9bd5;color:#fff}
-    .btn-next:hover{background:#4a89c8}
+    .btn-next{background:#4A89C8;color:#fff}                     /* ✅ ธีมเดียวกัน */
+    .btn-next:hover{background:#2E75B6}                          /* ✅ ธีมเดียวกัน */
 
     .btn-defect{
       margin-top:10px;
@@ -269,7 +299,8 @@
     .mini-item:last-child{border-bottom:none}
     .mini-no{
       width:26px;height:26px;border-radius:10px;
-      background:#e3f2fd;color:#1565c0;
+      background:#E6F0FA;                                        /* ✅ ธีมเดียวกัน */
+      color:#2E75B6;                                             /* ✅ ธีมเดียวกัน */
       display:flex;align-items:center;justify-content:center;
       font-weight:900;font-size:12px;
       flex:0 0 auto;
@@ -279,7 +310,7 @@
       font-size:13px;font-weight:900;color:#1f2d3d;line-height:1.25;
     }
     .mini-s{
-      font-size:12px;color:#607d8b;margin-top:4px;line-height:1.3;
+      font-size:12px;color:#6B7A90;margin-top:4px;line-height:1.3; /* ✅ ธีมเดียวกัน */
     }
     .mini-item.active{
       background:#f3f9ff;
@@ -290,8 +321,8 @@
     .loading,.error{
       background:#fff;border-radius:16px;
       padding:30px;
-      box-shadow:0 2px 10px rgba(0,0,0,.08);
-      text-align:center;color:#607d8b;
+      box-shadow:0 2px 10px rgba(46,58,89,.08);                  /* ✅ ธีมเดียวกัน */
+      text-align:center;color:#6B7A90;                           /* ✅ ธีมเดียวกัน */
     }
     .loading i{font-size:46px;margin-bottom:10px;color:#90a4ae}
     .error i{font-size:46px;margin-bottom:10px;color:#e57373}
@@ -303,8 +334,12 @@
         position:relative;left:auto;top:auto;padding:10px;gap:12px;
       }
       .main-content{margin-left:0;width:100%}
-      .header{padding:24px 16px}
-      .header h1{font-size:22px}
+
+      /* ✅ HEADER STANDARD (มือถือ): เท่ากันทุกหน้า */
+      .header{padding:40px 20px;min-height:170px}
+      .header h1{font-size:28px}
+      .header p{font-size:15px;max-width:650px}
+
       .wrap{padding:12px 12px 20px}
       .slide{min-height:unset}
     }
