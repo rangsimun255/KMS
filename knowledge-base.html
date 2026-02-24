@@ -87,6 +87,19 @@
       box-shadow: 0 2px 10px rgba(46,58,89,0.08);
     }
 
+    .filter-row {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .filter-group {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
     .filter-group label {
       font-size: 14px;
       font-weight: 600;
@@ -101,13 +114,29 @@
       min-width: 180px;
     }
 
-    .filter-group select:focus { 
-      border-color: #4A89C8; 
-      outline: none; 
+    .filter-group select:focus {
+      border-color: #4A89C8;
+      outline: none;
     }
 
-    .checkbox-item label { 
-      font-size: 14px; 
+    .checkbox-group {
+      display: flex;
+      gap: 15px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .checkbox-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .checkbox-item input { width: 18px; height: 18px; }
+
+    .checkbox-item label {
+      font-size: 14px;
+      cursor: pointer;
       color: #2E3A59;
     }
 
@@ -124,7 +153,12 @@
     .btn-clear:hover { background: #C62828; }
 
     .cards-section { padding: 30px 40px; }
-    .cards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 25px;
+    }
 
     .card {
       background: #ffffff;
@@ -134,10 +168,19 @@
       transition: all 0.3s ease;
     }
 
-    .card:hover { 
-      transform: translateY(-5px); 
-      box-shadow: 0 8px 25px rgba(74,137,200,0.18); 
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px rgba(74,137,200,0.18);
     }
+
+    .card-image {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      background: #f0f0f0;
+    }
+
+    .card-content { padding: 20px; }
 
     .card-type {
       display: inline-block;
@@ -153,17 +196,17 @@
     .card-type.video { background: #FFF3E0; color: #EF6C00; }
     .card-type.experience { background: #FCE4EC; color: #C2185B; }
 
-    .card-title { 
-      font-size: 18px; 
-      font-weight: 600; 
-      color: #2E3A59; 
-      margin-bottom: 8px; 
+    .card-title {
+      font-size: 18px;
+      font-weight: 600;
+      color: #2E3A59;
+      margin-bottom: 8px;
     }
 
-    .card-info { 
-      font-size: 14px; 
-      color: #6B7A90; 
-      margin-bottom: 5px; 
+    .card-info {
+      font-size: 14px;
+      color: #6B7A90;
+      margin-bottom: 5px;
     }
 
     .card-btn {
@@ -179,34 +222,101 @@
 
     .card-btn:hover { background: #2E75B6; }
 
-    .no-results { 
-      text-align: center; 
-      padding: 60px; 
-      color: #6B7A90; 
+    .no-results {
+      text-align: center;
+      padding: 60px;
+      color: #6B7A90;
       font-size: 14px;
     }
 
-    .no-results i { 
-      font-size: 60px; 
-      margin-bottom: 20px; 
-      color: #8A98AD; 
+    .no-results i {
+      font-size: 60px;
+      margin-bottom: 20px;
+      color: #8A98AD;
     }
   </style>
 </head>
 
 <body>
   <div class="container">
-   <nav class="sidebar">
-  <a class="sidebar-icon" data-page="index" href="index.html"><i class="fas fa-home"></i></a>
-  <a class="sidebar-icon" data-page="kb" href="knowledge-base.html"><i class="fas fa-book"></i></a>
-  <a class="sidebar-icon" data-page="lp" href="learning-path.html"><i class="fas fa-graduation-cap"></i></a>
-  <a class="sidebar-icon" data-page="quiz" href="quiz.html"><i class="fas fa-clipboard-check"></i></a>
-  <a class="sidebar-icon" data-page="share" href="share-experience.html"><i class="fas fa-comments"></i></a>
-  <a class="sidebar-icon logout" href="#"><i class="fas fa-sign-out-alt"></i></a>
-</nav>
+    <nav class="sidebar">
+      <a class="sidebar-icon" data-page="index" href="index.html"><i class="fas fa-home"></i></a>
+      <a class="sidebar-icon" data-page="kb" href="knowledge-base.html"><i class="fas fa-book"></i></a>
+      <a class="sidebar-icon" data-page="lp" href="learning-path.html"><i class="fas fa-graduation-cap"></i></a>
+      <a class="sidebar-icon" data-page="quiz" href="quiz.html"><i class="fas fa-clipboard-check"></i></a>
+      <a class="sidebar-icon" data-page="share" href="share-experience.html"><i class="fas fa-comments"></i></a>
+      <a class="sidebar-icon logout" href="#"><i class="fas fa-sign-out-alt"></i></a>
+    </nav>
 
     <main class="main-content">
       <header class="header">
         <h1>Knowledge Base</h1>
         <p>คลังความรู้ เทคนิค และวิธีแก้ปัญหาในกระบวนการผลิตยาสมุนไพร</p>
       </header>
+
+      <section class="filter-section">
+        <div class="filter-row">
+          <div class="filter-group">
+            <label>กระบวนการ:</label>
+            <select id="filterProcess">
+              <option value="">-- ทั้งหมด --</option>
+              <option value="1">1. ผสมเปียก</option>
+              <option value="2">2. แร่งเปียก</option>
+              <option value="3">3. อบลมร้อน</option>
+              <option value="4">4. แร่งแห้ง</option>
+              <option value="5">5. ผสมแห้ง</option>
+              <option value="6">6. ตอกเม็ดยา</option>
+              <option value="7">7. บรรจุซอง</option>
+            </select>
+          </div>
+
+          <div class="filter-group">
+            <label>ลักษณะของเสีย:</label>
+            <select id="filterDefect">
+              <option value="">-- ทั้งหมด --</option>
+            </select>
+          </div>
+
+          <div class="filter-group">
+            <label>ประเภท:</label>
+            <div class="checkbox-group">
+              <div class="checkbox-item">
+                <input type="checkbox" id="typeOPL" value="OPL" checked>
+                <label for="typeOPL">OPL</label>
+              </div>
+              <div class="checkbox-item">
+                <input type="checkbox" id="typeWI" value="WI" checked>
+                <label for="typeWI">WI</label>
+              </div>
+              <div class="checkbox-item">
+                <input type="checkbox" id="typeVideo" value="Video" checked>
+                <label for="typeVideo">Video</label>
+              </div>
+              <div class="checkbox-item">
+                <input type="checkbox" id="typeExp" value="Experience" checked>
+                <label for="typeExp">Experience</label>
+              </div>
+            </div>
+          </div>
+
+          <button class="btn-clear" onclick="clearFilters()">ล้างตัวกรอง</button>
+        </div>
+      </section>
+
+      <section class="cards-section">
+        <div class="cards-grid" id="cardsContainer">
+          <div class="no-results">
+            <i class="fas fa-spinner fa-spin"></i>
+            <p>กำลังโหลดข้อมูล...</p>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    /* JavaScript ของคุณคงเดิมทั้งหมด */
+  </script>
+<script src="Js"></script>
+</body>
+</html>
