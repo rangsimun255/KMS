@@ -116,7 +116,7 @@
       display:flex;flex-direction:column;gap:12px;flex:1;
     }
 
-    /* ✅ กล่องฟ้าเอาออก -> ขาวล้วน */
+    /* ✅ กล่องฟ้าเอาออก -> ขาวล้วน (ข้อความอยู่เหมือนเดิม) */
     .detail{
       color:#2E3A59;
       font-size:14px;
@@ -144,18 +144,19 @@
     }
 
     /* =====================================================
-       ✅ FRAME ลายเฉียงแบบ "ไม่มีกรอบข้างใน" (แก้ปัญหาที่เห็น)
-       ใช้ ::before วาดลายเฉียง + ::after วางพื้นด้านใน (inset)
+       ✅ FRAME ลายเฉียงแบบ "ไม่มีกรอบข้างใน"
+       - ไม่มีช่องว่างสีขาวที่ขอบ
+       - ไม่มีเส้นกรอบด้านใน
     ====================================================== */
     .hazard-frame{
-      --b:14px;          /* ความหนาขอบ */
-      --r:22px;          /* ความโค้ง */
-      --pad:18px;        /* padding ระหว่างขอบกับกล่อง */
+      --b:14px;     /* ความหนาขอบ */
+      --r:22px;     /* ความโค้ง */
+      --pad:0px;    /* ✅ ไม่มีช่องว่างสีขาว */
       position:relative;
       border-radius:var(--r);
       padding:calc(var(--b) + var(--pad));
       box-shadow:0 6px 18px rgba(46,58,89,.12);
-      overflow:hidden; /* กันมุมลายเฉียง */
+      overflow:hidden;
       background:transparent;
     }
     .hazard-frame::before{
@@ -169,7 +170,7 @@
       );
       z-index:0;
     }
-    /* แผ่นปิดด้านใน -> ตัดลายเฉียงออก เหลือแค่ "ขอบ" จริง ๆ */
+    /* ✅ แผ่นด้านใน: ปิดให้เหลือแค่ "ขอบลายเฉียง" จริง ๆ */
     .hazard-frame::after{
       content:"";
       position:absolute;
@@ -190,20 +191,23 @@
       --inner:#FFF8E1;
     }
 
-    /* กล่องข้างใน (ไม่มีเส้นกรอบ) */
+    /* ✅ กล่องข้างใน "ไม่มีเส้นกรอบ" + ✅ ขึ้นบรรทัดใหม่เหมือนเดิม */
     .critical, .impact{
       position:relative;
-      z-index:2;              /* อยู่เหนือ ::after */
-      border:none !important; /* กัน CSS เก่าทับ */
+      z-index:2;
+      border:none !important;
       outline:none;
       box-shadow:none;
-      border-radius:16px;
+      border-radius:0;     /* ✅ กันมองเหมือนมีกรอบซ้อน */
       padding:18px;
       display:flex;gap:10px;align-items:flex-start;
       font-size:14px;font-weight:800;
-      background:transparent; /* ให้ใช้สีจาก --inner ของ frame */
+      background:transparent;
     }
-    .critical{ color:#B71C1C; }
+    .critical{
+      color:#B71C1C;
+      white-space: pre-line; /* ✅ ให้ \n ขึ้นบรรทัดใหม่เหมือนเดิม */
+    }
     .impact{ color:#7A4F00; }
 
     .critical i,.impact i{margin-top:3px}
@@ -214,7 +218,7 @@
     .impact-subtitle{font-weight:900;margin-top:12px;margin-bottom:6px}
     .impact-list{white-space:pre-line;font-weight:800}
 
-    /* Right panel (ของเดิม) */
+    /* Right panel */
     .panel{
       background:#fff;border-radius:18px;
       box-shadow:0 2px 10px rgba(46,58,89,.08);
@@ -409,7 +413,7 @@
 
             ${wiBtnHtml}
 
-            <!-- ✅ ดำ-แดง เฉียง (ไม่มีกรอบข้างในแล้ว) -->
+            <!-- ✅ ดำ-แดง เฉียง + ไม่มีกรอบข้างใน + ขึ้นบรรทัดใหม่ -->
             <div class="hazard-frame hazard-red">
               <div class="critical">
                 <i class="fas fa-triangle-exclamation"></i>
@@ -417,7 +421,7 @@
               </div>
             </div>
 
-            <!-- ✅ ดำ-เหลือง เฉียง (ไม่มีกรอบข้างในแล้ว) -->
+            <!-- ✅ ดำ-เหลือง เฉียง + ไม่มีกรอบข้างใน -->
             <div class="hazard-frame hazard-yellow">
               <div class="impact">
                 <i class="fas fa-share-nodes"></i>
