@@ -10,19 +10,23 @@
 
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
+
     body {
       font-family: 'Sarabun', sans-serif;
-      background-color: #e8eef5;
+      background-color: #F4F7FB;            /* ✅ ให้ตรงธีมเดียวกัน */
       min-height: 100vh;
       overflow-x: hidden;
-      color: #2c3e50;
+      color: #2E3A59;                        /* ✅ ให้ตรงธีมเดียวกัน */
+      font-size: 14px;
+      line-height: 1.7;
     }
+
     .container { display: flex; min-height: 100vh; }
 
     /* ===== Sidebar (Desktop: ซ้าย) ===== */
     .sidebar {
       width: 70px;
-      background: linear-gradient(180deg, #5b9bd5 0%, #4a89c8 100%);
+      background: linear-gradient(180deg, #4A89C8 0%, #2E75B6 100%); /* ✅ ให้ตรงธีมเดียวกัน */
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -40,16 +44,18 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      color: rgba(255,255,255,0.7);
+      color: rgba(255,255,255,0.85);        /* ✅ ให้ตรงธีมเดียวกัน */
       font-size: 20px;
       border-radius: 12px;
       cursor: pointer;
       transition: all 0.3s ease;
       text-decoration: none;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
     }
     .sidebar-icon:hover,
     .sidebar-icon.active {
-      background-color: rgba(255,255,255,0.2);
+      background-color: rgba(255,255,255,0.18); /* ✅ ให้ตรงธีมเดียวกัน */
       color: #fff;
     }
 
@@ -60,24 +66,32 @@
       width: calc(100% - 70px);
     }
 
-    /* ===== Header ===== */
+    /* ✅ HEADER STANDARD: เท่ากันทุกหน้า */
     .header {
-      background: linear-gradient(135deg, #5b9bd5 0%, #2e75b6 100%);
-      padding: 36px 24px;
+      background: linear-gradient(135deg, #4A89C8 0%, #2E75B6 100%); /* ✅ ให้ตรงธีมเดียวกัน */
+      padding: 60px 40px;
+      min-height: 240px;                      /* ✅ ล็อกความสูงให้เท่าหน้าอื่น */
       text-align: center;
+      box-shadow: 0 4px 15px rgba(74, 137, 200, 0.25);
+
+      display: flex;                          /* ✅ จัดกลางแนวตั้ง */
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
     }
     .header h1 {
-      font-size: 32px;
+      font-size: 42px;                        /* ✅ เท่าหน้าอื่น */
       font-weight: 700;
       color: #fff;
-      margin-bottom: 8px;
-      letter-spacing: 0.3px;
+      margin-bottom: 15px;                    /* ✅ เท่าหน้าอื่น */
+      letter-spacing: 1px;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.2);
     }
     .header p {
-      font-size: 15px;
-      color: rgba(255,255,255,0.92);
-      line-height: 1.6;
-      max-width: 920px;
+      font-size: 18px;                        /* ✅ เท่าหน้าอื่น */
+      color: rgba(255,255,255,0.95);
+      line-height: 1.7;
+      max-width: 650px;                       /* ✅ เท่าหน้าอื่น */
       margin: 0 auto;
     }
 
@@ -90,7 +104,7 @@
     .intro-card {
       background: #fff;
       border-radius: 16px;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+      box-shadow: 0 6px 18px rgba(46,58,89,0.08); /* ✅ ให้ตรงธีมเดียวกัน */
       padding: 16px 18px;
       display: grid;
       grid-template-columns: 1fr auto;
@@ -109,8 +123,8 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background: #e3f2fd;
-      color: #1565c0;
+      background: #E6F0FA;                    /* ✅ ให้ตรงธีมเดียวกัน */
+      color: #2E75B6;                         /* ✅ ให้ตรงธีมเดียวกัน */
       font-size: 18px;
       flex: 0 0 auto;
     }
@@ -118,11 +132,12 @@
       font-size: 16px;
       margin: 0 0 4px 0;
       font-weight: 700;
+      color: #2E3A59;
     }
     .intro-text p {
       font-size: 13px;
       margin: 0;
-      color: #607d8b;
+      color: #6B7A90;                         /* ✅ ให้ตรงธีมเดียวกัน */
       line-height: 1.6;
     }
     .intro-right {
@@ -134,8 +149,8 @@
     .pill {
       font-size: 12px;
       padding: 8px 10px;
-      background: #f5f7fb;
-      border: 1px solid #e8eef5;
+      background: #F4F7FB;                    /* ✅ ให้ตรงธีมเดียวกัน */
+      border: 1px solid #E0E6EF;              /* ✅ ให้ตรงธีมเดียวกัน */
       border-radius: 999px;
       color: #455a64;
       display: inline-flex;
@@ -163,21 +178,21 @@
       border-radius: 18px;
       overflow: hidden;
       cursor: pointer;
-      box-shadow: 0 8px 22px rgba(0,0,0,0.08);
+      box-shadow: 0 8px 22px rgba(46,58,89,0.08); /* ✅ ให้ตรงธีมเดียวกัน */
       transition: transform 0.2s ease, box-shadow 0.2s ease;
-      border: 1px solid rgba(91,155,213,0.15);
+      border: 1px solid rgba(74,137,200,0.16);    /* ✅ ให้ตรงธีมเดียวกัน */
       position: relative;
     }
     .process-card:hover {
       transform: translateY(-6px);
-      box-shadow: 0 14px 30px rgba(91,155,213,0.18);
+      box-shadow: 0 14px 30px rgba(74,137,200,0.18); /* ✅ ให้ตรงธีมเดียวกัน */
     }
 
     .process-img {
       width: 100%;
       height: 175px;
       object-fit: cover;
-      background: #eef3f8;
+      background: #EEF3F8;
       display: block;
     }
 
@@ -202,13 +217,13 @@
       border-radius: 999px;
       font-size: 12px;
       font-weight: 700;
-      background: #e3f2fd;
-      color: #1565c0;
+      background: #E6F0FA;                    /* ✅ ให้ตรงธีมเดียวกัน */
+      color: #2E75B6;                         /* ✅ ให้ตรงธีมเดียวกัน */
     }
 
     .mini {
       font-size: 12px;
-      color: #607d8b;
+      color: #6B7A90;                         /* ✅ ให้ตรงธีมเดียวกัน */
       display: inline-flex;
       align-items: center;
       gap: 8px;
@@ -218,12 +233,13 @@
       font-size: 16px;
       font-weight: 800;
       margin: 0;
+      color: #2E3A59;
     }
 
     .process-desc {
       font-size: 13px;
       margin: 0;
-      color: #546e7a;
+      color: #6B7A90;                         /* ✅ ให้ตรงธีมเดียวกัน */
       line-height: 1.5;
       min-height: 40px;
     }
@@ -243,18 +259,18 @@
       padding: 10px 12px;
       border-radius: 12px;
       border: none;
-      background: #5b9bd5;
+      background: #4A89C8;                    /* ✅ ให้ตรงธีมเดียวกัน */
       color: #fff;
       font-weight: 700;
       font-size: 13px;
       cursor: pointer;
       transition: background 0.2s ease;
     }
-    .cta:hover { background: #4a89c8; }
+    .cta:hover { background: #2E75B6; }       /* ✅ ให้ตรงธีมเดียวกัน */
 
     .hint {
       font-size: 12px;
-      color: #90a4ae;
+      color: #8A98AD;                         /* ✅ ให้ตรงธีมเดียวกัน */
     }
 
     /* ===== Responsive ===== */
@@ -283,9 +299,10 @@
         width: 100% !important;
       }
 
-      .header { padding: 22px 16px; }
-      .header h1 { font-size: 24px; }
-      .header p { font-size: 13px; }
+      /* ✅ HEADER STANDARD (มือถือ): เท่ากันทุกหน้า */
+      .header { padding: 40px 20px; min-height: 170px; }
+      .header h1 { font-size: 28px; }
+      .header p { font-size: 15px; }
 
       .intro, .section { padding-left: 16px; padding-right: 16px; }
       .intro-card { grid-template-columns: 1fr; }
@@ -300,14 +317,13 @@
 <body>
   <div class="container">
     <nav class="sidebar">
-  <a class="sidebar-icon" data-page="index" href="index.html"><i class="fas fa-home"></i></a>
-  <a class="sidebar-icon" data-page="kb" href="knowledge-base.html"><i class="fas fa-book"></i></a>
-  <a class="sidebar-icon" data-page="lp" href="learning-path.html"><i class="fas fa-graduation-cap"></i></a>
-  <a class="sidebar-icon" data-page="quiz" href="quiz.html"><i class="fas fa-clipboard-check"></i></a>
-  <a class="sidebar-icon" data-page="share" href="share-experience.html"><i class="fas fa-comments"></i></a>
-  <a class="sidebar-icon logout" href="#"><i class="fas fa-sign-out-alt"></i></a>
-</nav>
-
+      <a class="sidebar-icon" data-page="index" href="index.html"><i class="fas fa-home"></i></a>
+      <a class="sidebar-icon" data-page="kb" href="knowledge-base.html"><i class="fas fa-book"></i></a>
+      <a class="sidebar-icon" data-page="lp" href="learning-path.html"><i class="fas fa-graduation-cap"></i></a>
+      <a class="sidebar-icon" data-page="quiz" href="quiz.html"><i class="fas fa-clipboard-check"></i></a>
+      <a class="sidebar-icon" data-page="share" href="share-experience.html"><i class="fas fa-comments"></i></a>
+      <a class="sidebar-icon logout" href="#"><i class="fas fa-sign-out-alt"></i></a>
+    </nav>
 
     <main class="main-content">
       <!-- Header -->
@@ -426,7 +442,7 @@
     const grid = document.getElementById("processGrid");
     grid.innerHTML = PROCESS_LIST.map(cardTemplate).join("");
   </script>
-<script src="Js"></script>
+  <script src="Js"></script>
 
 </body>
 </html>
