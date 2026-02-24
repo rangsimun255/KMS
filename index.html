@@ -19,37 +19,23 @@
 
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-
-    /* เปลี่ยนพื้นหลัง */
-    body { 
-      font-family: 'Sarabun', sans-serif; 
-      background-color: #F4F7FB; 
-      min-height: 100vh; 
-    }
-
+    body { font-family: 'Sarabun', sans-serif; background-color: #e8eef5; min-height: 100vh; }
     .container { display: flex; min-height: 100vh; }
 
-    /* Sidebar เปลี่ยนเป็น Blue-Gray */
+    /* Sidebar */
     .sidebar {
       width: 70px;
-      background: linear-gradient(180deg, #4A89C8 0%, #2E75B6 100%);
-      display: flex; 
-      flex-direction: column; 
-      align-items: center;
-      padding-top: 20px; 
-      gap: 10px;
-      position: fixed; 
-      height: 100vh;
+      background: linear-gradient(180deg, #5b9bd5 0%, #4a89c8 100%);
+      display: flex; flex-direction: column; align-items: center;
+      padding-top: 20px; gap: 10px;
+      position: fixed; height: 100vh;
       z-index: 10;
     }
 
     .sidebar-icon {
-      width: 50px; 
-      height: 50px;
-      display: flex; 
-      align-items: center; 
-      justify-content: center;
-      color: rgba(255,255,255,0.85);
+      width: 50px; height: 50px;
+      display: flex; align-items: center; justify-content: center;
+      color: rgba(255,255,255,0.7);
       font-size: 20px;
       border-radius: 12px;
       cursor: pointer;
@@ -58,131 +44,88 @@
       user-select: none;
       -webkit-tap-highlight-color: transparent;
     }
-
     .sidebar-icon:hover,
     .sidebar-icon.active {
-      background-color: rgba(255,255,255,0.18);
+      background-color: rgba(255,255,255,0.2);
       color: #fff;
     }
-
     .sidebar-icon:active { transform: scale(0.96); }
 
+    /* Main Content */
     .main-content { flex: 1; padding: 0; margin-left: 70px; }
 
-    /* Header เปลี่ยนโทน */
+    /* Header */
     .header {
-      background: linear-gradient(135deg, #4A89C8 0%, #2E75B6 100%);
+      background: linear-gradient(135deg, #5b9bd5 0%, #2e75b6 100%);
+      border-radius: 0;
       padding: 60px 40px;
+      margin: 0;
       text-align: center;
-      box-shadow: 0 4px 15px rgba(74, 137, 200, 0.25);
+      box-shadow: 0 4px 15px rgba(91, 155, 213, 0.3);
     }
-
     .header h1 {
-      font-size: 42px; 
-      font-weight: 700; 
-      color: #ffffff;
+      font-size: 42px; font-weight: 700; color: #ffffff;
       margin-bottom: 15px;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      letter-spacing: 1px;
     }
-
     .header .subtitle {
-      font-size: 18px; 
-      color: rgba(255, 255, 255, 0.95);
+      font-size: 18px; color: rgba(255, 255, 255, 0.95);
+      max-width: 650px; margin: 0 auto; line-height: 1.7;
     }
 
-    /* Cards เปลี่ยนสีให้ Soft */
+    /* Menu Cards */
     .menu-cards {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 20px;
       padding: 30px 40px;
     }
-
     .card {
-      background: #ffffff;
+      background: #fff;
       border-radius: 16px;
       padding: 28px 20px;
       text-align: center;
       text-decoration: none;
-      box-shadow: 0 4px 15px rgba(46,58,89,0.08);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
       transition: all 0.3s ease;
       border: 2px solid transparent;
     }
-
     .card:hover {
       transform: translateY(-5px);
-      box-shadow: 0 8px 25px rgba(74,137,200,0.18);
-      border-color: #4A89C8;
+      box-shadow: 0 8px 25px rgba(91,155,213,0.2);
+      border-color: #5b9bd5;
     }
-
     .card-icon {
-      width: 60px; 
-      height: 60px;
+      width: 60px; height: 60px;
       margin: 0 auto 15px;
-      background: linear-gradient(135deg, #E6F0FA 0%, #DCEAF8 100%);
+      background: linear-gradient(135deg, #e8f4fc 0%, #d4e9f7 100%);
       border-radius: 14px;
-      display: flex; 
-      align-items: center; 
-      justify-content: center;
-      font-size: 26px; 
-      color: #4A89C8;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 26px; color: #5b9bd5;
     }
+    .card-title { font-size: 17px; font-weight: 600; color: #2c3e50; margin-bottom: 8px; }
+    .card-desc { font-size: 13px; color: #7f8c8d; line-height: 1.5; }
 
-    .card-title { 
-      font-size: 17px; 
-      font-weight: 600; 
-      color: #2E3A59; 
-      margin-bottom: 8px; 
-    }
-
-    .card-desc { 
-      font-size: 13px; 
-      color: #6B7A90; 
-      line-height: 1.5; 
-    }
-
-    /* New Employee เพิ่ม accent สีเขียว */
+    /* New Employee */
     .new-employee {
-      background: #ffffff;
+      background: #fff;
       border-radius: 16px;
       padding: 22px 28px;
       margin: 0 40px 20px 40px;
-      box-shadow: 0 4px 15px rgba(46,58,89,0.08);
-      border-left: 6px solid #4CAF50;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
     }
+    .new-employee h3 { font-size: 16px; font-weight: 600; color: #2c3e50; margin-bottom: 12px; }
+    .new-employee h3 i { color: #5b9bd5; margin-right: 10px; }
+    .new-employee ol { margin-left: 22px; color: #555; line-height: 1.9; font-size: 14px; }
+    .new-employee strong { color: #5b9bd5; }
 
-    .new-employee h3 { 
-      font-size: 16px; 
-      font-weight: 600; 
-      color: #2E3A59; 
-      margin-bottom: 12px; 
-    }
+    /* Footer */
+    .footer { text-align: center; padding: 15px 40px; color: #95a5a6; font-size: 13px; }
 
-    .new-employee h3 i { 
-      color: #4CAF50; 
-      margin-right: 10px; 
-    }
-
-    .new-employee ol { 
-      margin-left: 22px; 
-      color: #2E3A59; 
-      line-height: 1.9; 
-      font-size: 14px; 
-    }
-
-    .new-employee strong { 
-      color: #4A89C8; 
-    }
-
-    .footer { 
-      text-align: center; 
-      padding: 15px 40px; 
-      color: #8A98AD; 
-      font-size: 13px; 
-    }
-
+    /* Responsive */
     @media (max-width: 768px) {
       .container { flex-direction: column; }
-
       .sidebar {
         width: 100%;
         height: 60px;
@@ -192,23 +135,76 @@
         position: sticky;
         top: 0;
       }
-
       .main-content { margin-left: 0; }
-
-      .menu-cards { 
-        grid-template-columns: 1fr; 
-        padding: 20px; 
-      }
-
-      .new-employee { 
-        margin: 0 20px 20px 20px; 
-      }
-
+      .menu-cards { grid-template-columns: 1fr; padding: 20px; }
+      .new-employee { margin: 0 20px 20px 20px; }
       .header { padding: 40px 20px; }
-
       .header h1 { font-size: 28px; }
-
       .header .subtitle { font-size: 15px; }
     }
   </style>
 </head>
+
+<body>
+  <div class="container">
+    <nav class="sidebar">
+      <a class="sidebar-icon" data-page="index" href="index.html"><i class="fas fa-home"></i></a>
+      <a class="sidebar-icon" data-page="kb" href="knowledge-base.html"><i class="fas fa-book"></i></a>
+      <a class="sidebar-icon" data-page="lp" href="learning-path.html"><i class="fas fa-graduation-cap"></i></a>
+      <a class="sidebar-icon" data-page="quiz" href="quiz.html"><i class="fas fa-clipboard-check"></i></a>
+      <a class="sidebar-icon" data-page="share" href="share-experience.html"><i class="fas fa-comments"></i></a>
+      <a class="sidebar-icon logout" href="#"><i class="fas fa-sign-out-alt"></i></a>
+    </nav>
+
+    <main class="main-content">
+      <header class="header">
+        <h1>Knowledge Management System</h1>
+        <p class="subtitle">ศูนย์รวมความรู้ เทคนิค และจุดสำคัญในการผลิต </p>
+      </header>
+
+      <section class="menu-cards">
+        <a href="knowledge-base.html" class="card">
+          <div class="card-icon"><i class="fas fa-book-open"></i></div>
+          <h2 class="card-title">Knowledge Base</h2>
+          <p class="card-desc">ค้นหาความรู้ เทคนิค และวิธีแก้ปัญหา</p>
+        </a>
+
+        <a href="learning-path.html" class="card">
+          <div class="card-icon"><i class="fas fa-graduation-cap"></i></div>
+          <h2 class="card-title">Learning Path</h2>
+          <p class="card-desc">เรียนรู้กระบวนการผลิตและจุดสำคัญ</p>
+        </a>
+
+        <a href="quiz.html" class="card">
+          <div class="card-icon"><i class="fas fa-clipboard-check"></i></div>
+          <h2 class="card-title">Quiz / Check Point</h2>
+          <p class="card-desc">ตรวจสอบความเข้าใจในจุดสำคัญ</p>
+        </a>
+
+        <a href="share-experience.html" class="card">
+          <div class="card-icon"><i class="fas fa-comments"></i></div>
+          <h2 class="card-title">Share Experience</h2>
+          <p class="card-desc">แชร์ประสบการณ์และวิธีแก้ปัญหา</p>
+        </a>
+      </section>
+
+      <section class="new-employee">
+        <h3><i class="fas fa-user-plus"></i> สำหรับพนักงานใหม่</h3>
+        <ol>
+          <li>เข้า <strong>Learning Path</strong></li>
+          <li>เลือกกระบวนการที่รับผิดชอบ</li>
+          <li>ศึกษา Critical Point</li>
+          <li>เปิดดูเอกสารใน <strong>Knowledge Base</strong></li>
+        </ol>
+      </section>
+
+      <footer class="footer">
+        <p>Knowledge Management System | ใช้ภายในองค์กรเท่านั้น</p>
+      </footer>
+    </main>
+  </div>
+
+  <script src="Js"></script>
+</body>
+</html>
+
