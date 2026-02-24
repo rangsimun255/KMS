@@ -11,6 +11,7 @@
   <style>
     *{margin:0;padding:0;box-sizing:border-box}
 
+    /* ✅ ปรับสี/ฟอนต์/ขนาด ให้ชุดเดียวกับหน้า Home (ธีม #4A89C8 / #2E75B6) */
     body{
       font-family:'Sarabun',sans-serif;
       background:#F4F7FB;
@@ -42,7 +43,7 @@
 
     .main-content{flex:1;margin-left:70px;width:calc(100% - 70px)}
 
-    /* Header */
+    /* ✅ Header ให้เท่าหน้า Home */
     .header{
       background:linear-gradient(135deg,#4A89C8 0%,#2E75B6 100%);
       padding:60px 40px;
@@ -90,6 +91,7 @@
     .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
     @media(max-width:980px){.grid{grid-template-columns:1fr}}
 
+    /* ✅ FIX: overflow ต้อง visible ไม่งั้น dropdown จะโดนตัด/โดนทับ */
     .card{
       background:#fff;
       border-radius:18px;
@@ -97,6 +99,7 @@
       overflow:visible;
       border:1px solid rgba(74,137,200,0.12);
     }
+    /* ✅ ยกการ์ดที่เปิด dropdown ให้ลอยเหนือการ์ดอื่น */
     .card.dropdown-open{position:relative;z-index:30}
 
     .card-head{
@@ -129,8 +132,9 @@
     }
     .error{color:#c62828}
 
-    /* Dropdown */
+    /* ===== Dropdown (ไม่ตกขอบ + ไม่ล้น + scroll) ===== */
     .dropdown{position:relative;width:100%;max-width:100%}
+
     .drop-btn{
       width:100%;
       max-width:100%;
@@ -138,12 +142,14 @@
       align-items:center;
       justify-content:space-between;
       gap:10px;
+
       padding:10px 12px;
       border-radius:12px;
       background:#2E75B6;
       color:#fff;
       font-weight:900;
       font-size:13px;
+
       border:none;
       cursor:pointer;
       overflow:hidden;
@@ -158,10 +164,12 @@
       left:0;
       right:0;
       top:calc(100% + 8px);
+
       background:#fff;
       border:1px solid #E9EEF6;
       border-radius:12px;
       box-shadow:0 10px 24px rgba(46,58,89,.12);
+
       z-index:999;
       max-height:240px;
       overflow-y:auto;
@@ -173,11 +181,13 @@
       display:flex;
       align-items:center;
       gap:10px;
+
       padding:10px 12px;
       color:#1f2d3d;
       text-decoration:none;
       font-weight:800;
       font-size:13px;
+
       white-space:nowrap;
       overflow:hidden;
       text-overflow:ellipsis;
@@ -197,6 +207,8 @@
         gap:12px
       }
       .main-content{margin-left:0;width:100%}
+
+      /* ✅ มือถือให้เท่าหน้า Home */
       .header{padding:40px 20px}
       .header h1{font-size:28px}
       .header p{font-size:15px}
@@ -225,11 +237,7 @@
     <div class="wrap">
       <div class="topbar">
         <span class="pill"><i class="fas fa-diagram-project"></i> <span id="titleText">Process - Defect</span></span>
-
-        <!-- ✅ เปลี่ยนปุ่ม -->
-        <a class="btn-back" id="nextBtn" href="#">
-          <i class="fas fa-arrow-right"></i> ไปยังลักษณะของเสียถัดไป
-        </a>
+        <a class="btn-back" id="backBtn" href="#"><i class="fas fa-arrow-left"></i> กลับหน้าลักษณะของเสีย</a>
       </div>
 
       <div id="content" class="loading">
@@ -241,9 +249,6 @@
 
 <script>
   const API_BASE = "https://script.google.com/macros/s/AKfycbwMRbnqSLTmmI4wofmNfZ5YPFGSiqg__rZUgyDlTTR03JchnQXgUj7DKDvzS4-QBmJrvw/exec";
-
-  // ✅ ใช้หา defect ถัดไป
-  const DEFECT_LEARNING_API = `${API_BASE}?view=defectlearning`;
 
   const iconMap = {
     "Man": "fa-user",
@@ -354,51 +359,17 @@
     `;
   }
 
-  // ✅ หา defect ถัดไปจากชีท Defect Learning
-  async function resolveNextDefect(proc, currentDefect){
-    try{
-      const res = await fetch(DEFECT_LEARNING_API);
-      const data = await res.json();
-      const list = (Array.isArray(data) ? data : [])
-        .filter(x => String(x.Process || "").trim() === String(proc).trim())
-        .sort((a,b)=> String(a.DefectCode).localeCompare(String(b.DefectCode), 'th'));
-
-      const idx = list.findIndex(x => String(x.DefectCode).trim() === String(currentDefect).trim());
-      if(idx < 0) return { nextCode:"", isLast:true };
-
-      const next = list[idx + 1];
-      if(next && next.DefectCode){
-        return { nextCode: String(next.DefectCode).trim(), isLast:false };
-      }
-      return { nextCode:"", isLast:true };
-    }catch(e){
-      return { nextCode:"", isLast:true };
-    }
-  }
-
   async function load(){
     const proc = String(getQueryParam("process") || "").trim();
     const defect = String(getQueryParam("defect") || "").trim();
 
+    document.getElementById("backBtn").href = `defect-learning.html?process=${encodeURIComponent(proc)}`;
     document.getElementById("titleText").textContent = `Process ${proc} • Defect ${defect}`;
 
     if(!proc || !defect){
       document.getElementById("content").className = "error";
       document.getElementById("content").innerHTML = `ขาดพารามิเตอร์ process/defect`;
       return;
-    }
-
-    // ✅ ตั้งลิงก์ “ไปยังลักษณะของเสียถัดไป”
-    const nextBtn = document.getElementById("nextBtn");
-    const { nextCode, isLast } = await resolveNextDefect(proc, defect);
-
-    if(!isLast && nextCode){
-      nextBtn.href = `defect-learning.html?process=${encodeURIComponent(proc)}&defect=${encodeURIComponent(nextCode)}`;
-      nextBtn.innerHTML = `<i class="fas fa-arrow-right"></i> ไปยังลักษณะของเสียถัดไป (${esc(nextCode)})`;
-    }else{
-      // ถ้าเป็นอันสุดท้าย: กลับไปหน้ารวม defect ของ process นั้น
-      nextBtn.href = `defect-learning.html?process=${encodeURIComponent(proc)}`;
-      nextBtn.innerHTML = `<i class="fas fa-list"></i> กลับไปหน้าลักษณะของเสีย (รายการทั้งหมด)`;
     }
 
     try{
@@ -437,14 +408,16 @@
 
   load();
 
-  // Dropdown toggle + ยก z-index การ์ดตอนเปิด
+  // ===== Dropdown toggle + ยก z-index การ์ดตอนเปิด =====
   document.addEventListener("click", (e) => {
     const btn = e.target.closest(".drop-btn");
     const dropdown = e.target.closest("[data-dropdown]");
 
+    // ปิดทั้งหมดก่อน
     document.querySelectorAll("[data-dropdown].open").forEach(d => d.classList.remove("open"));
     document.querySelectorAll(".card.dropdown-open").forEach(c => c.classList.remove("dropdown-open"));
 
+    // ถ้าคลิกปุ่ม dropdown: เปิดอันนี้
     if(btn && dropdown){
       dropdown.classList.add("open");
       const card = dropdown.closest(".card");
