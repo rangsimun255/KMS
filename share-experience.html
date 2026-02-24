@@ -10,12 +10,20 @@
 
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: 'Sarabun', sans-serif; background-color: #e8eef5; min-height: 100vh; overflow-x: hidden; }
+
+    /* ✅ ธีมหลักให้เข้าชุด */
+    body{
+      font-family:'Sarabun',sans-serif;
+      background:#F4F7FB;
+      min-height:100vh;
+      overflow-x:hidden;
+      color:#2E3A59;
+    }
     .container { display: flex; min-height: 100vh; }
 
     .sidebar {
       width: 70px;
-      background: linear-gradient(180deg, #5b9bd5 0%, #4a89c8 100%);
+      background: linear-gradient(180deg, #4A89C8 0%, #2E75B6 100%);
       display: flex; flex-direction: column; align-items: center;
       padding-top: 20px; gap: 10px;
       position: fixed; left: 0; top: 0;
@@ -24,21 +32,43 @@
     .sidebar-icon {
       width: 50px; height: 50px;
       display: flex; align-items: center; justify-content: center;
-      color: rgba(255,255,255,0.7); font-size: 20px;
+      color: rgba(255,255,255,.85); font-size: 20px;
       border-radius: 12px; cursor: pointer;
-      transition: all 0.3s ease; text-decoration: none;
+      transition: all 0.2s ease; text-decoration: none;
+      -webkit-tap-highlight-color:transparent;
+      user-select:none;
     }
-    .sidebar-icon:hover, .sidebar-icon.active { background-color: rgba(255,255,255,0.2); color: #fff; }
+    .sidebar-icon:hover, .sidebar-icon.active { background-color: rgba(255,255,255,0.18); color: #fff; }
 
     .main-content { flex: 1; margin-left: 70px; width: calc(100% - 70px); }
 
-    .header {
-      background: linear-gradient(135deg, #5b9bd5 0%, #2e75b6 100%);
-      padding: 34px 40px;
-      text-align: center;
+    /* ✅ HEADER STANDARD (เหมือนหน้าอื่น) */
+    .header{
+      background:linear-gradient(135deg,#4A89C8 0%,#2E75B6 100%);
+      padding:60px 40px;
+      min-height:240px;
+      text-align:center;
+      box-shadow:0 4px 15px rgba(74,137,200,.25);
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      align-items:center;
     }
-    .header h1 { color: #fff; font-size: 30px; font-weight: 700; margin-bottom: 8px; }
-    .header p { color: rgba(255,255,255,0.92); font-size: 15px; line-height: 1.6; }
+    .header h1{
+      color:#fff;
+      font-size:42px;
+      font-weight:700;
+      margin-bottom:15px;
+      letter-spacing:1px;
+      text-shadow:0 2px 4px rgba(0,0,0,.2);
+    }
+    .header p{
+      color:rgba(255,255,255,.95);
+      font-size:18px;
+      max-width:780px;
+      margin:0 auto;
+      line-height:1.7;
+    }
 
     .wrap { padding: 22px 40px 40px; }
 
@@ -47,8 +77,9 @@
       margin: 0 auto;
       background: #fff;
       border-radius: 16px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+      box-shadow: 0 4px 15px rgba(46,58,89,0.06);
       overflow: hidden;
+      border:1px solid rgba(74,137,200,0.10);
     }
 
     .form-top {
@@ -67,9 +98,9 @@
       padding: 8px 12px;
       border-radius: 999px;
       font-size: 12px;
-      background: #eef5ff;
-      color: #2e75b6;
-      font-weight: 600;
+      background: #E6F0FA;
+      color: #2E75B6;
+      font-weight: 800;
     }
     .hint { font-size: 12px; color: #7f8c8d; line-height: 1.4; }
 
@@ -95,7 +126,7 @@
       background: #fff;
     }
     textarea { min-height: 110px; resize: vertical; }
-    input:focus, select:focus, textarea:focus { border-color: #5b9bd5; }
+    input:focus, select:focus, textarea:focus { border-color: #4A89C8; }
 
     .uploader {
       border: 2px dashed #cfe1f4;
@@ -128,10 +159,10 @@
       text-decoration: none;
       justify-content: center;
     }
-    .btn-primary { background: #5b9bd5; color: #fff; }
-    .btn-primary:hover { background: #4a89c8; }
-    .btn-ghost { background: #eef5ff; color: #2e75b6; }
-    .btn-ghost:hover { background: #e3efff; }
+    .btn-primary { background: #4A89C8; color: #fff; }
+    .btn-primary:hover { background: #2E75B6; }
+    .btn-ghost { background: #E6F0FA; color: #2E75B6; }
+    .btn-ghost:hover { background: #d8e9ff; }
     .btn-danger { background: #ffe8ea; color: #b3261e; }
     .btn-danger:hover { background: #ffd7db; }
     .btn:disabled { opacity: .6; cursor: not-allowed; }
@@ -178,14 +209,12 @@
       word-break: break-word;
     }
     .status.show { display: block; }
-    .status.info { background: #eef5ff; color: #1f4f7a; border: 1px solid #cfe1f4; }
+    .status.info { background: #E6F0FA; color: #1f4f7a; border: 1px solid #cfe1f4; }
     .status.ok { background: #e8f5e9; color: #1b5e20; border: 1px solid #c8e6c9; }
     .status.err { background: #ffebee; color: #b71c1c; border: 1px solid #ffcdd2; }
 
     @media (max-width: 980px) {
       .wrap { padding: 18px 24px 30px; }
-      .header { padding: 26px 20px; }
-      .header h1 { font-size: 26px; }
     }
 
     @media (max-width: 900px) {
@@ -196,13 +225,19 @@
         flex-direction: row;
         justify-content: center;
         padding: 10px;
-        position: sticky;
-        top: 0;
+        position: fixed;
+        top: 0; left: 0;
+        z-index: 1000;
       }
-      .main-content { margin-left: 0; width: 100%; }
+      .main-content { margin-left: 0; width: 100%; margin-top:60px; }
     }
 
     @media (max-width: 768px) {
+      /* ✅ header standard มือถือ */
+      .header{padding:40px 20px;min-height:170px}
+      .header h1{font-size:28px}
+      .header p{font-size:15px}
+
       .wrap { padding: 16px; }
       form { padding: 16px; }
       .grid { grid-template-columns: 1fr; }
@@ -214,15 +249,14 @@
 
 <body>
   <div class="container">
-   <nav class="sidebar">
-  <a class="sidebar-icon" data-page="index" href="index.html"><i class="fas fa-home"></i></a>
-  <a class="sidebar-icon" data-page="kb" href="knowledge-base.html"><i class="fas fa-book"></i></a>
-  <a class="sidebar-icon" data-page="lp" href="learning-path.html"><i class="fas fa-graduation-cap"></i></a>
-  <a class="sidebar-icon" data-page="quiz" href="quiz.html"><i class="fas fa-clipboard-check"></i></a>
-  <a class="sidebar-icon" data-page="share" href="share-experience.html"><i class="fas fa-comments"></i></a>
-  <a class="sidebar-icon logout" href="#"><i class="fas fa-sign-out-alt"></i></a>
-</nav>
-
+    <nav class="sidebar">
+      <a class="sidebar-icon" data-page="index" href="index.html"><i class="fas fa-home"></i></a>
+      <a class="sidebar-icon" data-page="kb" href="knowledge-base.html"><i class="fas fa-book"></i></a>
+      <a class="sidebar-icon" data-page="lp" href="learning-path.html"><i class="fas fa-graduation-cap"></i></a>
+      <a class="sidebar-icon" data-page="quiz" href="quiz.html"><i class="fas fa-clipboard-check"></i></a>
+      <a class="sidebar-icon active" data-page="share" href="share-experience.html"><i class="fas fa-comments"></i></a>
+      <a class="sidebar-icon logout" href="#"><i class="fas fa-sign-out-alt"></i></a>
+    </nav>
 
     <main class="main-content">
       <header class="header">
@@ -292,7 +326,6 @@
                         <i class="fa-regular fa-image"></i> เลือกรูป
                       </button>
 
-                      <!-- ✅ มือถือ: ถ่ายรูป (เปิดกล้อง) -->
                       <button type="button" class="btn btn-ghost" id="btnCamera">
                         <i class="fa-solid fa-camera"></i> ถ่ายรูป
                       </button>
@@ -303,10 +336,7 @@
                     </div>
                   </div>
 
-                  <!-- ✅ เลือกจากคอม/คลังรูป -->
                   <input id="images" type="file" accept="image/*" multiple hidden />
-
-                  <!-- ✅ เปิดกล้อง (มือถือ) -->
                   <input id="camera" type="file" accept="image/*" capture="environment" hidden />
 
                   <div class="thumbs" id="thumbs"></div>
@@ -323,7 +353,6 @@
                 <textarea id="solution" required placeholder="อธิบายวิธีการแก้ไข"></textarea>
               </div>
 
-              <!-- ✅ เพิ่ม Result -->
               <div class="field" style="grid-column: 1 / -1;">
                 <label for="result">9) ผลจากการแก้ไข (Result)</label>
                 <textarea id="result" placeholder="เช่น ลดของเสีย / เครื่องเดินนิ่ง / ผ่าน QC ฯลฯ"></textarea>
@@ -444,7 +473,6 @@
       clearStatus();
     });
 
-    // ส่งรูปเป็น [{name,type,data}, ...] โดย data เป็น base64 "ล้วน"
     function fileToBase64Object(file) {
       return new Promise((resolve, reject) => {
         const reader = new FileReader();
@@ -487,7 +515,7 @@
           docType: document.getElementById('docType').value,
           description: document.getElementById('problemDetail').value.trim(),
           how: document.getElementById('solution').value.trim(),
-          result: document.getElementById('result').value.trim(), // ✅ ส่ง Result
+          result: document.getElementById('result').value.trim(),
           images
         };
 
@@ -523,7 +551,7 @@
 
     renderThumbs();
   </script>
-<script src="Js"></script>
 
+  <script src="Js"></script>
 </body>
 </html>
