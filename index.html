@@ -64,11 +64,11 @@
 
     .main-content { flex: 1; padding: 0; margin-left: 70px; }
 
-    /* ✅ HEADER STANDARD: ให้ความสูงเท่ากันทุกหน้า */
+    /* ✅ HEADER STANDARD */
     .header {
       background: linear-gradient(135deg, #4A89C8 0%, #2E75B6 100%);
       padding: 60px 40px;
-      min-height: 240px; /* ล็อกความสูง */
+      min-height: 240px;
       text-align: center;
       box-shadow: 0 4px 15px rgba(74, 137, 200, 0.25);
 
@@ -143,14 +143,14 @@
       line-height: 1.5; 
     }
 
-    /* New Employee */
+    /* ✅ New Employee (เอาเขียวออก -> ฟ้าเดียวกับธีม) */
     .new-employee {
       background: #ffffff;
       border-radius: 16px;
       padding: 22px 28px;
       margin: 0 40px 20px 40px;
       box-shadow: 0 4px 15px rgba(46,58,89,0.08);
-      border-left: 6px solid #4CAF50;
+      border-left: 6px solid #4A89C8; /* ✅ จากเขียว -> ฟ้า */
     }
 
     .new-employee h3 { 
@@ -161,7 +161,7 @@
     }
 
     .new-employee h3 i { 
-      color: #4CAF50; 
+      color: #4A89C8;  /* ✅ จากเขียว -> ฟ้า */
       margin-right: 10px; 
     }
 
@@ -198,7 +198,6 @@
       .menu-cards { grid-template-columns: 1fr; padding: 20px; }
       .new-employee { margin: 0 20px 20px 20px; }
 
-      /* ✅ HEADER STANDARD (มือถือ): สูงเท่ากันทุกหน้า */
       .header { padding: 40px 20px; min-height: 170px; }
       .header h1 { font-size: 28px; }
       .header .subtitle { font-size: 15px; }
