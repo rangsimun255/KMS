@@ -268,10 +268,10 @@
         <section class="form-card">
           <div class="form-top">
             <div class="badge"><i class="fa-solid fa-file-pen"></i> แบบฟอร์มบันทึกประสบการณ์</div>
-            
           </div>
 
-          <form id="shareForm">
+          <!-- ✅ แก้: ใส่ novalidate เพื่อให้เราเป็นคนคุมข้อความแจ้งเตือน -->
+          <form id="shareForm" novalidate>
             <div class="grid">
 
               <div class="field" style="grid-column: 1 / -1;">
@@ -492,9 +492,29 @@
       });
     }
 
+    // ✅✅✅ แก้: ทำให้ข้อความ required เป็น "โปรดกรอกข้อมูลในช่องนี้" ✅✅✅
+    const REQUIRED_MSG = 'โปรดกรอกข้อมูลในช่องนี้';
+
+    function applyRequiredMessages() {
+      const requiredEls = form.querySelectorAll('[required]');
+      requiredEls.forEach(el => {
+        el.setCustomValidity('');
+        const isEmpty = (el.value == null) || String(el.value).trim() === '';
+        if (isEmpty) el.setCustomValidity(REQUIRED_MSG);
+      });
+    }
+
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       clearStatus();
+
+      // ✅ ตั้งข้อความก่อน reportValidity ทุกครั้ง
+      applyRequiredMessages();
+
+      if (!form.checkValidity()) {
+        form.reportValidity(); // จะโชว์ข้อความที่เราตั้งไว้
+        return;
+      }
 
       if (selectedFiles.length < 1) {
         setStatus('err', 'กรุณาแนบรูปอย่างน้อย 1 รูป (สูงสุด 4 รูป)');
