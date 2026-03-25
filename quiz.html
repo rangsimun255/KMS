@@ -22,7 +22,6 @@
     body{font-family:'Sarabun',sans-serif;background:#F4F7FB;min-height:100vh;color:#2E3A59}
     .container{display:flex;min-height:100vh}
 
-    /* Sidebar (เดสก์ท็อป) */
     .sidebar{
       width:70px;background:linear-gradient(180deg,#4A89C8 0%,#2E75B6 100%);
       display:flex;flex-direction:column;align-items:center;
@@ -36,10 +35,8 @@
     .sidebar-icon:hover,.sidebar-icon.active{background:rgba(255,255,255,.18);color:#fff}
     .sidebar-icon:active{transform:scale(.96)}
 
-    /* Main */
     .main-content{flex:1;padding:0;margin-left:70px}
 
-    /* ✅ HEADER STANDARD (เหมือนหน้าอื่น) */
     .header{
       background:linear-gradient(135deg,#4A89C8 0%,#2E75B6 100%);
       padding:60px 40px;
@@ -67,7 +64,6 @@
       line-height:1.7;
     }
 
-    /* Content blocks */
     .content{padding:30px 40px}
     .box{
       background:#fff;border-radius:16px;padding:22px 24px;
@@ -78,7 +74,6 @@
     .box ol{margin-left:20px;color:#555;line-height:1.9;font-size:14px}
     .box .hint{margin-top:10px;color:#4A89C8;font-weight:600}
 
-    /* ✅ การ์ดเป็นแถวเดียว */
     .quiz-grid{
       display:grid;
       grid-template-columns:1fr;
@@ -122,7 +117,6 @@
 
     .footer{text-align:center;padding:15px 40px;color:#95a5a6;font-size:13px}
 
-    /* ✅ Responsive มือถือ */
     @media (max-width: 768px){
       .container{flex-direction:column;}
 
@@ -147,7 +141,6 @@
       .header .subtitle{font-size:15px}
 
       .content{padding:18px}
-
       .quiz-grid{max-width:100%;}
     }
   </style>
@@ -155,7 +148,6 @@
 
 <body>
   <div class="container">
-    <!-- Sidebar -->
     <nav class="sidebar">
       <a class="sidebar-icon" data-page="index" href="index.html"><i class="fas fa-home"></i></a>
       <a class="sidebar-icon" data-page="kb" href="knowledge-base.html"><i class="fas fa-book"></i></a>
@@ -170,12 +162,11 @@
         <h1>Quiz / Check Point</h1>
         <p class="subtitle">
           หน้านี้มีไว้สำหรับทดสอบความเข้าใจ “หลังเรียน Learning Path”<br>
-          กรุณาเริ่มทำจาก Quiz 1 และทำตามลำดับจนถึง Quiz 7 (แต่ละกระบวนการมี Kahoot แยก)
+          กรุณาเริ่มทำจาก Quiz 1 และทำตามลำดับจนถึง Quiz 7
         </p>
       </header>
 
       <section class="content">
-        <!-- อธิบาย -->
         <div class="box">
           <h3><i class="fas fa-info-circle" style="color:#4A89C8;margin-right:8px;"></i> หน้านี้มีไว้ทำอะไร</h3>
           <p>
@@ -186,7 +177,6 @@
           <p class="hint">แนะนำ: ถ้ายังไม่มั่นใจ ให้กลับไปทบทวน Learning Path ก่อนทำแบบทดสอบ</p>
         </div>
 
-        <!-- ขั้นตอน -->
         <div class="box">
           <h3><i class="fas fa-list-check" style="color:#4A89C8;margin-right:8px;"></i> ขั้นตอนการทำแบบทดสอบ</h3>
           <ol>
@@ -198,7 +188,6 @@
           </ol>
         </div>
 
-        <!-- 7 Cards -->
         <div class="quiz-grid" id="quizContainer"></div>
       </section>
 
@@ -210,13 +199,48 @@
 
   <script>
     const quizzes = [
-      { no: 1, title: "กระบวนการผสมเปียก",   id: "11b67807-5c83-4da3-9e19-239c6a36e09b_1774425380720", desc: "ทดสอบ Wet Mass / ความชื้น / ความสม่ำเสมอ" },
-      { no: 2, title: "กระบวนการแร่งเปียก",  id: "11b67807-5c83-4da3-9e19-239c6a36e09b_1774426044750", desc: "ทดสอบการแกร่ง/ขึ้นรูปเม็ดเปียกและผลกระทบต่อขั้นตอนถัดไป" },
-      { no: 3, title: "กระบวนการอบลมร้อน",  id: "KAHOOT_ID_3", desc: "ทดสอบการควบคุมความชื้นตกค้างและผลเสียเมื่ออบไม่เหมาะสม" },
-      { no: 4, title: "กระบวนการแร่งแห้ง",  id: "KAHOOT_ID_4", desc: "ทดสอบการคัดขนาดหลังอบ และผลต่อการไหล/น้ำหนักเม็ด" },
-      { no: 5, title: "กระบวนการผสมแห้ง",   id: "KAHOOT_ID_5", desc: "ทดสอบความสม่ำเสมอของสูตร และความเสี่ยงจากการผสมไม่ทั่ว" },
-      { no: 6, title: "กระบวนการตอกเม็ดยา", id: "KAHOOT_ID_6", desc: "ทดสอบ defect จาก Compression (แตก/บิ่น/ติดพั้นช์ ฯลฯ)" },
-      { no: 7, title: "กระบวนการบรรจุซอง",  id: "KAHOOT_ID_7", desc: "ทดสอบการตรวจขั้นสุดท้ายและการตัดสินใจเมื่อพบ NG ระหว่างบรรจุ" },
+      {
+        no: 1,
+        title: "กระบวนการผสมเปียก",
+        challengeUrl: "https://kahoot.it/challenge/07283733?challenge-id=11b67807-5c83-4da3-9e19-239c6a36e09b_1774425380720",
+        desc: "ทดสอบ Wet Mass / ความชื้น / ความสม่ำเสมอ"
+      },
+      {
+        no: 2,
+        title: "กระบวนการแร่งเปียก",
+        challengeUrl: "https://kahoot.it/challenge/0238689?challenge-id=11b67807-5c83-4da3-9e19-239c6a36e09b_1774426044750",
+        desc: "ทดสอบการแกร่ง/ขึ้นรูปเม็ดเปียกและผลกระทบต่อขั้นตอนถัดไป"
+      },
+      {
+        no: 3,
+        title: "กระบวนการอบลมร้อน",
+        challengeUrl: "",
+        desc: "ทดสอบการควบคุมความชื้นตกค้างและผลเสียเมื่ออบไม่เหมาะสม"
+      },
+      {
+        no: 4,
+        title: "กระบวนการแร่งแห้ง",
+        challengeUrl: "",
+        desc: "ทดสอบการคัดขนาดหลังอบ และผลต่อการไหล/น้ำหนักเม็ด"
+      },
+      {
+        no: 5,
+        title: "กระบวนการผสมแห้ง",
+        challengeUrl: "",
+        desc: "ทดสอบความสม่ำเสมอของสูตร และความเสี่ยงจากการผสมไม่ทั่ว"
+      },
+      {
+        no: 6,
+        title: "กระบวนการตอกเม็ดยา",
+        challengeUrl: "",
+        desc: "ทดสอบ defect จาก Compression (แตก/บิ่น/ติดพั้นช์ ฯลฯ)"
+      },
+      {
+        no: 7,
+        title: "กระบวนการบรรจุซอง",
+        challengeUrl: "",
+        desc: "ทดสอบการตรวจขั้นสุดท้ายและการตัดสินใจเมื่อพบ NG ระหว่างบรรจุ"
+      }
     ];
 
     const container = document.getElementById("quizContainer");
@@ -225,7 +249,7 @@
       const card = document.createElement("div");
       card.className = "quiz-card";
 
-      const idMissing = !q.id || q.id.startsWith("KAHOOT_ID_");
+      const linkMissing = !q.challengeUrl || !q.challengeUrl.includes("kahoot.it/challenge/");
 
       card.innerHTML = `
         <div>
@@ -235,11 +259,12 @@
         </div>
 
         <a class="btn-start"
-           href="quiz-play.html?k=${encodeURIComponent(q.id)}&title=${encodeURIComponent(q.title)}"
-           ${idMissing ? `onclick="alert('ยังไม่ได้ใส่ Kahoot ID ของ Quiz ${q.no}'); return false;"` : ""}>
+           href="quiz-play.html?url=${encodeURIComponent(q.challengeUrl)}&title=${encodeURIComponent(q.title)}"
+           ${linkMissing ? `onclick="alert('ยังไม่ได้ใส่ลิงก์ Kahoot ของ Quiz ${q.no}'); return false;"` : ""}>
           <i class="fas fa-play"></i> เริ่มทำแบบทดสอบ
         </a>
       `;
+
       container.appendChild(card);
     });
   </script>
