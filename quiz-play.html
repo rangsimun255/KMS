@@ -22,7 +22,6 @@
     body{font-family:'Sarabun',sans-serif;background:#F4F7FB;min-height:100vh;color:#2E3A59}
     .container{display:flex;min-height:100vh}
 
-    /* Sidebar */
     .sidebar{
       width:70px;background:linear-gradient(180deg,#4A89C8 0%,#2E75B6 100%);
       display:flex;flex-direction:column;align-items:center;
@@ -38,7 +37,6 @@
 
     .main-content{flex:1;padding:0;margin-left:70px}
 
-    /* ✅ HEADER STANDARD (เหมือนหน้าอื่น) */
     .header{
       background:linear-gradient(135deg,#4A89C8 0%,#2E75B6 100%);
       padding:60px 40px;
@@ -82,13 +80,49 @@
     .btn:hover{transform:translateY(-2px);border-color:#4A89C8}
     .btn i{color:#4A89C8}
 
-    .frame-box{
-      background:#fff;border-radius:16px;overflow:hidden;
+    .play-box{
+      background:#fff;border-radius:16px;padding:32px 24px;
       box-shadow:0 8px 25px rgba(46,58,89,.08);
-      height:calc(100vh - 70px - 240px);
-      min-height:520px;
+      text-align:center;
     }
-    iframe{width:100%;height:100%;border:0}
+
+    .play-icon{
+      width:84px;height:84px;border-radius:50%;
+      margin:0 auto 18px auto;
+      display:flex;align-items:center;justify-content:center;
+      background:linear-gradient(135deg,#E6F0FA 0%,#D4E9F7 100%);
+      color:#2E75B6;font-size:34px;
+    }
+
+    .play-box h2{
+      font-size:28px;
+      color:#1F2D3D;
+      margin-bottom:10px;
+    }
+
+    .play-box p{
+      font-size:15px;
+      line-height:1.8;
+      color:#5B6780;
+      max-width:760px;
+      margin:0 auto 12px auto;
+    }
+
+    .quiz-link{
+      margin-top:18px;
+      display:inline-flex;align-items:center;justify-content:center;gap:10px;
+      padding:14px 20px;border-radius:14px;text-decoration:none;font-weight:700;font-size:15px;color:#fff;
+      background:linear-gradient(135deg,#4A89C8 0%,#2E75B6 100%);
+      box-shadow:0 10px 20px rgba(46,58,89,.10);
+      transition:all .2s ease;
+    }
+    .quiz-link:hover{transform:translateY(-2px);filter:brightness(1.02)}
+
+    .note{
+      margin-top:16px;
+      font-size:14px;
+      color:#7A869A;
+    }
 
     .error{
       background:#fff;border-radius:16px;padding:18px 20px;
@@ -98,7 +132,6 @@
 
     .footer{text-align:center;padding:15px 40px;color:#95a5a6;font-size:13px}
 
-    /* Mobile */
     @media (max-width:768px){
       .sidebar{
         width:100%;
@@ -121,7 +154,7 @@
       .header .subtitle{font-size:15px}
 
       .content{padding:18px}
-      .frame-box{height:70vh;min-height:420px}
+      .play-box h2{font-size:22px}
     }
   </style>
 </head>
@@ -141,7 +174,7 @@
       <header class="header">
         <h1 id="pageTitle">Quiz</h1>
         <p class="subtitle">
-          ทำแบบทดสอบในหน้า KMS (ฝัง Kahoot) โดยไม่เด้งออกไปหน้าอื่น<br>
+          แบบทดสอบนี้จะเปิดผ่าน Kahoot ในแท็บใหม่<br>
           * ก่อนเริ่มอย่าลืมกรอก <b>ชื่อ/รหัสพนักงาน</b> ใน Kahoot
         </p>
       </header>
@@ -154,9 +187,7 @@
           </div>
         </div>
 
-        <div class="frame-box" id="frameBox">
-          <iframe id="kahootFrame" allowfullscreen></iframe>
-        </div>
+        <div id="contentBox"></div>
       </section>
 
       <footer class="footer">
@@ -172,16 +203,36 @@
 
     document.getElementById("pageTitle").innerText = title;
 
+    const contentBox = document.getElementById("contentBox");
+
     if (!kahootId || kahootId.startsWith("KAHOOT_ID_")) {
-      document.getElementById("frameBox").innerHTML = `
+      contentBox.innerHTML = `
         <div class="error">
           <b>ยังไม่พบ Kahoot ID</b><br>
-          กรุณากลับไปหน้า Quiz แล้วใส่ Kahoot ID ให้ครบทั้ง 7 ชุด<br><br>
-          ถ้าใส่แล้วแต่ยังไม่ขึ้น อาจเป็นเพราะ Kahoot ไม่อนุญาตให้ Embed ใน iframe
+          กรุณากลับไปหน้า Quiz แล้วใส่ Kahoot ID ให้ครบทั้ง 7 ชุด
         </div>
       `;
     } else {
-      document.getElementById("kahootFrame").src = "https://embed.kahoot.it/" + encodeURIComponent(kahootId);
+      const challengeUrl = "https://kahoot.it/challenge/" + encodeURIComponent(kahootId);
+
+      contentBox.innerHTML = `
+        <div class="play-box">
+          <div class="play-icon"><i class="fas fa-play"></i></div>
+          <h2>${title}</h2>
+          <p>
+            เนื่องจาก Kahoot บางชุดไม่รองรับการฝังในหน้าเว็บ ระบบจึงเปิดแบบทดสอบผ่านลิงก์โดยตรงแทน
+          </p>
+          <p>
+            กดปุ่มด้านล่างเพื่อเริ่มทำแบบทดสอบได้เลย
+          </p>
+          <a class="quiz-link" href="${challengeUrl}" target="_blank" rel="noopener noreferrer">
+            <i class="fas fa-arrow-up-right-from-square"></i> เปิด Quiz ใน Kahoot
+          </a>
+          <div class="note">
+            หากกดแล้วไม่เปิด ให้ตรวจสอบว่า Kahoot ID ถูกต้องหรือยัง
+          </div>
+        </div>
+      `;
     }
   </script>
 
