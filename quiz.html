@@ -162,7 +162,8 @@
         <h1>Quiz / Check Point</h1>
         <p class="subtitle">
           หน้านี้มีไว้สำหรับทดสอบความเข้าใจ “หลังเรียน Learning Path”<br>
-          กรุณาเริ่มทำจาก Quiz 1 และทำตามลำดับจนถึง Quiz 7
+          กรุณาเริ่มทำจาก Quiz 1 และทำตามลำดับจนถึง Quiz 7<br>
+          * แบบทดสอบจะเปิดผ่าน Kahoot ในแท็บใหม่
         </p>
       </header>
 
@@ -259,7 +260,9 @@
         </div>
 
         <a class="btn-start"
-           href="quiz-play.html?url=${encodeURIComponent(q.challengeUrl)}&title=${encodeURIComponent(q.title)}"
+           href="${linkMissing ? "#" : q.challengeUrl}"
+           target="_blank"
+           rel="noopener noreferrer"
            ${linkMissing ? `onclick="alert('ยังไม่ได้ใส่ลิงก์ Kahoot ของ Quiz ${q.no}'); return false;"` : ""}>
           <i class="fas fa-play"></i> เริ่มทำแบบทดสอบ
         </a>
