@@ -11,7 +11,6 @@
   <style>
     *{margin:0;padding:0;box-sizing:border-box}
 
-    /* ✅ Theme เดียวกับหน้า Home */
     :root{
       --blue1:#4A89C8;
       --blue2:#2E75B6;
@@ -36,7 +35,6 @@
 
     .container{display:flex;min-height:100vh}
 
-    /* Sidebar */
     .sidebar{
       width:70px;
       background:linear-gradient(180deg,var(--blue1) 0%,var(--blue2) 100%);
@@ -58,7 +56,6 @@
       padding:0;
     }
 
-    /* ✅ Header ให้เท่าหน้า Home */
     .header{
       background:linear-gradient(135deg,var(--blue1) 0%,var(--blue2) 100%);
       padding:60px 40px;
@@ -110,7 +107,6 @@
     }
     .btn-back:hover{background:var(--blue2)}
 
-    /* ===== Layout ===== */
     .stage{
       display:grid;
       grid-template-columns: 1fr 360px;
@@ -183,10 +179,24 @@
       background:var(--soft);
       border:1px solid var(--soft-line);
       border-radius:16px;
-      height:220px;
+      height:320px;
       display:flex;
       align-items:center;
       justify-content:center;
+      overflow:hidden;
+      color:#8A98AD;
+      font-weight:800;
+    }
+
+    .defect-image{
+      width:100%;
+      height:100%;
+      object-fit:contain;
+      display:block;
+      background:#fff;
+    }
+
+    .no-image{
       color:#8A98AD;
       font-weight:800;
     }
@@ -207,7 +217,6 @@
     }
     .box .txt{color:var(--text);font-size:14px;line-height:1.55}
 
-    /* Right panel */
     .panel{
       background:var(--card);
       border-radius:18px;
@@ -319,14 +328,12 @@
         position:relative;left:auto;top:auto;padding:10px;gap:12px;
       }
       .main-content{margin-left:0;width:100%}
-
-      /* ✅ Mobile header เท่าหน้า Home */
       .header{padding:40px 20px}
       .header h1{font-size:28px}
       .header p{font-size:15px}
-
       .wrap{padding:12px 12px 20px}
       .card{min-height:unset}
+      .img-box{height:240px}
     }
   </style>
 </head>
@@ -369,8 +376,8 @@
 </div>
 
 <script>
-  // ✅ ดึงจากชีท Defect Learning เท่านั้น
   const API_URL = "https://script.google.com/macros/s/AKfycbwMRbnqSLTmmI4wofmNfZ5YPFGSiqg__rZUgyDlTTR03JchnQXgUj7DKDvzS4-QBmJrvw/exec?view=defectlearning";
+  const DEFECT_IMG_BASE = "assets/";
 
   const procMap = {"1":"ผสมเปียก","2":"แร่งเปียก","3":"อบลมร้อน","4":"แร่งแห้ง","5":"ผสมแห้ง","6":"ตอกเม็ดยา","7":"บรรจุซอง"};
 
@@ -381,11 +388,19 @@
     const url = new URL(window.location.href);
     return url.searchParams.get(name);
   }
+
   function esc(s){
     return String(s ?? "")
       .replaceAll("&","&amp;").replaceAll("<","&lt;")
-      .replaceAll(">","&gt;").replaceAll('"',"&quot;")
+      .replaceAll(">","&gt;")
+      .replaceAll('"',"&quot;")
       .replaceAll("'","&#039;");
+  }
+
+  function getDefectImageUrl(defectCode){
+    const code = String(defectCode || "").trim().toLowerCase();
+    if(!code) return "";
+    return `${DEFECT_IMG_BASE}df${code}.jpg`;
   }
 
   function setIndex(i){
@@ -405,6 +420,7 @@
     const total = defects.length;
     const percent = total ? Math.round(((index+1)/total)*100) : 0;
     const isLast = (index === total - 1);
+    const imgUrl = getDefectImageUrl(d.DefectCode);
 
     document.getElementById("content").innerHTML = `
       <div class="stage">
@@ -418,7 +434,14 @@
           </div>
 
           <div class="body">
-            <div class="img-box">ยังไม่มีรูปของเสีย (จะเพิ่มทีหลัง)</div>
+            <div class="img-box">
+              <img
+                class="defect-image"
+                src="${imgUrl}"
+                alt="${esc(d.DefectName)}"
+                onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=&quot;no-image&quot;>ยังไม่มีรูปของเสีย</div>';"
+              >
+            </div>
 
             <div class="box">
               <div class="label"><i class="fas fa-lightbulb"></i> Learning Hint</div>
