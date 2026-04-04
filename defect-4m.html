@@ -226,7 +226,6 @@
       <div class="topbar">
         <span class="pill"><i class="fas fa-diagram-project"></i> <span id="titleText">Process - Defect</span></span>
 
-        <!-- ✅ เปลี่ยนปุ่ม -->
         <a class="btn-back" id="nextBtn" href="#">
           <i class="fas fa-arrow-right"></i> ไปยังลักษณะของเสียถัดไป
         </a>
@@ -242,7 +241,6 @@
 <script>
   const API_BASE = "https://script.google.com/macros/s/AKfycbwMRbnqSLTmmI4wofmNfZ5YPFGSiqg__rZUgyDlTTR03JchnQXgUj7DKDvzS4-QBmJrvw/exec";
 
-  // ✅ ใช้หา defect ถัดไป
   const DEFECT_LEARNING_API = `${API_BASE}?view=defectlearning`;
 
   const iconMap = {
@@ -251,6 +249,7 @@
     "Material": "fa-cubes",
     "Method": "fa-list-check"
   };
+
   const titleMap = {
     "Man": "Man (คน)",
     "Machine": "Machine (เครื่องจักร)",
@@ -265,7 +264,8 @@
 
   function esc(s){
     return String(s ?? "")
-      .replaceAll("&","&amp;").replaceAll("<","&lt;")
+      .replaceAll("&","&amp;")
+      .replaceAll("<","&lt;")
       .replaceAll(">","&gt;")
       .replaceAll('"',"&quot;")
       .replaceAll("'","&#039;");
@@ -287,10 +287,12 @@
     const t = titleMap[type] || type;
 
     const cause = row ? String(row.CauseDescription || "").trim() : "";
-    const p1 = row ? String(row.Prevention1 || "").trim() : "";
+    const rootCause = row
+      ? String(row["Root cause"] || row.Prevention1 || "").trim()
+      : "";
 
     const safeCause = cause || "ยังไม่มีข้อมูลสาเหตุ (ใส่เพิ่มในชีท Defect 4M)";
-    const safeP1 = p1 || "ยังไม่มีแนวทางป้องกัน/แก้ไข";
+    const safeRootCause = rootCause || "ยังไม่มีข้อมูล Root cause";
 
     const list = Array.isArray(shortcuts) ? shortcuts : [];
 
@@ -344,8 +346,8 @@
           </div>
 
           <div class="box">
-            <h3><i class="fas fa-shield-halved"></i> การป้องกัน/แก้ไข (1 ข้อ)</h3>
-            <p>${esc(safeP1)}</p>
+            <h3><i class="fas fa-shield-halved"></i> Root cause (1 ข้อ)</h3>
+            <p>${esc(safeRootCause)}</p>
           </div>
 
           ${shortcutBlock}
@@ -354,7 +356,6 @@
     `;
   }
 
-  // ✅ หา defect ถัดไปจากชีท Defect Learning
   async function resolveNextDefect(proc, currentDefect){
     try{
       const res = await fetch(DEFECT_LEARNING_API);
@@ -388,7 +389,6 @@
       return;
     }
 
-    // ✅ ตั้งลิงก์ “ไปยังลักษณะของเสียถัดไป”
     const nextBtn = document.getElementById("nextBtn");
     const { nextCode, isLast } = await resolveNextDefect(proc, defect);
 
@@ -396,7 +396,6 @@
       nextBtn.href = `defect-learning.html?process=${encodeURIComponent(proc)}&defect=${encodeURIComponent(nextCode)}`;
       nextBtn.innerHTML = `<i class="fas fa-arrow-right"></i> ไปยังลักษณะของเสียถัดไป (${esc(nextCode)})`;
     }else{
-      // ถ้าเป็นอันสุดท้าย: กลับไปหน้ารวม defect ของ process นั้น
       nextBtn.href = `defect-learning.html?process=${encodeURIComponent(proc)}`;
       nextBtn.innerHTML = `<i class="fas fa-list"></i> กลับไปหน้าลักษณะของเสีย (รายการทั้งหมด)`;
     }
@@ -437,7 +436,6 @@
 
   load();
 
-  // Dropdown toggle + ยก z-index การ์ดตอนเปิด
   document.addEventListener("click", (e) => {
     const btn = e.target.closest(".drop-btn");
     const dropdown = e.target.closest("[data-dropdown]");
