@@ -23,7 +23,6 @@
 
     .container{display:flex;min-height:100vh}
 
-    /* Sidebar */
     .sidebar{
       width:70px;
       background:linear-gradient(180deg,#4A89C8 0%,#2E75B6 100%);
@@ -42,7 +41,6 @@
 
     .main-content{flex:1;margin-left:70px;width:calc(100% - 70px)}
 
-    /* Header */
     .header{
       background:linear-gradient(135deg,#4A89C8 0%,#2E75B6 100%);
       padding:60px 40px;
@@ -78,8 +76,17 @@
     .pill{
       display:inline-flex;align-items:center;gap:8px;
       padding:8px 12px;border-radius:999px;
-      background:#E6F0FA;color:#2E75B6;font-weight:900;font-size:13px
+      background:#E6F0FA;color:#2E75B6;font-weight:900;font-size:13px;
+      max-width:100%;
     }
+    .pill-text{
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      display:inline-block;
+      max-width:100%;
+    }
+
     .btn-back{
       display:inline-flex;align-items:center;gap:8px;
       padding:10px 12px;border-radius:12px;
@@ -129,7 +136,6 @@
     }
     .error{color:#c62828}
 
-    /* Dropdown */
     .dropdown{position:relative;width:100%;max-width:100%}
     .drop-btn{
       width:100%;
@@ -201,6 +207,8 @@
       .header h1{font-size:28px}
       .header p{font-size:15px}
       .wrap{padding:12px 12px 20px}
+      .pill{max-width:100%}
+      .pill-text{max-width:260px}
     }
   </style>
 </head>
@@ -224,7 +232,10 @@
 
     <div class="wrap">
       <div class="topbar">
-        <span class="pill"><i class="fas fa-diagram-project"></i> <span id="titleText">Process - Defect</span></span>
+        <span class="pill">
+          <i class="fas fa-diagram-project"></i>
+          <span class="pill-text" id="titleText">Process - Defect</span>
+        </span>
 
         <a class="btn-back" id="nextBtn" href="#">
           <i class="fas fa-arrow-right"></i> ไปยังลักษณะของเสียถัดไป
@@ -240,7 +251,6 @@
 
 <script>
   const API_BASE = "https://script.google.com/macros/s/AKfycbwMRbnqSLTmmI4wofmNfZ5YPFGSiqg__rZUgyDlTTR03JchnQXgUj7DKDvzS4-QBmJrvw/exec";
-
   const DEFECT_LEARNING_API = `${API_BASE}?view=defectlearning`;
 
   const iconMap = {
@@ -288,7 +298,7 @@
 
     const cause = row ? String(row.CauseDescription || "").trim() : "";
     const rootCause = row
-      ? String(row["Root cause"] || row.Prevention1 || "").trim()
+      ? String(row.RootCause || row["Root cause"] || "").trim()
       : "";
 
     const safeCause = cause || "ยังไม่มีข้อมูลสาเหตุ (ใส่เพิ่มในชีท Defect 4M)";
@@ -296,13 +306,7 @@
 
     const list = Array.isArray(shortcuts) ? shortcuts : [];
 
-    let shortcutBlock = `
-      <div class="box">
-        <h3><i class="fas fa-link"></i> สื่อทางลัด (จาก KMS Base)</h3>
-        <p>ยังไม่มีไฟล์สำหรับ DefectCode นี้ในหมวด ${esc(type)}</p>
-      </div>
-    `;
-
+    let shortcutBlock = "";
     if(list.length){
       const items = list.map((s) => {
         const name = (s.FileName && String(s.FileName).trim()) ? String(s.FileName).trim() : "เอกสาร";
@@ -381,8 +385,6 @@
     const proc = String(getQueryParam("process") || "").trim();
     const defect = String(getQueryParam("defect") || "").trim();
 
-    document.getElementById("titleText").textContent = `Process ${proc} • Defect ${defect}`;
-
     if(!proc || !defect){
       document.getElementById("content").className = "error";
       document.getElementById("content").innerHTML = `ขาดพารามิเตอร์ process/defect`;
@@ -405,6 +407,14 @@
       const res4m = await fetch(url4m);
       const rows = await res4m.json();
       const list = Array.isArray(rows) ? rows : [];
+
+      let defectName = "";
+      if(list.length > 0){
+        defectName = String(list[0].DefectName || "").trim();
+      }
+
+      document.getElementById("titleText").textContent =
+        `Process ${proc} • Defect ${defect}` + (defectName ? ` • ${defectName}` : "");
 
       const man = pickFirstRowByType(list, "Man");
       const machine = pickFirstRowByType(list, "Machine");
