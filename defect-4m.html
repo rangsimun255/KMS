@@ -30,60 +30,103 @@
       padding-top:20px;gap:10px;
       position:fixed;height:100vh;left:0;top:0;z-index:100;
     }
-
     .sidebar-icon{
       width:50px;height:50px;display:flex;align-items:center;justify-content:center;
       color:rgba(255,255,255,.85);font-size:20px;border-radius:12px;
       cursor:pointer;transition:.2s;text-decoration:none;
+      -webkit-tap-highlight-color:transparent;
+      user-select:none;
     }
-    .sidebar-icon:hover{background:rgba(255,255,255,.18);color:#fff}
+    .sidebar-icon:hover,.sidebar-icon.active{background:rgba(255,255,255,.18);color:#fff}
 
-    .main-content{flex:1;margin-left:70px}
+    .main-content{flex:1;margin-left:70px;width:calc(100% - 70px)}
 
     .header{
       background:linear-gradient(135deg,#4A89C8 0%,#2E75B6 100%);
-      padding:50px;text-align:center;color:#fff;
+      padding:60px 40px;
+      text-align:center;
+      box-shadow:0 4px 15px rgba(74,137,200,0.25);
+    }
+    .header h1{
+      color:#fff;
+      font-size:42px;
+      font-weight:700;
+      margin-bottom:15px;
+      letter-spacing:1px;
+      text-shadow:0 2px 4px rgba(0,0,0,0.2);
+    }
+    .header p{
+      color:rgba(255,255,255,.95);
+      font-size:18px;
+      max-width:650px;
+      margin:0 auto;
+      line-height:1.7;
     }
 
-    .wrap{padding:16px}
+    .wrap{padding:16px 18px 24px}
 
     .topbar{
-      background:#fff;border-radius:16px;padding:12px;
-      display:flex;justify-content:space-between;align-items:center;
-      margin-bottom:12px;
+      background:#fff;
+      border-radius:16px;
+      padding:12px 14px;
+      box-shadow:0 2px 10px rgba(46,58,89,.08);
+      display:flex;align-items:center;justify-content:space-between;gap:10px;
+      flex-wrap:wrap;margin-bottom:12px
+    }
+    .pill{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:8px 12px;border-radius:999px;
+      background:#E6F0FA;color:#2E75B6;font-weight:900;font-size:13px;
+      max-width:100%;
+    }
+    .pill-text{
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      display:inline-block;
+      max-width:100%;
     }
 
-    .pill{
-      background:#E6F0FA;color:#2E75B6;
-      padding:8px 12px;border-radius:999px;font-weight:900;
+    .btn-back{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:10px 12px;border-radius:12px;
+      background:#4A89C8;color:#fff;text-decoration:none;font-weight:900
     }
+    .btn-back:hover{background:#2E75B6}
 
     .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+    @media(max-width:980px){.grid{grid-template-columns:1fr}}
 
     .card{
-      background:#fff;border-radius:16px;padding:12px;
-      box-shadow:0 4px 12px rgba(0,0,0,0.08);
+      background:#fff;
+      border-radius:18px;
+      box-shadow:0 6px 18px rgba(46,58,89,.10);
+      overflow:visible;
+      border:1px solid rgba(74,137,200,0.12);
     }
+    .card.dropdown-open{position:relative;z-index:30}
 
-    .card-head{display:flex;gap:10px;margin-bottom:10px}
-
+    .card-head{
+      padding:14px;
+      border-bottom:1px solid #EEF3F8;
+      display:flex;align-items:center;gap:10px
+    }
     .icon{
-      width:40px;height:40px;border-radius:12px;
+      width:44px;height:44px;border-radius:16px;
       background:#4A89C8;color:#fff;
-      display:flex;align-items:center;justify-content:center;
+      display:flex;align-items:center;justify-content:center;font-size:18px
     }
+    .h-title{font-weight:900;color:#1F2D3D;font-size:18px}
+    .h-sub{color:#6B7A90;font-size:13px;margin-top:4px}
 
+    .card-body{padding:14px;display:flex;flex-direction:column;gap:10px}
     .box{
-      background:#F7FBFF;
+      border-radius:14px;
       border:1px solid #E8F1FB;
-      border-radius:12px;
-      padding:10px;
-      margin-bottom:10px;
+      background:#F7FBFF;
+      padding:12px
     }
-
-    .box h3{font-size:13px;color:#2E75B6;margin-bottom:5px}
-
-    /* ✅ จุดสำคัญ: รองรับ Alt+Enter */
+    .box h3{font-size:13px;color:#2E75B6;font-weight:900;margin-bottom:6px}
     .box p{
       font-size:14px;
       color:#34495e;
@@ -91,65 +134,337 @@
       white-space: pre-line;
     }
 
+    .loading,.error{
+      background:#fff;border-radius:16px;padding:30px;
+      box-shadow:0 2px 10px rgba(46,58,89,.08);
+      text-align:center;color:#6B7A90
+    }
+    .error{color:#c62828}
+
+    .dropdown{position:relative;width:100%;max-width:100%}
+    .drop-btn{
+      width:100%;
+      max-width:100%;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      padding:10px 12px;
+      border-radius:12px;
+      background:#2E75B6;
+      color:#fff;
+      font-weight:900;
+      font-size:13px;
+      border:none;
+      cursor:pointer;
+      overflow:hidden;
+    }
+    .drop-btn:hover{background:#1f5f97}
+    .drop-btn span{display:flex;align-items:center;gap:10px;min-width:0}
+    .drop-btn .label{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+    .drop-menu{
+      display:none;
+      position:absolute;
+      left:0;
+      right:0;
+      top:calc(100% + 8px);
+      background:#fff;
+      border:1px solid #E9EEF6;
+      border-radius:12px;
+      box-shadow:0 10px 24px rgba(46,58,89,.12);
+      z-index:999;
+      max-height:240px;
+      overflow-y:auto;
+      overflow-x:hidden;
+    }
+    .dropdown.open .drop-menu{display:block}
+
+    .drop-item{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding:10px 12px;
+      color:#1f2d3d;
+      text-decoration:none;
+      font-weight:800;
+      font-size:13px;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .drop-item:hover{background:#f3f7ff}
+    .drop-item i{color:#2E75B6;flex:0 0 auto}
+
+    @media(max-width:768px){
+      .container{flex-direction:column}
+      .sidebar{
+        width:100%;
+        height:60px;
+        flex-direction:row;
+        justify-content:center;
+        position:relative;
+        padding:10px;
+        gap:12px
+      }
+      .main-content{margin-left:0;width:100%}
+      .header{padding:40px 20px}
+      .header h1{font-size:28px}
+      .header p{font-size:15px}
+      .wrap{padding:12px 12px 20px}
+      .pill{max-width:100%}
+      .pill-text{max-width:260px}
+    }
   </style>
 </head>
 
 <body>
-
 <div class="container">
+  <nav class="sidebar">
+    <a class="sidebar-icon" href="index.html"><i class="fas fa-home"></i></a>
+    <a class="sidebar-icon" href="knowledge-base.html"><i class="fas fa-book"></i></a>
+    <a class="sidebar-icon" href="learning-path.html"><i class="fas fa-graduation-cap"></i></a>
+    <a class="sidebar-icon" href="quiz.html"><i class="fas fa-clipboard-check"></i></a>
+    <a class="sidebar-icon" href="share-experience.html"><i class="fas fa-comments"></i></a>
+    <a class="sidebar-icon logout" href="#"><i class="fas fa-sign-out-alt"></i></a>
+  </nav>
 
-<nav class="sidebar">
-  <a class="sidebar-icon" href="index.html"><i class="fas fa-home"></i></a>
-</nav>
+  <main class="main-content">
+    <header class="header">
+      <h1>สาเหตุ (4M)</h1>
+      <p>1 เรียนรู้สาเหตุจากปัจจัย4M</p>
+    </header>
 
-<main class="main-content">
+    <div class="wrap">
+      <div class="topbar">
+        <span class="pill">
+          <i class="fas fa-diagram-project"></i>
+          <span class="pill-text" id="titleText">Process - Defect</span>
+        </span>
 
-<header class="header">
-  <h1>สาเหตุ (4M)</h1>
-</header>
+        <a class="btn-back" id="nextBtn" href="#">
+          <i class="fas fa-arrow-right"></i> ไปยังลักษณะของเสียถัดไป
+        </a>
+      </div>
 
-<div class="wrap">
-
-<div class="topbar">
-  <span class="pill" id="titleText">Process</span>
-</div>
-
-<div id="content">Loading...</div>
-
-</div>
-</main>
+      <div id="content" class="loading">
+        <i class="fas fa-spinner fa-spin"></i><div>กำลังโหลดข้อมูล...</div>
+      </div>
+    </div>
+  </main>
 </div>
 
 <script>
-const API = "YOUR_API";
+  const API_BASE = "https://script.google.com/macros/s/AKfycbwMRbnqSLTmmI4wofmNfZ5YPFGSiqg__rZUgyDlTTR03JchnQXgUj7DKDvzS4-QBmJrvw/exec";
+  const DEFECT_LEARNING_API = `${API_BASE}?view=defectlearning`;
 
-function esc(s){
-  return String(s ?? "")
-}
+  const iconMap = {
+    "Man": "fa-user",
+    "Machine": "fa-gears",
+    "Material": "fa-cubes",
+    "Method": "fa-list-check"
+  };
 
-function renderCard(type,row){
-  const cause = row?.CauseDescription || "";
-  const root = row?.RootCause || "";
+  const titleMap = {
+    "Man": "Man (คน)",
+    "Machine": "Machine (เครื่องจักร)",
+    "Material": "Material (วัตถุดิบ)",
+    "Method": "Method (วิธีการ)"
+  };
 
-  return `
-  <div class="card">
-    <div class="card-head">
-      <div class="icon"><i class="fas fa-circle"></i></div>
-      <div>${type}</div>
-    </div>
+  function getQueryParam(name){
+    const url = new URL(window.location.href);
+    return url.searchParams.get(name);
+  }
 
-    <div class="box">
-      <h3><i class="fas fa-circle-exclamation"></i> สาเหตุ</h3>
-      <p>${esc(cause)}</p>
-    </div>
+  function esc(s){
+    return String(s ?? "")
+      .replaceAll("&","&amp;")
+      .replaceAll("<","&lt;")
+      .replaceAll(">","&gt;")
+      .replaceAll('"',"&quot;")
+      .replaceAll("'","&#039;");
+  }
 
-    <div class="box">
-      <h3><i class="fas fa-magnifying-glass"></i> Root cause</h3>
-      <p>${esc(root)}</p>
-    </div>
-  </div>
-  `;
-}
+  function pickFirstRowByType(rows, type){
+    return rows.find(r => String(r.M_Type).trim() === type) || null;
+  }
+
+  async function fetchShortcuts(proc, defect, cat){
+    const url = `${API_BASE}?view=shortcuts&process=${encodeURIComponent(proc)}&defect=${encodeURIComponent(defect)}&cat=${encodeURIComponent(cat)}`;
+    const res = await fetch(url);
+    const data = await res.json();
+    return Array.isArray(data) ? data : [];
+  }
+
+  function renderCard(type, row, shortcuts){
+    const icon = iconMap[type] || "fa-circle";
+    const t = titleMap[type] || type;
+
+    const cause = row ? String(row.CauseDescription || "").trim() : "";
+    const rootCause = row
+      ? String(row.RootCause || row["Root cause"] || "").trim()
+      : "";
+
+    const safeCause = cause || "ยังไม่มีข้อมูลสาเหตุ (ใส่เพิ่มในชีท Defect 4M)";
+    const safeRootCause = rootCause || "ยังไม่มีข้อมูล Root cause";
+
+    const list = Array.isArray(shortcuts) ? shortcuts : [];
+
+    let shortcutBlock = "";
+    if(list.length){
+      const items = list.map((s) => {
+        const name = (s.FileName && String(s.FileName).trim()) ? String(s.FileName).trim() : "เอกสาร";
+        return `
+          <a class="drop-item" target="_blank" rel="noopener" href="${esc(s.FileURL)}" title="${esc(name)}">
+            <i class="fas fa-file-lines"></i> ${esc(name)}
+          </a>
+        `;
+      }).join("");
+
+      shortcutBlock = `
+        <div class="box">
+          <h3><i class="fas fa-link"></i> สื่อทางลัด (จาก KMS Base)</h3>
+          <div class="dropdown" data-dropdown>
+            <button class="drop-btn" type="button">
+              <span><i class="fas fa-bolt"></i> <span class="label">เปิดไฟล์</span></span>
+              <i class="fas fa-caret-down"></i>
+            </button>
+            <div class="drop-menu">
+              ${items}
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    return `
+      <section class="card">
+        <div class="card-head">
+          <div class="icon"><i class="fas ${esc(icon)}"></i></div>
+          <div>
+            <div class="h-title">${esc(t)}</div>
+            <div class="h-sub">โฟกัสให้พนักงานใหม่เข้าใจเร็ว</div>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <div class="box">
+            <h3><i class="fas fa-circle-exclamation"></i> สาเหตุ </h3>
+            <p>${esc(safeCause)}</p>
+          </div>
+
+          <div class="box">
+            <h3><i class="fas fa-magnifying-glass"></i> Root cause </h3>
+            <p>${esc(safeRootCause)}</p>
+          </div>
+
+          ${shortcutBlock}
+        </div>
+      </section>
+    `;
+  }
+
+  async function resolveNextDefect(proc, currentDefect){
+    try{
+      const res = await fetch(DEFECT_LEARNING_API);
+      const data = await res.json();
+      const list = (Array.isArray(data) ? data : [])
+        .filter(x => String(x.Process || "").trim() === String(proc).trim())
+        .sort((a,b)=> String(a.DefectCode).localeCompare(String(b.DefectCode), 'th'));
+
+      const idx = list.findIndex(x => String(x.DefectCode).trim() === String(currentDefect).trim());
+      if(idx < 0) return { nextCode:"", isLast:true };
+
+      const next = list[idx + 1];
+      if(next && next.DefectCode){
+        return { nextCode: String(next.DefectCode).trim(), isLast:false };
+      }
+      return { nextCode:"", isLast:true };
+    }catch(e){
+      return { nextCode:"", isLast:true };
+    }
+  }
+
+  async function load(){
+    const proc = String(getQueryParam("process") || "").trim();
+    const defect = String(getQueryParam("defect") || "").trim();
+
+    if(!proc || !defect){
+      document.getElementById("content").className = "error";
+      document.getElementById("content").innerHTML = `ขาดพารามิเตอร์ process/defect`;
+      return;
+    }
+
+    const nextBtn = document.getElementById("nextBtn");
+    const { nextCode, isLast } = await resolveNextDefect(proc, defect);
+
+    if(!isLast && nextCode){
+      nextBtn.href = `defect-learning.html?process=${encodeURIComponent(proc)}&defect=${encodeURIComponent(nextCode)}`;
+      nextBtn.innerHTML = `<i class="fas fa-arrow-right"></i> ไปยังลักษณะของเสียถัดไป (${esc(nextCode)})`;
+    }else{
+      nextBtn.href = `defect-learning.html?process=${encodeURIComponent(proc)}`;
+      nextBtn.innerHTML = `<i class="fas fa-list"></i> กลับไปหน้าลักษณะของเสีย (รายการทั้งหมด)`;
+    }
+
+    try{
+      const url4m = `${API_BASE}?view=defect4m&process=${encodeURIComponent(proc)}&defect=${encodeURIComponent(defect)}`;
+      const res4m = await fetch(url4m);
+      const rows = await res4m.json();
+      const list = Array.isArray(rows) ? rows : [];
+
+      let defectName = "";
+      if(list.length > 0){
+        defectName = String(list[0].DefectName || "").trim();
+      }
+
+      document.getElementById("titleText").textContent =
+        `Process ${proc} • Defect ${defect}` + (defectName ? ` • ${defectName}` : "");
+
+      const man = pickFirstRowByType(list, "Man");
+      const machine = pickFirstRowByType(list, "Machine");
+      const material = pickFirstRowByType(list, "Material");
+      const method = pickFirstRowByType(list, "Method");
+
+      const [manLinks, machineLinks, materialLinks, methodLinks] = await Promise.all([
+        fetchShortcuts(proc, defect, "Man"),
+        fetchShortcuts(proc, defect, "Machine"),
+        fetchShortcuts(proc, defect, "Material"),
+        fetchShortcuts(proc, defect, "Method"),
+      ]);
+
+      document.getElementById("content").className = "";
+      document.getElementById("content").innerHTML = `
+        <div class="grid">
+          ${renderCard("Man", man, manLinks)}
+          ${renderCard("Machine", machine, machineLinks)}
+          ${renderCard("Material", material, materialLinks)}
+          ${renderCard("Method", method, methodLinks)}
+        </div>
+      `;
+    }catch(err){
+      console.error(err);
+      document.getElementById("content").className = "error";
+      document.getElementById("content").innerHTML = `โหลดข้อมูลไม่สำเร็จ`;
+    }
+  }
+
+  load();
+
+  document.addEventListener("click", (e) => {
+    const btn = e.target.closest(".drop-btn");
+    const dropdown = e.target.closest("[data-dropdown]");
+
+    document.querySelectorAll("[data-dropdown].open").forEach(d => d.classList.remove("open"));
+    document.querySelectorAll(".card.dropdown-open").forEach(c => c.classList.remove("dropdown-open"));
+
+    if(btn && dropdown){
+      dropdown.classList.add("open");
+      const card = dropdown.closest(".card");
+      if(card) card.classList.add("dropdown-open");
+      return;
+    }
+  });
 </script>
 
 </body>
