@@ -429,7 +429,6 @@
             <div class="defect-badge">${esc(d.DefectCode)}</div>
             <div>
               <div class="defect-title">${esc(d.DefectName)}</div>
-              <div class="defect-sub">${esc(d.DefectSummary || "")}</div>
             </div>
           </div>
 
@@ -444,8 +443,8 @@
             </div>
 
             <div class="box">
-              <div class="label"><i class="fas fa-lightbulb"></i> Learning Hint</div>
-              <div class="txt">${esc(d.LearningHint || "-")}</div>
+              <div class="label"><i class="fas fa-circle-info"></i> ลักษณะของของเสีย</div>
+              <div class="txt">${esc(d.DefectSummary || "-")}</div>
             </div>
 
             <div class="box">
