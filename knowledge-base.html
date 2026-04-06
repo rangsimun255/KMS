@@ -247,6 +247,7 @@
       font-size: 14px;
       color: #6B7A90;
       margin-bottom: 5px;
+      line-height: 1.7;
     }
 
     .card-btn {
@@ -496,42 +497,6 @@
       ]
     };
 
-    function formatDefectCodeRanges(codes) {
-      const parsed = [...new Set(codes)]
-        .map(code => {
-          const [major, minor] = String(code).trim().split('.').map(Number);
-          return { code: String(code).trim(), major, minor };
-        })
-        .filter(x => !isNaN(x.major) && !isNaN(x.minor))
-        .sort((a, b) => a.major - b.major || a.minor - b.minor);
-
-      if (parsed.length === 0) return '';
-
-      const ranges = [];
-      let start = parsed[0];
-      let prev = parsed[0];
-
-      for (let i = 1; i < parsed.length; i++) {
-        const curr = parsed[i];
-
-        if (curr.major === prev.major && curr.minor === prev.minor + 1) {
-          prev = curr;
-        } else {
-          ranges.push({ start, end: prev });
-          start = curr;
-          prev = curr;
-        }
-      }
-
-      ranges.push({ start, end: prev });
-
-      return ranges.map(r =>
-        r.start.code === r.end.code
-          ? r.start.code
-          : `${r.start.code}-${r.end.code}`
-      ).join(', ');
-    }
-
     async function loadData() {
       try {
         const response = await fetch(API_URL);
@@ -558,26 +523,37 @@
       return String(url);
     }
 
+    function uniqueTextList(list) {
+      return [...new Set(
+        list
+          .map(v => String(v || '').trim())
+          .filter(v => v !== '')
+      )];
+    }
+
     function createCard(item) {
       const typeClass = String(item.Type || '').toLowerCase();
 
       const thumbSource = item.ThumbnailURL || item.FileURL || '';
       const thumbnail = getThumbnailFromUrl(thumbSource) || 'https://via.placeholder.com/400x200?text=No+Image';
 
-      const defectText = String(item.DefectName || '').trim();
-      const causeText = String(item.CauseCategory || '').trim();
-      const defectCodeText = String(item.DefectCodeDisplay || item.DefectCode || '').trim();
+      const defectNames = uniqueTextList(item.DefectNameList || [item.DefectName]);
+      const causeCategories = uniqueTextList(item.CauseCategoryList || [item.CauseCategory]);
 
-      const defectCodeLine = defectCodeText
-        ? `<p class="card-info"><strong>Defect Code:</strong> ${defectCodeText}</p>`
-        : '';
+      const defectNameText = defectNames
+        .map(name => `- ${name}`)
+        .join('<br>');
 
-      const problemLine = defectText
-        ? `<p class="card-info"><strong>ปัญหา:</strong> ${defectText}</p>`
+      const causeText = causeCategories
+        .map(cause => `- ${cause}`)
+        .join('<br>');
+
+      const problemLine = defectNameText
+        ? `<p class="card-info"><strong>ปัญหา:</strong><br>${defectNameText}</p>`
         : '';
 
       const causeLine = causeText
-        ? `<p class="card-info"><strong>สาเหตุ:</strong> ${causeText}</p>`
+        ? `<p class="card-info"><strong>สาเหตุ:</strong><br>${causeText}</p>`
         : '';
 
       return `
@@ -588,7 +564,6 @@
             <span class="card-type ${typeClass}">${item.Type || ''}</span>
             <h3 class="card-title">${item.FileName || ''}</h3>
             <p class="card-info"><strong>กระบวนการ:</strong> ${item.ProcessName || ''}</p>
-            ${defectCodeLine}
             ${problemLine}
             ${causeLine}
             <a href="${item.FileURL || '#'}" target="_blank" class="card-btn">
@@ -620,31 +595,25 @@
 
       filtered.forEach((item, index) => {
         const cleanFileUrl = String(item.FileURL || '').trim();
-        const cleanDefectCode = String(item.DefectCode || '').trim();
-
         const key = cleanFileUrl || `row-${index}`;
 
         if (!grouped[key]) {
           grouped[key] = {
             ...item,
-            DefectCodeList: cleanDefectCode ? [cleanDefectCode] : []
+            DefectNameList: item.DefectName ? [item.DefectName] : [],
+            CauseCategoryList: item.CauseCategory ? [item.CauseCategory] : []
           };
         } else {
-          if (cleanDefectCode) {
-            grouped[key].DefectCodeList.push(cleanDefectCode);
-          }
+          if (item.DefectName) grouped[key].DefectNameList.push(item.DefectName);
+          if (item.CauseCategory) grouped[key].CauseCategoryList.push(item.CauseCategory);
         }
       });
 
-      const finalData = Object.values(grouped).map(item => {
-        const codeList = item.DefectCodeList || [];
-        const codeDisplay = formatDefectCodeRanges(codeList);
-
-        return {
-          ...item,
-          DefectCodeDisplay: codeDisplay || String(item.DefectCode || '').trim()
-        };
-      });
+      const finalData = Object.values(grouped).map(item => ({
+        ...item,
+        DefectNameList: uniqueTextList(item.DefectNameList || []),
+        CauseCategoryList: uniqueTextList(item.CauseCategoryList || [])
+      }));
 
       const container = document.getElementById('cardsContainer');
 
