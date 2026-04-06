@@ -259,6 +259,7 @@
       border-radius: 8px;
       font-size: 14px;
       margin-top: 10px;
+      border: none;
     }
 
     .card-btn:hover {
@@ -585,9 +586,12 @@
       if (document.getElementById('typeExp').checked) types.push('Experience');
 
       const filtered = allData.filter(item => {
+        if (!String(item.FileURL || '').trim()) return false;
+
         if (process && String(item.Process) != process) return false;
         if (defect && String(item.DefectCode) != defect) return false;
         if (!types.includes(item.Type)) return false;
+
         return true;
       });
 
