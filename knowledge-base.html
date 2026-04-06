@@ -52,6 +52,7 @@
       user-select: none;
       -webkit-tap-highlight-color: transparent;
     }
+
     .sidebar-icon:hover,
     .sidebar-icon.active {
       background-color: rgba(255,255,255,0.18);
@@ -65,14 +66,12 @@
       width: calc(100% - 70px);
     }
 
-    /* ✅ HEADER STANDARD: ล็อกความสูงให้เท่ากันทุกหน้า */
     .header {
       background: linear-gradient(135deg, #4A89C8 0%, #2E75B6 100%);
       padding: 60px 40px;
-      min-height: 240px; /* ✅ เท่ากันชัวร์ */
+      min-height: 240px;
       text-align: center;
       box-shadow: 0 4px 15px rgba(74, 137, 200, 0.25);
-
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -101,22 +100,26 @@
       padding: 25px 40px;
       box-shadow: 0 2px 10px rgba(46,58,89,0.08);
     }
+
     .filter-row {
       display: flex;
       gap: 20px;
       flex-wrap: wrap;
       align-items: center;
     }
+
     .filter-group {
       display: flex;
       flex-direction: column;
       gap: 5px;
     }
+
     .filter-group label {
       font-size: 14px;
       font-weight: 600;
       color: #2E3A59;
     }
+
     .filter-group select {
       padding: 10px 15px;
       border: 2px solid #E0E6EF;
@@ -126,7 +129,11 @@
       background: #fff;
       color: #2E3A59;
     }
-    .filter-group select:focus { border-color: #4A89C8; outline: none; }
+
+    .filter-group select:focus {
+      border-color: #4A89C8;
+      outline: none;
+    }
 
     .checkbox-group {
       display: flex;
@@ -134,13 +141,23 @@
       align-items: center;
       flex-wrap: wrap;
     }
+
     .checkbox-item {
       display: flex;
       align-items: center;
       gap: 5px;
     }
-    .checkbox-item input { width: 18px; height: 18px; }
-    .checkbox-item label { font-size: 14px; cursor: pointer; color: #2E3A59; }
+
+    .checkbox-item input {
+      width: 18px;
+      height: 18px;
+    }
+
+    .checkbox-item label {
+      font-size: 14px;
+      cursor: pointer;
+      color: #2E3A59;
+    }
 
     .btn-clear {
       padding: 10px 20px;
@@ -151,10 +168,20 @@
       cursor: pointer;
       font-size: 14px;
     }
-    .btn-clear:hover { background: #C62828; }
 
-    .cards-section { padding: 30px 40px; }
-    .cards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; }
+    .btn-clear:hover {
+      background: #C62828;
+    }
+
+    .cards-section {
+      padding: 30px 40px;
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 25px;
+    }
 
     .card {
       background: #fff;
@@ -163,10 +190,22 @@
       box-shadow: 0 4px 15px rgba(46,58,89,0.08);
       transition: all 0.3s ease;
     }
-    .card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(74,137,200,0.18); }
 
-    .card-image { width: 100%; height: 200px; object-fit: cover; background: #f0f0f0; }
-    .card-content { padding: 20px; }
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px rgba(74,137,200,0.18);
+    }
+
+    .card-image {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      background: #f0f0f0;
+    }
+
+    .card-content {
+      padding: 20px;
+    }
 
     .card-type {
       display: inline-block;
@@ -176,13 +215,39 @@
       font-weight: 600;
       margin-bottom: 10px;
     }
-    .card-type.opl { background: #e8f5e9; color: #2e7d32; }
-    .card-type.wi { background: #e3f2fd; color: #1565c0; }
-    .card-type.video { background: #fff3e0; color: #ef6c00; }
-    .card-type.experience { background: #fce4ec; color: #c2185b; }
 
-    .card-title { font-size: 18px; font-weight: 600; color: #2E3A59; margin-bottom: 8px; }
-    .card-info { font-size: 14px; color: #6B7A90; margin-bottom: 5px; }
+    .card-type.opl {
+      background: #e8f5e9;
+      color: #2e7d32;
+    }
+
+    .card-type.wi {
+      background: #e3f2fd;
+      color: #1565c0;
+    }
+
+    .card-type.video {
+      background: #fff3e0;
+      color: #ef6c00;
+    }
+
+    .card-type.experience {
+      background: #fce4ec;
+      color: #c2185b;
+    }
+
+    .card-title {
+      font-size: 18px;
+      font-weight: 600;
+      color: #2E3A59;
+      margin-bottom: 8px;
+    }
+
+    .card-info {
+      font-size: 14px;
+      color: #6B7A90;
+      margin-bottom: 5px;
+    }
 
     .card-btn {
       display: inline-block;
@@ -194,19 +259,42 @@
       font-size: 14px;
       margin-top: 10px;
     }
-    .card-btn:hover { background: #2E75B6; }
 
-    .no-results { text-align: center; padding: 60px; color: #6B7A90; font-size: 14px; }
-    .no-results i { font-size: 60px; margin-bottom: 20px; color: #8A98AD; }
+    .card-btn:hover {
+      background: #2E75B6;
+    }
+
+    .no-results {
+      text-align: center;
+      padding: 60px;
+      color: #6B7A90;
+      font-size: 14px;
+    }
+
+    .no-results i {
+      font-size: 60px;
+      margin-bottom: 20px;
+      color: #8A98AD;
+    }
 
     @media (max-width: 1200px) {
-      .cards-grid { grid-template-columns: repeat(2, 1fr); }
-      .cards-section { padding: 20px 24px; }
-      .filter-section { padding: 16px 24px; }
+      .cards-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .cards-section {
+        padding: 20px 24px;
+      }
+
+      .filter-section {
+        padding: 16px 24px;
+      }
     }
 
     @media (max-width: 768px) {
-      .container { flex-direction: column !important; }
+      .container {
+        flex-direction: column !important;
+      }
 
       .sidebar {
         width: 100% !important;
@@ -222,38 +310,78 @@
         gap: 12px !important;
       }
 
-      .main-content { margin-left: 0 !important; width: 100% !important; }
+      .main-content {
+        margin-left: 0 !important;
+        width: 100% !important;
+      }
 
-      /* ✅ มือถือ: ล็อกความสูงให้เท่ากันทุกหน้า */
-      .header { padding: 40px 20px; min-height: 170px; }
-      .header h1 { font-size: 28px; }
-      .header p  { font-size: 15px; }
+      .header {
+        padding: 40px 20px;
+        min-height: 170px;
+      }
 
-      .filter-section { padding: 14px 16px; }
-      .filter-row { flex-direction: column !important; align-items: stretch !important; gap: 12px; }
-      .filter-group select { width: 100% !important; min-width: 0 !important; }
-      .btn-clear { width: 100%; }
+      .header h1 {
+        font-size: 28px;
+      }
 
-      .cards-section { padding: 16px; }
-      .cards-grid { grid-template-columns: 1fr !important; gap: 14px; }
-      .card-image { height: 160px; }
-      .card-content { padding: 14px; }
-      .card-btn { width: 100%; text-align: center; }
+      .header p {
+        font-size: 15px;
+      }
+
+      .filter-section {
+        padding: 14px 16px;
+      }
+
+      .filter-row {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 12px;
+      }
+
+      .filter-group select {
+        width: 100% !important;
+        min-width: 0 !important;
+      }
+
+      .btn-clear {
+        width: 100%;
+      }
+
+      .cards-section {
+        padding: 16px;
+      }
+
+      .cards-grid {
+        grid-template-columns: 1fr !important;
+        gap: 14px;
+      }
+
+      .card-image {
+        height: 160px;
+      }
+
+      .card-content {
+        padding: 14px;
+      }
+
+      .card-btn {
+        width: 100%;
+        text-align: center;
+      }
     }
   </style>
 </head>
 
 <body>
   <div class="container">
-   <nav class="sidebar">
-  <a class="sidebar-icon" data-page="index" href="index.html"><i class="fas fa-home"></i></a>
-  <a class="sidebar-icon" data-page="kb" href="knowledge-base.html"><i class="fas fa-book"></i></a>
-  <a class="sidebar-icon" data-page="lp" href="learning-path.html"><i class="fas fa-graduation-cap"></i></a>
-  <a class="sidebar-icon" data-page="quiz" href="quiz.html"><i class="fas fa-clipboard-check"></i></a>
-  <a class="sidebar-icon" data-page="share" href="share-experience.html"><i class="fas fa-comments"></i></a>
-  <a class="sidebar-icon logout" href="#"><i class="fas fa-sign-out-alt"></i></a>
-</nav>
-
+    <nav class="sidebar">
+      <a class="sidebar-icon" data-page="index" href="index.html"><i class="fas fa-home"></i></a>
+      <a class="sidebar-icon" data-page="kb" href="knowledge-base.html"><i class="fas fa-book"></i></a>
+      <a class="sidebar-icon" data-page="lp" href="learning-path.html"><i class="fas fa-graduation-cap"></i></a>
+      <a class="sidebar-icon" data-page="quiz" href="quiz.html"><i class="fas fa-clipboard-check"></i></a>
+      <a class="sidebar-icon" data-page="share" href="share-experience.html"><i class="fas fa-comments"></i></a>
+      <a class="sidebar-icon logout" href="#"><i class="fas fa-sign-out-alt"></i></a>
+    </nav>
 
     <main class="main-content">
       <header class="header">
@@ -328,33 +456,81 @@
     const defectsByProcess = {
       "1": [
         { code: "1.1", name: "Wet Mass แฉะเกินไป" },
-        { code: "1.2", name: "Wet Mass ไม่สม่ำเสมอ" },
-        { code: "1.3", name: "Wet Mass เหนียวเกินไป" }
+        { code: "1.2", name: "Wet Mass แห้งเกินไป" },
+        { code: "1.3", name: "Wet Mass ไม่สม่ำเสมอ" },
+        { code: "1.4", name: "Wet Mass เหนียวเกินไป" },
+        { code: "1.5", name: "Wet Mass ปนเปื้อน" }
       ],
       "2": [
-        { code: "2.1", name: "Wet Granule แฉะเกินไป" },
-        { code: "2.2", name: "Wet Granule แร่งไม่ออก" }
+        { code: "2.1", name: "Wet Granule ร่วนเกินไป" },
+        { code: "2.2", name: "Wet Granule แฉะเกินไป" },
+        { code: "2.3", name: "Wet Granule แร่งไม่ออก" },
+        { code: "2.4", name: "Wet Granule ปนเปื้อน" }
       ],
       "3": [
-        { code: "3.1", name: "ความชื้นสูงกว่ากำหนด" },
-        { code: "3.2", name: "ความชื้นต่ำกว่ากำหนด" }
+        { code: "3.1", name: "Dry Granule ความชื้นต่ำกว่ากำหนด" },
+        { code: "3.2", name: "Dry Granule ความชื้นสูงกว่ากำหนด" }
       ],
-      "4": [{ code: "4.1", name: "ผงแตกละเอียดมากเกิน" }],
-      "5": [{ code: "5.1", name: "ผงยาไม่สม่ำเสมอ" }],
+      "4": [
+        { code: "4.1", name: "ผงยาสมุนไพรแตกละเอียดมากเกิน" },
+        { code: "4.2", name: "ผงยาสมุนไพรปนเปื้อน" }
+      ],
+      "5": [
+        { code: "5.1", name: "ผงยาไม่สม่ำเสมอ" },
+        { code: "5.2", name: "ผงยาสมุนไพรปนเปื้อน" }
+      ],
       "6": [
         { code: "6.1", name: "เม็ดยานิ่ม" },
         { code: "6.2", name: "เม็ดยาบิ่น" },
         { code: "6.3", name: "เม็ดยาแข็ง" },
-        { code: "6.4", name: "ความหนาไม่ได้มาตรฐาน" },
-        { code: "6.5", name: "ขึ้นรูปไม่ได้" }
+        { code: "6.4", name: "เม็ดยาความหนาไม่ได้มาตรฐาน" },
+        { code: "6.5", name: "เม็ดยาขึ้นรูปไม่ได้" },
+        { code: "6.6", name: "เม็ดยามีน้ำหนักไม่ได้มาตรฐาน" },
+        { code: "6.7", name: "เม็ดยาปนเปื้อน" }
       ],
       "7": [
-        { code: "7.1", name: "ซองยารั่ว" },
-        { code: "7.2", name: "ซองเบี้ยวหรือผิดรูป" },
+        { code: "7.1", name: "ซองเบี้ยวหรือผิดรูป" },
+        { code: "7.2", name: "ซองยารั่ว" },
         { code: "7.3", name: "จำนวนเม็ดไม่ครบ" },
-        { code: "7.4", name: "จำนวนเม็ดเกิน" }
+        { code: "7.4", name: "จำนวนเม็ดยาต่อซองครบ แต่น้ำหนักไม่ได้มาตรฐาน" }
       ]
     };
+
+    function formatDefectCodeRanges(codes) {
+      const parsed = [...new Set(codes)]
+        .map(code => {
+          const [major, minor] = String(code).trim().split('.').map(Number);
+          return { code: String(code).trim(), major, minor };
+        })
+        .filter(x => !isNaN(x.major) && !isNaN(x.minor))
+        .sort((a, b) => a.major - b.major || a.minor - b.minor);
+
+      if (parsed.length === 0) return '';
+
+      const ranges = [];
+      let start = parsed[0];
+      let prev = parsed[0];
+
+      for (let i = 1; i < parsed.length; i++) {
+        const curr = parsed[i];
+
+        if (curr.major === prev.major && curr.minor === prev.minor + 1) {
+          prev = curr;
+        } else {
+          ranges.push({ start, end: prev });
+          start = curr;
+          prev = curr;
+        }
+      }
+
+      ranges.push({ start, end: prev });
+
+      return ranges.map(r =>
+        r.start.code === r.end.code
+          ? r.start.code
+          : `${r.start.code}-${r.end.code}`
+      ).join(', ');
+    }
 
     async function loadData() {
       try {
@@ -389,7 +565,12 @@
       const thumbnail = getThumbnailFromUrl(thumbSource) || 'https://via.placeholder.com/400x200?text=No+Image';
 
       const defectText = String(item.DefectName || '').trim();
-      const causeText  = String(item.CauseCategory || '').trim();
+      const causeText = String(item.CauseCategory || '').trim();
+      const defectCodeText = String(item.DefectCodeDisplay || item.DefectCode || '').trim();
+
+      const defectCodeLine = defectCodeText
+        ? `<p class="card-info"><strong>Defect Code:</strong> ${defectCodeText}</p>`
+        : '';
 
       const problemLine = defectText
         ? `<p class="card-info"><strong>ปัญหา:</strong> ${defectText}</p>`
@@ -407,6 +588,7 @@
             <span class="card-type ${typeClass}">${item.Type || ''}</span>
             <h3 class="card-title">${item.FileName || ''}</h3>
             <p class="card-info"><strong>กระบวนการ:</strong> ${item.ProcessName || ''}</p>
+            ${defectCodeLine}
             ${problemLine}
             ${causeLine}
             <a href="${item.FileURL || '#'}" target="_blank" class="card-btn">
@@ -434,8 +616,39 @@
         return true;
       });
 
+      const grouped = {};
+
+      filtered.forEach((item, index) => {
+        const cleanFileUrl = String(item.FileURL || '').trim();
+        const cleanDefectCode = String(item.DefectCode || '').trim();
+
+        const key = cleanFileUrl || `row-${index}`;
+
+        if (!grouped[key]) {
+          grouped[key] = {
+            ...item,
+            DefectCodeList: cleanDefectCode ? [cleanDefectCode] : []
+          };
+        } else {
+          if (cleanDefectCode) {
+            grouped[key].DefectCodeList.push(cleanDefectCode);
+          }
+        }
+      });
+
+      const finalData = Object.values(grouped).map(item => {
+        const codeList = item.DefectCodeList || [];
+        const codeDisplay = formatDefectCodeRanges(codeList);
+
+        return {
+          ...item,
+          DefectCodeDisplay: codeDisplay || String(item.DefectCode || '').trim()
+        };
+      });
+
       const container = document.getElementById('cardsContainer');
-      if (filtered.length === 0) {
+
+      if (finalData.length === 0) {
         container.innerHTML = `
           <div class="no-results">
             <i class="fas fa-search"></i>
@@ -443,7 +656,7 @@
           </div>
         `;
       } else {
-        container.innerHTML = filtered.map(createCard).join('');
+        container.innerHTML = finalData.map(createCard).join('');
       }
     }
 
@@ -452,11 +665,13 @@
       const defectSelect = document.getElementById('filterDefect');
 
       defectSelect.innerHTML = '<option value="">-- ทั้งหมด --</option>';
+
       if (process && defectsByProcess[process]) {
         defectsByProcess[process].forEach(d => {
           defectSelect.innerHTML += `<option value="${d.code}">${d.code} ${d.name}</option>`;
         });
       }
+
       filterAndDisplay();
     }
 
@@ -480,6 +695,5 @@
     loadData();
   </script>
   <script src="Js"></script>
-
 </body>
 </html>
