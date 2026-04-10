@@ -27,84 +27,224 @@
       font-family:'Sarabun',sans-serif;
       background:var(--bg);
       min-height:100vh;
+      overflow-x:hidden;
       color:var(--text);
+      font-size:14px;
+      line-height:1.7;
     }
 
     .container{display:flex;min-height:100vh}
 
     .sidebar{
       width:70px;
-      background:linear-gradient(180deg,var(--blue1),var(--blue2));
+      background:linear-gradient(180deg,var(--blue1) 0%,var(--blue2) 100%);
       display:flex;flex-direction:column;align-items:center;
       padding-top:20px;gap:10px;
-      position:fixed;height:100vh;
+      position:fixed;height:100vh;left:0;top:0;z-index:100;
     }
-
     .sidebar-icon{
-      width:50px;height:50px;
-      display:flex;align-items:center;justify-content:center;
-      color:#fff;font-size:20px;border-radius:12px;
+      width:50px;height:50px;display:flex;align-items:center;justify-content:center;
+      color:rgba(255,255,255,.85);
+      font-size:20px;border-radius:12px;
+      cursor:pointer;transition:.2s;text-decoration:none;
+      user-select:none;-webkit-tap-highlight-color:transparent;
     }
+    .sidebar-icon:hover,.sidebar-icon.active{background:rgba(255,255,255,.18);color:#fff}
 
-    .main-content{margin-left:70px;width:100%}
+    .main-content{
+      flex:1;margin-left:70px;width:calc(100% - 70px);
+      padding:0;
+    }
 
     .header{
-      background:linear-gradient(135deg,var(--blue1),var(--blue2));
-      padding:50px;text-align:center;color:#fff;
+      background:linear-gradient(135deg,var(--blue1) 0%,var(--blue2) 100%);
+      padding:60px 40px;
+      text-align:center;
+      box-shadow:0 4px 15px rgba(74,137,200,.25);
+    }
+    .header h1{
+      color:#fff;
+      font-size:42px;
+      font-weight:700;
+      margin-bottom:15px;
+      letter-spacing:1px;
+      text-shadow:0 2px 4px rgba(0,0,0,.2);
+    }
+    .header p{
+      color:rgba(255,255,255,.95);
+      font-size:18px;
+      max-width:650px;
+      margin:0 auto;
+      line-height:1.7;
     }
 
-    .wrap{padding:16px}
+    .wrap{padding:16px 18px 24px}
+
+    .topbar{
+      background:var(--card);
+      border-radius:16px;
+      padding:14px 16px;
+      box-shadow:0 2px 10px rgba(46,58,89,.08);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
+      margin-bottom:14px;
+    }
+    .pill{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:8px 12px;border-radius:999px;
+      background:#E6F0FA;color:var(--blue2);
+      font-weight:900;font-size:13px;
+    }
+    .meta{color:var(--muted);font-size:13px}
+
+    .btn-back{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:10px 12px;border-radius:10px;
+      background:var(--blue1);color:#fff;text-decoration:none;font-weight:900;
+    }
+    .btn-back:hover{background:var(--blue2)}
+
+    .stage{
+      display:grid;
+      grid-template-columns: 1fr 360px;
+      gap:14px;
+      align-items:stretch;
+    }
+    @media (max-width: 980px){
+      .stage{grid-template-columns:1fr}
+    }
 
     .card{
-      background:#fff;
-      border-radius:16px;
-      padding:16px;
-      box-shadow:0 4px 12px rgba(0,0,0,.08);
+      background:var(--card);
+      border-radius:18px;
+      box-shadow:0 6px 18px rgba(46,58,89,.10);
+      overflow:hidden;
+      display:flex;
+      flex-direction:column;
+      min-height:520px;
+      border:1px solid rgba(74,137,200,0.12);
     }
 
-    .img-box{
-      height:260px;
-      background:#f5f7fa;
-      border-radius:12px;
+    .defect-header{
+      padding:16px 16px 12px;
+      border-bottom:1px solid var(--line);
+      display:flex;
+      align-items:flex-start;
+      gap:14px;
+    }
+
+    .defect-badge{
+      width:56px;
+      min-width:56px;
+      height:40px;
+      border-radius:14px;
       display:flex;
       align-items:center;
       justify-content:center;
-      margin-bottom:12px;
+      font-weight:900;
+      font-size:14px;
+      line-height:1;
+      flex:0 0 56px;
+      background:#E3F2FD;
+      color:#1565C0;
+    }
+
+    .defect-title{
+      font-weight:900;
+      color:#1F2D3D;
+      font-size:20px;
+      line-height:1.2;
+      margin:2px 0 0 0;
+    }
+    .defect-sub{
+      margin:8px 0 0 0;
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.45;
+    }
+
+    .body{
+      padding:14px 16px 16px;
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+      flex:1;
+    }
+
+    .img-box{
+      flex:0 0 auto;
+      background:var(--soft);
+      border:1px solid var(--soft-line);
+      border-radius:16px;
+      height:320px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      overflow:hidden;
+      color:#8A98AD;
+      font-weight:800;
+    }
+
+    .defect-image{
+      width:100%;
+      height:100%;
+      object-fit:contain;
+      display:block;
+      background:#fff;
+    }
+
+    .no-image{
+      color:#8A98AD;
+      font-weight:800;
     }
 
     .box{
-      background:#F7FBFF;
-      border-radius:14px;
-      padding:12px;
-      margin-top:10px;
+      background:var(--soft);
+      border:1px solid var(--soft-line);
+      border-radius:16px;
+      padding:12px 12px;
     }
-
-    .label{
-      font-weight:700;
-      margin-bottom:6px;
+    .box .label{
+      font-weight:900;
       color:var(--blue2);
+      display:flex;
+      align-items:center;
+      gap:8px;
+      margin-bottom:6px;
     }
+    .box .txt{color:var(--text);font-size:14px;line-height:1.55}
 
-    /* 🔥 NEW ACTION CARD */
     .action-card{
       display:flex;
       align-items:center;
       gap:12px;
+      padding:14px;
+      border-radius:14px;
+      background:#FFFFFF;
+      border:1px solid #DCEBFA;
+      box-shadow:0 2px 8px rgba(46,58,89,.06);
+      flex-wrap:wrap;
     }
 
     .action-btn{
       width:44px;
+      min-width:44px;
       height:44px;
-      display:flex;
+      display:inline-flex;
       align-items:center;
       justify-content:center;
+      padding:0;
       border-radius:12px;
       background:var(--blue1);
       color:#fff;
       text-decoration:none;
       font-size:18px;
+      transition:.2s;
+      flex:0 0 44px;
     }
-
     .action-btn:hover{
       background:var(--blue2);
     }
@@ -112,105 +252,405 @@
     .action-content{
       display:flex;
       flex-direction:column;
+      min-width:180px;
+      flex:1;
     }
 
     .action-title{
-      font-weight:700;
+      font-weight:900;
+      color:#1F2D3D;
+      margin-bottom:2px;
+      font-size:14px;
+      line-height:1.35;
     }
 
     .action-desc{
+      color:var(--muted);
       font-size:13px;
-      color:#6B7A90;
+      line-height:1.45;
+      word-break:break-word;
     }
 
+    .panel{
+      background:var(--card);
+      border-radius:18px;
+      box-shadow:0 2px 10px rgba(46,58,89,.08);
+      padding:14px;
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+      border:1px solid rgba(74,137,200,0.10);
+    }
+    .progress{
+      background:#F2F7FD;
+      border:1px solid #E3EDF8;
+      border-radius:16px;
+      padding:12px;
+    }
+    .progress-top{
+      display:flex;justify-content:space-between;align-items:center;gap:10px;
+      color:#294B6A;font-weight:900;
+    }
+    .bar{
+      height:10px;border-radius:999px;background:#DBE7F6;
+      margin-top:10px;overflow:hidden;
+    }
+    .bar > div{
+      height:100%;
+      width:0%;
+      background:var(--blue1);
+      border-radius:999px;
+      transition:width .25s ease;
+    }
+
+    .nav-btns{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:10px;
+    }
+    .btn{
+      border:none;
+      border-radius:14px;
+      padding:12px 12px;
+      font-family:'Sarabun',sans-serif;
+      font-weight:900;
+      cursor:pointer;
+      display:flex;align-items:center;justify-content:center;gap:8px;
+      transition:.2s;
+    }
+    .btn:disabled{opacity:.45;cursor:not-allowed}
+    .btn-prev{background:#EEF3F8;color:var(--text)}
+    .btn-prev:hover{background:#E4ECF5}
+    .btn-next{background:var(--blue1);color:#fff}
+    .btn-next:hover{background:var(--blue2)}
+
+    .btn-4m{
+      border:none;
+      border-radius:14px;
+      padding:12px 12px;
+      font-family:'Sarabun',sans-serif;
+      font-weight:900;
+      cursor:pointer;
+      display:flex;align-items:center;justify-content:center;gap:10px;
+      transition:.2s;
+      background:var(--blue2);color:#fff;
+    }
+    .btn-4m:hover{filter:brightness(.95)}
+
+    .mini-list{
+      border:1px solid var(--line);
+      border-radius:16px;
+      overflow:hidden;
+    }
+
+    .mini-item{
+      padding:10px 12px;
+      display:flex;
+      align-items:flex-start;
+      gap:12px;
+      border-bottom:1px solid var(--line);
+      cursor:pointer;
+      background:#fff;
+    }
+    .mini-item:last-child{border-bottom:none}
+    .mini-item.active{
+      background:#F3F9FF;
+      outline:2px solid #CFE4FF;
+      outline-offset:-2px;
+    }
+
+    .mini-text .t{
+      font-size:13px;font-weight:900;color:#1F2D3D;line-height:1.25;margin:0;
+    }
+    .mini-text .s{
+      font-size:12px;color:var(--muted);margin-top:4px;line-height:1.3;
+    }
+
+    .loading,.error{
+      background:#fff;border-radius:16px;
+      padding:30px;
+      box-shadow:0 2px 10px rgba(46,58,89,.08);
+      text-align:center;color:var(--muted);
+    }
+    .loading i{font-size:46px;margin-bottom:10px;color:#8A98AD}
+    .error i{font-size:46px;margin-bottom:10px;color:#E57373}
+
+    @media (max-width: 768px){
+      .container{flex-direction:column}
+      .sidebar{
+        width:100%;height:60px;flex-direction:row;justify-content:center;
+        position:relative;left:auto;top:auto;padding:10px;gap:12px;
+      }
+      .main-content{margin-left:0;width:100%}
+      .header{padding:40px 20px}
+      .header h1{font-size:28px}
+      .header p{font-size:15px}
+      .wrap{padding:12px 12px 20px}
+      .card{min-height:unset}
+      .img-box{height:240px}
+      .action-card{
+        align-items:center;
+      }
+    }
   </style>
 </head>
 
 <body>
 <div class="container">
 
-<nav class="sidebar">
-  <div class="sidebar-icon"><i class="fas fa-home"></i></div>
+ <nav class="sidebar">
+  <a class="sidebar-icon" data-page="index" href="index.html"><i class="fas fa-home"></i></a>
+  <a class="sidebar-icon" data-page="kb" href="knowledge-base.html"><i class="fas fa-book"></i></a>
+  <a class="sidebar-icon" data-page="lp" href="learning-path.html"><i class="fas fa-graduation-cap"></i></a>
+  <a class="sidebar-icon" data-page="quiz" href="quiz.html"><i class="fas fa-clipboard-check"></i></a>
+  <a class="sidebar-icon" data-page="share" href="share-experience.html"><i class="fas fa-comments"></i></a>
+  <a class="sidebar-icon logout" href="#"><i class="fas fa-sign-out-alt"></i></a>
 </nav>
 
-<main class="main-content">
-  <div class="header">
-    <h1>Defect Learning</h1>
-  </div>
+  <main class="main-content">
+    <header class="header">
+      <h1>Defect Learning</h1>
+      <p>เรียนรู้ “ลักษณะของเสีย” ของแต่ละ Process แล้วกดไปดูสาเหตุจาก 4M </p>
+    </header>
 
-  <div class="wrap">
-    <div id="content">Loading...</div>
-  </div>
-</main>
+    <div class="wrap">
+      <div class="topbar">
+        <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+          <span class="pill"><i class="fas fa-triangle-exclamation"></i> <span id="procTitle">Process</span></span>
+          <span class="meta" id="procMeta">-</span>
+        </div>
+        <a class="btn-back" href="learning-path.html"><i class="fas fa-arrow-left"></i> กลับหน้าเลือกกระบวนการ</a>
+      </div>
 
+      <div id="content">
+        <div class="loading">
+          <i class="fas fa-spinner fa-spin"></i>
+          <div>กำลังโหลดข้อมูล...</div>
+        </div>
+      </div>
+    </div>
+  </main>
 </div>
 
 <script>
+  const API_URL = "https://script.google.com/macros/s/AKfycbwMRbnqSLTmmI4wofmNfZ5YPFGSiqg__rZUgyDlTTR03JchnQXgUj7DKDvzS4-QBmJrvw/exec?view=defectlearning";
+  const DEFECT_IMG_BASE = "assets/";
 
-const API_URL = "YOUR_API";
+  const procMap = {"1":"ผสมเปียก","2":"แร่งเปียก","3":"อบลมร้อน","4":"แร่งแห้ง","5":"ผสมแห้ง","6":"ตอกเม็ดยา","7":"บรรจุซอง"};
 
-let defects = [];
-let index = 0;
+  let defects = [];
+  let index = 0;
 
-function extractUrl(text){
-  const match = String(text||"").match(/https?:\/\/[^\s]+/);
-  return match ? match[0] : "";
-}
+  function getQueryParam(name){
+    const url = new URL(window.location.href);
+    return url.searchParams.get(name);
+  }
 
-function renderNextAction(url){
-  return `
-    <div class="action-card">
-      
-      <!-- 🔥 ปุ่มซ้าย -->
-      <a class="action-btn" href="${url}" target="_blank">
-        <i class="fas fa-play"></i>
-      </a>
+  function esc(s){
+    return String(s ?? "")
+      .replaceAll("&","&amp;").replaceAll("<","&lt;")
+      .replaceAll(">","&gt;")
+      .replaceAll('"',"&quot;")
+      .replaceAll("'","&#039;");
+  }
 
-      <!-- 🔥 ข้อความ -->
-      <div class="action-content">
-        <div class="action-title">ตัวอย่างลักษณะของเสีย</div>
-        <div class="action-desc">กดเพื่อดูวิดีโอ</div>
+  function getDefectImageUrl(defectCode){
+    const code = String(defectCode || "").trim().toLowerCase();
+    if(!code) return "";
+    return `${DEFECT_IMG_BASE}df${code}.jpg`;
+  }
+
+  function extractUrl(text){
+    const str = String(text || "").trim();
+    if(!str) return "";
+
+    const match = str.match(/https?:\/\/[^\s]+/i);
+    return match ? match[0] : "";
+  }
+
+  function renderNextAction(nextAction){
+    const url = extractUrl(nextAction);
+
+    return `
+      <div class="action-card">
+        <a class="action-btn" href="${esc(url)}" target="_blank" rel="noopener noreferrer" aria-label="เปิดวิดีโอ">
+          <i class="fas fa-play"></i>
+        </a>
+        <div class="action-content">
+          <div class="action-title">ตัวอย่างลักษณะของเสีย</div>
+          <div class="action-desc">กดเพื่อดูวิดีโอ</div>
+        </div>
       </div>
+    `;
+  }
 
-    </div>
-  `;
-}
+  function setIndex(i){
+    index = Math.max(0, Math.min(i, defects.length - 1));
+    render();
+  }
 
-function render(){
-  const d = defects[index];
-  const url = extractUrl(d.NextAction);
+  function go4M(){
+    const d = defects[index];
+    const proc = String(d.Process || "").trim();
+    const code = String(d.DefectCode || "").trim();
+    window.location.href = `defect-4m.html?process=${encodeURIComponent(proc)}&defect=${encodeURIComponent(code)}`;
+  }
 
-  document.getElementById("content").innerHTML = `
-    <div class="card">
+  function render(){
+    const d = defects[index];
+    const total = defects.length;
+    const percent = total ? Math.round(((index+1)/total)*100) : 0;
+    const isLast = (index === total - 1);
+    const imgUrl = getDefectImageUrl(d.DefectCode);
+    const nextActionUrl = extractUrl(d.NextAction);
 
-      <div class="img-box">
-        <img src="assets/df${d.DefectCode}.jpg" style="max-height:100%">
+    document.getElementById("content").innerHTML = `
+      <div class="stage">
+        <div class="card">
+          <div class="defect-header">
+            <div class="defect-badge">${esc(d.DefectCode)}</div>
+            <div>
+              <div class="defect-title">${esc(d.DefectName)}</div>
+            </div>
+          </div>
+
+          <div class="body">
+            <div class="img-box">
+              <img
+                class="defect-image"
+                src="${imgUrl}"
+                alt="${esc(d.DefectName)}"
+                onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=&quot;no-image&quot;>ยังไม่มีรูปของเสีย</div>';"
+              >
+            </div>
+
+            <div class="box">
+              <div class="label"><i class="fas fa-circle-info"></i> ลักษณะของของเสีย</div>
+              <div class="txt">${esc(d.DefectSummary || "-")}</div>
+            </div>
+
+            ${nextActionUrl ? `
+              <div class="box">
+                <div class="label"><i class="fas fa-flag-checkered"></i> Next Action</div>
+                ${renderNextAction(d.NextAction)}
+              </div>
+            ` : ``}
+          </div>
+        </div>
+
+        <aside class="panel">
+          <div class="progress">
+            <div class="progress-top">
+              <div>รายการ ${index+1} / ${total}</div>
+              <div>${percent}%</div>
+            </div>
+            <div class="bar"><div style="width:${percent}%"></div></div>
+          </div>
+
+          <div class="nav-btns">
+            <button class="btn btn-prev" id="btnPrev" ${index===0 ? "disabled":""}>
+              <i class="fas fa-arrow-left"></i> ก่อนหน้า
+            </button>
+
+            ${
+              isLast
+              ? `<button class="btn btn-next" id="btnNext">กลับหน้าเลือกกระบวนการ <i class="fas fa-arrow-right"></i></button>`
+              : `<button class="btn btn-next" id="btnNext">ถัดไป <i class="fas fa-arrow-right"></i></button>`
+            }
+          </div>
+
+          <button class="btn-4m" id="btn4m">
+            <i class="fas fa-users-gear"></i> ดูสาเหตุจาก 4M <i class="fas fa-arrow-right"></i>
+          </button>
+
+          <div class="mini-list">
+            ${defects.map((x,idx)=>`
+              <div class="mini-item ${idx===index?"active":""}" data-idx="${idx}">
+                <div class="defect-badge">${esc(x.DefectCode)}</div>
+                <div class="mini-text">
+                  <div class="t">${esc(x.DefectName)}</div>
+                  <div class="s">${esc(x.DefectSummary || "")}</div>
+                </div>
+              </div>
+            `).join("")}
+          </div>
+        </aside>
       </div>
+    `;
 
-      <div class="box">
-        <div class="label">ลักษณะของของเสีย</div>
-        ${d.DefectSummary || "-"}
-      </div>
+    document.getElementById("btnPrev").onclick = ()=> setIndex(index-1);
 
-      ${url ? `
-      <div class="box">
-        <div class="label">Next Action</div>
-        ${renderNextAction(url)}
-      </div>
-      ` : ``}
+    const btnNext = document.getElementById("btnNext");
+    btnNext.onclick = ()=>{
+      if(isLast){
+        window.location.href = "learning-path.html";
+      }else{
+        setIndex(index+1);
+      }
+    };
 
-    </div>
-  `;
-}
+    document.getElementById("btn4m").onclick = ()=> go4M();
 
-async function load(){
-  const res = await fetch(API_URL);
-  defects = await res.json();
-  render();
-}
+    document.querySelectorAll(".mini-item").forEach(el=>{
+      el.addEventListener("click", ()=>{
+        const idx = Number(el.getAttribute("data-idx"));
+        if(!Number.isNaN(idx)) setIndex(idx);
+      });
+    });
 
-load();
+    document.onkeydown = (e)=>{
+      if(e.key === "ArrowLeft") setIndex(index-1);
+      if(e.key === "ArrowRight"){
+        if(isLast) window.location.href = "learning-path.html";
+        else setIndex(index+1);
+      }
+    };
+  }
 
+  async function load(){
+    const proc = String(getQueryParam("process") || "1").trim();
+    document.getElementById("procTitle").textContent = `Process ${proc}`;
+    document.getElementById("procMeta").textContent  = procMap[proc] ? `กระบวนการ: ${procMap[proc]}` : "-";
+
+    try{
+      const res = await fetch(API_URL);
+      const data = await res.json();
+
+      defects = (Array.isArray(data) ? data : [])
+        .filter(x => String(x.Process).trim() === proc)
+        .sort((a,b)=> String(a.DefectCode).localeCompare(String(b.DefectCode), 'th'));
+
+      if(!defects.length){
+        document.getElementById("content").innerHTML = `
+          <div class="error">
+            <i class="fas fa-circle-exclamation"></i>
+            <div>ไม่พบข้อมูล Defect ของ Process ${esc(proc)} ในชีท Defect Learning</div>
+          </div>
+        `;
+        return;
+      }
+
+      const startDef = String(getQueryParam("defect") || "").trim();
+      if(startDef){
+        const idx = defects.findIndex(x => String(x.DefectCode).trim() === startDef);
+        if(idx >= 0) index = idx;
+      }
+
+      render();
+    }catch(err){
+      console.error(err);
+      document.getElementById("content").innerHTML = `
+        <div class="error">
+          <i class="fas fa-exclamation-triangle"></i>
+          <div>โหลดข้อมูลไม่สำเร็จ</div>
+        </div>
+      `;
+    }
+  }
+
+  load();
 </script>
+<script src="Js"></script>
+
 </body>
 </html>
