@@ -217,6 +217,56 @@
     }
     .box .txt{color:var(--text);font-size:14px;line-height:1.55}
 
+    .action-card{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      padding:14px;
+      border-radius:14px;
+      background:#FFFFFF;
+      border:1px solid #DCEBFA;
+      box-shadow:0 2px 8px rgba(46,58,89,.06);
+      flex-wrap:wrap;
+    }
+
+    .action-content{
+      flex:1;
+      min-width:220px;
+    }
+
+    .action-title{
+      font-weight:900;
+      color:#1F2D3D;
+      margin-bottom:4px;
+      font-size:14px;
+    }
+
+    .action-desc{
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.45;
+      word-break:break-word;
+    }
+
+    .action-btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      padding:11px 16px;
+      border-radius:12px;
+      background:var(--blue1);
+      color:#fff;
+      text-decoration:none;
+      font-weight:900;
+      white-space:nowrap;
+      transition:.2s;
+    }
+    .action-btn:hover{
+      background:var(--blue2);
+    }
+
     .panel{
       background:var(--card);
       border-radius:18px;
@@ -334,6 +384,8 @@
       .wrap{padding:12px 12px 20px}
       .card{min-height:unset}
       .img-box{height:240px}
+      .action-card{align-items:flex-start}
+      .action-btn{width:100%}
     }
   </style>
 </head>
@@ -403,6 +455,30 @@
     return `${DEFECT_IMG_BASE}df${code}.jpg`;
   }
 
+  function extractUrl(text){
+    const str = String(text || "").trim();
+    if(!str) return "";
+
+    const match = str.match(/https?:\/\/[^\s]+/i);
+    return match ? match[0] : "";
+  }
+
+  function renderNextAction(nextAction){
+    const url = extractUrl(nextAction);
+
+    return `
+      <div class="action-card">
+        <div class="action-content">
+          <div class="action-title">ไฟล์สำหรับดำเนินการต่อ</div>
+          <div class="action-desc">กดปุ่มเพื่อเปิดไฟล์จากลิงก์ที่บันทึกไว้ในคอลัมน์</div>
+        </div>
+        <a class="action-btn" href="${esc(url)}" target="_blank" rel="noopener noreferrer">
+          <i class="fas fa-folder-open"></i> เปิดไฟล์
+        </a>
+      </div>
+    `;
+  }
+
   function setIndex(i){
     index = Math.max(0, Math.min(i, defects.length - 1));
     render();
@@ -421,6 +497,7 @@
     const percent = total ? Math.round(((index+1)/total)*100) : 0;
     const isLast = (index === total - 1);
     const imgUrl = getDefectImageUrl(d.DefectCode);
+    const nextActionUrl = extractUrl(d.NextAction);
 
     document.getElementById("content").innerHTML = `
       <div class="stage">
@@ -447,10 +524,12 @@
               <div class="txt">${esc(d.DefectSummary || "-")}</div>
             </div>
 
-            <div class="box">
-              <div class="label"><i class="fas fa-flag-checkered"></i> Next Action</div>
-              <div class="txt">${esc(d.NextAction || "ดูสาเหตุจาก 4M")}</div>
-            </div>
+            ${nextActionUrl ? `
+              <div class="box">
+                <div class="label"><i class="fas fa-flag-checkered"></i> Next Action</div>
+                ${renderNextAction(d.NextAction)}
+              </div>
+            ` : ``}
           </div>
         </div>
 
