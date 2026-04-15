@@ -914,7 +914,7 @@
       const qid = String(question.QuestionID || '').trim();
 
       if (!quizNum || !qid) return '';
-      return `${CONFIG.RAW_BASE_URL}df${quizNum}.${qid}.jpg`;
+      return `${CONFIG.RAW_BASE_URL}q${quizNum}.${qid}.jpg`;
     }
 
     function renderQuestion() {
@@ -961,13 +961,22 @@
       `;
 
       const img = document.getElementById('questionImage');
+
+      img.src = '';
+      img.style.display = 'none';
+
       const imageUrl = getQuestionImageUrl(question);
+
       if (imageUrl) {
-        img.src = imageUrl;
-        img.style.display = 'block';
+        img.onload = () => {
+          img.style.display = 'block';
+        };
+
         img.onerror = () => {
           img.style.display = 'none';
         };
+
+        img.src = imageUrl;
       }
 
       const choicesArea = document.getElementById('choicesArea');
