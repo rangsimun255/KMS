@@ -234,18 +234,6 @@
             display: flex;
         }
 
-        .login-footer {
-            text-align: center;
-            padding: 20px;
-            background: #f8fbfd;
-            border-top: 1px solid #e8f4fc;
-        }
-
-        .login-footer p {
-            color: #95a5a6;
-            font-size: 0.85rem;
-        }
-
         @media (max-width: 768px) {
             body { padding: 16px; }
             .login-container { border-radius: 20px; }
@@ -319,18 +307,15 @@
                 <span>เข้าสู่ระบบ</span>
             </button>
         </form>
-
-        
     </div>
 
     <script>
-        // ✅ URL ใหม่สำหรับ Login API
         const API_URL = 'https://script.google.com/macros/s/AKfycbz1SmAmMToaNZH4KAvNiIvCBf4WoU80G8fMcZzS_zhOiuWjjJHb41TZpdQSmiITiKZuSg/exec';
 
         function togglePassword() {
             const passwordInput = document.getElementById('password');
             const toggleIcon = document.getElementById('toggleIcon');
-            
+
             if (passwordInput.type === 'password') {
                 passwordInput.type = 'text';
                 toggleIcon.classList.remove('fa-eye');
@@ -346,11 +331,11 @@
             const errorDiv = document.getElementById('errorMessage');
             const errorText = document.getElementById('errorText');
             const successDiv = document.getElementById('successMessage');
-            
+
             successDiv.classList.remove('show');
             errorText.textContent = message;
             errorDiv.classList.add('show');
-            
+
             setTimeout(function() {
                 errorDiv.classList.remove('show');
             }, 5000);
@@ -359,19 +344,37 @@
         function showSuccess() {
             const errorDiv = document.getElementById('errorMessage');
             const successDiv = document.getElementById('successMessage');
-            
+
             errorDiv.classList.remove('show');
             successDiv.classList.add('show');
         }
 
+        function saveUserSession(userData, rememberMe, employeeId) {
+            if (rememberMe) {
+                localStorage.setItem('currentUser', JSON.stringify(userData));
+                localStorage.setItem('kmsUser', JSON.stringify(userData));
+                localStorage.setItem('savedEmployeeId', employeeId);
+
+                sessionStorage.removeItem('currentUser');
+                sessionStorage.removeItem('kmsUser');
+            } else {
+                sessionStorage.setItem('currentUser', JSON.stringify(userData));
+                sessionStorage.setItem('kmsUser', JSON.stringify(userData));
+
+                localStorage.removeItem('currentUser');
+                localStorage.removeItem('kmsUser');
+                localStorage.removeItem('savedEmployeeId');
+            }
+        }
+
         async function handleLogin(event) {
             event.preventDefault();
-            
+
             const employeeId = document.getElementById('employeeId').value.trim();
             const password = document.getElementById('password').value;
             const rememberMe = document.getElementById('rememberMe').checked;
             const btnLogin = document.getElementById('btnLogin');
-            
+
             if (!employeeId || !password) {
                 showError('กรุณากรอกรหัสพนักงานและรหัสผ่าน');
                 return;
@@ -384,35 +387,29 @@
                 const url = API_URL + '?action=login&employeeId=' + encodeURIComponent(employeeId) + '&password=' + encodeURIComponent(password);
                 const response = await fetch(url);
                 const result = await response.json();
-                
+
                 if (result.success) {
                     const userData = {
                         employeeId: result.user.employeeId,
                         name: result.user.name,
                         role: result.user.role,
                         department: result.user.department,
+                        status: result.user.status || '',
                         loginTime: new Date().toISOString()
                     };
 
-                    if (rememberMe) {
-                        localStorage.setItem('currentUser', JSON.stringify(userData));
-                        localStorage.setItem('savedEmployeeId', employeeId);
-                    } else {
-                        sessionStorage.setItem('currentUser', JSON.stringify(userData));
-                        localStorage.removeItem('savedEmployeeId');
-                    }
-
+                    saveUserSession(userData, rememberMe, employeeId);
                     showSuccess();
 
                     setTimeout(function() {
                         window.location.href = 'index.html';
                     }, 1000);
-                    
+
                 } else {
                     showError(result.message || 'รหัสพนักงานหรือรหัสผ่านไม่ถูกต้อง');
                     resetButton();
                 }
-                
+
             } catch (error) {
                 console.error('Login error:', error);
                 showError('ไม่สามารถเชื่อมต่อระบบได้ กรุณาลองใหม่');
@@ -429,9 +426,15 @@
         }
 
         window.onload = function() {
-            const user = localStorage.getItem('currentUser') || sessionStorage.getItem('currentUser');
+            const user =
+                localStorage.getItem('kmsUser') ||
+                sessionStorage.getItem('kmsUser') ||
+                localStorage.getItem('currentUser') ||
+                sessionStorage.getItem('currentUser');
+
             if (user) {
                 window.location.href = 'index.html';
+                return;
             }
 
             const savedId = localStorage.getItem('savedEmployeeId');
