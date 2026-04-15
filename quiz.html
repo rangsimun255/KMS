@@ -3,7 +3,12 @@
 <head>
   <script>
     (function () {
-      const user = localStorage.getItem('currentUser') || sessionStorage.getItem('currentUser');
+      const user =
+        localStorage.getItem('kmsUser') ||
+        sessionStorage.getItem('kmsUser') ||
+        localStorage.getItem('currentUser') ||
+        sessionStorage.getItem('currentUser');
+
       if (!user) {
         window.location.replace('login.html');
       }
@@ -111,6 +116,8 @@
       box-shadow:0 10px 20px rgba(46,58,89,.10);
       transition:all .2s ease;
       width:100%;
+      border:none;
+      cursor:pointer;
     }
     .btn-start:hover{transform:translateY(-2px);filter:brightness(1.02)}
     .btn-start:active{transform:translateY(0)}
@@ -161,9 +168,9 @@
       <header class="header">
         <h1>Quiz / Check Point</h1>
         <p class="subtitle">
-          หน้านี้มีไว้สำหรับทดสอบความเข้าใจ “หลังเรียน Learning Path”<br>
+          หน้านี้มีไว้สำหรับทดสอบความเข้าใจหลังเรียนรู้ในแต่ละกระบวนการ<br>
           กรุณาเริ่มทำจาก Quiz 1 และทำตามลำดับจนถึง Quiz 7<br>
-          * แบบทดสอบจะเปิดผ่าน Kahoot ในแท็บใหม่
+          * ระบบจะบันทึกผลการตอบรายข้อของผู้ใช้งานที่ล็อกอิน
         </p>
       </header>
 
@@ -182,10 +189,10 @@
           <h3><i class="fas fa-list-check" style="color:#4A89C8;margin-right:8px;"></i> ขั้นตอนการทำแบบทดสอบ</h3>
           <ol>
             <li>เข้า <b>Learning Path</b> และเลือกกระบวนการที่รับผิดชอบ</li>
-            <li>อ่าน Critical Point + ดูเอกสารประกอบ (OPL/WI/Video)</li>
+            <li>อ่าน Critical Point + ดูเอกสารประกอบ (OPL / WI / Video)</li>
             <li>กลับมาที่หน้า Quiz แล้วเริ่มทำจาก <b>Quiz 1</b> ตามลำดับ</li>
-            <li>กรอก <b>ชื่อ/รหัสพนักงาน</b> ใน Kahoot ก่อนเริ่มทำ</li>
-            <li>ทำแบบทดสอบให้ครบ และบันทึกผลคะแนนตามที่หัวหน้างานกำหนด</li>
+            <li>ระบบจะใช้ข้อมูลผู้ใช้ที่ล็อกอินเพื่อบันทึกผลการทำแบบทดสอบ</li>
+            <li>ทำแบบทดสอบให้ครบตามที่หัวหน้างานกำหนด</li>
           </ol>
         </div>
 
@@ -202,44 +209,44 @@
     const quizzes = [
       {
         no: 1,
+        quizId: "Quiz1",
         title: "กระบวนการผสมเปียก",
-        challengeUrl: "https://kahoot.it/challenge/02635061?challenge-id=11b67807-5c83-4da3-9e19-239c6a36e09b_1774433434811",
         desc: "ทดสอบ Wet Mass / ความชื้น / ความสม่ำเสมอ"
       },
       {
         no: 2,
+        quizId: "Quiz2",
         title: "กระบวนการแร่งเปียก",
-        challengeUrl: "https://kahoot.it/challenge/0238689?challenge-id=11b67807-5c83-4da3-9e19-239c6a36e09b_1774426044750",
-        desc: "ทดสอบการแกร่ง/ขึ้นรูปเม็ดเปียกและผลกระทบต่อขั้นตอนถัดไป"
+        desc: "ทดสอบการแร่ง/ขึ้นรูปเม็ดเปียกและผลกระทบต่อขั้นตอนถัดไป"
       },
       {
         no: 3,
+        quizId: "Quiz3",
         title: "กระบวนการอบลมร้อน",
-        challengeUrl: "",
         desc: "ทดสอบการควบคุมความชื้นตกค้างและผลเสียเมื่ออบไม่เหมาะสม"
       },
       {
         no: 4,
+        quizId: "Quiz4",
         title: "กระบวนการแร่งแห้ง",
-        challengeUrl: "",
         desc: "ทดสอบการคัดขนาดหลังอบ และผลต่อการไหล/น้ำหนักเม็ด"
       },
       {
         no: 5,
+        quizId: "Quiz5",
         title: "กระบวนการผสมแห้ง",
-        challengeUrl: "",
         desc: "ทดสอบความสม่ำเสมอของสูตร และความเสี่ยงจากการผสมไม่ทั่ว"
       },
       {
         no: 6,
+        quizId: "Quiz6",
         title: "กระบวนการตอกเม็ดยา",
-        challengeUrl: "",
-        desc: "ทดสอบ defect จาก Compression (แตก/บิ่น/ติดพั้นช์ ฯลฯ)"
+        desc: "ทดสอบ defect จาก Compression เช่น แตก บิ่น ติดพั้นช์"
       },
       {
         no: 7,
+        quizId: "Quiz7",
         title: "กระบวนการบรรจุซอง",
-        challengeUrl: "",
         desc: "ทดสอบการตรวจขั้นสุดท้ายและการตัดสินใจเมื่อพบ NG ระหว่างบรรจุ"
       }
     ];
@@ -250,8 +257,6 @@
       const card = document.createElement("div");
       card.className = "quiz-card";
 
-      const linkMissing = !q.challengeUrl || !q.challengeUrl.includes("kahoot.it/challenge/");
-
       card.innerHTML = `
         <div>
           <div class="quiz-badge"><i class="fas fa-clipboard-check"></i> Quiz ${q.no}</div>
@@ -260,15 +265,21 @@
         </div>
 
         <a class="btn-start"
-           href="${linkMissing ? "#" : q.challengeUrl}"
-           target="_blank"
-           rel="noopener noreferrer"
-           ${linkMissing ? `onclick="alert('ยังไม่ได้ใส่ลิงก์ Kahoot ของ Quiz ${q.no}'); return false;"` : ""}>
+           href="quiz play.html?quiz=${encodeURIComponent(q.quizId)}">
           <i class="fas fa-play"></i> เริ่มทำแบบทดสอบ
         </a>
       `;
 
       container.appendChild(card);
+    });
+
+    document.querySelector('.logout')?.addEventListener('click', function (e) {
+      e.preventDefault();
+      localStorage.removeItem('kmsUser');
+      sessionStorage.removeItem('kmsUser');
+      localStorage.removeItem('currentUser');
+      sessionStorage.removeItem('currentUser');
+      window.location.href = 'login.html';
     });
   </script>
 
