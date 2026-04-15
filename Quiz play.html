@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quiz Play</title>
+  <style>
+    :root{
+      --bg:#f6f7fb;
+      --card:#ffffff;
+      --text:#1f2937;
+      --muted:#6b7280;
+      --line:#e5e7eb;
+      --red:#e21b3c;
+      --blue:#1368ce;
+      --yellow:#d89e00;
+      --green:#26890c;
+      --purple:#7b2cbf;
+      --shadow:0 12px 30px rgba(15,23,42,.08);
+      --radius:24px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:Arial, Helvetica, sans-serif;
+      background:linear-gradient(180deg,#f8fafc 0%,#eef2ff 100%);
+      color:var(--text);
+    }
+    .page{
+      min-height:100vh;
+      padding:24px;
+    }
+    .topbar{
+      max-width:1100px;
+      margin:0 auto 16px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+    .back-btn,.next-btn,.restart-btn{
+      border:none;
+      border-radius:999px;
+      padding:14px 20px;
+      font-weight:800;
+      cursor:pointer;
+      font-size:16px;
+    }
+    .back-btn{
+      background:#fff;
+      color:var(--text);
+      box-shadow:var(--shadow);
+    }
+    .next-btn,.restart-btn{
+      background:var(--purple);
+      color:#fff;
+    }
+    .next-btn[disabled]{
+      opacity:.4;
+      cursor:not-allowed;
+    }
+    .user-chip{
+      background:#fff;
+      border-radius:999px;
+      padding:10px 14px;
+      box-shadow:var(--shadow);
+      color:var(--muted);
+      font-weight:700;
+    }
+    .layout{
+      max-width:1100px;
+      margin:0 auto;
+      display:grid;
+      grid-template-columns:1.2fr .8fr;
+      gap:20px;
+    }
+    .card{
+      background:var(--card);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding:24px;
+    }
+    .quiz-header{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:16px;
+      flex-wrap:wrap;
+      margin-bottom:18px;
+    }
+    .quiz-title-wrap h1{
+      margin:0;
+      font-size:28px;
+    }
+    .quiz-meta{
+      color:var(--muted);
+      font-weight:700;
+      margin-top:6px;
+    }
+    .progress-wrap{margin-bottom:22px}
+    .progress-label{
+      display:flex;
+      justify-content:space-between;
+      font-size:14px;
+      color:var(--muted);
+      margin-bottom:8px;
+      font-weight:700;
+    }
+    .progress-bar{
+      height:14px;
+      background:#edf2f7;
+      border-radius:999px;
+      overflow:hidden;
+    }
+    .progress-bar-fill{
+      height:100%;
+      width:0%;
+      background:linear-gradient(90deg,#60a5fa 0%,#8b5cf6 100%);
+      transition:width .25s ease;
+    }
+    .question-number{
+      display:inline-block;
+      padding:8px 14px;
+      border-radius:999px;
+      background:#eef2ff;
+      color:#4338ca;
+      font-weight:800;
+      margin-bottom:14px;
+    }
+    .question-text{
+      font-size:28px;
+      line-height:1.35;
+      font-weight:800;
+      margin:0 0 18px;
+    }
+    .question-image{
+      display:none;
+      width:100%;
+      max-height:340px;
+      object-fit:contain;
+      border-radius:20px;
+      background:#f8fafc;
+      border:1px solid var(--line);
+      padding:12px;
+      margin-bottom:18px;
+    }
+    .choices{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:14px;
+    }
+    .choice{
+      border:none;
+      border-radius:22px;
+      min-height:92px;
+      color:#fff;
+      font-size:20px;
+      font-weight:800;
+      text-align:left;
+      padding:16px 18px;
+      cursor:pointer;
+      transition:transform .12s ease, opacity .2s ease, box-shadow .2s ease;
+      display:flex;
+      align-items:center;
+      gap:14px;
+      box-shadow:0 10px 20px rgba(15,23,42,.1);
+    }
+    .choice:hover{transform:translateY(-2px)}
+    .choice:disabled{cursor:default}
+    .choice.dim{opacity:.45}
+    .choice.correct-ring{box-shadow:0 0 0 5px rgba(16,185,129,.18),0 10px 20px rgba(15,23,42,.10)}
+    .choice.wrong-ring{box-shadow:0 0 0 5px rgba(239,68,68,.18),0 10px 20px rgba(15,23,42,.10)}
+    .shape{
+      width:42px;
+      height:42px;
+      flex:0 0 42px;
+      border-radius:12px;
+      display:grid;
+      place-items:center;
+      background:rgba(255,255,255,.18);
+      font-size:22px;
+    }
+    .choice.a{background:var(--red)}
+    .choice.b{background:var(--blue)}
+    .choice.c{background:var(--yellow)}
+    .choice.d{background:var(--green)}
+    .action-row{
+      margin-top:18px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+    .feedback{
+      min-height:24px;
+      font-weight:800;
+    }
+    .feedback.correct{color:var(--green)}
+    .feedback.wrong{color:var(--red)}
+    .side-title{
+      margin:0 0 14px;
+      font-size:22px;
+    }
+    .score-box{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:12px;
+      margin-bottom:18px;
+    }
+    .stat{
+      background:#f8fafc;
+      border:1px solid var(--line);
+      border-radius:20px;
+      padding:16px;
+      text-align:center;
+    }
+    .stat-label{
+      color:var(--muted);
+      font-size:13px;
+      font-weight:700;
+      margin-bottom:6px;
+    }
+    .stat-value{
+      font-size:30px;
+      font-weight:900;
+    }
+    .report-list{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      max-height:520px;
+      overflow:auto;
+      padding-right:4px;
+    }
+    .report-item{
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:14px;
+      background:#fff;
+    }
+    .report-top{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+      margin-bottom:8px;
+    }
+    .report-q{font-weight:800}
+    .badge{
+      border-radius:999px;
+      padding:6px 10px;
+      font-size:12px;
+      font-weight:800;
+      color:#fff;
+    }
+    .badge.correct{background:var(--green)}
+    .badge.wrong{background:var(--red)}
+    .report-answer{
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.5;
+    }
+    .loading-state,.error-state,.done-state,.empty-state{
+      text-align:center;
+      padding:40px 20px;
+    }
+    .done-title{
+      font-size:34px;
+      margin:0 0 12px;
+    }
+    .done-score{
+      font-size:50px;
+      font-weight:900;
+      color:var(--purple);
+      margin:10px 0 22px;
+    }
+    @media (max-width:900px){
+      .layout{grid-template-columns:1fr}
+    }
+    @media (max-width:640px){
+      .page{padding:14px}
+      .card{padding:18px}
+      .question-text{font-size:22px}
+      .choices{grid-template-columns:1fr}
+      .choice{min-height:82px;font-size:18px}
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="topbar">
+      <button class="back-btn" onclick="goBackToQuizPage()">← กลับหน้า Quiz</button>
+      <div class="user-chip" id="userChip">กำลังตรวจสอบผู้ใช้...</div>
+    </div>
+
+    <div class="layout">
+      <section class="card">
+        <div id="mainArea" class="loading-state">กำลังโหลดคำถาม...</div>
+      </section>
+
+      <aside class="card">
+        <h2 class="side-title">รายงานการทำข้อสอบ</h2>
+        <div class="score-box">
+          <div class="stat">
+            <div class="stat-label">ทำไปแล้ว</div>
+            <div class="stat-value" id="answeredCount">0</div>
+          </div>
+          <div class="stat">
+            <div class="stat-label">ถูก</div>
+            <div class="stat-value" id="correctCount">0</div>
+          </div>
+          <div class="stat">
+            <div class="stat-label">ผิด</div>
+            <div class="stat-value" id="wrongCount">0</div>
+          </div>
+        </div>
+        <div class="report-list" id="reportList">
+          <div class="empty-state">ยังไม่มีคำตอบ</div>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <script>
+    const CONFIG = {
+      API_URL: 'PASTE_YOUR_APPS_SCRIPT_URL_HERE',
+      RAW_BASE_URL: 'PASTE_YOUR_RAW_ASSET_BASE_URL_HERE',
+      QUIZ_PAGE_URL: 'Quiz.html'
+    };
+
+    const SHAPES = {
+      A: '▲',
+      B: '●',
+      C: '■',
+      D: '◆'
+    };
+
+    const state = {
+      quizId: '',
+      questions: [],
+      currentIndex: 0,
+      answers: [],
+      user: null,
+      isFinished: false
+    };
+
+    function getQuizIdFromURL() {
+      const params = new URLSearchParams(window.location.search);
+      return params.get('quiz') || localStorage.getItem('selectedQuizId') || 'Quiz1';
+    }
+
+    function getLoggedInUser() {
+      const raw = localStorage.getItem('kmsUser') || sessionStorage.getItem('kmsUser');
+      if (!raw) return null;
+
+      try {
+        const user = JSON.parse(raw);
+        return {
+          id: user.employeeId || user.id || 'unknown',
+          employeeId: user.employeeId || user.id || 'unknown',
+          name: user.name || 'Unknown User',
+          role: user.role || '',
+          department: user.department || '',
+          status: user.status || ''
+        };
+      } catch (error) {
+        return null;
+      }
+    }
+
+    function updateUserChip() {
+      const chip = document.getElementById('userChip');
+      if (!state.user) {
+        chip.textContent = 'ไม่พบข้อมูลผู้ใช้';
+        return;
+      }
+      chip.textContent = `ผู้ทำแบบทดสอบ: ${state.user.name} (${state.user.employeeId})`;
+    }
+
+    function goBackToQuizPage() {
+      window.location.href = CONFIG.QUIZ_PAGE_URL;
+    }
+
+    async function init() {
+      state.quizId = getQuizIdFromURL();
+      state.user = getLoggedInUser();
+      updateUserChip();
+
+      if (!CONFIG.API_URL || CONFIG.API_URL.includes('PASTE_YOUR')) {
+        renderError('ยังไม่ได้ใส่ API_URL ของ Apps Script');
+        return;
+      }
+
+      if (!state.user) {
+        renderError('ไม่พบข้อมูลผู้ใช้ที่ล็อกอิน');
+        return;
+      }
+
+      try {
+        const data = await fetchQuizQuestions(state.quizId);
+        state.questions = Array.isArray(data)
+          ? data.sort((a, b) => Number(a.QuestionID || 0) - Number(b.QuestionID || 0))
+          : [];
+
+        if (!state.questions.length) {
+          renderError(`ไม่พบคำถามของ ${state.quizId}`);
+          return;
+        }
+
+        renderQuestion();
+        updateScorePanel();
+        renderReport();
+      } catch (error) {
+        console.error(error);
+        renderError('โหลดคำถามไม่สำเร็จ');
+      }
+    }
+
+    async function fetchQuizQuestions(quizId) {
+      const url = `${CONFIG.API_URL}?view=quiz&quizId=${encodeURIComponent(quizId)}`;
+      const response = await fetch(url);
+      const result = await response.json();
+
+      if (!result.success) {
+        throw new Error(result.message || 'โหลดคำถามไม่สำเร็จ');
+      }
+
+      return result.data || [];
+    }
+
+    async function postToAPI(payload) {
+      const response = await fetch(CONFIG.API_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'text/plain;charset=utf-8'
+        },
+        body: JSON.stringify(payload)
+      });
+      return response.json();
+    }
+
+    function getCurrentQuestion() {
+      return state.questions[state.currentIndex];
+    }
+
+    function getChoiceKeys(question) {
+      return ['A', 'B', 'C', 'D'].filter(key => String(question[key] || '').trim() !== '');
+    }
+
+    function getQuestionImageUrl(question) {
+      if (!CONFIG.RAW_BASE_URL || CONFIG.RAW_BASE_URL.includes('PASTE_YOUR')) {
+        return '';
+      }
+
+      const quizNum = String(question.QuizID || '').replace('Quiz', '').trim();
+      const qid = String(question.QuestionID || '').trim();
+
+      if (!quizNum || !qid) return '';
+      return `${CONFIG.RAW_BASE_URL}df${quizNum}.${qid}.jpg`;
+    }
+
+    function renderQuestion() {
+      if (state.isFinished) {
+        renderDone();
+        return;
+      }
+
+      const question = getCurrentQuestion();
+      const choices = getChoiceKeys(question);
+      const progress = (state.currentIndex / state.questions.length) * 100;
+
+      const main = document.getElementById('mainArea');
+      main.className = '';
+      main.innerHTML = `
+        <div class="quiz-header">
+          <div class="quiz-title-wrap">
+            <h1>${escapeHTML(state.quizId)}</h1>
+            <div class="quiz-meta">ข้อ ${state.currentIndex + 1} / ${state.questions.length}</div>
+          </div>
+        </div>
+
+        <div class="progress-wrap">
+          <div class="progress-label">
+            <span>ความคืบหน้า</span>
+            <span>${Math.round(progress)}%</span>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-bar-fill" style="width:${progress}%"></div>
+          </div>
+        </div>
+
+        <div class="question-block">
+          <div class="question-number">Q${escapeHTML(question.QuestionID || String(state.currentIndex + 1))}</div>
+          <p class="question-text">${escapeHTML(question.Question || '')}</p>
+          <img id="questionImage" class="question-image" alt="ภาพคำถาม" />
+          <div class="choices" id="choicesArea"></div>
+        </div>
+
+        <div class="action-row">
+          <div class="feedback" id="feedbackText"></div>
+          <button class="next-btn" id="nextBtn" disabled>ข้อต่อไป</button>
+        </div>
+      `;
+
+      const img = document.getElementById('questionImage');
+      const imageUrl = getQuestionImageUrl(question);
+      if (imageUrl) {
+        img.src = imageUrl;
+        img.style.display = 'block';
+        img.onerror = () => {
+          img.style.display = 'none';
+        };
+      }
+
+      const choicesArea = document.getElementById('choicesArea');
+      choices.forEach(key => {
+        const btn = document.createElement('button');
+        btn.className = `choice ${key.toLowerCase()}`;
+        btn.dataset.choice = key;
+        btn.innerHTML = `
+          <span class="shape">${SHAPES[key]}</span>
+          <span>${escapeHTML(question[key])}</span>
+        `;
+        btn.addEventListener('click', () => selectAnswer(key));
+        choicesArea.appendChild(btn);
+      });
+
+      document.getElementById('nextBtn').addEventListener('click', goNext);
+    }
+
+    async function selectAnswer(choiceKey) {
+      const question = getCurrentQuestion();
+      const correctKey = String(question.Correct || '').trim().toUpperCase();
+      const isCorrect = choiceKey === correctKey;
+      const choiceButtons = Array.from(document.querySelectorAll('.choice'));
+
+      choiceButtons.forEach(btn => {
+        btn.disabled = true;
+        const key = btn.dataset.choice;
+
+        if (key === correctKey) btn.classList.add('correct-ring');
+        if (key === choiceKey && !isCorrect) btn.classList.add('wrong-ring');
+        if (key !== choiceKey && key !== correctKey) btn.classList.add('dim');
+      });
+
+      const answerRecord = {
+        employeeId: state.user.employeeId,
+        name: state.user.name,
+        role: state.user.role,
+        department: state.user.department,
+        quizId: state.quizId,
+        questionId: question.QuestionID || String(state.currentIndex + 1),
+        question: question.Question || '',
+        selected: choiceKey,
+        selectedText: question[choiceKey] || '',
+        correct: correctKey,
+        correctText: question[correctKey] || '',
+        isCorrect: isCorrect,
+        explanation: question.Explanation || '',
+        timestamp: new Date().toISOString()
+      };
+
+      state.answers[state.currentIndex] = answerRecord;
+
+      const feedback = document.getElementById('feedbackText');
+      feedback.className = `feedback ${isCorrect ? 'correct' : 'wrong'}`;
+      feedback.textContent = isCorrect
+        ? `ถูกต้อง${question.Explanation ? ' : ' + question.Explanation : ''}`
+        : `ไม่ถูกต้อง | คำตอบที่ถูกคือ ${correctKey}. ${question[correctKey] || ''}${question.Explanation ? ' | ' + question.Explanation : ''}`;
+
+      document.getElementById('nextBtn').disabled = false;
+      updateScorePanel();
+      renderReport();
+
+      try {
+        await postToAPI({
+          action: 'saveAnswer',
+          payload: answerRecord
+        });
+      } catch (error) {
+        console.warn('saveAnswer error', error);
+      }
+    }
+
+    function goNext() {
+      if (state.currentIndex < state.questions.length - 1) {
+        state.currentIndex += 1;
+        renderQuestion();
+      } else {
+        state.isFinished = true;
+        renderDone();
+      }
+    }
+
+    function updateScorePanel() {
+      const answered = state.answers.filter(Boolean);
+      const correct = answered.filter(item => item.isCorrect).length;
+      const wrong = answered.filter(item => !item.isCorrect).length;
+
+      document.getElementById('answeredCount').textContent = answered.length;
+      document.getElementById('correctCount').textContent = correct;
+      document.getElementById('wrongCount').textContent = wrong;
+    }
+
+    function renderReport() {
+      const list = document.getElementById('reportList');
+      const answered = state.answers.filter(Boolean);
+
+      if (!answered.length) {
+        list.innerHTML = '<div class="empty-state">ยังไม่มีคำตอบ</div>';
+        return;
+      }
+
+      list.innerHTML = answered.map(item => `
+        <div class="report-item">
+          <div class="report-top">
+            <div class="report-q">Q${escapeHTML(item.questionId)}</div>
+            <div class="badge ${item.isCorrect ? 'correct' : 'wrong'}">${item.isCorrect ? 'ถูก' : 'ผิด'}</div>
+          </div>
+          <div class="report-answer">
+            ตอบ: ${escapeHTML(item.selected)}. ${escapeHTML(item.selectedText)}<br>
+            คำตอบที่ถูก: ${escapeHTML(item.correct)}. ${escapeHTML(item.correctText)}
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function renderDone() {
+      const total = state.questions.length;
+      const correct = state.answers.filter(Boolean).filter(item => item.isCorrect).length;
+      const percent = total ? Math.round((correct / total) * 100) : 0;
+
+      const main = document.getElementById('mainArea');
+      main.className = 'done-state';
+      main.innerHTML = `
+        <h1 class="done-title">ทำ ${escapeHTML(state.quizId)} เสร็จแล้ว</h1>
+        <div>ผู้ทำแบบทดสอบ: ${escapeHTML(state.user?.name || 'Unknown')}</div>
+        <div class="done-score">${correct} / ${total}</div>
+        <div style="font-size:20px;font-weight:800;margin-bottom:20px;">คิดเป็น ${percent}%</div>
+        <button class="restart-btn" onclick="restartQuiz()">ทำใหม่อีกครั้ง</button>
+      `;
+    }
+
+    function restartQuiz() {
+      state.currentIndex = 0;
+      state.answers = [];
+      state.isFinished = false;
+      renderQuestion();
+      updateScorePanel();
+      renderReport();
+    }
+
+    function renderError(message) {
+      const main = document.getElementById('mainArea');
+      main.className = 'error-state';
+      main.innerHTML = `<div>${escapeHTML(message)}</div>`;
+    }
+
+    function escapeHTML(value) {
+      return String(value)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    init();
+  </script>
+</body>
+</html>
