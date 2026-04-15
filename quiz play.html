@@ -19,12 +19,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>KMS - Quiz Play</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <style>
     :root{
-      --bg:#f6f7fb;
+      --bg:#f6f8fc;
       --card:#ffffff;
       --text:#1f2937;
       --muted:#6b7280;
@@ -34,6 +34,8 @@
       --yellow:#d89e00;
       --green:#26890c;
       --purple:#7b2cbf;
+      --header1:#4A89C8;
+      --header2:#2E75B6;
       --shadow:0 12px 30px rgba(15,23,42,.08);
       --radius:24px;
     }
@@ -42,7 +44,7 @@
 
     body{
       font-family:'Sarabun',sans-serif;
-      background:#F4F7FB;
+      background:linear-gradient(180deg,#eef5fc 0%, #f7f9fc 100%);
       min-height:100vh;
       color:#2E3A59;
       font-size:14px;
@@ -56,7 +58,7 @@
 
     .sidebar{
       width:70px;
-      background:linear-gradient(180deg,#4A89C8 0%,#2E75B6 100%);
+      background:linear-gradient(180deg,var(--header1) 0%,var(--header2) 100%);
       display:flex;
       flex-direction:column;
       align-items:center;
@@ -65,6 +67,7 @@
       position:fixed;
       height:100vh;
       z-index:10;
+      box-shadow:4px 0 18px rgba(46,117,182,.15);
     }
 
     .sidebar-icon{
@@ -98,8 +101,8 @@
     }
 
     .header{
-      background:linear-gradient(135deg,#4A89C8 0%,#2E75B6 100%);
-      padding:60px 40px;
+      background:linear-gradient(135deg,var(--header1) 0%,var(--header2) 100%);
+      padding:52px 40px 58px 40px;
       min-height:220px;
       text-align:center;
       box-shadow:0 4px 15px rgba(74,137,200,.25);
@@ -107,15 +110,39 @@
       flex-direction:column;
       justify-content:center;
       align-items:center;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .header::after{
+      content:"";
+      position:absolute;
+      inset:auto -120px -120px auto;
+      width:320px;
+      height:320px;
+      background:rgba(255,255,255,.08);
+      border-radius:50%;
+    }
+
+    .header::before{
+      content:"";
+      position:absolute;
+      inset:-120px auto auto -120px;
+      width:260px;
+      height:260px;
+      background:rgba(255,255,255,.06);
+      border-radius:50%;
     }
 
     .header h1{
       font-size:42px;
-      font-weight:700;
+      font-weight:800;
       color:#ffffff;
-      margin-bottom:15px;
-      letter-spacing:1px;
-      text-shadow:0 2px 4px rgba(0,0,0,.2);
+      margin-bottom:10px;
+      letter-spacing:.5px;
+      text-shadow:0 2px 4px rgba(0,0,0,.18);
+      position:relative;
+      z-index:1;
     }
 
     .header .subtitle{
@@ -124,16 +151,21 @@
       max-width:760px;
       margin:0 auto;
       line-height:1.7;
+      position:relative;
+      z-index:1;
     }
 
     .page{
       min-height:calc(100vh - 220px);
-      padding:24px 40px 30px 40px;
+      padding:24px 32px 30px 32px;
+      margin-top:-26px;
+      position:relative;
+      z-index:2;
     }
 
     .topbar{
-      max-width:1100px;
-      margin:0 auto 16px;
+      max-width:1220px;
+      margin:0 auto 18px;
       display:flex;
       justify-content:space-between;
       align-items:center;
@@ -187,20 +219,61 @@
       font-weight:700;
     }
 
+    .summary-strip{
+      max-width:1220px;
+      margin:0 auto 18px;
+      display:grid;
+      grid-template-columns:repeat(3, minmax(0,1fr));
+      gap:14px;
+    }
+
+    .summary-pill{
+      background:rgba(255,255,255,.82);
+      backdrop-filter: blur(8px);
+      border:1px solid rgba(255,255,255,.7);
+      border-radius:18px;
+      box-shadow:var(--shadow);
+      padding:14px 18px;
+      min-height:84px;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+    }
+
+    .summary-pill .label{
+      color:var(--muted);
+      font-size:13px;
+      font-weight:700;
+      margin-bottom:4px;
+    }
+
+    .summary-pill .value{
+      color:#1f2937;
+      font-size:22px;
+      font-weight:800;
+      line-height:1.2;
+    }
+
     .layout{
-      max-width:1100px;
+      max-width:1220px;
       margin:0 auto;
       display:grid;
-      grid-template-columns:1.2fr .8fr;
+      grid-template-columns:minmax(0, 1fr) 360px;
       gap:20px;
       align-items:start;
+    }
+
+    .layout.quiz-active{
+      grid-template-columns:minmax(0, 860px);
+      justify-content:center;
     }
 
     .card{
       background:var(--card);
       border-radius:var(--radius);
       box-shadow:var(--shadow);
-      padding:24px;
+      padding:26px;
+      border:1px solid rgba(15,23,42,.04);
     }
 
     .quiz-header{
@@ -270,9 +343,9 @@
     .question-image{
       display:none;
       width:100%;
-      max-height:340px;
+      max-height:380px;
       object-fit:contain;
-      border-radius:20px;
+      border-radius:22px;
       background:#f8fafc;
       border:1px solid var(--line);
       padding:12px;
@@ -484,8 +557,15 @@
       display:none;
     }
 
-    @media (max-width:900px){
-      .layout{ grid-template-columns:1fr; }
+    @media (max-width:1100px){
+      .summary-strip{
+        grid-template-columns:1fr;
+      }
+
+      .layout,
+      .layout.quiz-active{
+        grid-template-columns:1fr;
+      }
     }
 
     @media (max-width:768px){
@@ -524,6 +604,7 @@
       .question-text{ font-size:22px; }
       .choices{ grid-template-columns:1fr; }
       .choice{ min-height:82px; font-size:18px; }
+      .topbar{ flex-direction:column; align-items:stretch; }
     }
   </style>
 </head>
@@ -550,7 +631,22 @@
           <div class="user-chip" id="userChip">กำลังตรวจสอบผู้ใช้...</div>
         </div>
 
-        <div class="layout">
+        <div class="summary-strip">
+          <div class="summary-pill">
+            <div class="label">แบบทดสอบ</div>
+            <div class="value" id="summaryQuizName">-</div>
+          </div>
+          <div class="summary-pill">
+            <div class="label">ผู้ทำแบบทดสอบ</div>
+            <div class="value" id="summaryUserName">-</div>
+          </div>
+          <div class="summary-pill">
+            <div class="label">สถานะ</div>
+            <div class="value" id="summaryStatus">กำลังทำแบบทดสอบ</div>
+          </div>
+        </div>
+
+        <div class="layout quiz-active" id="quizLayout">
           <section class="card">
             <div id="mainArea" class="loading-state">กำลังโหลดคำถาม...</div>
           </section>
@@ -658,6 +754,12 @@
     function updatePageHeader() {
       const title = QUIZ_TITLES[state.quizId] || state.quizId;
       document.getElementById('pageHeaderTitle').textContent = title;
+      document.getElementById('summaryQuizName').textContent = title;
+      document.getElementById('summaryUserName').textContent = state.user?.name || '-';
+    }
+
+    function updateSummaryStatus(text) {
+      document.getElementById('summaryStatus').textContent = text;
     }
 
     function goBackToQuizPage() {
@@ -695,7 +797,9 @@
 
     function showReportSection(show) {
       const reportSection = document.getElementById('reportSection');
+      const quizLayout = document.getElementById('quizLayout');
       reportSection.classList.toggle('hidden', !show);
+      quizLayout.classList.toggle('quiz-active', !show);
     }
 
     async function init() {
@@ -703,6 +807,7 @@
       state.user = getLoggedInUser();
       updateUserChip();
       updatePageHeader();
+      updateSummaryStatus('กำลังทำแบบทดสอบ');
       showReportSection(false);
 
       if (!CONFIG.API_URL) {
@@ -956,6 +1061,7 @@
       const meta = getPerformanceMeta(percent);
 
       showReportSection(true);
+      updateSummaryStatus('ทำแบบทดสอบเสร็จแล้ว');
       updateScorePanel();
       renderReport();
 
@@ -981,6 +1087,7 @@
       state.currentIndex = 0;
       state.answers = [];
       state.isFinished = false;
+      updateSummaryStatus('กำลังทำแบบทดสอบ');
       showReportSection(false);
       renderQuestion();
       updateScorePanel();
