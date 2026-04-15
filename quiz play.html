@@ -327,7 +327,7 @@
     const CONFIG = {
       API_URL: 'https://script.google.com/macros/s/AKfycbwMRbnqSLTmmI4wofmNfZ5YPFGSiqg__rZUgyDlTTR03JchnQXgUj7DKDvzS4-QBmJrvw/exec',
       RAW_BASE_URL: 'https://raw.githubusercontent.com/rangsimun255/KMS/main/assets/',
-      QUIZ_PAGE_URL: 'Quiz.html'
+      QUIZ_PAGE_URL: 'quiz.html'
     };
 
     const SHAPES = {
@@ -352,7 +352,12 @@
     }
 
     function getLoggedInUser() {
-      const raw = localStorage.getItem('kmsUser') || sessionStorage.getItem('kmsUser');
+      const raw =
+        localStorage.getItem('kmsUser') ||
+        sessionStorage.getItem('kmsUser') ||
+        localStorage.getItem('currentUser') ||
+        sessionStorage.getItem('currentUser');
+
       if (!raw) return null;
 
       try {
@@ -388,7 +393,7 @@
       state.user = getLoggedInUser();
       updateUserChip();
 
-      if (!CONFIG.API_URL || CONFIG.API_URL.includes('PASTE_YOUR')) {
+      if (!CONFIG.API_URL) {
         renderError('ยังไม่ได้ใส่ API_URL ของ Apps Script');
         return;
       }
@@ -450,9 +455,7 @@
     }
 
     function getQuestionImageUrl(question) {
-      if (!CONFIG.RAW_BASE_URL || CONFIG.RAW_BASE_URL.includes('PASTE_YOUR')) {
-        return '';
-      }
+      if (!CONFIG.RAW_BASE_URL) return '';
 
       const quizNum = String(question.QuizID || '').replace('Quiz', '').trim();
       const qid = String(question.QuestionID || '').trim();
