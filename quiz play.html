@@ -141,7 +141,7 @@
       flex-wrap:wrap;
     }
 
-    .back-btn,.next-btn,.restart-btn{
+    .back-btn,.next-btn,.restart-btn,.review-btn,.return-btn{
       border:none;
       border-radius:999px;
       padding:14px 20px;
@@ -157,9 +157,20 @@
       box-shadow:var(--shadow);
     }
 
+    .next-btn,.restart-btn,.review-btn,.return-btn{
+      color:#fff;
+    }
+
     .next-btn,.restart-btn{
       background:var(--purple);
-      color:#fff;
+    }
+
+    .review-btn{
+      background:var(--blue);
+    }
+
+    .return-btn{
+      background:#64748b;
     }
 
     .next-btn[disabled]{
@@ -182,6 +193,7 @@
       display:grid;
       grid-template-columns:1.2fr .8fr;
       gap:20px;
+      align-items:start;
     }
 
     .card{
@@ -400,6 +412,12 @@
 
     .badge.correct{ background:var(--green); }
     .badge.wrong{ background:var(--red); }
+    .badge.level{
+      display:inline-block;
+      margin-top:14px;
+      padding:8px 14px;
+      font-size:14px;
+    }
 
     .report-answer{
       color:var(--muted);
@@ -418,11 +436,41 @@
       color:#1f2937;
     }
 
+    .done-name{
+      font-size:18px;
+      color:#475569;
+      margin-bottom:12px;
+      font-weight:700;
+    }
+
     .done-score{
       font-size:50px;
       font-weight:900;
       color:var(--purple);
-      margin:10px 0 22px;
+      margin:10px 0 8px;
+    }
+
+    .done-percent{
+      font-size:20px;
+      font-weight:800;
+      margin-bottom:8px;
+      color:#1f2937;
+    }
+
+    .done-message{
+      max-width:560px;
+      margin:8px auto 20px;
+      color:#64748b;
+      font-size:17px;
+      line-height:1.7;
+    }
+
+    .done-actions{
+      display:flex;
+      justify-content:center;
+      gap:12px;
+      flex-wrap:wrap;
+      margin-top:12px;
     }
 
     .footer{
@@ -430,6 +478,10 @@
       padding:15px 40px;
       color:#8A98AD;
       font-size:13px;
+    }
+
+    #reportSection.hidden{
+      display:none;
     }
 
     @media (max-width:900px){
@@ -503,8 +555,8 @@
             <div id="mainArea" class="loading-state">กำลังโหลดคำถาม...</div>
           </section>
 
-          <aside class="card">
-            <h2 class="side-title">รายงานการทำข้อสอบ</h2>
+          <aside class="card hidden" id="reportSection">
+            <h2 class="side-title">📊 สรุปผลการทำแบบทดสอบ</h2>
             <div class="score-box">
               <div class="stat">
                 <div class="stat-label">ทำไปแล้ว</div>
@@ -612,11 +664,46 @@
       window.location.href = CONFIG.QUIZ_PAGE_URL;
     }
 
+    function getPerformanceMeta(percent) {
+      if (percent >= 90) {
+        return {
+          label: '⭐ ดีเยี่ยม',
+          message: 'คุณมีความเข้าใจในกระบวนการนี้เป็นอย่างดี',
+          badgeClass: 'correct'
+        };
+      }
+      if (percent >= 70) {
+        return {
+          label: '⭐ ดี',
+          message: 'คุณมีความเข้าใจในกระบวนการนี้ในระดับที่ดี',
+          badgeClass: 'correct'
+        };
+      }
+      if (percent >= 50) {
+        return {
+          label: '📝 พอใช้',
+          message: 'คุณมีความเข้าใจพื้นฐาน แต่ควรทบทวนเพิ่มเติมบางจุด',
+          badgeClass: 'wrong'
+        };
+      }
+      return {
+        label: '📘 ควรทบทวน',
+        message: 'ควรกลับไปทบทวนเนื้อหาอีกครั้งก่อนทำซ้ำ',
+        badgeClass: 'wrong'
+      };
+    }
+
+    function showReportSection(show) {
+      const reportSection = document.getElementById('reportSection');
+      reportSection.classList.toggle('hidden', !show);
+    }
+
     async function init() {
       state.quizId = getQuizIdFromURL();
       state.user = getLoggedInUser();
       updateUserChip();
       updatePageHeader();
+      showReportSection(false);
 
       if (!CONFIG.API_URL) {
         renderError('ยังไม่ได้ใส่ API_URL ของ Apps Script');
@@ -676,7 +763,10 @@
     }
 
     function getChoiceKeys(question) {
-      return ['A', 'B', 'C', 'D'].filter(key => String(question[key] || '').trim() !== '');
+      return ['A', 'B', 'C', 'D'].filter(key => {
+        const value = question[key];
+        return value !== undefined && value !== null && String(value).trim() !== '';
+      });
     }
 
     function getQuestionImageUrl(question) {
@@ -749,7 +839,7 @@
         btn.dataset.choice = key;
         btn.innerHTML = `
           <span class="shape">${SHAPES[key]}</span>
-          <span>${escapeHTML(question[key])}</span>
+          <span>${escapeHTML(String(question[key]))}</span>
         `;
         btn.addEventListener('click', () => selectAnswer(key));
         choicesArea.appendChild(btn);
@@ -782,11 +872,10 @@
         questionId: question.QuestionID || String(state.currentIndex + 1),
         question: question.Question || '',
         selected: choiceKey,
-        selectedText: question[choiceKey] || '',
+        selectedText: String(question[choiceKey] ?? ''),
         correct: correctKey,
-        correctText: question[correctKey] || '',
+        correctText: String(question[correctKey] ?? ''),
         isCorrect: isCorrect,
-        explanation: question.Explanation || '',
         timestamp: new Date().toISOString()
       };
 
@@ -796,11 +885,10 @@
       feedback.className = `feedback ${isCorrect ? 'correct' : 'wrong'}`;
       feedback.textContent = isCorrect
         ? `ถูกต้อง`
-        : `ไม่ถูกต้อง | คำตอบที่ถูกคือ ${correctKey}. ${question[correctKey] || ''}`;
+        : `ไม่ถูกต้อง | คำตอบที่ถูกคือ ${correctKey}. ${String(question[correctKey] ?? '')}`;
 
       document.getElementById('nextBtn').disabled = false;
       updateScorePanel();
-      renderReport();
 
       try {
         await postToAPI({
@@ -855,19 +943,37 @@
       `).join('');
     }
 
+    function scrollToReport() {
+      showReportSection(true);
+      renderReport();
+      document.getElementById('reportSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
     function renderDone() {
       const total = state.questions.length;
       const correct = state.answers.filter(Boolean).filter(item => item.isCorrect).length;
       const percent = total ? Math.round((correct / total) * 100) : 0;
+      const meta = getPerformanceMeta(percent);
+
+      showReportSection(true);
+      updateScorePanel();
+      renderReport();
 
       const main = document.getElementById('mainArea');
       main.className = 'done-state';
       main.innerHTML = `
-        <h1 class="done-title">ทำ ${escapeHTML(state.quizId)} เสร็จแล้ว</h1>
-        <div>ผู้ทำแบบทดสอบ: ${escapeHTML(state.user?.name || 'Unknown')}</div>
+        <h1 class="done-title">🎉 ทำแบบทดสอบเสร็จแล้ว</h1>
+        <div class="done-name">ชื่อ: ${escapeHTML(state.user?.name || 'Unknown User')}</div>
         <div class="done-score">${correct} / ${total}</div>
-        <div style="font-size:20px;font-weight:800;margin-bottom:20px;">คิดเป็น ${percent}%</div>
-        <button class="restart-btn" onclick="restartQuiz()">ทำใหม่อีกครั้ง</button>
+        <div class="done-percent">คะแนน: ${correct} / ${total} (${percent}%)</div>
+        <div class="badge level ${meta.badgeClass}">ระดับ: ${meta.label}</div>
+        <div class="done-message">${escapeHTML(meta.message)}</div>
+
+        <div class="done-actions">
+          <button class="review-btn" onclick="scrollToReport()">ดูเฉลย</button>
+          <button class="restart-btn" onclick="restartQuiz()">ทำใหม่อีกครั้ง</button>
+          <button class="return-btn" onclick="goBackToQuizPage()">กลับหน้า Quiz</button>
+        </div>
       `;
     }
 
@@ -875,9 +981,11 @@
       state.currentIndex = 0;
       state.answers = [];
       state.isFinished = false;
+      showReportSection(false);
       renderQuestion();
       updateScorePanel();
       renderReport();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     function renderError(message) {
