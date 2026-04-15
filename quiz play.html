@@ -379,8 +379,23 @@
     .choice:hover{ transform:translateY(-2px); }
     .choice:disabled{ cursor:default; }
     .choice.dim{ opacity:.45; }
-    .choice.correct-ring{ box-shadow:0 0 0 5px rgba(16,185,129,.18),0 10px 20px rgba(15,23,42,.10); }
-    .choice.wrong-ring{ box-shadow:0 0 0 5px rgba(239,68,68,.18),0 10px 20px rgba(15,23,42,.10); }
+
+    .choice.correct-ring{
+      border:3px solid #16a34a;
+      box-shadow:
+        0 0 0 6px #22c55e,
+        0 0 0 12px rgba(34,197,94,.22),
+        0 12px 24px rgba(15,23,42,.12);
+      transform:scale(1.01);
+    }
+
+    .choice.wrong-ring{
+      border:3px solid #dc2626;
+      box-shadow:
+        0 0 0 6px #ef4444,
+        0 0 0 12px rgba(239,68,68,.18),
+        0 12px 24px rgba(15,23,42,.12);
+    }
 
     .shape{
       width:42px;
@@ -410,10 +425,21 @@
     .feedback{
       min-height:24px;
       font-weight:800;
+      padding:10px 14px;
+      border-radius:14px;
     }
 
-    .feedback.correct{ color:var(--green); }
-    .feedback.wrong{ color:var(--red); }
+    .feedback.correct{
+      color:#166534;
+      background:#dcfce7;
+      border:1px solid #86efac;
+    }
+
+    .feedback.wrong{
+      color:#991b1b;
+      background:#fee2e2;
+      border:1px solid #fca5a5;
+    }
 
     .side-title{
       margin:0 0 14px;
@@ -988,9 +1014,12 @@
 
       const feedback = document.getElementById('feedbackText');
       feedback.className = `feedback ${isCorrect ? 'correct' : 'wrong'}`;
-      feedback.textContent = isCorrect
-        ? `ถูกต้อง`
-        : `ไม่ถูกต้อง | คำตอบที่ถูกคือ ${correctKey}. ${String(question[correctKey] ?? '')}`;
+
+      if (isCorrect) {
+        feedback.textContent = '✅ ถูกต้อง! ไปต่อได้เลย';
+      } else {
+        feedback.textContent = `❌ ไม่ถูกต้อง | คำตอบที่ถูกคือ ${correctKey}. ${String(question[correctKey] ?? '')}`;
+      }
 
       document.getElementById('nextBtn').disabled = false;
       updateScorePanel();
