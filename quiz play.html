@@ -1,9 +1,27 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
+  <script>
+    (function () {
+      const user =
+        localStorage.getItem('kmsUser') ||
+        sessionStorage.getItem('kmsUser') ||
+        localStorage.getItem('currentUser') ||
+        sessionStorage.getItem('currentUser');
+
+      if (!user) {
+        window.location.replace('login.html');
+      }
+    })();
+  </script>
+
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Quiz Play</title>
+  <title>KMS - Quiz Play</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
   <style>
     :root{
       --bg:#f6f7fb;
@@ -19,17 +37,100 @@
       --shadow:0 12px 30px rgba(15,23,42,.08);
       --radius:24px;
     }
-    *{box-sizing:border-box}
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
     body{
-      margin:0;
-      font-family:Arial, Helvetica, sans-serif;
-      background:linear-gradient(180deg,#f8fafc 0%,#eef2ff 100%);
-      color:var(--text);
-    }
-    .page{
+      font-family:'Sarabun',sans-serif;
+      background:#F4F7FB;
       min-height:100vh;
-      padding:24px;
+      color:#2E3A59;
+      font-size:14px;
+      line-height:1.7;
     }
+
+    .container{
+      display:flex;
+      min-height:100vh;
+    }
+
+    .sidebar{
+      width:70px;
+      background:linear-gradient(180deg,#4A89C8 0%,#2E75B6 100%);
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      padding-top:20px;
+      gap:10px;
+      position:fixed;
+      height:100vh;
+      z-index:10;
+    }
+
+    .sidebar-icon{
+      width:50px;
+      height:50px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:rgba(255,255,255,.85);
+      font-size:20px;
+      border-radius:12px;
+      cursor:pointer;
+      transition:all .3s ease;
+      text-decoration:none;
+      user-select:none;
+      -webkit-tap-highlight-color:transparent;
+    }
+
+    .sidebar-icon:hover,
+    .sidebar-icon.active{
+      background-color:rgba(255,255,255,.18);
+      color:#fff;
+    }
+
+    .sidebar-icon:active{ transform:scale(.96); }
+
+    .main-content{
+      flex:1;
+      padding:0;
+      margin-left:70px;
+    }
+
+    .header{
+      background:linear-gradient(135deg,#4A89C8 0%,#2E75B6 100%);
+      padding:60px 40px;
+      min-height:220px;
+      text-align:center;
+      box-shadow:0 4px 15px rgba(74,137,200,.25);
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      align-items:center;
+    }
+
+    .header h1{
+      font-size:42px;
+      font-weight:700;
+      color:#ffffff;
+      margin-bottom:15px;
+      letter-spacing:1px;
+      text-shadow:0 2px 4px rgba(0,0,0,.2);
+    }
+
+    .header .subtitle{
+      font-size:18px;
+      color:rgba(255,255,255,.95);
+      max-width:760px;
+      margin:0 auto;
+      line-height:1.7;
+    }
+
+    .page{
+      min-height:calc(100vh - 220px);
+      padding:24px 40px 30px 40px;
+    }
+
     .topbar{
       max-width:1100px;
       margin:0 auto 16px;
@@ -39,6 +140,7 @@
       gap:12px;
       flex-wrap:wrap;
     }
+
     .back-btn,.next-btn,.restart-btn{
       border:none;
       border-radius:999px;
@@ -46,20 +148,25 @@
       font-weight:800;
       cursor:pointer;
       font-size:16px;
+      font-family:'Sarabun',sans-serif;
     }
+
     .back-btn{
       background:#fff;
       color:var(--text);
       box-shadow:var(--shadow);
     }
+
     .next-btn,.restart-btn{
       background:var(--purple);
       color:#fff;
     }
+
     .next-btn[disabled]{
       opacity:.4;
       cursor:not-allowed;
     }
+
     .user-chip{
       background:#fff;
       border-radius:999px;
@@ -68,6 +175,7 @@
       color:var(--muted);
       font-weight:700;
     }
+
     .layout{
       max-width:1100px;
       margin:0 auto;
@@ -75,12 +183,14 @@
       grid-template-columns:1.2fr .8fr;
       gap:20px;
     }
+
     .card{
       background:var(--card);
       border-radius:var(--radius);
       box-shadow:var(--shadow);
       padding:24px;
     }
+
     .quiz-header{
       display:flex;
       justify-content:space-between;
@@ -89,16 +199,21 @@
       flex-wrap:wrap;
       margin-bottom:18px;
     }
+
     .quiz-title-wrap h1{
       margin:0;
       font-size:28px;
+      color:#1f2937;
     }
+
     .quiz-meta{
       color:var(--muted);
       font-weight:700;
       margin-top:6px;
     }
+
     .progress-wrap{margin-bottom:22px}
+
     .progress-label{
       display:flex;
       justify-content:space-between;
@@ -107,18 +222,21 @@
       margin-bottom:8px;
       font-weight:700;
     }
+
     .progress-bar{
       height:14px;
       background:#edf2f7;
       border-radius:999px;
       overflow:hidden;
     }
+
     .progress-bar-fill{
       height:100%;
       width:0%;
       background:linear-gradient(90deg,#60a5fa 0%,#8b5cf6 100%);
       transition:width .25s ease;
     }
+
     .question-number{
       display:inline-block;
       padding:8px 14px;
@@ -128,12 +246,15 @@
       font-weight:800;
       margin-bottom:14px;
     }
+
     .question-text{
       font-size:28px;
       line-height:1.35;
       font-weight:800;
       margin:0 0 18px;
+      color:#1f2937;
     }
+
     .question-image{
       display:none;
       width:100%;
@@ -145,11 +266,13 @@
       padding:12px;
       margin-bottom:18px;
     }
+
     .choices{
       display:grid;
       grid-template-columns:1fr 1fr;
       gap:14px;
     }
+
     .choice{
       border:none;
       border-radius:22px;
@@ -165,12 +288,15 @@
       align-items:center;
       gap:14px;
       box-shadow:0 10px 20px rgba(15,23,42,.1);
+      font-family:'Sarabun',sans-serif;
     }
-    .choice:hover{transform:translateY(-2px)}
-    .choice:disabled{cursor:default}
-    .choice.dim{opacity:.45}
-    .choice.correct-ring{box-shadow:0 0 0 5px rgba(16,185,129,.18),0 10px 20px rgba(15,23,42,.10)}
-    .choice.wrong-ring{box-shadow:0 0 0 5px rgba(239,68,68,.18),0 10px 20px rgba(15,23,42,.10)}
+
+    .choice:hover{ transform:translateY(-2px); }
+    .choice:disabled{ cursor:default; }
+    .choice.dim{ opacity:.45; }
+    .choice.correct-ring{ box-shadow:0 0 0 5px rgba(16,185,129,.18),0 10px 20px rgba(15,23,42,.10); }
+    .choice.wrong-ring{ box-shadow:0 0 0 5px rgba(239,68,68,.18),0 10px 20px rgba(15,23,42,.10); }
+
     .shape{
       width:42px;
       height:42px;
@@ -181,10 +307,12 @@
       background:rgba(255,255,255,.18);
       font-size:22px;
     }
-    .choice.a{background:var(--red)}
-    .choice.b{background:var(--blue)}
-    .choice.c{background:var(--yellow)}
-    .choice.d{background:var(--green)}
+
+    .choice.a{ background:var(--red); }
+    .choice.b{ background:var(--blue); }
+    .choice.c{ background:var(--yellow); }
+    .choice.d{ background:var(--green); }
+
     .action-row{
       margin-top:18px;
       display:flex;
@@ -193,22 +321,28 @@
       gap:12px;
       flex-wrap:wrap;
     }
+
     .feedback{
       min-height:24px;
       font-weight:800;
     }
-    .feedback.correct{color:var(--green)}
-    .feedback.wrong{color:var(--red)}
+
+    .feedback.correct{ color:var(--green); }
+    .feedback.wrong{ color:var(--red); }
+
     .side-title{
       margin:0 0 14px;
       font-size:22px;
+      color:#1f2937;
     }
+
     .score-box{
       display:grid;
       grid-template-columns:repeat(3,1fr);
       gap:12px;
       margin-bottom:18px;
     }
+
     .stat{
       background:#f8fafc;
       border:1px solid var(--line);
@@ -216,16 +350,20 @@
       padding:16px;
       text-align:center;
     }
+
     .stat-label{
       color:var(--muted);
       font-size:13px;
       font-weight:700;
       margin-bottom:6px;
     }
+
     .stat-value{
       font-size:30px;
       font-weight:900;
+      color:#1f2937;
     }
+
     .report-list{
       display:flex;
       flex-direction:column;
@@ -234,12 +372,14 @@
       overflow:auto;
       padding-right:4px;
     }
+
     .report-item{
       border:1px solid var(--line);
       border-radius:18px;
       padding:14px;
       background:#fff;
     }
+
     .report-top{
       display:flex;
       justify-content:space-between;
@@ -247,7 +387,9 @@
       gap:10px;
       margin-bottom:8px;
     }
-    .report-q{font-weight:800}
+
+    .report-q{ font-weight:800; }
+
     .badge{
       border-radius:999px;
       padding:6px 10px;
@@ -255,72 +397,139 @@
       font-weight:800;
       color:#fff;
     }
-    .badge.correct{background:var(--green)}
-    .badge.wrong{background:var(--red)}
+
+    .badge.correct{ background:var(--green); }
+    .badge.wrong{ background:var(--red); }
+
     .report-answer{
       color:var(--muted);
       font-size:14px;
       line-height:1.5;
     }
+
     .loading-state,.error-state,.done-state,.empty-state{
       text-align:center;
       padding:40px 20px;
     }
+
     .done-title{
       font-size:34px;
       margin:0 0 12px;
+      color:#1f2937;
     }
+
     .done-score{
       font-size:50px;
       font-weight:900;
       color:var(--purple);
       margin:10px 0 22px;
     }
-    @media (max-width:900px){
-      .layout{grid-template-columns:1fr}
+
+    .footer{
+      text-align:center;
+      padding:15px 40px;
+      color:#8A98AD;
+      font-size:13px;
     }
+
+    @media (max-width:900px){
+      .layout{ grid-template-columns:1fr; }
+    }
+
+    @media (max-width:768px){
+      .container{ flex-direction:column; }
+
+      .sidebar{
+        width:100%;
+        height:60px;
+        flex-direction:row;
+        justify-content:center;
+        padding:10px;
+        position:fixed;
+        top:0;
+        left:0;
+        z-index:1000;
+      }
+
+      .main-content{
+        margin-left:0;
+        margin-top:60px;
+      }
+
+      .header{
+        padding:40px 20px;
+        min-height:170px;
+      }
+
+      .header h1{ font-size:28px; }
+      .header .subtitle{ font-size:15px; }
+
+      .page{ padding:18px; }
+    }
+
     @media (max-width:640px){
-      .page{padding:14px}
-      .card{padding:18px}
-      .question-text{font-size:22px}
-      .choices{grid-template-columns:1fr}
-      .choice{min-height:82px;font-size:18px}
+      .card{ padding:18px; }
+      .question-text{ font-size:22px; }
+      .choices{ grid-template-columns:1fr; }
+      .choice{ min-height:82px; font-size:18px; }
     }
   </style>
 </head>
 <body>
-  <div class="page">
-    <div class="topbar">
-      <button class="back-btn" onclick="goBackToQuizPage()">← กลับหน้า Quiz</button>
-      <div class="user-chip" id="userChip">กำลังตรวจสอบผู้ใช้...</div>
-    </div>
+  <div class="container">
+    <nav class="sidebar">
+      <a class="sidebar-icon" href="index.html"><i class="fas fa-home"></i></a>
+      <a class="sidebar-icon" href="knowledge-base.html"><i class="fas fa-book"></i></a>
+      <a class="sidebar-icon" href="learning-path.html"><i class="fas fa-graduation-cap"></i></a>
+      <a class="sidebar-icon active" href="quiz.html"><i class="fas fa-clipboard-check"></i></a>
+      <a class="sidebar-icon" href="share-experience.html"><i class="fas fa-comments"></i></a>
+      <a class="sidebar-icon logout" href="#"><i class="fas fa-sign-out-alt"></i></a>
+    </nav>
 
-    <div class="layout">
-      <section class="card">
-        <div id="mainArea" class="loading-state">กำลังโหลดคำถาม...</div>
-      </section>
+    <main class="main-content">
+      <header class="header">
+        <h1 id="pageHeaderTitle">Quiz</h1>
+        <p class="subtitle">ตรวจสอบความเข้าใจในกระบวนการที่เรียนรู้</p>
+      </header>
 
-      <aside class="card">
-        <h2 class="side-title">รายงานการทำข้อสอบ</h2>
-        <div class="score-box">
-          <div class="stat">
-            <div class="stat-label">ทำไปแล้ว</div>
-            <div class="stat-value" id="answeredCount">0</div>
-          </div>
-          <div class="stat">
-            <div class="stat-label">ถูก</div>
-            <div class="stat-value" id="correctCount">0</div>
-          </div>
-          <div class="stat">
-            <div class="stat-label">ผิด</div>
-            <div class="stat-value" id="wrongCount">0</div>
-          </div>
+      <div class="page">
+        <div class="topbar">
+          <button class="back-btn" onclick="goBackToQuizPage()">← กลับหน้า Quiz</button>
+          <div class="user-chip" id="userChip">กำลังตรวจสอบผู้ใช้...</div>
         </div>
-        <div class="report-list" id="reportList">
-          <div class="empty-state">ยังไม่มีคำตอบ</div>
+
+        <div class="layout">
+          <section class="card">
+            <div id="mainArea" class="loading-state">กำลังโหลดคำถาม...</div>
+          </section>
+
+          <aside class="card">
+            <h2 class="side-title">รายงานการทำข้อสอบ</h2>
+            <div class="score-box">
+              <div class="stat">
+                <div class="stat-label">ทำไปแล้ว</div>
+                <div class="stat-value" id="answeredCount">0</div>
+              </div>
+              <div class="stat">
+                <div class="stat-label">ถูก</div>
+                <div class="stat-value" id="correctCount">0</div>
+              </div>
+              <div class="stat">
+                <div class="stat-label">ผิด</div>
+                <div class="stat-value" id="wrongCount">0</div>
+              </div>
+            </div>
+            <div class="report-list" id="reportList">
+              <div class="empty-state">ยังไม่มีคำตอบ</div>
+            </div>
+          </aside>
         </div>
-      </aside>
-    </div>
+      </div>
+
+      <footer class="footer">
+        <p>Knowledge Management System | ใช้ภายในองค์กรเท่านั้น</p>
+      </footer>
+    </main>
   </div>
 
   <script>
@@ -335,6 +544,16 @@
       B: '●',
       C: '■',
       D: '◆'
+    };
+
+    const QUIZ_TITLES = {
+      Quiz1: 'Quiz 1 - กระบวนการผสมเปียก',
+      Quiz2: 'Quiz 2 - กระบวนการแร่งเปียก',
+      Quiz3: 'Quiz 3 - กระบวนการอบลมร้อน',
+      Quiz4: 'Quiz 4 - กระบวนการแร่งแห้ง',
+      Quiz5: 'Quiz 5 - กระบวนการผสมแห้ง',
+      Quiz6: 'Quiz 6 - กระบวนการตอกเม็ดยา',
+      Quiz7: 'Quiz 7 - กระบวนการบรรจุซอง'
     };
 
     const state = {
@@ -384,6 +603,11 @@
       chip.textContent = `ผู้ทำแบบทดสอบ: ${state.user.name} (${state.user.employeeId})`;
     }
 
+    function updatePageHeader() {
+      const title = QUIZ_TITLES[state.quizId] || state.quizId;
+      document.getElementById('pageHeaderTitle').textContent = title;
+    }
+
     function goBackToQuizPage() {
       window.location.href = CONFIG.QUIZ_PAGE_URL;
     }
@@ -392,6 +616,7 @@
       state.quizId = getQuizIdFromURL();
       state.user = getLoggedInUser();
       updateUserChip();
+      updatePageHeader();
 
       if (!CONFIG.API_URL) {
         renderError('ยังไม่ได้ใส่ API_URL ของ Apps Script');
@@ -570,8 +795,8 @@
       const feedback = document.getElementById('feedbackText');
       feedback.className = `feedback ${isCorrect ? 'correct' : 'wrong'}`;
       feedback.textContent = isCorrect
-        ? `ถูกต้อง${question.Explanation ? ' : ' + question.Explanation : ''}`
-        : `ไม่ถูกต้อง | คำตอบที่ถูกคือ ${correctKey}. ${question[correctKey] || ''}${question.Explanation ? ' | ' + question.Explanation : ''}`;
+        ? `ถูกต้อง`
+        : `ไม่ถูกต้อง | คำตอบที่ถูกคือ ${correctKey}. ${question[correctKey] || ''}`;
 
       document.getElementById('nextBtn').disabled = false;
       updateScorePanel();
@@ -669,6 +894,16 @@
         .replace(/"/g, '&quot;')
         .replace(/'/g, '&#039;');
     }
+
+    document.querySelector('.logout')?.addEventListener('click', function (e) {
+      e.preventDefault();
+      localStorage.removeItem('kmsUser');
+      sessionStorage.removeItem('kmsUser');
+      localStorage.removeItem('currentUser');
+      sessionStorage.removeItem('currentUser');
+      localStorage.removeItem('savedEmployeeId');
+      window.location.href = 'login.html';
+    });
 
     init();
   </script>
