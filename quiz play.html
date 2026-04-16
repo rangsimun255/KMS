@@ -893,7 +893,22 @@
         },
         body: JSON.stringify(payload)
       });
-      return response.json();
+
+      const text = await response.text();
+      console.log('RAW API RESPONSE =', text);
+
+      let result;
+      try {
+        result = JSON.parse(text);
+      } catch (err) {
+        throw new Error('API ไม่ได้ส่ง JSON กลับมา: ' + text);
+      }
+
+      if (!result.success) {
+        throw new Error(result.message || 'บันทึกไม่สำเร็จ');
+      }
+
+      return result;
     }
 
     function getCurrentQuestion() {
@@ -1023,6 +1038,7 @@
         correct: correctKey,
         correctText: String(question[correctKey] ?? ''),
         isCorrect: isCorrect,
+        explanation: String(question.Explanation ?? ''),
         timestamp: new Date().toISOString()
       };
 
@@ -1041,12 +1057,14 @@
       updateScorePanel();
 
       try {
-        await postToAPI({
+        const saveResult = await postToAPI({
           action: 'saveAnswer',
           payload: answerRecord
         });
+        console.log('saveAnswer success =', saveResult);
       } catch (error) {
-        console.warn('saveAnswer error', error);
+        console.error('saveAnswer error =', error);
+        alert('บันทึกลง Quiz_Report ไม่สำเร็จ: ' + error.message);
       }
     }
 
