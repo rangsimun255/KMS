@@ -743,7 +743,8 @@
       currentIndex: 0,
       answers: [],
       user: null,
-      isFinished: false
+      isFinished: false,
+      isSubmitting: false
     };
 
     function getQuizIdFromURL() {
@@ -1010,7 +1011,7 @@
       document.getElementById('nextBtn').addEventListener('click', goNext);
     }
 
-    async function selectAnswer(choiceKey) {
+    function selectAnswer(choiceKey) {
       const question = getCurrentQuestion();
       const correctKey = String(question.Correct || '').trim().toUpperCase();
       const isCorrect = choiceKey === correctKey;
@@ -1026,11 +1027,6 @@
       });
 
       const answerRecord = {
-        employeeId: state.user.employeeId,
-        name: state.user.name,
-        role: state.user.role,
-        department: state.user.department,
-        quizId: state.quizId,
         questionId: question.QuestionID || String(state.currentIndex + 1),
         question: question.Question || '',
         selected: choiceKey,
@@ -1038,8 +1034,7 @@
         correct: correctKey,
         correctText: String(question[correctKey] ?? ''),
         isCorrect: isCorrect,
-        explanation: String(question.Explanation ?? ''),
-        timestamp: new Date().toISOString()
+        explanation: String(question.Explanation ?? '')
       };
 
       state.answers[state.currentIndex] = answerRecord;
@@ -1055,26 +1050,69 @@
 
       document.getElementById('nextBtn').disabled = false;
       updateScorePanel();
-
-      try {
-        const saveResult = await postToAPI({
-          action: 'saveAnswer',
-          payload: answerRecord
-        });
-        console.log('saveAnswer success =', saveResult);
-      } catch (error) {
-        console.error('saveAnswer error =', error);
-        alert('บันทึกลง Quiz_Report ไม่สำเร็จ: ' + error.message);
-      }
+      renderReport();
     }
 
-    function goNext() {
+    async function submitQuizAttempt() {
+      const answered = state.answers.filter(Boolean);
+      const correctCount = answered.filter(item => item.isCorrect).length;
+      const wrongCount = answered.filter(item => !item.isCorrect).length;
+      const total = state.questions.length;
+      const score = correctCount;
+      const percent = total ? Math.round((score / total) * 100) : 0;
+
+      const payload = {
+        employeeId: state.user.employeeId,
+        name: state.user.name,
+        role: state.user.role,
+        department: state.user.department,
+        quizId: state.quizId,
+        score: score,
+        total: total,
+        percent: percent,
+        correctCount: correctCount,
+        wrongCount: wrongCount,
+        answers: answered,
+        submittedAt: new Date().toISOString()
+      };
+
+      return await postToAPI({
+        action: 'saveQuizAttempt',
+        payload: payload
+      });
+    }
+
+    async function goNext() {
       if (state.currentIndex < state.questions.length - 1) {
         state.currentIndex += 1;
         renderQuestion();
-      } else {
+        return;
+      }
+
+      if (state.isSubmitting) return;
+
+      state.isSubmitting = true;
+      const nextBtn = document.getElementById('nextBtn');
+
+      if (nextBtn) {
+        nextBtn.disabled = true;
+        nextBtn.textContent = 'กำลังบันทึก...';
+      }
+
+      try {
+        await submitQuizAttempt();
         state.isFinished = true;
         renderDone();
+      } catch (error) {
+        console.error('submitQuizAttempt error =', error);
+        alert('บันทึกผลลง Quiz_Report ไม่สำเร็จ: ' + error.message);
+
+        if (nextBtn) {
+          nextBtn.disabled = false;
+          nextBtn.textContent = 'ข้อต่อไป';
+        }
+      } finally {
+        state.isSubmitting = false;
       }
     }
 
@@ -1150,6 +1188,7 @@
       state.currentIndex = 0;
       state.answers = [];
       state.isFinished = false;
+      state.isSubmitting = false;
       updateSummaryStatus('กำลังทำแบบทดสอบ');
       showReportSection(false);
       renderQuestion();
