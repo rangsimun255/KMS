@@ -100,12 +100,45 @@
       box-shadow:0 8px 25px rgba(74,137,200,.20);
       border-color:#4A89C8;
     }
+
+    .quiz-card-top{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      margin-bottom:10px;
+      flex-wrap:wrap;
+    }
+
     .quiz-badge{
       display:inline-flex;align-items:center;gap:8px;
       padding:6px 10px;border-radius:999px;
       background:linear-gradient(135deg,#E6F0FA 0%,#D4E9F7 100%);
-      color:#2E75B6;font-weight:700;font-size:12px;margin-bottom:10px;width:fit-content;
+      color:#2E75B6;font-weight:700;font-size:12px;width:fit-content;
     }
+
+    .quiz-status{
+      display:inline-flex;
+      align-items:center;
+      padding:6px 10px;
+      border-radius:999px;
+      font-size:12px;
+      font-weight:700;
+      white-space:nowrap;
+    }
+    .quiz-status.pass{
+      background:#dcfce7;
+      color:#166534;
+    }
+    .quiz-status.review{
+      background:#fef3c7;
+      color:#92400e;
+    }
+    .quiz-status.none{
+      background:#f1f5f9;
+      color:#475569;
+    }
+
     .quiz-title{font-size:16px;font-weight:700;color:#1F2D3D;margin-bottom:6px}
     .quiz-desc{font-size:13px;color:#6B7A90;line-height:1.6}
 
@@ -206,6 +239,10 @@
   </div>
 
   <script>
+    const CONFIG = {
+      API_URL: 'https://script.google.com/macros/s/AKfycbyM4bvM0Lxii-BLOqgtOVtYMcWm0_eHl905yMp2frMS1hHqHN6f3KKQHCwS8t7ThFvfqA/exec'
+    };
+
     const quizzes = [
       {
         no: 1,
@@ -253,25 +290,86 @@
 
     const container = document.getElementById("quizContainer");
 
-    quizzes.forEach(q => {
-      const card = document.createElement("div");
-      card.className = "quiz-card";
+    function getLoggedInUser() {
+      const raw =
+        localStorage.getItem('kmsUser') ||
+        sessionStorage.getItem('kmsUser') ||
+        localStorage.getItem('currentUser') ||
+        sessionStorage.getItem('currentUser');
 
-      card.innerHTML = `
-        <div>
-          <div class="quiz-badge"><i class="fas fa-clipboard-check"></i> Quiz ${q.no}</div>
-          <div class="quiz-title">${q.title}</div>
-          <div class="quiz-desc">${q.desc}</div>
+      if (!raw) return null;
+
+      try {
+        const user = JSON.parse(raw);
+        return {
+          employeeId: user.employeeId || user.id || '',
+          name: user.name || ''
+        };
+      } catch (e) {
+        return null;
+      }
+    }
+
+    async function fetchQuizStatus(employeeId) {
+      if (!employeeId) return {};
+
+      const url = `${CONFIG.API_URL}?view=quizstatus&employeeId=${encodeURIComponent(employeeId)}`;
+      const response = await fetch(url);
+      const result = await response.json();
+
+      if (!result.success) {
+        return {};
+      }
+
+      return result.data || {};
+    }
+
+    function renderStatusBadge(status) {
+      if (!status || !status.done) {
+        return `<div class="quiz-status none">ยังไม่เคยทำ</div>`;
+      }
+
+      const passed = status.total > 0 && (status.score / status.total) >= 0.8;
+
+      return `
+        <div class="quiz-status ${passed ? 'pass' : 'review'}">
+          ทำแล้ว • ${status.score} / ${status.total}
         </div>
-
-        <a class="btn-start"
-           href="quiz play.html?quiz=${encodeURIComponent(q.quizId)}">
-          <i class="fas fa-play"></i> เริ่มทำแบบทดสอบ
-        </a>
       `;
+    }
 
-      container.appendChild(card);
-    });
+    async function renderQuizCards() {
+      const user = getLoggedInUser();
+      const statusMap = user?.employeeId
+        ? await fetchQuizStatus(user.employeeId)
+        : {};
+
+      container.innerHTML = '';
+
+      quizzes.forEach(q => {
+        const card = document.createElement("div");
+        card.className = "quiz-card";
+
+        card.innerHTML = `
+          <div>
+            <div class="quiz-card-top">
+              <div class="quiz-badge"><i class="fas fa-clipboard-check"></i> Quiz ${q.no}</div>
+              ${renderStatusBadge(statusMap[q.quizId])}
+            </div>
+
+            <div class="quiz-title">${q.title}</div>
+            <div class="quiz-desc">${q.desc}</div>
+          </div>
+
+          <a class="btn-start"
+             href="quiz play.html?quiz=${encodeURIComponent(q.quizId)}">
+            <i class="fas fa-play"></i> เริ่มทำแบบทดสอบ
+          </a>
+        `;
+
+        container.appendChild(card);
+      });
+    }
 
     document.querySelector('.logout')?.addEventListener('click', function (e) {
       e.preventDefault();
@@ -281,6 +379,8 @@
       sessionStorage.removeItem('currentUser');
       window.location.href = 'login.html';
     });
+
+    renderQuizCards();
   </script>
 
   <script src="Js"></script>
