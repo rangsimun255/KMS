@@ -135,35 +135,14 @@
       z-index: 0;
     }
 
-    .top-layer-1 {
-      top: 0;
-      height: 112px;
-    }
+    .top-layer-1 { top: 0; height: 112px; }
+    .top-layer-1 path { fill: #00a289; opacity: 1; }
 
-    .top-layer-1 path {
-      fill: #00a289;
-      opacity: 1;
-    }
+    .top-layer-2 { top: 0; height: 128px; }
+    .top-layer-2 path { fill: #79c8a7; opacity: 0.92; }
 
-    .top-layer-2 {
-      top: 0;
-      height: 128px;
-    }
-
-    .top-layer-2 path {
-      fill: #79c8a7;
-      opacity: 0.92;
-    }
-
-    .top-layer-3 {
-      top: 0;
-      height: 144px;
-    }
-
-    .top-layer-3 path {
-      fill: #dff0e5;
-      opacity: 1;
-    }
+    .top-layer-3 { top: 0; height: 144px; }
+    .top-layer-3 path { fill: #dff0e5; opacity: 1; }
 
     .hero-bottom-shape {
       position: absolute;
@@ -480,7 +459,7 @@
     .card {
       position: relative;
       overflow: hidden;
-      background: #fbfcfb;
+      background: #fcfdfc;
       border-radius: 18px;
       padding: 18px 20px 16px;
       text-align: center;
@@ -497,18 +476,10 @@
       justify-content: center;
     }
 
-    .card::before,
-    .card::after {
-      content: "";
-      position: absolute;
-      pointer-events: none;
-      z-index: 0;
-    }
-
     .card:hover {
       transform: translateY(-4px);
       box-shadow: 0 8px 25px rgba(79, 160, 138, 0.12);
-      border-color: rgba(160, 206, 190, 0.38);
+      border-color: rgba(160, 206, 190, 0.34);
     }
 
     .card-icon,
@@ -546,215 +517,166 @@
       line-height: 1.45;
     }
 
-    .card-dots {
+    .card-dots,
+    .card-wave,
+    .card-leaf,
+    .card-geo {
       position: absolute;
-      width: 88px;
-      height: 88px;
-      background-image: radial-gradient(circle, rgba(63, 166, 126, 0.40) 1.5px, transparent 1.5px);
-      background-size: 14px 14px;
       pointer-events: none;
+    }
+
+    .card-dots {
+      width: 86px;
+      height: 86px;
+      background-image: radial-gradient(circle, rgba(70, 174, 133, 0.42) 1.5px, transparent 1.5px);
+      background-size: 14px 14px;
       z-index: 0;
     }
 
     .card-wave {
-      position: absolute;
-      right: -22px;
-      bottom: -22px;
-      width: 220px;
-      height: 120px;
+      right: -18px;
+      bottom: -18px;
+      width: 210px;
+      height: 110px;
       background: radial-gradient(
         ellipse at bottom right,
-        rgba(181, 223, 201, 0.42) 0%,
-        rgba(181, 223, 201, 0.18) 42%,
-        rgba(181, 223, 201, 0) 43%
+        rgba(186, 226, 206, 0.42) 0%,
+        rgba(186, 226, 206, 0.16) 42%,
+        rgba(186, 226, 206, 0) 43%
       );
-      pointer-events: none;
       z-index: 0;
     }
 
     .card-leaf {
-      position: absolute;
-      width: 48px;
-      height: 80px;
-      pointer-events: none;
+      width: 46px;
+      height: 74px;
+      right: 20px;
+      bottom: 10px;
       z-index: 1;
-      opacity: 0.42;
+      opacity: 0.46;
+    }
+
+    .card-leaf::before {
+      content: "";
+      position: absolute;
+      left: 20px;
+      top: 8px;
+      width: 2px;
+      height: 58px;
+      background: rgba(87, 176, 141, 0.30);
     }
 
     .card-leaf::after {
       content: "";
       position: absolute;
-      width: 2px;
-      height: 64px;
-      background: rgba(86, 171, 137, 0.30);
-      left: 18px;
-      top: 8px;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 28px 18px, rgba(104,191,151,0.70) 0 8px, transparent 9px),
+        radial-gradient(ellipse at 18px 34px, rgba(142,210,176,0.62) 0 8px, transparent 9px),
+        radial-gradient(ellipse at 28px 50px, rgba(110,194,156,0.62) 0 8px, transparent 9px);
     }
-
-    .card-leaf span {
-      position: absolute;
-      width: 20px;
-      height: 10px;
-      background: linear-gradient(135deg, rgba(88, 184, 141, 0.70), rgba(88, 184, 141, 0.22));
-      border-radius: 100% 0 100% 0;
-      display: block;
-    }
-
-    .card-leaf.right span:nth-child(1) { right: 0; top: 38px; transform: rotate(45deg); }
-    .card-leaf.right span:nth-child(2) { right: 8px; top: 22px; transform: rotate(12deg); }
-    .card-leaf.right span:nth-child(3) { right: 16px; top: 8px; transform: rotate(-15deg); }
 
     .card-geo {
-      position: absolute;
-      top: 18px;
+      top: 20px;
       right: 18px;
-      width: 112px;
-      height: 68px;
-      opacity: 0.22;
-      pointer-events: none;
+      width: 98px;
+      height: 60px;
       z-index: 0;
+      opacity: 0.20;
     }
 
-    .card-geo span {
+    .card-geo::before {
+      content: "";
       position: absolute;
-      width: 16px;
-      height: 9px;
-      border-top: 2px solid rgba(112,183,157,0.36);
-      border-bottom: 2px solid rgba(112,183,157,0.36);
+      inset: 0;
+      background:
+        radial-gradient(circle at 14px 10px, transparent 7px, rgba(113,184,158,0.34) 7px, rgba(113,184,158,0.34) 8.5px, transparent 9px),
+        radial-gradient(circle at 40px 20px, transparent 7px, rgba(113,184,158,0.34) 7px, rgba(113,184,158,0.34) 8.5px, transparent 9px),
+        radial-gradient(circle at 66px 36px, transparent 7px, rgba(113,184,158,0.34) 7px, rgba(113,184,158,0.34) 8.5px, transparent 9px),
+        radial-gradient(circle at 90px 18px, transparent 7px, rgba(113,184,158,0.34) 7px, rgba(113,184,158,0.34) 8.5px, transparent 9px);
     }
 
-    .card-geo span:nth-child(1) { top: 0; left: 0; }
-    .card-geo span:nth-child(2) { top: 8px; left: 18px; }
-    .card-geo span:nth-child(3) { top: 0; left: 36px; }
-    .card-geo span:nth-child(4) { top: 16px; left: 0; }
-    .card-geo span:nth-child(5) { top: 24px; left: 18px; }
-    .card-geo span:nth-child(6) { top: 16px; left: 36px; }
+    .card-geo::after {
+      content: "";
+      position: absolute;
+      left: 20px;
+      top: 14px;
+      width: 58px;
+      height: 24px;
+      background:
+        linear-gradient(rgba(113,184,158,0.26), rgba(113,184,158,0.26)) 12px 8px / 16px 2px no-repeat,
+        linear-gradient(rgba(113,184,158,0.26), rgba(113,184,158,0.26)) 38px 18px / 16px 2px no-repeat,
+        linear-gradient(rgba(113,184,158,0.26), rgba(113,184,158,0.26)) 64px 8px / 16px 2px no-repeat;
+    }
 
+    /* card 1 */
     .kb .card-dots {
       left: 20px;
       top: 18px;
     }
 
     .kb .card-wave {
-      right: -8px;
-      bottom: -8px;
-      width: 210px;
-      height: 118px;
+      right: -12px;
+      bottom: -10px;
+      width: 180px;
+      height: 90px;
     }
 
-    .kb::before {
-      right: 22px;
+    .kb .card-leaf {
+      right: 18px;
       bottom: 8px;
-      width: 58px;
-      height: 84px;
-      opacity: 0.55;
-      background:
-        linear-gradient(90deg, transparent 18px, rgba(83,176,137,0.32) 18px, rgba(83,176,137,0.32) 20px, transparent 20px),
-        radial-gradient(ellipse at 40px 22px, rgba(93,189,147,0.72) 0 12px, transparent 13px),
-        radial-gradient(ellipse at 28px 40px, rgba(135,209,175,0.72) 0 12px, transparent 13px),
-        radial-gradient(ellipse at 44px 56px, rgba(109,194,156,0.72) 0 12px, transparent 13px);
-      border-radius: 0 0 16px 0;
-      transform: rotate(18deg);
+      transform: rotate(14deg);
+    }
+
+    /* card 2 */
+    .lp .card-geo {
+      right: 18px;
+      top: 18px;
     }
 
     .lp .card-wave {
       right: -10px;
       bottom: -8px;
-      width: 210px;
-      height: 120px;
+      width: 220px;
+      height: 112px;
     }
 
-    .lp .card-geo {
-      right: 16px;
-      top: 16px;
-    }
-
-    .lp::before {
-      right: 0;
-      bottom: 0;
-      width: 168px;
-      height: 94px;
-      background:
-        radial-gradient(ellipse at bottom right, rgba(189,226,208,0.58) 0%, rgba(189,226,208,0.18) 44%, rgba(189,226,208,0) 45%);
-    }
-
-    .lp::after {
-      right: 18px;
-      top: 32px;
-      width: 86px;
-      height: 86px;
-      opacity: 0.22;
-      background:
-        radial-gradient(circle at 12px 14px, transparent 7px, rgba(109,183,157,0.35) 7px, rgba(109,183,157,0.35) 9px, transparent 10px),
-        radial-gradient(circle at 42px 28px, transparent 7px, rgba(109,183,157,0.35) 7px, rgba(109,183,157,0.35) 9px, transparent 10px),
-        radial-gradient(circle at 64px 48px, transparent 7px, rgba(109,183,157,0.35) 7px, rgba(109,183,157,0.35) 9px, transparent 10px);
-    }
-
+    /* card 3 */
     .quiz .card-dots {
       left: 20px;
       top: 18px;
-      opacity: 0.36;
+      opacity: 0.34;
     }
 
     .quiz .card-wave {
-      right: -8px;
+      right: -10px;
       bottom: -6px;
       width: 240px;
-      height: 122px;
+      height: 118px;
       background: radial-gradient(
         ellipse at bottom right,
-        rgba(179, 221, 199, 0.46) 0%,
-        rgba(179, 221, 199, 0.18) 40%,
-        rgba(179, 221, 199, 0) 41%
+        rgba(183, 224, 202, 0.50) 0%,
+        rgba(183, 224, 202, 0.18) 40%,
+        rgba(183, 224, 202, 0) 41%
       );
     }
 
-    .quiz::before {
-      right: 0;
-      bottom: 0;
-      width: 180px;
-      height: 96px;
-      background:
-        radial-gradient(ellipse at bottom right, rgba(197,232,214,0.72) 0%, rgba(197,232,214,0.18) 42%, rgba(197,232,214,0) 43%);
-    }
-
-    .quiz::after {
-      right: 26px;
-      bottom: 12px;
-      width: 110px;
-      height: 54px;
-      opacity: 0.32;
-      background:
-        radial-gradient(ellipse at center, rgba(120,194,152,0.46) 0%, rgba(120,194,152,0.18) 44%, rgba(120,194,152,0) 45%);
-      border-radius: 999px;
-    }
-
+    /* card 4 */
     .share .card-dots {
       right: 18px;
       top: 18px;
-      width: 88px;
-      height: 88px;
     }
 
     .share .card-wave {
       right: -10px;
       bottom: -8px;
-      width: 210px;
-      height: 120px;
+      width: 220px;
+      height: 112px;
     }
 
     .share .card-leaf {
-      right: 26px;
+      right: 20px;
       bottom: 10px;
-    }
-
-    .share::before {
-      right: 0;
-      bottom: 0;
-      width: 168px;
-      height: 94px;
-      background:
-        radial-gradient(ellipse at bottom right, rgba(189,226,208,0.58) 0%, rgba(189,226,208,0.18) 44%, rgba(189,226,208,0) 45%);
     }
 
     /* New Employee */
@@ -897,6 +819,21 @@
         font-size: 13px;
       }
 
+      .card-dots {
+        width: 74px;
+        height: 74px;
+      }
+
+      .card-wave {
+        width: 170px;
+        height: 88px;
+      }
+
+      .card-leaf {
+        width: 40px;
+        height: 64px;
+      }
+
       .new-employee {
         margin: 0 16px 18px 16px;
       }
@@ -1029,6 +966,7 @@
         <a href="knowledge-base.html" class="card kb">
           <div class="card-dots"></div>
           <div class="card-wave"></div>
+          <div class="card-leaf"></div>
 
           <div class="card-icon"><i class="fas fa-book-open"></i></div>
           <h2 class="card-title">Knowledge Base</h2>
@@ -1036,10 +974,7 @@
         </a>
 
         <a href="learning-path.html" class="card lp">
-          <div class="card-geo">
-            <span></span><span></span><span></span>
-            <span></span><span></span><span></span>
-          </div>
+          <div class="card-geo"></div>
           <div class="card-wave"></div>
 
           <div class="card-icon"><i class="fas fa-graduation-cap"></i></div>
@@ -1059,7 +994,7 @@
         <a href="share-experience.html" class="card share">
           <div class="card-dots"></div>
           <div class="card-wave"></div>
-          <div class="card-leaf right"><span></span><span></span><span></span></div>
+          <div class="card-leaf"></div>
 
           <div class="card-icon"><i class="fas fa-comments"></i></div>
           <h2 class="card-title">Share Experience</h2>
