@@ -1,310 +1,229 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-  <script>
-    (function () {
-      const user = localStorage.getItem('currentUser') || sessionStorage.getItem('currentUser');
-      if (!user) {
-        window.location.replace('login.html');
-      }
-    })();
-  </script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KMS</title>
 
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>KMS - Knowledge Management System</title>
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
 
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+body{
+  font-family:'Sarabun',sans-serif;
+  background:#F4F7F5;
+  color:#2E3A59;
+}
 
-    body { 
-      font-family: 'Sarabun', sans-serif; 
-      background-color: #F4F7F4; 
-      min-height: 100vh; 
-      color: #24413B;
-      font-size: 14px;
-      line-height: 1.7;
-    }
+/* ===== SIDEBAR ===== */
+.sidebar{
+  width:70px;
+  background:linear-gradient(180deg,#0A6A60,#045F55);
+  position:fixed;
+  height:100vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  padding-top:20px;
+}
 
-    .container {
-      display: flex;
-      min-height: 100vh;
-    }
+.sidebar-icon{
+  width:50px;height:50px;
+  display:flex;align-items:center;justify-content:center;
+  color:#fff;
+  font-size:20px;
+  border-radius:12px;
+  margin-bottom:10px;
+}
 
-    /* Sidebar */
-    .sidebar {
-      width: 70px;
-      background: linear-gradient(180deg, #0A6A60 0%, #07544D 100%);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding-top: 20px;
-      gap: 10px;
-      position: fixed;
-      height: 100vh;
-      z-index: 10;
-    }
+.sidebar-icon:hover{
+  background:rgba(255,255,255,0.15);
+}
 
-    .sidebar-icon {
-      width: 50px;
-      height: 50px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: rgba(255,255,255,0.88);
-      font-size: 20px;
-      border-radius: 12px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      text-decoration: none;
-      user-select: none;
-      -webkit-tap-highlight-color: transparent;
-    }
+/* ===== MAIN ===== */
+.main{margin-left:70px}
 
-    .sidebar-icon:hover,
-    .sidebar-icon.active {
-      background-color: rgba(255,255,255,0.16);
-      color: #fff;
-    }
+/* ===== HEADER ===== */
+.header{
+  position:relative;
+  overflow:hidden;
 
-    .sidebar-icon:active {
-      transform: scale(0.96);
-    }
+  background:linear-gradient(135deg,#00A289,#0A6A60);
+  padding:70px 20px;
+  text-align:center;
+  color:#fff;
+}
 
-    .main-content {
-      flex: 1;
-      padding: 0;
-      margin-left: 70px;
-    }
+/* ลาย dot */
+.header::before{
+  content:"";
+  position:absolute;
+  right:60px;
+  top:40px;
+  width:120px;height:120px;
 
-    /* Header */
-    .header {
-      background: linear-gradient(135deg, #00A289 0%, #0A6A60 100%);
-      padding: 60px 40px;
-      min-height: 240px;
-      text-align: center;
-      box-shadow: 0 4px 15px rgba(0, 162, 137, 0.24);
+  background-image:radial-gradient(rgba(255,255,255,0.35) 1.5px,transparent 1.5px);
+  background-size:12px 12px;
+  opacity:.4;
+}
 
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-    }
+/* wave */
+.header::after{
+  content:"";
+  position:absolute;
+  bottom:-40px;
+  left:-10%;
+  width:120%;
+  height:120px;
 
-    .header h1 {
-      font-size: 42px;
-      font-weight: 700;
-      color: #FFFFFF;
-      margin-bottom: 15px;
-      letter-spacing: 1px;
-      text-shadow: 0 2px 4px rgba(0,0,0,0.18);
-    }
+  background:radial-gradient(ellipse at center,
+  rgba(255,255,255,0.15) 0%,
+  rgba(255,255,255,0.05) 40%,
+  transparent 41%);
+}
 
-    .header .subtitle {
-      font-size: 18px;
-      color: rgba(255, 255, 255, 0.95);
-      max-width: 650px;
-      margin: 0 auto;
-      line-height: 1.7;
-    }
+.header h1{
+  font-size:40px;
+  font-weight:700;
+  position:relative;
+  z-index:2;
+}
 
-    /* Menu Cards */
-    .menu-cards {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 20px;
-      padding: 30px 40px;
-    }
+.header p{
+  margin-top:10px;
+  font-size:16px;
+  position:relative;
+  z-index:2;
+}
 
-    .card {
-      background: #FFFFFF;
-      border-radius: 16px;
-      padding: 28px 20px;
-      text-align: center;
-      text-decoration: none;
-      box-shadow: 0 4px 15px rgba(36,65,59,0.08);
-      transition: all 0.3s ease;
-      border: 2px solid transparent;
-    }
+/* ===== CARDS ===== */
+.cards{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:20px;
+  padding:30px;
+}
 
-    .card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 8px 25px rgba(0,162,137,0.16);
-      border-color: #00A289;
-    }
+.card{
+  background:#fff;
+  border-radius:16px;
+  padding:30px;
+  text-align:center;
+  box-shadow:0 4px 15px rgba(0,0,0,0.05);
+  transition:.3s;
+}
 
-    .card-icon {
-      width: 60px;
-      height: 60px;
-      margin: 0 auto 15px;
-      background: linear-gradient(135deg, #E8F5EF 0%, #DDF1E8 100%);
-      border-radius: 14px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 26px;
-      color: #00A289;
-    }
+.card:hover{
+  transform:translateY(-5px);
+  box-shadow:0 8px 25px rgba(0,162,137,0.2);
+}
 
-    .card-title {
-      font-size: 18px;
-      font-weight: 600;
-      color: #1E4D47;
-      margin-bottom: 8px;
-    }
+.card-icon{
+  width:60px;height:60px;
+  margin:auto;
+  background:#E3F3ED;
+  border-radius:14px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:24px;
+  color:#00A289;
+  margin-bottom:15px;
+}
 
-    .card-desc {
-      font-size: 14px;
-      color: #6B7A76;
-      line-height: 1.5;
-    }
+.card h3{
+  margin-bottom:8px;
+  color:#0A6A60;
+}
 
-    /* New Employee */
-    .new-employee {
-      background: #FFFFFF;
-      border-radius: 16px;
-      padding: 22px 28px;
-      margin: 0 40px 20px 40px;
-      box-shadow: 0 4px 15px rgba(36,65,59,0.08);
-      border-left: 6px solid #00A289;
-    }
+.card p{
+  color:#666;
+  font-size:14px;
+}
 
-    .new-employee h3 {
-      font-size: 18px;
-      font-weight: 600;
-      color: #24413B;
-      margin-bottom: 12px;
-    }
+/* ===== NEW EMPLOYEE ===== */
+.box{
+  background:#fff;
+  margin:20px 30px;
+  padding:20px;
+  border-left:6px solid #00A289;
+  border-radius:12px;
+}
 
-    .new-employee h3 i {
-      color: #00A289;
-      margin-right: 10px;
-    }
+.box h3{
+  margin-bottom:10px;
+  color:#0A6A60;
+}
 
-    .new-employee ol {
-      margin-left: 22px;
-      color: #24413B;
-      line-height: 1.9;
-      font-size: 14px;
-    }
-
-    .new-employee strong {
-      color: #00A289;
-    }
-
-    .footer {
-      text-align: center;
-      padding: 15px 40px;
-      color: #7E918B;
-      font-size: 13px;
-    }
-
-    @media (max-width: 768px) {
-      .container {
-        flex-direction: column;
-      }
-
-      .sidebar {
-        width: 100%;
-        height: 60px;
-        flex-direction: row;
-        justify-content: center;
-        padding: 10px;
-        position: sticky;
-        top: 0;
-      }
-
-      .main-content {
-        margin-left: 0;
-      }
-
-      .menu-cards {
-        grid-template-columns: 1fr;
-        padding: 20px;
-      }
-
-      .new-employee {
-        margin: 0 20px 20px 20px;
-      }
-
-      .header {
-        padding: 40px 20px;
-        min-height: 170px;
-      }
-
-      .header h1 {
-        font-size: 28px;
-      }
-
-      .header .subtitle {
-        font-size: 15px;
-      }
-    }
-  </style>
+/* ===== MOBILE ===== */
+@media(max-width:768px){
+  .cards{grid-template-columns:1fr}
+  .main{margin-left:0}
+  .sidebar{
+    width:100%;
+    height:60px;
+    flex-direction:row;
+    justify-content:center;
+  }
+}
+</style>
 </head>
 
 <body>
-  <div class="container">
-    <nav class="sidebar">
-      <a class="sidebar-icon active" href="index.html"><i class="fas fa-home"></i></a>
-      <a class="sidebar-icon" href="knowledge-base.html"><i class="fas fa-book"></i></a>
-      <a class="sidebar-icon" href="learning-path.html"><i class="fas fa-graduation-cap"></i></a>
-      <a class="sidebar-icon" href="quiz.html"><i class="fas fa-clipboard-check"></i></a>
-      <a class="sidebar-icon" href="share-experience.html"><i class="fas fa-comments"></i></a>
-      <a class="sidebar-icon logout" href="#"><i class="fas fa-sign-out-alt"></i></a>
-    </nav>
 
-    <main class="main-content">
-      <header class="header">
-        <h1>Knowledge Management System</h1>
-        <p class="subtitle">ศูนย์รวมความรู้ เทคนิค และจุดสำคัญในการผลิต</p>
-      </header>
+<div class="sidebar">
+  <div class="sidebar-icon"><i class="fas fa-home"></i></div>
+  <div class="sidebar-icon"><i class="fas fa-book"></i></div>
+  <div class="sidebar-icon"><i class="fas fa-graduation-cap"></i></div>
+  <div class="sidebar-icon"><i class="fas fa-clipboard-check"></i></div>
+</div>
 
-      <section class="menu-cards">
-        <a href="knowledge-base.html" class="card">
-          <div class="card-icon"><i class="fas fa-book-open"></i></div>
-          <h2 class="card-title">Knowledge Base</h2>
-          <p class="card-desc">ค้นหาความรู้ เทคนิค และวิธีแก้ปัญหา</p>
-        </a>
+<div class="main">
 
-        <a href="learning-path.html" class="card">
-          <div class="card-icon"><i class="fas fa-graduation-cap"></i></div>
-          <h2 class="card-title">Learning Path</h2>
-          <p class="card-desc">เรียนรู้กระบวนการผลิตและจุดสำคัญ</p>
-        </a>
-
-        <a href="quiz.html" class="card">
-          <div class="card-icon"><i class="fas fa-clipboard-check"></i></div>
-          <h2 class="card-title">Quiz / Check Point</h2>
-          <p class="card-desc">ตรวจสอบความเข้าใจในจุดสำคัญ</p>
-        </a>
-
-        <a href="share-experience.html" class="card">
-          <div class="card-icon"><i class="fas fa-comments"></i></div>
-          <h2 class="card-title">Share Experience</h2>
-          <p class="card-desc">แชร์ประสบการณ์และวิธีแก้ปัญหา</p>
-        </a>
-      </section>
-
-      <section class="new-employee">
-        <h3><i class="fas fa-user-plus"></i> สำหรับพนักงานใหม่</h3>
-        <ol>
-          <li>เข้า <strong>Learning Path</strong></li>
-          <li>เลือกกระบวนการที่รับผิดชอบ</li>
-          <li>ศึกษา Critical Point</li>
-          <li>เปิดดูเอกสารใน <strong>Knowledge Base</strong></li>
-        </ol>
-      </section>
-
-      <footer class="footer">
-        <p>Knowledge Management System | ใช้ภายในองค์กรเท่านั้น</p>
-      </footer>
-    </main>
+  <div class="header">
+    <h1>Knowledge Management System</h1>
+    <p>ศูนย์รวมความรู้ เทคนิค และจุดสำคัญในการผลิต</p>
   </div>
 
-  <script src="Js"></script>
+  <div class="cards">
+
+    <div class="card">
+      <div class="card-icon"><i class="fas fa-book"></i></div>
+      <h3>Knowledge Base</h3>
+      <p>ค้นหาความรู้ เทคนิค และวิธีแก้ปัญหา</p>
+    </div>
+
+    <div class="card">
+      <div class="card-icon"><i class="fas fa-graduation-cap"></i></div>
+      <h3>Learning Path</h3>
+      <p>เรียนรู้กระบวนการผลิต</p>
+    </div>
+
+    <div class="card">
+      <div class="card-icon"><i class="fas fa-check"></i></div>
+      <h3>Quiz</h3>
+      <p>ทดสอบความเข้าใจ</p>
+    </div>
+
+    <div class="card">
+      <div class="card-icon"><i class="fas fa-comments"></i></div>
+      <h3>Share</h3>
+      <p>แชร์ประสบการณ์</p>
+    </div>
+
+  </div>
+
+  <div class="box">
+    <h3>สำหรับพนักงานใหม่</h3>
+    <ol>
+      <li>เข้า Learning Path</li>
+      <li>เลือกกระบวนการ</li>
+      <li>ศึกษา Critical Point</li>
+      <li>ดู Knowledge Base</li>
+    </ol>
+  </div>
+
+</div>
+
 </body>
 </html>
