@@ -120,7 +120,6 @@
       pointer-events: none;
     }
 
-    /* TOP ORGANIC LAYERS */
     .hero-top-layer {
       position: absolute;
       left: 0;
@@ -159,7 +158,6 @@
       opacity: 0.98;
     }
 
-    /* BOTTOM ORGANIC LAYERS */
     .hero-bottom-shape {
       position: absolute;
       pointer-events: none;
@@ -202,7 +200,6 @@
       opacity: 1;
     }
 
-    /* Extra soft depth */
     .hero-soft-wave-left,
     .hero-soft-wave-right {
       position: absolute;
@@ -239,7 +236,6 @@
       opacity: 0.9;
     }
 
-    /* LINE WAVES */
     .hero-top-wave {
       position: absolute;
       top: -4px;
@@ -275,7 +271,6 @@
       stroke-width: 2;
     }
 
-    /* DOTS */
     .hero-dots-left {
       position: absolute;
       left: 92px;
@@ -315,7 +310,6 @@
       pointer-events: none;
     }
 
-    /* HEXAGON */
     .hero-hexagon {
       position: absolute;
       top: 26px;
@@ -334,7 +328,6 @@
       fill: none;
     }
 
-    /* SPARKLES */
     .hero-sparkle {
       position: absolute;
       color: rgba(255,255,255,0.92);
@@ -349,7 +342,6 @@
     .hero-sparkle.s3 { top: 116px; right: 37%; }
     .hero-sparkle.s4 { top: 146px; left: 40%; font-size: 9px; opacity: 0.82; }
 
-    /* LEAVES */
     .hero-leaf-left {
       position: absolute;
       left: 42px;
@@ -401,7 +393,6 @@
     .hero-leaf-right .r3 { fill: #60b785; }
     .hero-leaf-right .r4 { fill: #46a46f; }
 
-    /* CONTENT */
     .hero-content {
       position: relative;
       z-index: 10;
@@ -454,7 +445,6 @@
       line-height: 1.7;
     }
 
-    /* BOTTOM SEPARATOR */
     .wave-bottom {
       position: absolute;
       bottom: 0;
@@ -475,8 +465,8 @@
     .menu-cards {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 20px;
-      padding: 30px 40px;
+      gap: 18px;
+      padding: 20px 28px 22px;
       background: #f4f6f4;
     }
 
@@ -484,14 +474,20 @@
       position: relative;
       overflow: hidden;
       background: #ffffff;
-      border-radius: 16px;
-      padding: 28px 20px;
+      border-radius: 18px;
+      padding: 18px 20px 16px;
       text-align: center;
       text-decoration: none;
       box-shadow: 0 4px 15px rgba(46,58,89,0.06);
       transition: all 0.25s ease;
       border: 1px solid rgba(160, 206, 190, 0.15);
       isolation: isolate;
+      min-height: 150px;
+
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
     }
 
     .card:hover {
@@ -508,29 +504,30 @@
     }
 
     .card-icon {
-      width: 60px;
-      height: 60px;
-      margin: 0 auto 15px;
-      background: linear-gradient(135deg, #EEF7F1 0%, #E7F2EC 100%);
-      border-radius: 14px;
+      width: 64px;
+      height: 64px;
+      margin: 0 auto 12px;
+      background: linear-gradient(135deg, #eef7f1 0%, #e5f1ea 100%);
+      border-radius: 18px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 26px;
+      font-size: 30px;
       color: #0D6B63;
     }
 
     .card-title {
       font-size: 18px;
-      font-weight: 600;
+      font-weight: 700;
       color: #23453F;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
+      line-height: 1.3;
     }
 
     .card-desc {
       font-size: 14px;
       color: #6B7A90;
-      line-height: 1.5;
+      line-height: 1.45;
     }
 
     .card-dots {
@@ -549,7 +546,12 @@
       bottom: -18px;
       width: 165px;
       height: 92px;
-      background: radial-gradient(ellipse at bottom right, rgba(176, 220, 203, 0.22) 0%, rgba(176, 220, 203, 0.08) 48%, rgba(176, 220, 203, 0) 49%);
+      background: radial-gradient(
+        ellipse at bottom right,
+        rgba(176, 220, 203, 0.22) 0%,
+        rgba(176, 220, 203, 0.08) 48%,
+        rgba(176, 220, 203, 0) 49%
+      );
       pointer-events: none;
       z-index: 0;
     }
@@ -560,7 +562,7 @@
       height: 72px;
       pointer-events: none;
       z-index: 1;
-      opacity: 0.28;
+      opacity: 0.22;
     }
 
     .card-leaf::after {
@@ -592,7 +594,7 @@
       right: 18px;
       width: 86px;
       height: 42px;
-      opacity: 0.18;
+      opacity: 0.16;
       pointer-events: none;
       z-index: 0;
     }
@@ -618,7 +620,7 @@
     .lp .card-geo { right: 20px; top: 16px; }
     .lp .card-wave { right: -10px; bottom: -14px; }
 
-    .quiz .card-dots { left: 18px; top: 18px; opacity: 0.18; }
+    .quiz .card-dots { left: 18px; top: 18px; opacity: 0.14; }
     .quiz .card-wave { right: -10px; bottom: -14px; }
 
     .share .card-dots { right: 18px; top: 18px; }
@@ -743,6 +745,26 @@
       .menu-cards {
         grid-template-columns: 1fr;
         padding: 20px;
+      }
+
+      .card {
+        min-height: 138px;
+        padding: 16px 18px 14px;
+      }
+
+      .card-icon {
+        width: 58px;
+        height: 58px;
+        font-size: 28px;
+        margin-bottom: 10px;
+      }
+
+      .card-title {
+        font-size: 17px;
+      }
+
+      .card-desc {
+        font-size: 13px;
       }
 
       .new-employee {
