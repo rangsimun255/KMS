@@ -20,18 +20,18 @@
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
-    body { 
-      font-family: 'Sarabun', sans-serif; 
-      background-color: #F4F6F4; 
-      min-height: 100vh; 
+    body {
+      font-family: 'Sarabun', sans-serif;
+      background-color: #F4F6F4;
+      min-height: 100vh;
       color: #2E3A59;
       font-size: 14px;
       line-height: 1.7;
     }
 
-    .container { 
-      display: flex; 
-      min-height: 100vh; 
+    .container {
+      display: flex;
+      min-height: 100vh;
     }
 
     /* Sidebar */
@@ -85,14 +85,14 @@
       transform: translateY(-1px);
     }
 
-    .sidebar-icon:active { 
-      transform: scale(0.96); 
+    .sidebar-icon:active {
+      transform: scale(0.96);
     }
 
-    .main-content { 
-      flex: 1; 
-      padding: 0; 
-      margin-left: 70px; 
+    .main-content {
+      flex: 1;
+      padding: 0;
+      margin-left: 70px;
     }
 
     /* HERO */
@@ -105,123 +105,184 @@
       justify-content: center;
       text-align: center;
       overflow: hidden;
-      background: linear-gradient(
-        180deg,
-        #f7fcf8 0%,
-        #eef8f1 26%,
-        #e4f2e8 58%,
-        #d3e8db 100%
-      );
       isolation: isolate;
+      background:
+        linear-gradient(180deg, #f8fcf9 0%, #f0f8f2 30%, #e6f2ea 64%, #d8eadf 100%);
       box-shadow: 0 4px 15px rgba(55, 110, 95, 0.05);
     }
 
-    .hero-bg {
+    .hero-base {
       position: absolute;
       inset: 0;
       z-index: 0;
+      background:
+        radial-gradient(circle at 50% 46%, rgba(255,255,255,0.88) 0%, rgba(255,255,255,0.48) 24%, rgba(255,255,255,0) 50%);
       pointer-events: none;
     }
 
-    .hero-bg::before,
-    .hero-bg::after {
-      content: "";
+    /* TOP ORGANIC LAYERS */
+    .hero-top-layer {
       position: absolute;
-      left: -12%;
-      width: 124%;
-      border-radius: 50%;
-    }
-
-    .hero-bg::before {
-      top: -145px;
-      height: 210px;
-      background: rgba(112, 189, 156, 0.20);
-    }
-
-    .hero-bg::after {
-      bottom: -145px;
-      height: 200px;
-      background: rgba(121, 192, 161, 0.16);
-    }
-
-    .hero-bg-wave-left,
-    .hero-bg-wave-right {
-      position: absolute;
-      border-radius: 50%;
+      left: 0;
+      width: 100%;
       pointer-events: none;
       z-index: 0;
     }
 
-    .hero-bg-wave-left {
-      width: 650px;
-      height: 210px;
-      left: -120px;
-      top: -90px;
-      background: radial-gradient(
-        ellipse at center,
-        rgba(130, 201, 171, 0.22) 0%,
-        rgba(130, 201, 171, 0.08) 46%,
-        rgba(130, 201, 171, 0) 47%
-      );
-      transform: rotate(-7deg);
+    .top-layer-1 {
+      top: 0;
+      height: 112px;
     }
 
-    .hero-bg-wave-right {
+    .top-layer-1 path {
+      fill: #a5d3b8;
+      opacity: 0.42;
+    }
+
+    .top-layer-2 {
+      top: 0;
+      height: 128px;
+    }
+
+    .top-layer-2 path {
+      fill: #c8e4d3;
+      opacity: 0.8;
+    }
+
+    .top-layer-3 {
+      top: 0;
+      height: 144px;
+    }
+
+    .top-layer-3 path {
+      fill: #e5f2ea;
+      opacity: 0.98;
+    }
+
+    /* BOTTOM ORGANIC LAYERS */
+    .hero-bottom-shape {
+      position: absolute;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .bottom-left-shape {
+      left: -6px;
+      bottom: 0;
+      width: 420px;
+      height: 96px;
+    }
+
+    .bottom-left-shape path {
+      fill: #e3f1e8;
+      opacity: 0.95;
+    }
+
+    .bottom-right-shape-1 {
+      right: 0;
+      bottom: 0;
+      width: 340px;
+      height: 100px;
+    }
+
+    .bottom-right-shape-1 path {
+      fill: #c7e1d0;
+      opacity: 0.95;
+    }
+
+    .bottom-right-shape-2 {
+      right: -6px;
+      bottom: -2px;
+      width: 320px;
+      height: 90px;
+    }
+
+    .bottom-right-shape-2 path {
+      fill: #abd1b8;
+      opacity: 0.92;
+    }
+
+    /* Extra soft depth */
+    .hero-soft-wave-left,
+    .hero-soft-wave-right {
+      position: absolute;
+      z-index: 0;
+      pointer-events: none;
+      border-radius: 50%;
+    }
+
+    .hero-soft-wave-left {
+      left: -110px;
+      top: -80px;
       width: 560px;
       height: 180px;
-      right: -120px;
-      bottom: -70px;
-      background: radial-gradient(
-        ellipse at center,
-        rgba(110, 184, 151, 0.18) 0%,
-        rgba(110, 184, 151, 0.08) 46%,
-        rgba(110, 184, 151, 0) 47%
-      );
-      transform: rotate(6deg);
+      background:
+        radial-gradient(ellipse at center,
+          rgba(143, 209, 180, 0.18) 0%,
+          rgba(143, 209, 180, 0.08) 45%,
+          rgba(143, 209, 180, 0) 46%);
+      transform: rotate(-7deg);
+      opacity: 0.8;
     }
 
+    .hero-soft-wave-right {
+      right: -120px;
+      bottom: -62px;
+      width: 360px;
+      height: 130px;
+      background:
+        radial-gradient(ellipse at center,
+          rgba(146, 204, 176, 0.18) 0%,
+          rgba(146, 204, 176, 0.08) 46%,
+          rgba(146, 204, 176, 0) 47%);
+      transform: rotate(8deg);
+      opacity: 0.9;
+    }
+
+    /* LINE WAVES */
     .hero-top-wave {
       position: absolute;
-      top: -6px;
-      left: -16px;
-      width: 330px;
-      height: 110px;
+      top: -4px;
+      left: -8px;
+      width: 350px;
+      height: 112px;
       z-index: 1;
-      opacity: 0.58;
+      opacity: 0.62;
       pointer-events: none;
     }
 
     .hero-top-wave path {
       fill: none;
-      stroke: rgba(255,255,255,0.72);
+      stroke: rgba(255,255,255,0.76);
       stroke-width: 2;
     }
 
-    .hero-bottom-wave {
+    .hero-bottom-wave-lines {
       position: absolute;
-      right: -8px;
-      bottom: -4px;
-      width: 300px;
-      height: 100px;
+      right: -4px;
+      bottom: 4px;
+      width: 292px;
+      height: 96px;
       z-index: 1;
-      opacity: 0.46;
+      opacity: 0.48;
       pointer-events: none;
       transform: scaleX(-1);
     }
 
-    .hero-bottom-wave path {
+    .hero-bottom-wave-lines path {
       fill: none;
-      stroke: rgba(255,255,255,0.64);
+      stroke: rgba(255,255,255,0.68);
       stroke-width: 2;
     }
 
+    /* DOTS */
     .hero-dots-left {
       position: absolute;
       left: 92px;
-      top: 64px;
+      top: 66px;
       width: 88px;
       height: 88px;
-      background-image: radial-gradient(circle, rgba(255,255,255,0.9) 1.8px, transparent 1.8px);
+      background-image: radial-gradient(circle, rgba(255,255,255,0.92) 1.8px, transparent 1.8px);
       background-size: 14px 14px;
       opacity: 0.72;
       z-index: 1;
@@ -230,13 +291,13 @@
 
     .hero-dots-bottom {
       position: absolute;
-      left: 170px;
-      bottom: 68px;
-      width: 86px;
-      height: 44px;
-      background-image: radial-gradient(circle, rgba(216,233,222,1) 1.8px, transparent 1.8px);
+      left: 178px;
+      bottom: 56px;
+      width: 80px;
+      height: 40px;
+      background-image: radial-gradient(circle, rgba(214,232,220,1) 1.8px, transparent 1.8px);
       background-size: 14px 14px;
-      opacity: 0.88;
+      opacity: 0.9;
       z-index: 1;
       pointer-events: none;
     }
@@ -244,9 +305,9 @@
     .hero-mini-dots-right {
       position: absolute;
       right: 92px;
-      bottom: 74px;
-      width: 62px;
-      height: 30px;
+      bottom: 66px;
+      width: 58px;
+      height: 28px;
       background-image: radial-gradient(circle, rgba(188,221,203,0.95) 1.8px, transparent 1.8px);
       background-size: 14px 14px;
       opacity: 0.62;
@@ -254,109 +315,93 @@
       pointer-events: none;
     }
 
+    /* HEXAGON */
     .hero-hexagon {
       position: absolute;
       top: 26px;
-      right: 62px;
-      width: 180px;
-      height: 70px;
-      opacity: 0.32;
+      right: 64px;
+      width: 188px;
+      height: 72px;
+      opacity: 0.30;
       z-index: 1;
       pointer-events: none;
     }
 
     .hero-hexagon polygon,
     .hero-hexagon line {
-      stroke: #8ab69d;
+      stroke: #8fb7a0;
       stroke-width: 2;
       fill: none;
     }
 
+    /* SPARKLES */
     .hero-sparkle {
       position: absolute;
-      color: rgba(255,255,255,0.9);
+      color: rgba(255,255,255,0.92);
       font-size: 11px;
       line-height: 1;
       z-index: 1;
       pointer-events: none;
     }
 
-    .hero-sparkle.s1 { top: 74px; left: 46%; }
+    .hero-sparkle.s1 { top: 76px; left: 46%; }
     .hero-sparkle.s2 { top: 60px; right: 42%; }
     .hero-sparkle.s3 { top: 116px; right: 37%; }
-    .hero-sparkle.s4 { top: 148px; left: 40%; font-size: 9px; opacity: 0.82; }
+    .hero-sparkle.s4 { top: 146px; left: 40%; font-size: 9px; opacity: 0.82; }
 
+    /* LEAVES */
     .hero-leaf-left {
       position: absolute;
-      left: 50px;
+      left: 42px;
       bottom: 6px;
-      width: 118px;
-      height: 128px;
+      width: 132px;
+      height: 146px;
       z-index: 1;
-      opacity: 0.64;
+      opacity: 0.34;
       pointer-events: none;
     }
 
     .hero-leaf-left .stem {
-      stroke: #a7d2b8;
-      stroke-width: 3;
       fill: none;
+      stroke: #b8d9c3;
+      stroke-width: 2.5;
+      stroke-linecap: round;
     }
 
-    .hero-leaf-left .leaf-a { fill: #cfe8d8; }
-    .hero-leaf-left .leaf-b { fill: #aed8be; }
-    .hero-leaf-left .leaf-c { fill: #e4f3ea; }
-    .hero-leaf-left .leaf-d { fill: #bfe1cc; }
+    .hero-leaf-left .l1 { fill: #eff8f2; }
+    .hero-leaf-left .l2 { fill: #e7f3eb; }
+    .hero-leaf-left .l3 { fill: #dceee3; }
+    .hero-leaf-left .r1 { fill: #e5f2e9; }
+    .hero-leaf-left .r2 { fill: #d7eade; }
+    .hero-leaf-left .r3 { fill: #cae2d0; }
 
     .hero-leaf-right {
       position: absolute;
-      right: 40px;
-      top: 95px;
-      width: 92px;
-      height: 120px;
+      right: 26px;
+      top: 74px;
+      width: 120px;
+      height: 170px;
       z-index: 1;
-      opacity: 0.76;
+      opacity: 0.82;
       pointer-events: none;
     }
 
     .hero-leaf-right .stem {
-      stroke: #79b993;
-      stroke-width: 3;
       fill: none;
+      stroke: #79b993;
+      stroke-width: 2.8;
+      stroke-linecap: round;
     }
 
-    .hero-leaf-right .leaf-a { fill: #b9dcc5; }
-    .hero-leaf-right .leaf-b { fill: #95caaa; }
-    .hero-leaf-right .leaf-c { fill: #d1ead9; }
-    .hero-leaf-right .leaf-d { fill: #82bf98; }
+    .hero-leaf-right .l1 { fill: #dcecdf; }
+    .hero-leaf-right .l2 { fill: #cfe4d5; }
+    .hero-leaf-right .l3 { fill: #bdd9c7; }
+    .hero-leaf-right .r1 { fill: #b8dbc2; }
+    .hero-leaf-right .r2 { fill: #a4ceb2; }
+    .hero-leaf-right .r3 { fill: #91c5a3; }
+    .hero-leaf-right .r4 { fill: #7fbe96; }
 
-    .hero-soft-wave-left,
-    .hero-soft-wave-right {
-      position: absolute;
-      z-index: 0;
-      pointer-events: none;
-      border-radius: 50%;
-      opacity: 0.58;
-    }
-
-    .hero-soft-wave-left {
-      left: -120px;
-      bottom: -34px;
-      width: 430px;
-      height: 110px;
-      background: radial-gradient(ellipse at center, rgba(214,235,222,0.88) 0%, rgba(214,235,222,0.40) 42%, rgba(214,235,222,0) 43%);
-      transform: rotate(-4deg);
-    }
-
-    .hero-soft-wave-right {
-      right: -80px;
-      bottom: -40px;
-      width: 360px;
-      height: 120px;
-      background: radial-gradient(ellipse at center, rgba(184,223,199,0.78) 0%, rgba(184,223,199,0.34) 42%, rgba(184,223,199,0) 43%);
-      transform: rotate(8deg);
-    }
-
+    /* CONTENT */
     .hero-content {
       position: relative;
       z-index: 10;
@@ -369,7 +414,7 @@
       font-weight: 700;
       color: #0c5c4d;
       margin: 0;
-      letter-spacing: 0.25px;
+      letter-spacing: 0.2px;
       line-height: 1.2;
       text-shadow: 0 1px 0 rgba(255,255,255,0.35);
     }
@@ -409,6 +454,7 @@
       line-height: 1.7;
     }
 
+    /* BOTTOM SEPARATOR */
     .wave-bottom {
       position: absolute;
       bottom: 0;
@@ -470,21 +516,21 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 26px; 
+      font-size: 26px;
       color: #0D6B63;
     }
 
-    .card-title { 
-      font-size: 18px; 
-      font-weight: 600; 
-      color: #23453F; 
-      margin-bottom: 8px; 
+    .card-title {
+      font-size: 18px;
+      font-weight: 600;
+      color: #23453F;
+      margin-bottom: 8px;
     }
 
-    .card-desc { 
-      font-size: 14px; 
-      color: #6B7A90; 
-      line-height: 1.5; 
+    .card-desc {
+      font-size: 14px;
+      color: #6B7A90;
+      line-height: 1.5;
     }
 
     .card-dots {
@@ -604,43 +650,43 @@
       pointer-events: none;
     }
 
-    .new-employee h3 { 
-      font-size: 18px; 
-      font-weight: 600; 
-      color: #23453F; 
-      margin-bottom: 12px; 
+    .new-employee h3 {
+      font-size: 18px;
+      font-weight: 600;
+      color: #23453F;
+      margin-bottom: 12px;
       position: relative;
       z-index: 1;
     }
 
-    .new-employee h3 i { 
+    .new-employee h3 i {
       color: #0D6B63;
-      margin-right: 10px; 
+      margin-right: 10px;
     }
 
-    .new-employee ol { 
-      margin-left: 22px; 
-      color: #2E3A59; 
-      line-height: 1.9; 
-      font-size: 14px; 
+    .new-employee ol {
+      margin-left: 22px;
+      color: #2E3A59;
+      line-height: 1.9;
+      font-size: 14px;
       position: relative;
       z-index: 1;
     }
 
-    .new-employee strong { 
-      color: #0D6B63; 
+    .new-employee strong {
+      color: #0D6B63;
     }
 
-    .footer { 
-      text-align: center; 
-      padding: 15px 40px; 
-      color: #8A98AD; 
-      font-size: 13px; 
+    .footer {
+      text-align: center;
+      padding: 15px 40px;
+      color: #8A98AD;
+      font-size: 13px;
     }
 
     @media (max-width: 768px) {
-      .container { 
-        flex-direction: column; 
+      .container {
+        flex-direction: column;
       }
 
       .sidebar {
@@ -660,8 +706,8 @@
         font-size: 18px;
       }
 
-      .main-content { 
-        margin-left: 0; 
+      .main-content {
+        margin-left: 0;
       }
 
       .hero-section {
@@ -669,13 +715,13 @@
         padding: 40px 20px;
       }
 
-      .hero-title { 
-        font-size: 28px; 
+      .hero-title {
+        font-size: 28px;
         letter-spacing: 0;
       }
 
-      .hero-subtitle { 
-        font-size: 15px; 
+      .hero-subtitle {
+        font-size: 15px;
       }
 
       .div-line {
@@ -683,7 +729,7 @@
       }
 
       .hero-top-wave,
-      .hero-bottom-wave,
+      .hero-bottom-wave-lines,
       .hero-dots-left,
       .hero-dots-bottom,
       .hero-mini-dots-right,
@@ -719,9 +765,34 @@
 
     <main class="main-content">
       <header class="hero-section">
-        <div class="hero-bg"></div>
-        <div class="hero-bg-wave-left"></div>
-        <div class="hero-bg-wave-right"></div>
+        <div class="hero-base"></div>
+
+        <svg class="hero-top-layer top-layer-1" viewBox="0 0 1600 420" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0,150 C180,70 360,40 560,65 C760,90 950,145 1180,120 C1360,100 1490,55 1600,0 L1600,0 L0,0 Z"/>
+        </svg>
+
+        <svg class="hero-top-layer top-layer-2" viewBox="0 0 1600 420" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0,185 C180,120 360,78 560,92 C760,106 930,152 1140,144 C1330,136 1470,88 1600,30 L1600,0 L0,0 Z"/>
+        </svg>
+
+        <svg class="hero-top-layer top-layer-3" viewBox="0 0 1600 420" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0,220 C180,175 350,145 550,152 C760,160 920,188 1130,188 C1320,188 1470,150 1600,105 L1600,0 L0,0 Z"/>
+        </svg>
+
+        <svg class="hero-bottom-shape bottom-left-shape" viewBox="0 0 800 260" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0,210 C120,170 250,150 390,165 C520,180 640,220 800,250 L800,260 L0,260 Z"/>
+        </svg>
+
+        <svg class="hero-bottom-shape bottom-right-shape-1" viewBox="0 0 900 320" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0,240 C150,180 320,145 500,152 C670,160 790,210 900,280 L900,320 L0,320 Z"/>
+        </svg>
+
+        <svg class="hero-bottom-shape bottom-right-shape-2" viewBox="0 0 900 320" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0,265 C150,220 310,195 470,202 C630,210 770,245 900,300 L900,320 L0,320 Z"/>
+        </svg>
+
+        <div class="hero-soft-wave-left"></div>
+        <div class="hero-soft-wave-right"></div>
 
         <svg class="hero-top-wave" viewBox="0 0 600 220" xmlns="http://www.w3.org/2000/svg">
           <path d="M0 120C80 60 180 20 290 35C390 48 490 20 600 0" />
@@ -730,7 +801,7 @@
           <path d="M0 195C120 120 220 90 335 105C435 118 525 98 600 80" />
         </svg>
 
-        <svg class="hero-bottom-wave" viewBox="0 0 600 220" xmlns="http://www.w3.org/2000/svg">
+        <svg class="hero-bottom-wave-lines" viewBox="0 0 600 220" xmlns="http://www.w3.org/2000/svg">
           <path d="M0 120C80 60 180 20 290 35C390 48 490 20 600 0" />
           <path d="M0 145C95 80 195 45 305 58C405 70 500 45 600 25" />
           <path d="M0 170C110 100 210 65 320 80C420 95 515 75 600 55" />
@@ -757,23 +828,25 @@
         <span class="hero-sparkle s4">✦</span>
 
         <svg class="hero-leaf-left" viewBox="0 0 220 220" xmlns="http://www.w3.org/2000/svg">
-          <path class="stem" d="M108 210C108 165 111 120 136 54"/>
-          <path class="leaf-a" d="M128 151C92 145 67 121 56 92C89 101 115 121 128 151Z"/>
-          <path class="leaf-b" d="M140 118C177 114 200 90 208 58C175 63 151 84 140 118Z"/>
-          <path class="leaf-c" d="M114 186C76 182 50 157 39 125C74 134 98 155 114 186Z"/>
-          <path class="leaf-d" d="M120 92C92 88 76 72 68 48C94 54 113 68 120 92Z"/>
+          <path class="stem" d="M78 210C82 178 90 146 102 118C113 92 126 67 146 36" />
+          <path class="l1" d="M94 168C67 162 49 144 42 118C67 123 86 140 94 168Z"/>
+          <path class="l2" d="M106 142C75 138 57 118 50 92C79 98 98 117 106 142Z"/>
+          <path class="l3" d="M120 114C92 109 73 90 66 66C94 71 113 88 120 114Z"/>
+          <path class="r1" d="M112 158C131 135 153 126 181 125C168 147 145 160 112 158Z"/>
+          <path class="r2" d="M124 128C145 105 168 95 196 95C183 118 159 132 124 128Z"/>
+          <path class="r3" d="M138 98C159 75 181 64 207 64C195 86 172 99 138 98Z"/>
         </svg>
 
-        <svg class="hero-leaf-right" viewBox="0 0 180 220" xmlns="http://www.w3.org/2000/svg">
-          <path class="stem" d="M70 210C72 165 78 120 98 50"/>
-          <path class="leaf-a" d="M100 80C128 80 150 56 158 25C130 32 110 50 100 80Z"/>
-          <path class="leaf-b" d="M88 118C128 116 154 92 164 62C128 68 104 86 88 118Z"/>
-          <path class="leaf-c" d="M78 158C120 156 146 130 156 100C118 106 94 124 78 158Z"/>
-          <path class="leaf-d" d="M70 196C110 194 136 170 146 142C112 148 88 164 70 196Z"/>
+        <svg class="hero-leaf-right" viewBox="0 0 180 240" xmlns="http://www.w3.org/2000/svg">
+          <path class="stem" d="M72 228C74 192 80 160 89 129C98 100 111 73 125 34" />
+          <path class="l1" d="M74 190C53 184 39 168 34 146C54 150 68 165 74 190Z"/>
+          <path class="l2" d="M82 162C59 157 45 141 40 118C61 123 76 138 82 162Z"/>
+          <path class="l3" d="M92 132C68 127 54 111 49 88C72 93 86 107 92 132Z"/>
+          <path class="r1" d="M92 188C111 163 131 152 158 150C146 174 125 188 92 188Z"/>
+          <path class="r2" d="M99 158C119 133 141 121 169 120C156 144 135 158 99 158Z"/>
+          <path class="r3" d="M107 126C127 101 148 89 175 88C163 111 141 126 107 126Z"/>
+          <path class="r4" d="M116 95C136 71 155 58 178 56C168 79 149 94 116 95Z"/>
         </svg>
-
-        <div class="hero-soft-wave-left"></div>
-        <div class="hero-soft-wave-right"></div>
 
         <div class="hero-content">
           <h1 class="hero-title">Knowledge Management System</h1>
