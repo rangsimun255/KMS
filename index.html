@@ -34,7 +34,7 @@
     /* Sidebar */
     .sidebar {
       width: 70px;
-      background: linear-gradient(180deg, #00796B 0%, #0172B4 100%);
+      background: linear-gradient(180deg, #0172b4 0%, #015c95 100%);
       display: flex; flex-direction: column; align-items: center;
       padding-top: 20px; gap: 10px;
       position: fixed; height: 100vh;
@@ -50,27 +50,23 @@
       cursor: pointer;
       transition: all 0.3s ease;
       text-decoration: none;
-      user-select: none;
-      -webkit-tap-highlight-color: transparent;
     }
 
     .sidebar-icon:hover,
     .sidebar-icon.active {
-      background-color: rgba(255,255,255,0.18);
+      background-color: rgba(245,223,78,0.25);
       color: #fff;
     }
-
-    .sidebar-icon:active { transform: scale(0.96); }
 
     .main-content { flex: 1; padding: 0; margin-left: 70px; }
 
     /* HEADER */
     .header {
-      background: linear-gradient(135deg, #00796B 0%, #00A896 100%);
+      background: linear-gradient(135deg, #0172b4 0%, #a1dba9 100%);
       padding: 60px 40px;
       min-height: 240px;
       text-align: center;
-      box-shadow: 0 4px 15px rgba(0,121,107,0.25);
+      box-shadow: 0 4px 15px rgba(1,114,180,0.25);
 
       display: flex;
       flex-direction: column;
@@ -83,19 +79,14 @@
       font-weight: 700; 
       color: #ffffff;
       margin-bottom: 15px;
-      letter-spacing: 1px;
-      text-shadow: 0 2px 4px rgba(0,0,0,0.2);
     }
 
     .header .subtitle {
       font-size: 18px; 
-      color: rgba(255, 255, 255, 0.95);
-      max-width: 650px; 
-      margin: 0 auto; 
-      line-height: 1.7;
+      color: rgba(255,255,255,0.95);
     }
 
-    /* Menu Cards */
+    /* Cards */
     .menu-cards {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -116,31 +107,29 @@
 
     .card:hover {
       transform: translateY(-5px);
-      box-shadow: 0 8px 25px rgba(0,121,107,0.18);
-      border-color: #00A896;
+      border-color: #a1dba9;
+      box-shadow: 0 8px 25px rgba(161,219,169,0.3);
     }
 
     .card-icon {
       width: 60px; height: 60px;
       margin: 0 auto 15px;
-      background: linear-gradient(135deg, #E6F7F3 0%, #D4F1EA 100%);
+      background: linear-gradient(135deg, #f5df4e 0%, #fdac53 100%);
       border-radius: 14px;
       display: flex; align-items: center; justify-content: center;
       font-size: 26px; 
-      color: #00796B;
+      color: #0172b4;
     }
 
     .card-title { 
       font-size: 18px; 
       font-weight: 600; 
-      color: #2E3A59; 
       margin-bottom: 8px; 
     }
 
     .card-desc { 
       font-size: 14px; 
-      color: #6B7A90; 
-      line-height: 1.5; 
+      color: #6B7A90;
     }
 
     .new-employee {
@@ -149,30 +138,15 @@
       padding: 22px 28px;
       margin: 0 40px 20px 40px;
       box-shadow: 0 4px 15px rgba(46,58,89,0.08);
-      border-left: 6px solid #00796B;
-    }
-
-    .new-employee h3 { 
-      font-size: 18px; 
-      font-weight: 600; 
-      color: #2E3A59; 
-      margin-bottom: 12px; 
+      border-left: 6px solid #fdac53;
     }
 
     .new-employee h3 i { 
-      color: #0172B4;
-      margin-right: 10px; 
-    }
-
-    .new-employee ol { 
-      margin-left: 22px; 
-      color: #2E3A59; 
-      line-height: 1.9; 
-      font-size: 14px; 
+      color: #0172b4;
     }
 
     .new-employee strong { 
-      color: #FDAC53; 
+      color: #f5df4e; 
     }
 
     .footer { 
@@ -189,17 +163,9 @@
         height: 60px;
         flex-direction: row;
         justify-content: center;
-        padding: 10px;
-        position: sticky;
-        top: 0;
       }
       .main-content { margin-left: 0; }
       .menu-cards { grid-template-columns: 1fr; padding: 20px; }
-      .new-employee { margin: 0 20px 20px 20px; }
-
-      .header { padding: 40px 20px; min-height: 170px; }
-      .header h1 { font-size: 28px; }
-      .header .subtitle { font-size: 15px; }
     }
   </style>
 </head>
@@ -262,7 +228,5 @@
       </footer>
     </main>
   </div>
-
-  <script src="Js"></script>
 </body>
 </html>
