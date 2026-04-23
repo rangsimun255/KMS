@@ -35,15 +35,22 @@
     .sidebar {
       width: 70px;
       background: linear-gradient(180deg, #1F6F68 0%, #2A9D8F 100%);
-      display: flex; flex-direction: column; align-items: center;
-      padding-top: 20px; gap: 10px;
-      position: fixed; height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 20px;
+      gap: 10px;
+      position: fixed;
+      height: 100vh;
       z-index: 10;
     }
 
     .sidebar-icon {
-      width: 50px; height: 50px;
-      display: flex; align-items: center; justify-content: center;
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       color: rgba(255,255,255,0.85);
       font-size: 20px;
       border-radius: 12px;
@@ -62,10 +69,16 @@
 
     .sidebar-icon:active { transform: scale(0.96); }
 
-    .main-content { flex: 1; padding: 0; margin-left: 70px; }
+    .main-content {
+      flex: 1;
+      padding: 0;
+      margin-left: 70px;
+    }
 
     /* HEADER */
     .header {
+      position: relative;
+      overflow: hidden;
       background: linear-gradient(135deg, #1F6F68 0%, #2A9D8F 100%);
       padding: 60px 40px;
       min-height: 240px;
@@ -76,6 +89,36 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
+      isolation: isolate;
+    }
+
+    /* ลวดลายพื้นหลังใน header */
+    .header::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 12% 22%, rgba(255,255,255,0.16) 0 2px, transparent 2px 18px),
+        radial-gradient(circle at 88% 20%, rgba(255,255,255,0.14) 0 2px, transparent 2px 18px),
+        linear-gradient(135deg, rgba(255,255,255,0.10), rgba(255,255,255,0.02));
+      background-size: 26px 26px, 26px 26px, 100% 100%;
+      opacity: 0.65;
+      pointer-events: none;
+      z-index: -2;
+    }
+
+    .header::after {
+      content: "";
+      position: absolute;
+      width: 520px;
+      height: 520px;
+      right: -140px;
+      top: -180px;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle, rgba(255,255,255,0.14) 0%, rgba(255,255,255,0.05) 40%, rgba(255,255,255,0) 70%);
+      pointer-events: none;
+      z-index: -1;
     }
 
     .header h1 {
@@ -104,6 +147,8 @@
     }
 
     .card {
+      position: relative;
+      overflow: hidden;
       background: #ffffff;
       border-radius: 16px;
       padding: 28px 20px;
@@ -112,6 +157,35 @@
       box-shadow: 0 4px 15px rgba(31, 41, 55, 0.08);
       transition: all 0.3s ease;
       border: 2px solid transparent;
+      isolation: isolate;
+    }
+
+    /* ลายจุดมุมบนซ้าย */
+    .card::before {
+      content: "";
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      width: 72px;
+      height: 72px;
+      background-image: radial-gradient(circle, rgba(42, 157, 143, 0.18) 1.5px, transparent 1.5px);
+      background-size: 12px 12px;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    /* ลายโค้งมุมล่างขวา */
+    .card::after {
+      content: "";
+      position: absolute;
+      right: -30px;
+      bottom: -30px;
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(42, 157, 143, 0.10) 0%, rgba(42, 157, 143, 0.05) 45%, transparent 70%);
+      pointer-events: none;
+      z-index: -1;
     }
 
     .card:hover {
@@ -121,13 +195,18 @@
     }
 
     .card-icon {
-      width: 60px; height: 60px;
+      width: 60px;
+      height: 60px;
       margin: 0 auto 15px;
       background: linear-gradient(135deg, #EAF7F5 0%, #DFF3F0 100%);
       border-radius: 14px;
-      display: flex; align-items: center; justify-content: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       font-size: 26px; 
       color: #1F6F68;
+      position: relative;
+      z-index: 1;
     }
 
     .card-title { 
@@ -135,12 +214,16 @@
       font-weight: 600; 
       color: #1F2937; 
       margin-bottom: 8px; 
+      position: relative;
+      z-index: 1;
     }
 
     .card-desc { 
       font-size: 14px; 
       color: #5B6875; 
       line-height: 1.5; 
+      position: relative;
+      z-index: 1;
     }
 
     .new-employee {
@@ -184,6 +267,7 @@
 
     @media (max-width: 768px) {
       .container { flex-direction: column; }
+
       .sidebar {
         width: 100%;
         height: 60px;
@@ -193,13 +277,32 @@
         position: sticky;
         top: 0;
       }
-      .main-content { margin-left: 0; }
-      .menu-cards { grid-template-columns: 1fr; padding: 20px; }
-      .new-employee { margin: 0 20px 20px 20px; }
 
-      .header { padding: 40px 20px; min-height: 170px; }
+      .main-content { margin-left: 0; }
+
+      .menu-cards {
+        grid-template-columns: 1fr;
+        padding: 20px;
+      }
+
+      .new-employee {
+        margin: 0 20px 20px 20px;
+      }
+
+      .header {
+        padding: 40px 20px;
+        min-height: 170px;
+      }
+
       .header h1 { font-size: 28px; }
       .header .subtitle { font-size: 15px; }
+
+      .header::after {
+        width: 320px;
+        height: 320px;
+        right: -100px;
+        top: -120px;
+      }
     }
   </style>
 </head>
