@@ -14,7 +14,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>KMS - Knowledge Management System</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <style>
@@ -29,21 +29,25 @@
       line-height: 1.7;
     }
 
-    .container { display: flex; min-height: 100vh; }
+    .container { 
+      display: flex; 
+      min-height: 100vh; 
+    }
 
     /* Sidebar */
     .sidebar {
-      width: 70px;
-      background: linear-gradient(180deg, #0C6B63 0%, #085B54 100%);
+      width: 88px;
+      background: linear-gradient(180deg, #0A6A60 0%, #07544D 100%);
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding-top: 20px;
-      gap: 10px;
+      padding-top: 22px;
+      gap: 16px;
       position: fixed;
       height: 100vh;
-      z-index: 10;
+      z-index: 50;
       overflow: hidden;
+      box-shadow: 3px 0 18px rgba(7, 84, 77, 0.10);
     }
 
     .sidebar::before {
@@ -52,19 +56,19 @@
       inset: 0;
       background-image: radial-gradient(circle, rgba(255,255,255,0.05) 1px, transparent 1px);
       background-size: 18px 18px;
-      opacity: 0.25;
+      opacity: 0.22;
       pointer-events: none;
     }
 
     .sidebar-icon {
-      width: 50px;
-      height: 50px;
+      width: 54px;
+      height: 54px;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: rgba(255,255,255,0.92);
-      font-size: 20px;
-      border-radius: 12px;
+      color: rgba(255,255,255,0.96);
+      font-size: 24px;
+      border-radius: 16px;
       cursor: pointer;
       transition: all 0.25s ease;
       text-decoration: none;
@@ -78,246 +82,334 @@
     .sidebar-icon.active {
       background-color: rgba(255,255,255,0.14);
       color: #fff;
+      transform: translateY(-1px);
     }
 
-    .sidebar-icon:active { transform: scale(0.96); }
+    .sidebar-icon:active { 
+      transform: scale(0.96); 
+    }
 
-    .main-content { flex: 1; padding: 0; margin-left: 70px; }
+    .main-content { 
+      flex: 1; 
+      padding: 0; 
+      margin-left: 88px; 
+    }
 
     /* HERO */
     .hero-section {
       position: relative;
-      min-height: 240px;
-      padding: 60px 40px;
+      min-height: 440px;
+      padding: 78px 40px 110px;
       display: flex;
       align-items: center;
       justify-content: center;
       text-align: center;
       overflow: hidden;
-      background: linear-gradient(180deg, #F4FBF7 0%, #ECF7F1 55%, #E4F2EA 100%);
-      box-shadow: 0 4px 15px rgba(55, 110, 95, 0.05);
+      background: linear-gradient(
+        180deg,
+        #f7fcf8 0%,
+        #eef8f1 26%,
+        #e4f2e8 58%,
+        #d3e8db 100%
+      );
       isolation: isolate;
+      box-shadow: inset 0 -1px 0 rgba(120, 175, 150, 0.08);
     }
 
-    .hero-section::before {
-      content: "";
+    .hero-bg {
       position: absolute;
       inset: 0;
-      background:
-        radial-gradient(920px 220px at 14% -30%, rgba(116,198,157,0.22) 0%, rgba(116,198,157,0.10) 36%, transparent 37%),
-        radial-gradient(760px 170px at 75% -28%, rgba(181,227,209,0.22) 0%, rgba(181,227,209,0.10) 35%, transparent 36%),
-        radial-gradient(600px 130px at 20% 100%, rgba(181,227,209,0.22) 0%, rgba(181,227,209,0.08) 48%, transparent 49%),
-        radial-gradient(560px 125px at 92% 100%, rgba(118,194,168,0.18) 0%, rgba(118,194,168,0.08) 48%, transparent 49%);
       z-index: 0;
       pointer-events: none;
     }
 
-    .hero-top-lines {
+    .hero-bg::before,
+    .hero-bg::after {
+      content: "";
       position: absolute;
-      left: 0;
-      top: 0;
-      width: 300px;
-      height: 72px;
-      background:
-        repeating-linear-gradient(
-          -18deg,
-          rgba(116,198,157,0.10) 0px,
-          rgba(116,198,157,0.10) 1px,
-          transparent 1px,
-          transparent 9px
-        );
-      opacity: 0.5;
-      border-radius: 0 0 110px 0;
+      left: -12%;
+      width: 124%;
+      border-radius: 50%;
+    }
+
+    .hero-bg::before {
+      top: -175px;
+      height: 255px;
+      background: rgba(112, 189, 156, 0.22);
+    }
+
+    .hero-bg::after {
+      bottom: -165px;
+      height: 245px;
+      background: rgba(121, 192, 161, 0.18);
+    }
+
+    .hero-bg-wave-left,
+    .hero-bg-wave-right {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(0.2px);
       pointer-events: none;
+      z-index: 0;
+    }
+
+    .hero-bg-wave-left {
+      width: 900px;
+      height: 320px;
+      left: -140px;
+      top: -120px;
+      background: radial-gradient(
+        ellipse at center,
+        rgba(130, 201, 171, 0.28) 0%,
+        rgba(130, 201, 171, 0.12) 45%,
+        rgba(130, 201, 171, 0) 46%
+      );
+      transform: rotate(-7deg);
+    }
+
+    .hero-bg-wave-right {
+      width: 780px;
+      height: 250px;
+      right: -120px;
+      bottom: -90px;
+      background: radial-gradient(
+        ellipse at center,
+        rgba(110, 184, 151, 0.22) 0%,
+        rgba(110, 184, 151, 0.10) 45%,
+        rgba(110, 184, 151, 0) 46%
+      );
+      transform: rotate(6deg);
+    }
+
+    /* top curved lines */
+    .hero-top-wave {
+      position: absolute;
+      top: -6px;
+      left: -22px;
+      width: 470px;
+      height: 180px;
       z-index: 1;
+      opacity: 0.62;
+      pointer-events: none;
+    }
+
+    .hero-top-wave path {
+      fill: none;
+      stroke: rgba(255,255,255,0.74);
+      stroke-width: 2;
+    }
+
+    /* bottom curved lines */
+    .hero-bottom-wave {
+      position: absolute;
+      right: -12px;
+      bottom: -6px;
+      width: 430px;
+      height: 150px;
+      z-index: 1;
+      opacity: 0.5;
+      pointer-events: none;
+      transform: scaleX(-1);
+    }
+
+    .hero-bottom-wave path {
+      fill: none;
+      stroke: rgba(255,255,255,0.68);
+      stroke-width: 2;
     }
 
     .hero-dots-left {
       position: absolute;
-      left: 92px;
-      top: 74px;
-      width: 88px;
-      height: 88px;
-      background-image: radial-gradient(circle, rgba(45,106,79,0.18) 1.4px, transparent 1.4px);
-      background-size: 14px 14px;
-      opacity: 0.55;
+      left: 94px;
+      top: 62px;
+      width: 108px;
+      height: 108px;
+      background-image: radial-gradient(circle, rgba(255,255,255,0.92) 2px, transparent 2px);
+      background-size: 16px 16px;
+      opacity: 0.8;
       z-index: 1;
       pointer-events: none;
     }
 
-    .hero-geo-right {
+    .hero-dots-bottom {
       position: absolute;
-      top: 24px;
-      right: 88px;
-      width: 150px;
-      height: 60px;
+      left: 200px;
+      bottom: 78px;
+      width: 108px;
+      height: 56px;
+      background-image: radial-gradient(circle, rgba(216,233,222,1) 2px, transparent 2px);
+      background-size: 16px 16px;
+      opacity: 0.95;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .hero-mini-dots-right {
+      position: absolute;
+      right: 115px;
+      bottom: 96px;
+      width: 80px;
+      height: 38px;
+      background-image: radial-gradient(circle, rgba(188,221,203,0.95) 2px, transparent 2px);
+      background-size: 16px 16px;
+      opacity: 0.7;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .hero-hexagon {
+      position: absolute;
+      top: 38px;
+      right: 56px;
+      width: 310px;
+      height: 120px;
       opacity: 0.34;
       z-index: 1;
       pointer-events: none;
     }
 
-    .hero-geo-right span {
-      position: absolute;
-      width: 18px;
-      height: 10px;
-      border-top: 2px solid rgba(109,183,157,0.34);
-      border-bottom: 2px solid rgba(109,183,157,0.34);
+    .hero-hexagon polygon,
+    .hero-hexagon line {
+      stroke: #8ab69d;
+      stroke-width: 2;
+      fill: none;
     }
 
-    .hero-geo-right span:nth-child(1) { top: 0; left: 0; }
-    .hero-geo-right span:nth-child(2) { top: 8px; left: 22px; }
-    .hero-geo-right span:nth-child(3) { top: 0; left: 44px; }
-    .hero-geo-right span:nth-child(4) { top: 16px; left: 0; }
-    .hero-geo-right span:nth-child(5) { top: 24px; left: 22px; }
-    .hero-geo-right span:nth-child(6) { top: 16px; left: 44px; }
-    .hero-geo-right span:nth-child(7) { top: 0; left: 88px; }
-    .hero-geo-right span:nth-child(8) { top: 16px; left: 88px; }
-
-    .hero-leaf-left,
-    .hero-leaf-right {
+    .hero-sparkle {
       position: absolute;
-      width: 62px;
-      height: 108px;
-      opacity: 0.24;
+      color: rgba(255,255,255,0.92);
+      font-size: 14px;
+      line-height: 1;
       z-index: 1;
       pointer-events: none;
     }
+
+    .hero-sparkle.s1 { top: 120px; left: 45%; }
+    .hero-sparkle.s2 { top: 92px; right: 44%; }
+    .hero-sparkle.s3 { top: 166px; right: 37%; }
+    .hero-sparkle.s4 { top: 204px; left: 40%; font-size: 10px; opacity: 0.85; }
 
     .hero-leaf-left {
-      left: 118px;
-      bottom: 12px;
-      transform: rotate(-10deg);
+      position: absolute;
+      left: 44px;
+      bottom: 8px;
+      width: 170px;
+      height: 180px;
+      z-index: 1;
+      opacity: 0.78;
+      pointer-events: none;
     }
+
+    .hero-leaf-left .stem {
+      stroke: #a7d2b8;
+      stroke-width: 3;
+      fill: none;
+    }
+
+    .hero-leaf-left .leaf-a { fill: #cfe8d8; }
+    .hero-leaf-left .leaf-b { fill: #aed8be; }
+    .hero-leaf-left .leaf-c { fill: #e4f3ea; }
+    .hero-leaf-left .leaf-d { fill: #bfe1cc; }
 
     .hero-leaf-right {
-      right: 82px;
-      bottom: 14px;
-      transform: rotate(10deg);
-    }
-
-    .hero-leaf-left::after,
-    .hero-leaf-right::after {
-      content: "";
       position: absolute;
-      width: 2px;
-      height: 90px;
-      background: rgba(109,183,157,0.22);
-      left: 28px;
-      top: 10px;
-    }
-
-    .hero-leaf-left span,
-    .hero-leaf-right span {
-      position: absolute;
-      display: block;
-      width: 24px;
-      height: 12px;
-      background: linear-gradient(135deg, rgba(135,206,179,0.58), rgba(135,206,179,0.18));
-      border-radius: 100% 0 100% 0;
-    }
-
-    .hero-leaf-left span:nth-child(1) { left: 2px; top: 54px; transform: rotate(-45deg); }
-    .hero-leaf-left span:nth-child(2) { left: 10px; top: 34px; transform: rotate(-12deg); }
-    .hero-leaf-left span:nth-child(3) { left: 18px; top: 14px; transform: rotate(18deg); }
-
-    .hero-leaf-right span:nth-child(1) { right: 2px; top: 54px; transform: rotate(45deg); }
-    .hero-leaf-right span:nth-child(2) { right: 10px; top: 34px; transform: rotate(12deg); }
-    .hero-leaf-right span:nth-child(3) { right: 18px; top: 14px; transform: rotate(-18deg); }
-
-    .hero-bottom-lines {
-      position: absolute;
-      right: -8px;
-      bottom: 0;
-      width: 290px;
-      height: 88px;
-      background:
-        repeating-linear-gradient(
-          -26deg,
-          rgba(109,183,157,0.08) 0px,
-          rgba(109,183,157,0.08) 1px,
-          transparent 1px,
-          transparent 10px
-        );
-      opacity: 0.34;
-      border-radius: 90px 0 0 0;
+      right: 36px;
+      top: 110px;
+      width: 144px;
+      height: 190px;
+      z-index: 1;
+      opacity: 0.94;
       pointer-events: none;
-      z-index: 1;
     }
 
-    .hero-bottom-glow {
+    .hero-leaf-right .stem {
+      stroke: #79b993;
+      stroke-width: 3;
+      fill: none;
+    }
+
+    .hero-leaf-right .leaf-a { fill: #b9dcc5; }
+    .hero-leaf-right .leaf-b { fill: #95caaa; }
+    .hero-leaf-right .leaf-c { fill: #d1ead9; }
+    .hero-leaf-right .leaf-d { fill: #82bf98; }
+
+    .hero-soft-wave-left,
+    .hero-soft-wave-right {
       position: absolute;
-      left: 50%;
-      bottom: -34px;
-      transform: translateX(-50%);
-      width: 420px;
-      height: 90px;
-      background: radial-gradient(ellipse at center, rgba(181,227,209,0.18) 0%, rgba(181,227,209,0.08) 45%, transparent 70%);
+      z-index: 0;
       pointer-events: none;
-      z-index: 1;
+      border-radius: 50%;
+      opacity: 0.7;
     }
 
-    .hero-stars::before,
-    .hero-stars::after {
-      content: "✦";
-      position: absolute;
-      color: rgba(82,183,136,0.28);
-      font-size: 11px;
-      z-index: 1;
+    .hero-soft-wave-left {
+      left: -120px;
+      bottom: -45px;
+      width: 620px;
+      height: 170px;
+      background: radial-gradient(ellipse at center, rgba(214,235,222,0.9) 0%, rgba(214,235,222,0.45) 40%, rgba(214,235,222,0) 41%);
+      transform: rotate(-4deg);
     }
 
-    .hero-stars::before {
-      left: 330px;
-      top: 32px;
-    }
-
-    .hero-stars::after {
-      right: 360px;
-      top: 34px;
+    .hero-soft-wave-right {
+      right: -90px;
+      bottom: -55px;
+      width: 520px;
+      height: 180px;
+      background: radial-gradient(ellipse at center, rgba(184,223,199,0.82) 0%, rgba(184,223,199,0.38) 42%, rgba(184,223,199,0) 43%);
+      transform: rotate(8deg);
     }
 
     .hero-content {
       position: relative;
       z-index: 10;
       text-align: center;
+      max-width: 1100px;
     }
 
     .hero-title {
-      font-size: 42px;
-      font-weight: 700;
-      color: #0c7468;
-      margin: 0 0 10px 0;
-      letter-spacing: 0.25px;
-      line-height: 1.2;
-    }
-
-    .hero-subtitle {
-      font-size: 18px;
-      color: #5e6e80;
-      margin: 6px 0 0 0;
-      font-weight: 400;
-      line-height: 1.7;
+      font-size: 66px;
+      font-weight: 800;
+      color: #0c5c4d;
+      margin: 0;
+      letter-spacing: -1.2px;
+      line-height: 1.12;
+      text-shadow: 0 1px 0 rgba(255,255,255,0.35);
     }
 
     .hero-divider {
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 14px;
-      margin: 10px 0 8px;
+      gap: 18px;
+      margin: 18px 0 18px;
     }
 
     .div-line {
       display: block;
-      width: 86px;
-      height: 2px;
-      background: rgba(12,116,104,0.32);
-      border-radius: 2px;
+      width: 112px;
+      height: 3px;
+      background: rgba(44, 137, 105, 0.42);
+      border-radius: 999px;
     }
 
-    .div-icon {
-      font-size: 18px;
-      line-height: 1;
-      color: #2a9d8f;
+    .divider-leaf {
+      width: 54px;
+      height: 28px;
+    }
+
+    .divider-leaf path {
+      stroke: #2d8b65;
+      fill: #2d8b65;
+      stroke-width: 1.3;
+    }
+
+    .hero-subtitle {
+      font-size: 22px;
+      color: #596761;
+      margin: 0;
+      font-weight: 500;
+      line-height: 1.7;
     }
 
     .wave-bottom {
@@ -332,7 +424,7 @@
 
     .wave-bottom svg {
       width: 100%;
-      height: 54px;
+      height: 64px;
       display: block;
     }
 
@@ -340,27 +432,29 @@
     .menu-cards {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 20px;
-      padding: 30px 40px;
+      gap: 22px;
+      padding: 26px 32px 24px;
+      background: #f4f6f4;
     }
 
     .card {
       position: relative;
       overflow: hidden;
       background: #ffffff;
-      border-radius: 16px;
-      padding: 28px 20px;
+      border-radius: 24px;
+      padding: 30px 24px 28px;
       text-align: center;
       text-decoration: none;
       box-shadow: 0 4px 15px rgba(46,58,89,0.06);
       transition: all 0.25s ease;
-      border: 1px solid rgba(160, 206, 190, 0.15);
+      border: 1px solid rgba(160, 206, 190, 0.16);
       isolation: isolate;
+      min-height: 228px;
     }
 
     .card:hover {
       transform: translateY(-4px);
-      box-shadow: 0 8px 25px rgba(79, 160, 138, 0.12);
+      box-shadow: 0 8px 26px rgba(79, 160, 138, 0.12);
       border-color: rgba(160, 206, 190, 0.38);
     }
 
@@ -372,92 +466,93 @@
     }
 
     .card-icon {
-      width: 60px;
-      height: 60px;
-      margin: 0 auto 15px;
-      background: linear-gradient(135deg, #EEF7F1 0%, #E7F2EC 100%);
-      border-radius: 14px;
+      width: 88px;
+      height: 88px;
+      margin: 0 auto 20px;
+      background: linear-gradient(135deg, #EEF7F1 0%, #E5F2EA 100%);
+      border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 26px; 
+      font-size: 38px; 
       color: #0D6B63;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.8);
     }
 
     .card-title { 
-      font-size: 18px; 
-      font-weight: 600; 
-      color: #23453F; 
-      margin-bottom: 8px; 
+      font-size: 22px; 
+      font-weight: 700; 
+      color: #18493f; 
+      margin-bottom: 10px; 
+      line-height: 1.3;
     }
 
     .card-desc { 
-      font-size: 14px; 
+      font-size: 16px; 
       color: #6B7A90; 
-      line-height: 1.5; 
+      line-height: 1.6; 
     }
 
-    /* Decorative system for cards: one main accent per card */
     .card-dots {
       position: absolute;
-      width: 84px;
-      height: 84px;
-      background-image: radial-gradient(circle, rgba(109, 183, 157, 0.22) 1.4px, transparent 1.4px);
-      background-size: 12px 12px;
+      width: 92px;
+      height: 92px;
+      background-image: radial-gradient(circle, rgba(109, 183, 157, 0.20) 1.6px, transparent 1.6px);
+      background-size: 13px 13px;
       pointer-events: none;
       z-index: 0;
     }
 
     .card-wave {
       position: absolute;
-      right: -18px;
-      bottom: -18px;
-      width: 165px;
-      height: 92px;
-      background: radial-gradient(ellipse at bottom right, rgba(176, 220, 203, 0.22) 0%, rgba(176, 220, 203, 0.08) 48%, rgba(176, 220, 203, 0) 49%);
+      right: -24px;
+      bottom: -24px;
+      width: 180px;
+      height: 100px;
+      background: radial-gradient(ellipse at bottom right, rgba(176, 220, 203, 0.24) 0%, rgba(176, 220, 203, 0.09) 48%, rgba(176, 220, 203, 0) 49%);
       pointer-events: none;
       z-index: 0;
     }
 
     .card-leaf {
       position: absolute;
-      width: 42px;
-      height: 72px;
+      width: 50px;
+      height: 84px;
       pointer-events: none;
       z-index: 1;
-      opacity: 0.28;
+      opacity: 0.30;
     }
 
     .card-leaf::after {
       content: "";
       position: absolute;
       width: 2px;
-      height: 54px;
+      height: 60px;
       background: rgba(107, 177, 152, 0.20);
-      left: 16px;
-      top: 8px;
+      left: 19px;
+      top: 10px;
     }
 
     .card-leaf span {
       position: absolute;
-      width: 18px;
-      height: 9px;
+      width: 20px;
+      height: 10px;
       background: linear-gradient(135deg, rgba(123, 197, 170, 0.54), rgba(123, 197, 170, 0.16));
       border-radius: 100% 0 100% 0;
       display: block;
     }
 
-    .card-leaf.right span:nth-child(1) { right: 0; top: 34px; transform: rotate(45deg); }
-    .card-leaf.right span:nth-child(2) { right: 7px; top: 20px; transform: rotate(12deg); }
-    .card-leaf.right span:nth-child(3) { right: 14px; top: 8px; transform: rotate(-15deg); }
+    .card-leaf.right span:nth-child(1) { right: 0; top: 40px; transform: rotate(45deg); }
+    .card-leaf.right span:nth-child(2) { right: 8px; top: 24px; transform: rotate(12deg); }
+    .card-leaf.right span:nth-child(3) { right: 16px; top: 10px; transform: rotate(-15deg); }
 
     .card-geo {
       position: absolute;
-      top: 16px;
+      top: 18px;
       right: 18px;
-      width: 86px;
-      height: 42px;
-      opacity: 0.18;
+      width: 96px;
+      height: 52px;
+      opacity: 0.20;
       pointer-events: none;
       z-index: 0;
     }
@@ -477,13 +572,13 @@
     .card-geo span:nth-child(5) { top: 24px; left: 18px; }
     .card-geo span:nth-child(6) { top: 16px; left: 36px; }
 
-    .kb .card-dots { left: 18px; top: 18px; }
+    .kb .card-dots { left: 20px; top: 18px; }
     .kb .card-wave { right: -10px; bottom: -14px; }
 
-    .lp .card-geo { right: 20px; top: 16px; }
+    .lp .card-geo { right: 18px; top: 16px; }
     .lp .card-wave { right: -10px; bottom: -14px; }
 
-    .quiz .card-dots { left: 18px; top: 18px; opacity: 0.18; }
+    .quiz .card-dots { left: 20px; top: 18px; opacity: 0.18; }
     .quiz .card-wave { right: -10px; bottom: -14px; }
 
     .share .card-dots { right: 18px; top: 18px; }
@@ -495,9 +590,9 @@
       position: relative;
       overflow: hidden;
       background: #ffffff;
-      border-radius: 16px;
-      padding: 22px 28px;
-      margin: 0 40px 20px 40px;
+      border-radius: 20px;
+      padding: 24px 28px;
+      margin: 0 32px 24px 32px;
       box-shadow: 0 4px 15px rgba(46,58,89,0.06);
       border-left: 6px solid #0D6B63;
     }
@@ -505,10 +600,10 @@
     .new-employee::after {
       content: "";
       position: absolute;
-      top: 20px;
+      top: 18px;
       right: 18px;
-      width: 82px;
-      height: 48px;
+      width: 90px;
+      height: 54px;
       background-image: radial-gradient(circle, rgba(109, 183, 157, 0.18) 1.5px, transparent 1.5px);
       background-size: 12px 12px;
       opacity: 0.45;
@@ -516,8 +611,8 @@
     }
 
     .new-employee h3 { 
-      font-size: 18px; 
-      font-weight: 600; 
+      font-size: 20px; 
+      font-weight: 700; 
       color: #23453F; 
       margin-bottom: 12px; 
       position: relative;
@@ -533,7 +628,7 @@
       margin-left: 22px; 
       color: #2E3A59; 
       line-height: 1.9; 
-      font-size: 14px; 
+      font-size: 15px; 
       position: relative;
       z-index: 1;
     }
@@ -544,42 +639,87 @@
 
     .footer { 
       text-align: center; 
-      padding: 15px 40px; 
+      padding: 15px 40px 24px; 
       color: #8A98AD; 
       font-size: 13px; 
     }
 
+    @media (max-width: 992px) {
+      .hero-title {
+        font-size: 52px;
+      }
+
+      .hero-subtitle {
+        font-size: 18px;
+      }
+    }
+
     @media (max-width: 768px) {
-      .container { flex-direction: column; }
+      .container { 
+        flex-direction: column; 
+      }
 
       .sidebar {
         width: 100%;
-        height: 60px;
+        height: 70px;
         flex-direction: row;
         justify-content: center;
-        padding: 10px;
+        padding: 8px 10px;
         position: sticky;
         top: 0;
+        gap: 10px;
       }
 
-      .main-content { margin-left: 0; }
+      .sidebar-icon {
+        width: 48px;
+        height: 48px;
+        font-size: 21px;
+      }
+
+      .main-content { 
+        margin-left: 0; 
+      }
 
       .hero-section {
-        min-height: 170px;
-        padding: 40px 20px;
+        min-height: 280px;
+        padding: 48px 20px 76px;
       }
 
-      .hero-title { font-size: 28px; }
-      .hero-subtitle { font-size: 15px; }
+      .hero-title { 
+        font-size: 34px; 
+        letter-spacing: 0;
+      }
 
-      .hero-top-lines,
+      .hero-subtitle { 
+        font-size: 15px; 
+      }
+
+      .div-line {
+        width: 60px;
+      }
+
+      .hero-top-wave,
+      .hero-bottom-wave,
       .hero-dots-left,
-      .hero-geo-right,
+      .hero-dots-bottom,
+      .hero-mini-dots-right,
+      .hero-hexagon,
       .hero-leaf-left,
       .hero-leaf-right,
-      .hero-bottom-lines,
-      .hero-bottom-glow {
-        opacity: 0.18;
+      .hero-sparkle {
+        opacity: 0.42;
+      }
+
+      .hero-leaf-left {
+        width: 118px;
+        left: 12px;
+        bottom: 8px;
+      }
+
+      .hero-leaf-right {
+        width: 92px;
+        right: 12px;
+        top: 138px;
       }
 
       .menu-cards {
@@ -587,8 +727,28 @@
         padding: 20px;
       }
 
+      .card {
+        min-height: 210px;
+        border-radius: 20px;
+      }
+
+      .card-icon {
+        width: 76px;
+        height: 76px;
+        font-size: 32px;
+      }
+
+      .card-title {
+        font-size: 20px;
+      }
+
+      .card-desc {
+        font-size: 15px;
+      }
+
       .new-employee {
         margin: 0 20px 20px 20px;
+        border-radius: 16px;
       }
     }
   </style>
@@ -597,7 +757,7 @@
 <body>
   <div class="container">
     <nav class="sidebar">
-      <a class="sidebar-icon" href="index.html"><i class="fas fa-home"></i></a>
+      <a class="sidebar-icon active" href="index.html"><i class="fas fa-home"></i></a>
       <a class="sidebar-icon" href="knowledge-base.html"><i class="fas fa-book"></i></a>
       <a class="sidebar-icon" href="learning-path.html"><i class="fas fa-graduation-cap"></i></a>
       <a class="sidebar-icon" href="quiz.html"><i class="fas fa-clipboard-check"></i></a>
@@ -607,32 +767,75 @@
 
     <main class="main-content">
       <header class="hero-section">
-        <div class="hero-top-lines"></div>
+        <div class="hero-bg"></div>
+        <div class="hero-bg-wave-left"></div>
+        <div class="hero-bg-wave-right"></div>
+
+        <svg class="hero-top-wave" viewBox="0 0 600 220" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0 120C80 60 180 20 290 35C390 48 490 20 600 0" />
+          <path d="M0 145C95 80 195 45 305 58C405 70 500 45 600 25" />
+          <path d="M0 170C110 100 210 65 320 80C420 95 515 75 600 55" />
+          <path d="M0 195C120 120 220 90 335 105C435 118 525 98 600 80" />
+        </svg>
+
+        <svg class="hero-bottom-wave" viewBox="0 0 600 220" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0 120C80 60 180 20 290 35C390 48 490 20 600 0" />
+          <path d="M0 145C95 80 195 45 305 58C405 70 500 45 600 25" />
+          <path d="M0 170C110 100 210 65 320 80C420 95 515 75 600 55" />
+          <path d="M0 195C120 120 220 90 335 105C435 118 525 98 600 80" />
+        </svg>
+
         <div class="hero-dots-left"></div>
+        <div class="hero-dots-bottom"></div>
+        <div class="hero-mini-dots-right"></div>
 
-        <div class="hero-geo-right">
-          <span></span><span></span><span></span><span></span>
-          <span></span><span></span><span></span><span></span>
-        </div>
+        <svg class="hero-hexagon" viewBox="0 0 320 140" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="40,30 55,18 75,18 90,30 75,48 55,48"/>
+          <polygon points="105,22 120,10 140,10 155,22 140,40 120,40"/>
+          <polygon points="170,34 185,22 205,22 220,34 205,52 185,52"/>
+          <polygon points="235,20 250,8 270,8 285,20 270,38 250,38"/>
+          <polygon points="285,72 300,60 320,60 335,72 320,84 300,84" transform="translate(-20 0)"/>
+          <line x1="90" y1="30" x2="105" y2="22"/>
+          <line x1="155" y1="22" x2="170" y2="34"/>
+          <line x1="220" y1="34" x2="235" y2="20"/>
+        </svg>
 
-        <div class="hero-leaf-left">
-          <span></span><span></span><span></span>
-        </div>
+        <span class="hero-sparkle s1">✦</span>
+        <span class="hero-sparkle s2">✦</span>
+        <span class="hero-sparkle s3">✦</span>
+        <span class="hero-sparkle s4">✦</span>
 
-        <div class="hero-leaf-right">
-          <span></span><span></span><span></span>
-        </div>
+        <svg class="hero-leaf-left" viewBox="0 0 220 220" xmlns="http://www.w3.org/2000/svg">
+          <path class="stem" d="M108 210C108 165 111 120 136 54"/>
+          <path class="leaf-a" d="M128 151C92 145 67 121 56 92C89 101 115 121 128 151Z"/>
+          <path class="leaf-b" d="M140 118C177 114 200 90 208 58C175 63 151 84 140 118Z"/>
+          <path class="leaf-c" d="M114 186C76 182 50 157 39 125C74 134 98 155 114 186Z"/>
+          <path class="leaf-d" d="M120 92C92 88 76 72 68 48C94 54 113 68 120 92Z"/>
+        </svg>
 
-        <div class="hero-bottom-lines"></div>
-        <div class="hero-bottom-glow"></div>
-        <div class="hero-stars"></div>
+        <svg class="hero-leaf-right" viewBox="0 0 180 220" xmlns="http://www.w3.org/2000/svg">
+          <path class="stem" d="M70 210C72 165 78 120 98 50"/>
+          <path class="leaf-a" d="M100 80C128 80 150 56 158 25C130 32 110 50 100 80Z"/>
+          <path class="leaf-b" d="M88 118C128 116 154 92 164 62C128 68 104 86 88 118Z"/>
+          <path class="leaf-c" d="M78 158C120 156 146 130 156 100C118 106 94 124 78 158Z"/>
+          <path class="leaf-d" d="M70 196C110 194 136 170 146 142C112 148 88 164 70 196Z"/>
+        </svg>
+
+        <div class="hero-soft-wave-left"></div>
+        <div class="hero-soft-wave-right"></div>
 
         <div class="hero-content">
           <h1 class="hero-title">Knowledge Management System</h1>
 
           <div class="hero-divider">
             <span class="div-line"></span>
-            <span class="div-icon"><i class="fas fa-seedling"></i></span>
+
+            <svg class="divider-leaf" viewBox="0 0 60 30" xmlns="http://www.w3.org/2000/svg">
+              <path d="M29 24C29 16 31 10 35 4" />
+              <path d="M27 18C19 18 13 13 10 7C18 8 24 12 27 18Z" />
+              <path d="M34 15C42 15 47 10 50 4C42 5 37 9 34 15Z" />
+            </svg>
+
             <span class="div-line"></span>
           </div>
 
@@ -641,7 +844,7 @@
 
         <div class="wave-bottom">
           <svg viewBox="0 0 1440 80" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
-            <path d="M0,40 C360,80 720,0 1080,50 C1260,75 1380,60 1440,40 L1440,80 L0,80 Z" fill="#f4f6f4"/>
+            <path d="M0,42 C310,92 660,6 1030,48 C1240,72 1360,63 1440,42 L1440,80 L0,80 Z" fill="#f4f6f4"/>
           </svg>
         </div>
       </header>
