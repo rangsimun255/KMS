@@ -107,11 +107,11 @@
     .header {
       position: relative;
       overflow: hidden;
-      background: linear-gradient(180deg, #EEF6F1 0%, #E7F2EC 100%);
+      background: linear-gradient(180deg, #F3FAF6 0%, #EEF7F2 100%);
       padding: 60px 40px;
       min-height: 240px;
       text-align: center;
-      box-shadow: 0 4px 15px rgba(55, 110, 95, 0.08);
+      box-shadow: 0 4px 15px rgba(55, 110, 95, 0.05);
 
       display: flex;
       flex-direction: column;
@@ -120,91 +120,185 @@
       isolation: isolate;
     }
 
-    /* wave ด้านบน */
+    /* wave ใหญ่ซ้ายบน + ล่าง */
     .header::before {
       content: "";
       position: absolute;
       inset: 0;
       background:
-        radial-gradient(950px 240px at 12% -25%, rgba(116, 190, 164, 0.30) 0%, rgba(116, 190, 164, 0.14) 34%, rgba(116, 190, 164, 0) 35%),
-        radial-gradient(1050px 220px at 40% -32%, rgba(143, 210, 184, 0.18) 0%, rgba(143, 210, 184, 0.08) 35%, rgba(143, 210, 184, 0) 36%),
-        radial-gradient(520px 120px at 28% 100%, rgba(162, 219, 197, 0.22) 0%, rgba(162, 219, 197, 0.10) 48%, rgba(162, 219, 197, 0) 49%),
-        radial-gradient(520px 120px at 94% 100%, rgba(108, 182, 156, 0.24) 0%, rgba(108, 182, 156, 0.10) 48%, rgba(108, 182, 156, 0) 49%);
+        radial-gradient(900px 220px at 10% -35%, rgba(92, 180, 150, 0.28) 0%, rgba(92, 180, 150, 0.12) 33%, transparent 34%),
+        radial-gradient(760px 180px at 20% -30%, rgba(147, 214, 188, 0.20) 0%, rgba(147, 214, 188, 0.08) 36%, transparent 37%),
+        radial-gradient(520px 120px at 28% 100%, rgba(181, 227, 209, 0.24) 0%, rgba(181, 227, 209, 0.10) 48%, transparent 49%),
+        radial-gradient(560px 130px at 94% 100%, rgba(118, 194, 168, 0.22) 0%, rgba(118, 194, 168, 0.10) 48%, transparent 49%);
       pointer-events: none;
       z-index: -3;
     }
 
-    /* เส้นมุมซ้ายบน */
-    .header-wave-top {
+    /* เส้นโค้งมุมซ้ายบน */
+    .header::after {
+      content: "";
       position: absolute;
-      top: -10px;
-      left: -18px;
-      width: 270px;
-      height: 88px;
+      left: -20px;
+      top: -18px;
+      width: 340px;
+      height: 95px;
       background:
         repeating-linear-gradient(
           -18deg,
-          rgba(109, 183, 157, 0.12) 0px,
-          rgba(109, 183, 157, 0.12) 1px,
+          rgba(111, 189, 164, 0.14) 0px,
+          rgba(111, 189, 164, 0.14) 1px,
           transparent 1px,
           transparent 8px
         );
       opacity: 0.55;
-      border-radius: 0 0 90px 0;
+      border-radius: 0 0 120px 0;
       pointer-events: none;
       z-index: -2;
     }
 
-    /* เส้นมุมขวาล่าง */
-    .header-wave-bottom {
+    .header-top-lines {
       position: absolute;
-      right: -20px;
-      bottom: 0;
-      width: 320px;
-      height: 110px;
+      left: 0;
+      top: 0;
+      width: 300px;
+      height: 70px;
       background:
         repeating-linear-gradient(
-          -24deg,
-          rgba(109, 183, 157, 0.10) 0px,
-          rgba(109, 183, 157, 0.10) 1px,
+          -18deg,
+          rgba(109, 183, 157, 0.08) 0px,
+          rgba(109, 183, 157, 0.08) 1px,
           transparent 1px,
           transparent 9px
         );
-      opacity: 0.42;
-      border-radius: 100px 0 0 0;
-      pointer-events: none;
-      z-index: -2;
-    }
-
-    /* dot ซ้าย */
-    .header-dots {
-      position: absolute;
-      left: 92px;
-      top: 54px;
-      width: 92px;
-      height: 92px;
-      background-image: radial-gradient(circle, rgba(110, 183, 157, 0.38) 1.5px, transparent 1.5px);
-      background-size: 14px 14px;
-      opacity: 0.6;
-      pointer-events: none;
-      z-index: -1;
-    }
-
-    /* ดอทเล็กด้านล่างซ้าย */
-    .header-dots-small {
-      position: absolute;
-      left: 164px;
-      bottom: 36px;
-      width: 84px;
-      height: 48px;
-      background-image: radial-gradient(circle, rgba(110, 183, 157, 0.30) 1.4px, transparent 1.4px);
-      background-size: 14px 14px;
       opacity: 0.45;
       pointer-events: none;
       z-index: -1;
     }
 
-    /* ดาวเล็ก */
+    .header-left-dots {
+      position: absolute;
+      left: 92px;
+      top: 70px;
+      width: 86px;
+      height: 86px;
+      background-image: radial-gradient(circle, rgba(109, 183, 157, 0.36) 1.5px, transparent 1.5px);
+      background-size: 14px 14px;
+      opacity: 0.55;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .header-right-geo {
+      position: absolute;
+      top: 22px;
+      right: 86px;
+      width: 150px;
+      height: 56px;
+      pointer-events: none;
+      opacity: 0.45;
+      z-index: -1;
+    }
+
+    .header-right-geo span {
+      position: absolute;
+      width: 18px;
+      height: 10px;
+      border-top: 2px solid rgba(109,183,157,0.34);
+      border-bottom: 2px solid rgba(109,183,157,0.34);
+    }
+
+    .header-right-geo span:nth-child(1) { top: 0; left: 0; }
+    .header-right-geo span:nth-child(2) { top: 8px; left: 22px; }
+    .header-right-geo span:nth-child(3) { top: 0; left: 44px; }
+    .header-right-geo span:nth-child(4) { top: 16px; left: 0; }
+    .header-right-geo span:nth-child(5) { top: 24px; left: 22px; }
+    .header-right-geo span:nth-child(6) { top: 16px; left: 44px; }
+    .header-right-geo span:nth-child(7) { top: 0; left: 88px; }
+    .header-right-geo span:nth-child(8) { top: 16px; left: 88px; }
+
+    .header-left-leaf,
+    .header-right-leaf {
+      position: absolute;
+      width: 64px;
+      height: 110px;
+      pointer-events: none;
+      opacity: 0.38;
+      z-index: -1;
+    }
+
+    .header-left-leaf {
+      left: 118px;
+      bottom: 28px;
+      transform: rotate(-12deg);
+    }
+
+    .header-right-leaf {
+      right: 88px;
+      bottom: 26px;
+      transform: rotate(10deg);
+    }
+
+    .header-left-leaf::after,
+    .header-right-leaf::after {
+      content: "";
+      position: absolute;
+      width: 2px;
+      height: 92px;
+      background: rgba(109,183,157,0.28);
+      left: 28px;
+      top: 10px;
+    }
+
+    .header-left-leaf span,
+    .header-right-leaf span {
+      position: absolute;
+      display: block;
+      width: 24px;
+      height: 12px;
+      background: linear-gradient(135deg, rgba(135,206,179,0.65), rgba(135,206,179,0.22));
+      border-radius: 100% 0 100% 0;
+    }
+
+    .header-left-leaf span:nth-child(1) { left: 2px; top: 54px; transform: rotate(-45deg); }
+    .header-left-leaf span:nth-child(2) { left: 10px; top: 34px; transform: rotate(-12deg); }
+    .header-left-leaf span:nth-child(3) { left: 18px; top: 14px; transform: rotate(18deg); }
+
+    .header-right-leaf span:nth-child(1) { right: 2px; top: 54px; transform: rotate(45deg); }
+    .header-right-leaf span:nth-child(2) { right: 10px; top: 34px; transform: rotate(12deg); }
+    .header-right-leaf span:nth-child(3) { right: 18px; top: 14px; transform: rotate(-18deg); }
+
+    .header-bottom-lines {
+      position: absolute;
+      right: -8px;
+      bottom: 0;
+      width: 290px;
+      height: 90px;
+      background:
+        repeating-linear-gradient(
+          -26deg,
+          rgba(109,183,157,0.10) 0px,
+          rgba(109,183,157,0.10) 1px,
+          transparent 1px,
+          transparent 9px
+        );
+      opacity: 0.38;
+      border-radius: 90px 0 0 0;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .header-bottom-glow {
+      position: absolute;
+      left: 50%;
+      bottom: -34px;
+      transform: translateX(-50%);
+      width: 420px;
+      height: 90px;
+      background: radial-gradient(ellipse at center, rgba(181,227,209,0.22) 0%, rgba(181,227,209,0.10) 45%, transparent 70%);
+      pointer-events: none;
+      z-index: -1;
+    }
+
     .header-stars::before,
     .header-stars::after {
       content: "✦";
@@ -225,109 +319,12 @@
       top: 86px;
     }
 
-    /* hex มุมขวาบน */
-    .header-hex {
-      position: absolute;
-      top: 24px;
-      right: 94px;
-      width: 210px;
-      height: 84px;
-      pointer-events: none;
-      z-index: -1;
-      opacity: 0.42;
-    }
-
-    .hex {
-      position: absolute;
-      width: 30px;
-      height: 17px;
-      border-top: 2px solid rgba(109, 183, 157, 0.40);
-      border-bottom: 2px solid rgba(109, 183, 157, 0.40);
-    }
-
-    .hex::before,
-    .hex::after {
-      content: "";
-      position: absolute;
-      width: 21px;
-      height: 21px;
-      border-top: 2px solid rgba(109, 183, 157, 0.40);
-      border-right: 2px solid rgba(109, 183, 157, 0.40);
-      transform: scaleY(0.58) rotate(-45deg);
-      background: transparent;
-      left: 3px;
-    }
-
-    .hex::before { top: -12px; }
-    .hex::after { bottom: -12px; }
-
-    .hx1 { top: 10px; left: 0; }
-    .hx2 { top: 0; left: 52px; }
-    .hx3 { top: 15px; left: 104px; }
-    .hx4 { top: 36px; left: 28px; }
-    .hx5 { top: 36px; left: 82px; }
-    .hx6 { top: 12px; left: 156px; }
-
-    /* ใบไม้ซ้ายใน header */
-    .header-leaf-left,
-    .header-leaf-right {
-      position: absolute;
-      width: 82px;
-      height: 110px;
-      pointer-events: none;
-      z-index: -1;
-      opacity: 0.55;
-    }
-
-    .header-leaf-left {
-      left: 88px;
-      bottom: 12px;
-      transform: rotate(-10deg);
-    }
-
-    .header-leaf-right {
-      right: 76px;
-      bottom: 10px;
-      transform: rotate(8deg);
-    }
-
-    .header-leaf-left::after,
-    .header-leaf-right::after {
-      content: "";
-      position: absolute;
-      width: 2px;
-      height: 96px;
-      background: rgba(107, 177, 152, 0.35);
-      left: 34px;
-      top: 8px;
-    }
-
-    .header-leaf-left span,
-    .header-leaf-right span {
-      position: absolute;
-      display: block;
-      width: 28px;
-      height: 14px;
-      background: linear-gradient(135deg, rgba(123, 197, 170, 0.70), rgba(123, 197, 170, 0.28));
-      border-radius: 100% 0 100% 0;
-    }
-
-    .header-leaf-left span:nth-child(1) { left: 2px; top: 56px; transform: rotate(-45deg); }
-    .header-leaf-left span:nth-child(2) { left: 12px; top: 38px; transform: rotate(-18deg); }
-    .header-leaf-left span:nth-child(3) { left: 22px; top: 20px; transform: rotate(8deg); }
-    .header-leaf-left span:nth-child(4) { left: 34px; top: 2px; transform: rotate(32deg); }
-
-    .header-leaf-right span:nth-child(1) { right: 2px; top: 56px; transform: rotate(45deg); }
-    .header-leaf-right span:nth-child(2) { right: 12px; top: 38px; transform: rotate(18deg); }
-    .header-leaf-right span:nth-child(3) { right: 22px; top: 20px; transform: rotate(-8deg); }
-    .header-leaf-right span:nth-child(4) { right: 34px; top: 2px; transform: rotate(-32deg); }
-
     .header h1 {
       font-size: 42px; 
       font-weight: 700; 
-      color: #0D6B63;
-      margin-bottom: 12px;
-      letter-spacing: 0.6px;
+      color: #0C7468;
+      margin-bottom: 14px;
+      letter-spacing: 0.4px;
       text-shadow: none;
       position: relative;
       z-index: 2;
@@ -337,29 +334,29 @@
       display: flex;
       align-items: center;
       gap: 14px;
-      margin-bottom: 12px;
+      margin-bottom: 14px;
       position: relative;
       z-index: 2;
     }
 
     .header-decor .line {
-      width: 88px;
+      width: 86px;
       height: 2px;
-      background: rgba(13, 107, 99, 0.35);
+      background: rgba(12, 116, 104, 0.32);
       border-radius: 999px;
     }
 
     .header-decor .icon {
       color: #2A9D8F;
-      font-size: 19px;
+      font-size: 20px;
       line-height: 1;
     }
 
     .header .subtitle {
-      font-size: 18px; 
-      color: #566476;
-      max-width: 650px; 
-      margin: 0 auto; 
+      font-size: 18px;
+      color: #5E6E80;
+      max-width: 650px;
+      margin: 0 auto;
       line-height: 1.7;
       position: relative;
       z-index: 2;
@@ -426,7 +423,6 @@
       line-height: 1.5; 
     }
 
-    /* card patterns */
     .card-dots {
       position: absolute;
       width: 84px;
@@ -444,23 +440,6 @@
       width: 170px;
       height: 95px;
       background: radial-gradient(ellipse at bottom right, rgba(176, 220, 203, 0.32) 0%, rgba(176, 220, 203, 0.16) 48%, rgba(176, 220, 203, 0) 49%);
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    .card-lines {
-      position: absolute;
-      width: 90px;
-      height: 56px;
-      background:
-        repeating-linear-gradient(
-          -28deg,
-          rgba(109, 183, 157, 0.10) 0px,
-          rgba(109, 183, 157, 0.10) 1px,
-          transparent 1px,
-          transparent 8px
-        );
-      opacity: 0.45;
       pointer-events: none;
       z-index: 0;
     }
@@ -512,10 +491,36 @@
       z-index: 0;
     }
 
-    .card-hex .hex {
-      transform: scale(0.72);
-      transform-origin: top left;
+    .hex {
+      position: absolute;
+      width: 30px;
+      height: 17px;
+      border-top: 2px solid rgba(109, 183, 157, 0.40);
+      border-bottom: 2px solid rgba(109, 183, 157, 0.40);
     }
+
+    .hex::before,
+    .hex::after {
+      content: "";
+      position: absolute;
+      width: 21px;
+      height: 21px;
+      border-top: 2px solid rgba(109, 183, 157, 0.40);
+      border-right: 2px solid rgba(109, 183, 157, 0.40);
+      transform: scaleY(0.58) rotate(-45deg);
+      background: transparent;
+      left: 3px;
+    }
+
+    .hex::before { top: -12px; }
+    .hex::after { bottom: -12px; }
+
+    .hx1 { top: 10px; left: 0; }
+    .hx2 { top: 0; left: 52px; }
+    .hx3 { top: 15px; left: 104px; }
+    .hx4 { top: 36px; left: 28px; }
+    .hx5 { top: 36px; left: 82px; }
+    .hx6 { top: 12px; left: 156px; }
 
     .kb .card-dots { left: 18px; top: 18px; }
     .kb .card-wave { right: -10px; bottom: -14px; }
@@ -592,7 +597,6 @@
 
     @media (max-width: 768px) {
       .container { flex-direction: column; }
-
       .sidebar {
         width: 100%;
         height: 60px;
@@ -602,7 +606,6 @@
         position: sticky;
         top: 0;
       }
-
       .main-content { margin-left: 0; }
       .menu-cards { grid-template-columns: 1fr; padding: 20px; }
       .new-employee { margin: 0 20px 20px 20px; }
@@ -611,14 +614,14 @@
       .header h1 { font-size: 28px; }
       .header .subtitle { font-size: 15px; }
 
-      .header-dots,
-      .header-dots-small,
-      .header-wave-top,
-      .header-wave-bottom,
-      .header-hex,
-      .header-leaf-left,
-      .header-leaf-right {
-        opacity: 0.24;
+      .header-top-lines,
+      .header-left-dots,
+      .header-right-geo,
+      .header-left-leaf,
+      .header-right-leaf,
+      .header-bottom-lines,
+      .header-bottom-glow {
+        opacity: 0.22;
       }
     }
   </style>
@@ -637,28 +640,25 @@
 
     <main class="main-content">
       <header class="header">
-        <div class="header-wave-top"></div>
-        <div class="header-wave-bottom"></div>
-        <div class="header-dots"></div>
-        <div class="header-dots-small"></div>
+        <div class="header-top-lines"></div>
+        <div class="header-left-dots"></div>
+
+        <div class="header-right-geo">
+          <span></span><span></span><span></span><span></span>
+          <span></span><span></span><span></span><span></span>
+        </div>
+
+        <div class="header-left-leaf">
+          <span></span><span></span><span></span>
+        </div>
+
+        <div class="header-right-leaf">
+          <span></span><span></span><span></span>
+        </div>
+
+        <div class="header-bottom-lines"></div>
+        <div class="header-bottom-glow"></div>
         <div class="header-stars"></div>
-
-        <div class="header-hex">
-          <span class="hex hx1"></span>
-          <span class="hex hx2"></span>
-          <span class="hex hx3"></span>
-          <span class="hex hx4"></span>
-          <span class="hex hx5"></span>
-          <span class="hex hx6"></span>
-        </div>
-
-        <div class="header-leaf-left">
-          <span></span><span></span><span></span><span></span>
-        </div>
-
-        <div class="header-leaf-right">
-          <span></span><span></span><span></span><span></span>
-        </div>
 
         <h1>Knowledge Management System</h1>
 
