@@ -194,7 +194,10 @@
       <a class="sidebar-icon" data-page="lp" href="learning-path.html"><i class="fas fa-graduation-cap"></i></a>
       <a class="sidebar-icon active" data-page="quiz" href="quiz.html"><i class="fas fa-clipboard-check"></i></a>
       <a class="sidebar-icon" data-page="share" href="share-experience.html"><i class="fas fa-comments"></i></a>
-      <a class="sidebar-icon logout" href="#"><i class="fas fa-sign-out-alt"></i></a>
+
+      <a class="sidebar-icon" href="login.html" id="logoutBtn">
+        <i class="fas fa-sign-out-alt"></i>
+      </a>
     </nav>
 
     <main class="main-content">
@@ -371,16 +374,23 @@
       });
     }
 
-    document.querySelector('.logout')?.addEventListener('click', function (e) {
-      e.preventDefault();
-      localStorage.removeItem('kmsUser');
-      sessionStorage.removeItem('kmsUser');
-      localStorage.removeItem('currentUser');
-      sessionStorage.removeItem('currentUser');
-      window.location.href = 'login.html';
-    });
-
     renderQuizCards();
+  </script>
+
+  <script>
+    document.getElementById('logoutBtn').addEventListener('click', function(event) {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+
+      localStorage.removeItem('currentUser');
+      localStorage.removeItem('kmsUser');
+      localStorage.removeItem('savedEmployeeId');
+
+      sessionStorage.removeItem('currentUser');
+      sessionStorage.removeItem('kmsUser');
+
+      window.location.replace('login.html');
+    }, true);
   </script>
 
   <script src="Js"></script>
