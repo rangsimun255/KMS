@@ -22,7 +22,6 @@
     }
     .container{display:flex;min-height:100vh}
 
-    /* Sidebar */
     .sidebar{
       width:70px;
       background:linear-gradient(180deg,#4A89C8 0%,#2E75B6 100%);
@@ -41,7 +40,6 @@
 
     .main-content{flex:1;margin-left:70px;width:calc(100% - 70px);padding:0}
 
-    /* HEADER STANDARD */
     .header{
       background:linear-gradient(135deg,#4A89C8 0%,#2E75B6 100%);
       padding:60px 40px;
@@ -81,7 +79,6 @@
     }
     .btn-back:hover{background:#2E75B6}
 
-    /* Slide Layout */
     .stage{
       display:grid;
       grid-template-columns: 1fr 340px;
@@ -116,7 +113,6 @@
       display:flex;flex-direction:column;gap:12px;flex:1;
     }
 
-    /* ✅ กล่องฟ้าเอาออก -> ขาวล้วน (ข้อความอยู่เหมือนเดิม) */
     .detail{
       color:#2E3A59;
       font-size:14px;
@@ -128,7 +124,6 @@
       white-space: pre-line;
     }
 
-    /* WI Button */
     .wi-actions{ margin-top: 10px; }
     .btn-wi{
       display:inline-flex;align-items:center;justify-content:center;gap:10px;
@@ -143,15 +138,10 @@
       background:#c9d6e3;color:#5b6b7a;box-shadow:none;pointer-events:none;
     }
 
-    /* =====================================================
-       ✅ FRAME ลายเฉียงแบบ "ไม่มีกรอบข้างใน"
-       - ไม่มีช่องว่างสีขาวที่ขอบ
-       - ไม่มีเส้นกรอบด้านใน
-    ====================================================== */
     .hazard-frame{
-      --b:8px;     /* ความหนาขอบ */
-      --r:22px;     /* ความโค้ง */
-      --pad:0px;    /* ✅ ไม่มีช่องว่างสีขาว */
+      --b:8px;
+      --r:22px;
+      --pad:0px;
       position:relative;
       border-radius:var(--r);
       padding:calc(var(--b) + var(--pad));
@@ -170,7 +160,6 @@
       );
       z-index:0;
     }
-    /* ✅ แผ่นด้านใน: ปิดให้เหลือแค่ "ขอบลายเฉียง" จริง ๆ */
     .hazard-frame::after{
       content:"";
       position:absolute;
@@ -191,14 +180,13 @@
       --inner:#FFF8E1;
     }
 
-    /* ✅ กล่องข้างใน "ไม่มีเส้นกรอบ" + ✅ ขึ้นบรรทัดใหม่เหมือนเดิม */
     .critical, .impact{
       position:relative;
       z-index:2;
       border:none !important;
       outline:none;
       box-shadow:none;
-      border-radius:0;     /* ✅ กันมองเหมือนมีกรอบซ้อน */
+      border-radius:0;
       padding:18px;
       display:flex;gap:10px;align-items:flex-start;
       font-size:14px;font-weight:800;
@@ -206,7 +194,7 @@
     }
     .critical{
       color:#B71C1C;
-      white-space: pre-line; /* ✅ ให้ \n ขึ้นบรรทัดใหม่เหมือนเดิม */
+      white-space: pre-line;
     }
     .impact{ color:#7A4F00; }
 
@@ -218,7 +206,6 @@
     .impact-subtitle{font-weight:900;margin-top:12px;margin-bottom:6px}
     .impact-list{white-space:pre-line;font-weight:800}
 
-    /* Right panel */
     .panel{
       background:#fff;border-radius:18px;
       box-shadow:0 2px 10px rgba(46,58,89,.08);
@@ -254,17 +241,17 @@
     .btn-next:hover{background:#2E75B6}
 
     .btn-defect{
-  margin-top:10px;display:flex;align-items:center;justify-content:center;gap:8px;
-  padding:14px;border-radius:14px;
-  background:#4A89C8;
-  color:#fff;
-  font-weight:900;text-decoration:none;transition:.2s;
-}
+      margin-top:10px;display:flex;align-items:center;justify-content:center;gap:8px;
+      padding:14px;border-radius:14px;
+      background:#4A89C8;
+      color:#fff;
+      font-weight:900;text-decoration:none;transition:.2s;
+    }
 
-.btn-defect:hover{
-  background:#2E75B6;
-}
-    .btn-defect:hover{filter:brightness(.95)}
+    .btn-defect:hover{
+      background:#2E75B6;
+      filter:brightness(.95)
+    }
 
     .mini-list{border:1px solid #eef3f8;border-radius:16px;overflow:hidden}
     .mini-item{
@@ -311,10 +298,10 @@
 <nav class="sidebar">
   <a class="sidebar-icon" data-page="index" href="index.html"><i class="fas fa-home"></i></a>
   <a class="sidebar-icon" data-page="kb" href="knowledge-base.html"><i class="fas fa-book"></i></a>
-  <a class="sidebar-icon" data-page="lp" href="learning-path.html"><i class="fas fa-graduation-cap"></i></a>
+  <a class="sidebar-icon active" data-page="lp" href="learning-path.html"><i class="fas fa-graduation-cap"></i></a>
   <a class="sidebar-icon" data-page="quiz" href="quiz.html"><i class="fas fa-clipboard-check"></i></a>
   <a class="sidebar-icon" data-page="share" href="share-experience.html"><i class="fas fa-comments"></i></a>
-  <a class="sidebar-icon logout" href="#"><i class="fas fa-sign-out-alt"></i></a>
+  <a class="sidebar-icon" href="#" onclick="logout(event)"><i class="fas fa-sign-out-alt"></i></a>
 </nav>
 
   <main class="main-content">
@@ -356,10 +343,25 @@
   let wiLink = "";
   let wiName = "";
 
+  function logout(event) {
+    event.preventDefault();
+    event.stopPropagation();
+
+    localStorage.removeItem('currentUser');
+    localStorage.removeItem('kmsUser');
+    localStorage.removeItem('savedEmployeeId');
+
+    sessionStorage.removeItem('currentUser');
+    sessionStorage.removeItem('kmsUser');
+
+    window.location.replace('login.html');
+  }
+
   function getQueryParam(name){
     const url = new URL(window.location.href);
     return url.searchParams.get(name);
   }
+
   function esc(s){
     return String(s ?? "")
       .replaceAll("&","&amp;").replaceAll("<","&lt;")
@@ -419,7 +421,6 @@
 
             ${wiBtnHtml}
 
-            <!-- ✅ ดำ-แดง เฉียง + ไม่มีกรอบข้างใน + ขึ้นบรรทัดใหม่ -->
             <div class="hazard-frame hazard-red">
               <div class="critical">
                 <i class="fas fa-triangle-exclamation"></i>
@@ -427,7 +428,6 @@
               </div>
             </div>
 
-            <!-- ✅ ดำ-เหลือง เฉียง + ไม่มีกรอบข้างใน -->
             <div class="hazard-frame hazard-yellow">
               <div class="impact">
                 <i class="fas fa-share-nodes"></i>
@@ -502,7 +502,6 @@
     document.getElementById("procTitle").textContent = `Process ${proc}`;
     document.getElementById("procMeta").textContent  = procMap[proc] ? `กระบวนการ: ${procMap[proc]}` : "-";
 
-    // โหลด WI
     try{
       const wiRes = await fetch(WI_API(proc));
       const wiData = await wiRes.json();
@@ -517,7 +516,6 @@
       wiLink = ""; wiName = "";
     }
 
-    // โหลด Learning
     try{
       const res = await fetch(LEARNING_API);
       const data = await res.json();
