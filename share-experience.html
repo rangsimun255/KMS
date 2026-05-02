@@ -11,7 +11,6 @@
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
-    /* ✅ ธีมหลักให้เข้าชุด */
     body{
       font-family:'Sarabun',sans-serif;
       background:#F4F7FB;
@@ -42,7 +41,6 @@
 
     .main-content { flex: 1; margin-left: 70px; width: calc(100% - 70px); }
 
-    /* ✅ HEADER STANDARD (เหมือนหน้าอื่น) */
     .header{
       background:linear-gradient(135deg,#4A89C8 0%,#2E75B6 100%);
       padding:60px 40px;
@@ -233,7 +231,6 @@
     }
 
     @media (max-width: 768px) {
-      /* ✅ header standard มือถือ */
       .header{padding:40px 20px;min-height:170px}
       .header h1{font-size:28px}
       .header p{font-size:15px}
@@ -255,7 +252,10 @@
       <a class="sidebar-icon" data-page="lp" href="learning-path.html"><i class="fas fa-graduation-cap"></i></a>
       <a class="sidebar-icon" data-page="quiz" href="quiz.html"><i class="fas fa-clipboard-check"></i></a>
       <a class="sidebar-icon active" data-page="share" href="share-experience.html"><i class="fas fa-comments"></i></a>
-      <a class="sidebar-icon logout" href="#"><i class="fas fa-sign-out-alt"></i></a>
+
+      <a class="sidebar-icon" href="login.html" id="logoutBtn">
+        <i class="fas fa-sign-out-alt"></i>
+      </a>
     </nav>
 
     <main class="main-content">
@@ -270,7 +270,6 @@
             <div class="badge"><i class="fa-solid fa-file-pen"></i> แบบฟอร์มบันทึกประสบการณ์</div>
           </div>
 
-          <!-- ✅ แก้: ใส่ novalidate เพื่อให้เราเป็นคนคุมข้อความแจ้งเตือน -->
           <form id="shareForm" novalidate>
             <div class="grid">
 
@@ -490,7 +489,6 @@
       });
     }
 
-    // ✅✅✅ แก้: ทำให้ข้อความ required เป็น "โปรดกรอกข้อมูลในช่องนี้" ✅✅✅
     const REQUIRED_MSG = 'โปรดกรอกข้อมูลในช่องนี้';
 
     function applyRequiredMessages() {
@@ -506,11 +504,10 @@
       e.preventDefault();
       clearStatus();
 
-      // ✅ ตั้งข้อความก่อน reportValidity ทุกครั้ง
       applyRequiredMessages();
 
       if (!form.checkValidity()) {
-        form.reportValidity(); // จะโชว์ข้อความที่เราตั้งไว้
+        form.reportValidity();
         return;
       }
 
@@ -568,6 +565,22 @@
     });
 
     renderThumbs();
+  </script>
+
+  <script>
+    document.getElementById('logoutBtn').addEventListener('click', function(event) {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+
+      localStorage.removeItem('currentUser');
+      localStorage.removeItem('kmsUser');
+      localStorage.removeItem('savedEmployeeId');
+
+      sessionStorage.removeItem('currentUser');
+      sessionStorage.removeItem('kmsUser');
+
+      window.location.replace('login.html');
+    }, true);
   </script>
 
   <script src="Js"></script>
