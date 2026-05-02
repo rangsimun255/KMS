@@ -3,7 +3,12 @@
 <head>
   <script>
     (function () {
-      const user = localStorage.getItem('currentUser') || sessionStorage.getItem('currentUser');
+      const user =
+        localStorage.getItem('kmsUser') ||
+        sessionStorage.getItem('kmsUser') ||
+        localStorage.getItem('currentUser') ||
+        sessionStorage.getItem('currentUser');
+
       if (!user) {
         window.location.replace('login.html');
       }
@@ -22,19 +27,18 @@
 
     body { 
       font-family: 'Sarabun', sans-serif; 
-      background-color: #F4F9F6;
+      background-color: #F4F7FB; 
       min-height: 100vh; 
-      color: #24413B;
+      color: #2E3A59;
       font-size: 14px;
       line-height: 1.7;
     }
 
     .container { display: flex; min-height: 100vh; }
 
-    /* Sidebar */
     .sidebar {
       width: 70px;
-      background: linear-gradient(180deg, #169873 0%, #0F6F58 100%);
+      background: linear-gradient(180deg, #4A89C8 0%, #2E75B6 100%);
       display: flex; flex-direction: column; align-items: center;
       padding-top: 20px; gap: 10px;
       position: fixed; height: 100vh;
@@ -44,43 +48,55 @@
     .sidebar-icon {
       width: 50px; height: 50px;
       display: flex; align-items: center; justify-content: center;
-      color: rgba(255,255,255,0.9);
+      color: rgba(255,255,255,0.85);
       font-size: 20px;
       border-radius: 12px;
       cursor: pointer;
       transition: all 0.3s ease;
       text-decoration: none;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
     }
 
     .sidebar-icon:hover,
     .sidebar-icon.active {
-      background-color: rgba(255,255,255,0.2);
+      background-color: rgba(255,255,255,0.18);
       color: #fff;
     }
 
-    .main-content { flex: 1; margin-left: 70px; }
+    .sidebar-icon:active { transform: scale(0.96); }
 
-    /* HEADER */
+    .main-content { flex: 1; padding: 0; margin-left: 70px; }
+
     .header {
-      background: linear-gradient(135deg, #169873 0%, #0F6F58 100%);
+      background: linear-gradient(135deg, #4A89C8 0%, #2E75B6 100%);
       padding: 60px 40px;
       min-height: 240px;
       text-align: center;
-      color: #fff;
+      box-shadow: 0 4px 15px rgba(74, 137, 200, 0.25);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
     }
 
     .header h1 {
-      font-size: 42px;
-      font-weight: 700;
-      margin-bottom: 10px;
+      font-size: 42px; 
+      font-weight: 700; 
+      color: #ffffff;
+      margin-bottom: 15px;
+      letter-spacing: 1px;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.2);
     }
 
     .header .subtitle {
-      font-size: 18px;
-      opacity: 0.95;
+      font-size: 18px; 
+      color: rgba(255, 255, 255, 0.95);
+      max-width: 650px; 
+      margin: 0 auto; 
+      line-height: 1.7;
     }
 
-    /* CARDS */
     .menu-cards {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -94,65 +110,77 @@
       padding: 28px 20px;
       text-align: center;
       text-decoration: none;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+      box-shadow: 0 4px 15px rgba(46,58,89,0.08);
       transition: all 0.3s ease;
       border: 2px solid transparent;
     }
 
     .card:hover {
       transform: translateY(-5px);
-      box-shadow: 0 8px 25px rgba(22,152,115,0.2);
-      border-color: #169873;
+      box-shadow: 0 8px 25px rgba(74,137,200,0.18);
+      border-color: #4A89C8;
     }
 
     .card-icon {
       width: 60px; height: 60px;
       margin: 0 auto 15px;
-      background: #EAF7EF;
+      background: linear-gradient(135deg, #E6F0FA 0%, #DCEAF8 100%);
       border-radius: 14px;
       display: flex; align-items: center; justify-content: center;
       font-size: 26px; 
-      color: #169873;
+      color: #4A89C8;
     }
 
     .card-title { 
       font-size: 18px; 
       font-weight: 600; 
-      color: #24413B; 
+      color: #2E3A59; 
       margin-bottom: 8px; 
     }
 
     .card-desc { 
       font-size: 14px; 
-      color: #5f6f6c; 
+      color: #6B7A90; 
+      line-height: 1.5; 
     }
 
-    /* NEW EMPLOYEE */
     .new-employee {
       background: #ffffff;
       border-radius: 16px;
       padding: 22px 28px;
       margin: 0 40px 20px 40px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-      border-left: 6px solid #169873;
+      box-shadow: 0 4px 15px rgba(46,58,89,0.08);
+      border-left: 6px solid #4A89C8;
     }
 
-    .new-employee h3 {
-      font-size: 18px;
-      margin-bottom: 10px;
-      color: #0F6F58;
+    .new-employee h3 { 
+      font-size: 18px; 
+      font-weight: 600; 
+      color: #2E3A59; 
+      margin-bottom: 12px; 
     }
 
-    .new-employee h3 i {
-      margin-right: 8px;
-      color: #169873;
+    .new-employee h3 i { 
+      color: #4A89C8;
+      margin-right: 10px; 
     }
 
-    .footer {
-      text-align: center;
-      padding: 15px;
-      color: #8A98AD;
-      font-size: 13px;
+    .new-employee ol { 
+      margin-left: 22px; 
+      color: #2E3A59; 
+      line-height: 1.9; 
+      font-size: 14px; 
+    }
+
+    .new-employee strong { 
+      color: #4A89C8; 
+    }
+
+    .footer { 
+      text-align: center; 
+      padding: 15px 40px; 
+      color: #8A98AD; 
+      font-size: 13px; 
     }
 
     @media (max-width: 768px) {
@@ -162,9 +190,17 @@
         height: 60px;
         flex-direction: row;
         justify-content: center;
+        padding: 10px;
+        position: sticky;
+        top: 0;
       }
       .main-content { margin-left: 0; }
       .menu-cards { grid-template-columns: 1fr; padding: 20px; }
+      .new-employee { margin: 0 20px 20px 20px; }
+
+      .header { padding: 40px 20px; min-height: 170px; }
+      .header h1 { font-size: 28px; }
+      .header .subtitle { font-size: 15px; }
     }
   </style>
 </head>
@@ -172,12 +208,12 @@
 <body>
   <div class="container">
     <nav class="sidebar">
-      <a class="sidebar-icon active" href="index.html"><i class="fas fa-home"></i></a>
+      <a class="sidebar-icon" href="index.html"><i class="fas fa-home"></i></a>
       <a class="sidebar-icon" href="knowledge-base.html"><i class="fas fa-book"></i></a>
       <a class="sidebar-icon" href="learning-path.html"><i class="fas fa-graduation-cap"></i></a>
       <a class="sidebar-icon" href="quiz.html"><i class="fas fa-clipboard-check"></i></a>
       <a class="sidebar-icon" href="share-experience.html"><i class="fas fa-comments"></i></a>
-      <a class="sidebar-icon logout" href="#"><i class="fas fa-sign-out-alt"></i></a>
+      <a class="sidebar-icon logout" href="#" onclick="logout(event)"><i class="fas fa-sign-out-alt"></i></a>
     </nav>
 
     <main class="main-content">
@@ -202,13 +238,13 @@
         <a href="quiz.html" class="card">
           <div class="card-icon"><i class="fas fa-clipboard-check"></i></div>
           <h2 class="card-title">Quiz / Check Point</h2>
-          <p class="card-desc">ตรวจสอบความเข้าใจ</p>
+          <p class="card-desc">ตรวจสอบความเข้าใจในจุดสำคัญ</p>
         </a>
 
         <a href="share-experience.html" class="card">
           <div class="card-icon"><i class="fas fa-comments"></i></div>
           <h2 class="card-title">Share Experience</h2>
-          <p class="card-desc">แชร์ประสบการณ์</p>
+          <p class="card-desc">แชร์ประสบการณ์และวิธีแก้ปัญหา</p>
         </a>
       </section>
 
@@ -216,9 +252,9 @@
         <h3><i class="fas fa-user-plus"></i> สำหรับพนักงานใหม่</h3>
         <ol>
           <li>เข้า <strong>Learning Path</strong></li>
-          <li>เลือกกระบวนการ</li>
-          <li>ศึกษา Critical Point</li>
-          <li>ดู Knowledge Base</li>
+          <li>เลือกกระบวนการที่รับผิดชอบ</li>
+          <li>ศึกษาจุดที่สำคัญในการผลิต</li>
+          <li>เปิดดูเอกสารใน <strong>Knowledge Base</strong></li>
         </ol>
       </section>
 
@@ -228,5 +264,21 @@
     </main>
   </div>
 
+  <script src="Js"></script>
+
+  <script>
+    function logout(event) {
+      event.preventDefault();
+
+      localStorage.removeItem('currentUser');
+      localStorage.removeItem('kmsUser');
+      localStorage.removeItem('savedEmployeeId');
+
+      sessionStorage.removeItem('currentUser');
+      sessionStorage.removeItem('kmsUser');
+
+      window.location.replace('login.html');
+    }
+  </script>
 </body>
 </html>
