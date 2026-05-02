@@ -661,7 +661,7 @@
       <a class="sidebar-icon" href="learning-path.html"><i class="fas fa-graduation-cap"></i></a>
       <a class="sidebar-icon active" href="quiz.html"><i class="fas fa-clipboard-check"></i></a>
       <a class="sidebar-icon" href="share-experience.html"><i class="fas fa-comments"></i></a>
-      <a class="sidebar-icon logout" href="#"><i class="fas fa-sign-out-alt"></i></a>
+      <a class="sidebar-icon" href="login.html" id="logoutBtn"><i class="fas fa-sign-out-alt"></i></a>
     </nav>
 
     <main class="main-content">
@@ -1213,15 +1213,19 @@
         .replace(/'/g, '&#039;');
     }
 
-    document.querySelector('.logout')?.addEventListener('click', function (e) {
-      e.preventDefault();
-      localStorage.removeItem('kmsUser');
-      sessionStorage.removeItem('kmsUser');
+    document.getElementById('logoutBtn').addEventListener('click', function(event) {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+
       localStorage.removeItem('currentUser');
-      sessionStorage.removeItem('currentUser');
+      localStorage.removeItem('kmsUser');
       localStorage.removeItem('savedEmployeeId');
-      window.location.href = 'login.html';
-    });
+
+      sessionStorage.removeItem('currentUser');
+      sessionStorage.removeItem('kmsUser');
+
+      window.location.replace('login.html');
+    }, true);
 
     init();
   </script>
