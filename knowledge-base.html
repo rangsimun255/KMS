@@ -1,6 +1,20 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
+  <script>
+    (function () {
+      const user =
+        localStorage.getItem('kmsUser') ||
+        sessionStorage.getItem('kmsUser') ||
+        localStorage.getItem('currentUser') ||
+        sessionStorage.getItem('currentUser');
+
+      if (!user) {
+        window.location.replace('login.html');
+      }
+    })();
+  </script>
+
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Knowledge Base - KMS</title>
@@ -12,10 +26,10 @@
 
     body {
       font-family: 'Sarabun', sans-serif;
-      background-color: #F6FAF7;
+      background-color: #F4F7FB;
       min-height: 100vh;
       overflow-x: hidden;
-      color: #24413B;
+      color: #2E3A59;
       font-size: 14px;
       line-height: 1.7;
     }
@@ -24,7 +38,7 @@
 
     .sidebar {
       width: 70px;
-      background: linear-gradient(180deg, #169873 0%, #0F6F58 100%);
+      background: linear-gradient(180deg, #4A89C8 0%, #2E75B6 100%);
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -67,11 +81,11 @@
     }
 
     .header {
-      background: linear-gradient(135deg, #169873 0%, #0F6F58 100%);
+      background: linear-gradient(135deg, #4A89C8 0%, #2E75B6 100%);
       padding: 60px 40px;
       min-height: 240px;
       text-align: center;
-      box-shadow: 0 4px 15px rgba(22, 152, 115, 0.25);
+      box-shadow: 0 4px 15px rgba(74, 137, 200, 0.25);
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -98,7 +112,7 @@
     .filter-section {
       background: #fff;
       padding: 25px 40px;
-      box-shadow: 0 2px 10px rgba(36, 65, 59, 0.08);
+      box-shadow: 0 2px 10px rgba(46, 58, 89, 0.08);
     }
 
     .filter-row {
@@ -117,21 +131,21 @@
     .filter-group label {
       font-size: 14px;
       font-weight: 600;
-      color: #24413B;
+      color: #2E3A59;
     }
 
     .filter-group select {
       padding: 10px 15px;
-      border: 2px solid #DDEEE6;
+      border: 2px solid #DCEAF8;
       border-radius: 8px;
       font-size: 14px;
       min-width: 180px;
       background: #fff;
-      color: #24413B;
+      color: #2E3A59;
     }
 
     .filter-group select:focus {
-      border-color: #169873;
+      border-color: #4A89C8;
       outline: none;
     }
 
@@ -151,13 +165,13 @@
     .checkbox-item input {
       width: 18px;
       height: 18px;
-      accent-color: #169873;
+      accent-color: #4A89C8;
     }
 
     .checkbox-item label {
       font-size: 14px;
       cursor: pointer;
-      color: #24413B;
+      color: #2E3A59;
     }
 
     .btn-clear {
@@ -188,13 +202,13 @@
       background: #fff;
       border-radius: 16px;
       overflow: hidden;
-      box-shadow: 0 4px 15px rgba(36, 65, 59, 0.08);
+      box-shadow: 0 4px 15px rgba(46, 58, 89, 0.08);
       transition: all 0.3s ease;
     }
 
     .card:hover {
       transform: translateY(-5px);
-      box-shadow: 0 8px 25px rgba(22, 152, 115, 0.18);
+      box-shadow: 0 8px 25px rgba(74, 137, 200, 0.18);
     }
 
     .card-image {
@@ -218,35 +232,35 @@
     }
 
     .card-type.opl {
-      background: #EAF7EF;
-      color: #2E7D32;
+      background: #E6F0FA;
+      color: #2E75B6;
     }
 
     .card-type.wi {
-      background: #EAF7EF;
-      color: #0F6F58;
+      background: #E6F0FA;
+      color: #2E75B6;
     }
 
     .card-type.video {
-      background: #F1FBF5;
-      color: #169873;
+      background: #EEF6FD;
+      color: #4A89C8;
     }
 
     .card-type.experience {
-      background: #E7F6EE;
-      color: #1D7F64;
+      background: #DCEAF8;
+      color: #1A5276;
     }
 
     .card-title {
       font-size: 18px;
       font-weight: 600;
-      color: #24413B;
+      color: #2E3A59;
       margin-bottom: 8px;
     }
 
     .card-info {
       font-size: 14px;
-      color: #5F6F6A;
+      color: #6B7A90;
       margin-bottom: 5px;
       line-height: 1.7;
     }
@@ -254,7 +268,7 @@
     .card-btn {
       display: inline-block;
       padding: 10px 20px;
-      background: #169873;
+      background: #4A89C8;
       color: #fff;
       text-decoration: none;
       border-radius: 8px;
@@ -264,20 +278,20 @@
     }
 
     .card-btn:hover {
-      background: #0F6F58;
+      background: #2E75B6;
     }
 
     .no-results {
       text-align: center;
       padding: 60px;
-      color: #5F6F6A;
+      color: #6B7A90;
       font-size: 14px;
     }
 
     .no-results i {
       font-size: 60px;
       margin-bottom: 20px;
-      color: #8AA59A;
+      color: #8A98AD;
     }
 
     @media (max-width: 1200px) {
@@ -379,11 +393,11 @@
   <div class="container">
     <nav class="sidebar">
       <a class="sidebar-icon" data-page="index" href="index.html"><i class="fas fa-home"></i></a>
-      <a class="sidebar-icon" data-page="kb" href="knowledge-base.html"><i class="fas fa-book"></i></a>
+      <a class="sidebar-icon active" data-page="kb" href="knowledge-base.html"><i class="fas fa-book"></i></a>
       <a class="sidebar-icon" data-page="lp" href="learning-path.html"><i class="fas fa-graduation-cap"></i></a>
       <a class="sidebar-icon" data-page="quiz" href="quiz.html"><i class="fas fa-clipboard-check"></i></a>
       <a class="sidebar-icon" data-page="share" href="share-experience.html"><i class="fas fa-comments"></i></a>
-      <a class="sidebar-icon logout" href="#"><i class="fas fa-sign-out-alt"></i></a>
+      <a class="sidebar-icon logout" href="#" onclick="logout(event)"><i class="fas fa-sign-out-alt"></i></a>
     </nav>
 
     <main class="main-content">
@@ -498,6 +512,19 @@
         { code: "7.4", name: "จำนวนเม็ดยาต่อซองครบ แต่น้ำหนักไม่ได้มาตรฐาน" }
       ]
     };
+
+    function logout(event) {
+      event.preventDefault();
+
+      localStorage.removeItem('currentUser');
+      localStorage.removeItem('kmsUser');
+      localStorage.removeItem('savedEmployeeId');
+
+      sessionStorage.removeItem('currentUser');
+      sessionStorage.removeItem('kmsUser');
+
+      window.location.replace('login.html');
+    }
 
     async function loadData() {
       try {
@@ -668,6 +695,7 @@
 
     loadData();
   </script>
+
   <script src="Js"></script>
 </body>
 </html>
