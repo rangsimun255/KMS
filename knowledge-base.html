@@ -1,20 +1,6 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-  <script>
-    (function () {
-      const user =
-        localStorage.getItem('kmsUser') ||
-        sessionStorage.getItem('kmsUser') ||
-        localStorage.getItem('currentUser') ||
-        sessionStorage.getItem('currentUser');
-
-      if (!user) {
-        window.location.replace('login.html');
-      }
-    })();
-  </script>
-
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Knowledge Base - KMS</title>
@@ -57,7 +43,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      color: rgba(255,255,255,0.9);
+      color: rgba(255,255,255,0.85);
       font-size: 20px;
       border-radius: 12px;
       cursor: pointer;
@@ -112,7 +98,7 @@
     .filter-section {
       background: #fff;
       padding: 25px 40px;
-      box-shadow: 0 2px 10px rgba(46, 58, 89, 0.08);
+      box-shadow: 0 2px 10px rgba(46,58,89,0.08);
     }
 
     .filter-row {
@@ -136,7 +122,7 @@
 
     .filter-group select {
       padding: 10px 15px;
-      border: 2px solid #DCEAF8;
+      border: 2px solid #E0E6EF;
       border-radius: 8px;
       font-size: 14px;
       min-width: 180px;
@@ -165,7 +151,6 @@
     .checkbox-item input {
       width: 18px;
       height: 18px;
-      accent-color: #4A89C8;
     }
 
     .checkbox-item label {
@@ -176,7 +161,7 @@
 
     .btn-clear {
       padding: 10px 20px;
-      background: #D64541;
+      background: #E53935;
       color: #fff;
       border: none;
       border-radius: 8px;
@@ -185,7 +170,7 @@
     }
 
     .btn-clear:hover {
-      background: #B93A36;
+      background: #C62828;
     }
 
     .cards-section {
@@ -202,13 +187,13 @@
       background: #fff;
       border-radius: 16px;
       overflow: hidden;
-      box-shadow: 0 4px 15px rgba(46, 58, 89, 0.08);
+      box-shadow: 0 4px 15px rgba(46,58,89,0.08);
       transition: all 0.3s ease;
     }
 
     .card:hover {
       transform: translateY(-5px);
-      box-shadow: 0 8px 25px rgba(74, 137, 200, 0.18);
+      box-shadow: 0 8px 25px rgba(74,137,200,0.18);
     }
 
     .card-image {
@@ -232,23 +217,23 @@
     }
 
     .card-type.opl {
-      background: #E6F0FA;
-      color: #2E75B6;
+      background: #e8f5e9;
+      color: #2e7d32;
     }
 
     .card-type.wi {
-      background: #E6F0FA;
-      color: #2E75B6;
+      background: #e3f2fd;
+      color: #1565c0;
     }
 
     .card-type.video {
-      background: #EEF6FD;
-      color: #4A89C8;
+      background: #fff3e0;
+      color: #ef6c00;
     }
 
     .card-type.experience {
-      background: #DCEAF8;
-      color: #1A5276;
+      background: #fce4ec;
+      color: #c2185b;
     }
 
     .card-title {
@@ -393,11 +378,11 @@
   <div class="container">
     <nav class="sidebar">
       <a class="sidebar-icon" data-page="index" href="index.html"><i class="fas fa-home"></i></a>
-      <a class="sidebar-icon active" data-page="kb" href="knowledge-base.html"><i class="fas fa-book"></i></a>
+      <a class="sidebar-icon" data-page="kb" href="knowledge-base.html"><i class="fas fa-book"></i></a>
       <a class="sidebar-icon" data-page="lp" href="learning-path.html"><i class="fas fa-graduation-cap"></i></a>
       <a class="sidebar-icon" data-page="quiz" href="quiz.html"><i class="fas fa-clipboard-check"></i></a>
       <a class="sidebar-icon" data-page="share" href="share-experience.html"><i class="fas fa-comments"></i></a>
-      <a class="sidebar-icon logout" href="#" onclick="logout(event)"><i class="fas fa-sign-out-alt"></i></a>
+      <a class="sidebar-icon" href="#" onclick="logout(event)"><i class="fas fa-sign-out-alt"></i></a>
     </nav>
 
     <main class="main-content">
@@ -515,6 +500,7 @@
 
     function logout(event) {
       event.preventDefault();
+      event.stopPropagation();
 
       localStorage.removeItem('currentUser');
       localStorage.removeItem('kmsUser');
