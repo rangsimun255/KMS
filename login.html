@@ -19,7 +19,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background: linear-gradient(135deg, #0f766e 0%, #059669 50%, #6ee7b7 100%);
+            background: linear-gradient(135deg, #1a5276 0%, #3498db 50%, #85c1e9 100%);
             padding: 20px;
         }
 
@@ -33,7 +33,7 @@
         }
 
         .login-header {
-            background: linear-gradient(135deg, #0f766e, #059669);
+            background: linear-gradient(135deg, #2c3e50, #3498db);
             padding: 40px 30px;
             text-align: center;
             position: relative;
@@ -64,7 +64,7 @@
 
         .logo-icon i {
             font-size: 2.5rem;
-            color: #059669;
+            color: #3498db;
         }
 
         .login-header h1 {
@@ -97,7 +97,7 @@
 
         .form-group label i {
             margin-right: 8px;
-            color: #059669;
+            color: #3498db;
         }
 
         .input-wrapper {
@@ -107,7 +107,7 @@
         .input-wrapper input {
             width: 100%;
             padding: 14px 16px 14px 48px;
-            border: 2px solid #dff7ec;
+            border: 2px solid #e8f4fc;
             border-radius: 12px;
             font-size: 1rem;
             font-family: 'Sarabun', sans-serif;
@@ -117,9 +117,9 @@
 
         .input-wrapper input:focus {
             outline: none;
-            border-color: #059669;
+            border-color: #3498db;
             background: white;
-            box-shadow: 0 0 0 4px rgba(5, 150, 105, 0.12);
+            box-shadow: 0 0 0 4px rgba(52, 152, 219, 0.1);
         }
 
         .input-wrapper .input-icon {
@@ -144,7 +144,7 @@
         }
 
         .input-wrapper .toggle-password:hover {
-            color: #059669;
+            color: #3498db;
         }
 
         .form-options {
@@ -163,7 +163,7 @@
         .remember-me input[type="checkbox"] {
             width: 18px;
             height: 18px;
-            accent-color: #059669;
+            accent-color: #3498db;
         }
 
         .remember-me span {
@@ -174,7 +174,7 @@
         .btn-login {
             width: 100%;
             padding: 16px;
-            background: linear-gradient(135deg, #10b981, #047857);
+            background: linear-gradient(135deg, #3498db, #2980b9);
             color: white;
             border: none;
             border-radius: 12px;
@@ -190,9 +190,9 @@
         }
 
         .btn-login:hover {
-            background: linear-gradient(135deg, #059669, #065f46);
+            background: linear-gradient(135deg, #2980b9, #1a5276);
             transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(5, 150, 105, 0.35);
+            box-shadow: 0 8px 20px rgba(52, 152, 219, 0.4);
         }
 
         .btn-login.loading,
@@ -436,6 +436,7 @@
 
         function resetButton() {
             const btnLogin = document.getElementById('btnLogin');
+
             btnLogin.classList.remove('loading');
             btnLogin.disabled = false;
             btnLogin.innerHTML = '<i class="fas fa-sign-in-alt"></i><span>เข้าสู่ระบบ</span>';
