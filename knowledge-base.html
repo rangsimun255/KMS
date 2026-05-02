@@ -280,23 +280,13 @@
     }
 
     @media (max-width: 1200px) {
-      .cards-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .cards-section {
-        padding: 20px 24px;
-      }
-
-      .filter-section {
-        padding: 16px 24px;
-      }
+      .cards-grid { grid-template-columns: repeat(2, 1fr); }
+      .cards-section { padding: 20px 24px; }
+      .filter-section { padding: 16px 24px; }
     }
 
     @media (max-width: 768px) {
-      .container {
-        flex-direction: column !important;
-      }
+      .container { flex-direction: column !important; }
 
       .sidebar {
         width: 100% !important;
@@ -322,17 +312,10 @@
         min-height: 170px;
       }
 
-      .header h1 {
-        font-size: 28px;
-      }
+      .header h1 { font-size: 28px; }
+      .header p { font-size: 15px; }
 
-      .header p {
-        font-size: 15px;
-      }
-
-      .filter-section {
-        padding: 14px 16px;
-      }
+      .filter-section { padding: 14px 16px; }
 
       .filter-row {
         flex-direction: column !important;
@@ -345,26 +328,17 @@
         min-width: 0 !important;
       }
 
-      .btn-clear {
-        width: 100%;
-      }
+      .btn-clear { width: 100%; }
 
-      .cards-section {
-        padding: 16px;
-      }
+      .cards-section { padding: 16px; }
 
       .cards-grid {
         grid-template-columns: 1fr !important;
         gap: 14px;
       }
 
-      .card-image {
-        height: 160px;
-      }
-
-      .card-content {
-        padding: 14px;
-      }
+      .card-image { height: 160px; }
+      .card-content { padding: 14px; }
 
       .card-btn {
         width: 100%;
@@ -382,7 +356,10 @@
       <a class="sidebar-icon" data-page="lp" href="learning-path.html"><i class="fas fa-graduation-cap"></i></a>
       <a class="sidebar-icon" data-page="quiz" href="quiz.html"><i class="fas fa-clipboard-check"></i></a>
       <a class="sidebar-icon" data-page="share" href="share-experience.html"><i class="fas fa-comments"></i></a>
-      <a class="sidebar-icon" href="#" onclick="logout(event)"><i class="fas fa-sign-out-alt"></i></a>
+
+      <a class="sidebar-icon" href="login.html" id="logoutBtn">
+        <i class="fas fa-sign-out-alt"></i>
+      </a>
     </nav>
 
     <main class="main-content">
@@ -498,20 +475,6 @@
       ]
     };
 
-    function logout(event) {
-      event.preventDefault();
-      event.stopPropagation();
-
-      localStorage.removeItem('currentUser');
-      localStorage.removeItem('kmsUser');
-      localStorage.removeItem('savedEmployeeId');
-
-      sessionStorage.removeItem('currentUser');
-      sessionStorage.removeItem('kmsUser');
-
-      window.location.replace('login.html');
-    }
-
     async function loadData() {
       try {
         const response = await fetch(API_URL);
@@ -548,20 +511,14 @@
 
     function createCard(item) {
       const typeClass = String(item.Type || '').toLowerCase();
-
       const thumbSource = item.ThumbnailURL || item.FileURL || '';
       const thumbnail = getThumbnailFromUrl(thumbSource) || 'https://via.placeholder.com/400x200?text=No+Image';
 
       const defectNames = uniqueTextList(item.DefectNameList || [item.DefectName]);
       const causeCategories = uniqueTextList(item.CauseCategoryList || [item.CauseCategory]);
 
-      const defectNameText = defectNames
-        .map(name => `- ${name}`)
-        .join('<br>');
-
-      const causeText = causeCategories
-        .map(cause => `- ${cause}`)
-        .join('<br>');
+      const defectNameText = defectNames.map(name => `- ${name}`).join('<br>');
+      const causeText = causeCategories.map(cause => `- ${cause}`).join('<br>');
 
       const problemLine = defectNameText
         ? `<p class="card-info"><strong>ปัญหา:</strong><br>${defectNameText}</p>`
@@ -601,11 +558,9 @@
 
       const filtered = allData.filter(item => {
         if (!String(item.FileURL || '').trim()) return false;
-
         if (process && String(item.Process) != process) return false;
         if (defect && String(item.DefectCode) != defect) return false;
         if (!types.includes(item.Type)) return false;
-
         return true;
       });
 
@@ -680,6 +635,22 @@
     document.getElementById('typeExp').addEventListener('change', filterAndDisplay);
 
     loadData();
+  </script>
+
+  <script>
+    document.getElementById('logoutBtn').addEventListener('click', function(event) {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+
+      localStorage.removeItem('currentUser');
+      localStorage.removeItem('kmsUser');
+      localStorage.removeItem('savedEmployeeId');
+
+      sessionStorage.removeItem('currentUser');
+      sessionStorage.removeItem('kmsUser');
+
+      window.location.replace('login.html');
+    }, true);
   </script>
 
   <script src="Js"></script>
