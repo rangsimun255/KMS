@@ -253,20 +253,126 @@
       filter:brightness(.95)
     }
 
-    .mini-list{border:1px solid #eef3f8;border-radius:16px;overflow:hidden}
+    /* ===== FLOW MINI LIST ===== */
+    .mini-list{
+      position:relative;
+      border:1px solid #eef3f8;
+      border-radius:16px;
+      overflow:hidden;
+      background:#fff;
+    }
+
+    .mini-list::before{
+      content:'';
+      position:absolute;
+      left:26px;
+      top:48px;
+      bottom:48px;
+      width:3px;
+      background:#D6E4F5;
+      z-index:0;
+    }
+
+    .flow-start,
+    .flow-end{
+      position:relative;
+      z-index:2;
+      text-align:center;
+      font-size:11px;
+      font-weight:900;
+      letter-spacing:1px;
+      color:#7B8BA1;
+      background:#fff;
+      padding:10px 0;
+    }
+
     .mini-item{
-      padding:10px 12px;display:flex;gap:10px;align-items:flex-start;
-      border-bottom:1px solid #eef3f8;cursor:pointer;background:#fff;
+      position:relative;
+      z-index:2;
+      padding:10px 12px;
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+      border-bottom:1px solid #eef3f8;
+      cursor:pointer;
+      background:#fff;
+      transition:.2s;
     }
-    .mini-item:last-child{border-bottom:none}
+
+    .mini-item:last-of-type{
+      border-bottom:1px solid #eef3f8;
+    }
+
     .mini-no{
-      width:26px;height:26px;border-radius:10px;background:#E6F0FA;color:#2E75B6;
-      display:flex;align-items:center;justify-content:center;
-      font-weight:900;font-size:12px;flex:0 0 auto;margin-top:1px;
+      width:30px;
+      height:30px;
+      border-radius:50%;
+      background:#E6F0FA;
+      color:#2E75B6;
+      border:2px solid #D6E4F5;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:900;
+      font-size:12px;
+      flex:0 0 auto;
+      margin-top:2px;
+      position:relative;
+      z-index:3;
     }
-    .mini-t{font-size:13px;font-weight:900;color:#1f2d3d;line-height:1.25}
-    .mini-s{font-size:12px;color:#6B7A90;margin-top:4px;line-height:1.3}
-    .mini-item.active{background:#f3f9ff;outline:2px solid #cfe4ff;outline-offset:-2px}
+
+    .mini-t{
+      font-size:13px;
+      font-weight:900;
+      color:#1f2d3d;
+      line-height:1.25;
+    }
+
+    .mini-s{
+      font-size:12px;
+      color:#6B7A90;
+      margin-top:4px;
+      line-height:1.3;
+    }
+
+    .mini-item.completed{
+      background:#F0FDF4;
+    }
+
+    .mini-item.completed .mini-no{
+      background:#22C55E;
+      border-color:#22C55E;
+      color:#fff;
+    }
+
+    .mini-item.active{
+      background:#EFF6FF;
+      outline:2px solid #BFDBFE;
+      outline-offset:-2px;
+    }
+
+    .mini-item.active .mini-no{
+      background:#2F80ED;
+      border-color:#2F80ED;
+      color:#fff;
+      box-shadow:0 0 0 5px rgba(47,128,237,.15);
+    }
+
+    .mini-item.pending{
+      background:#fff;
+    }
+
+    .mini-item:hover{
+      background:#f8fbff;
+    }
+
+    .mini-item.completed:hover{
+      background:#EAFBF0;
+    }
+
+    .mini-item.active:hover{
+      background:#EFF6FF;
+    }
 
     .loading,.error{
       background:#fff;border-radius:16px;padding:30px;
@@ -360,6 +466,12 @@
     render();
   }
 
+  function getStepStatus(idx){
+    if(idx < index) return "completed";
+    if(idx === index) return "active";
+    return "pending";
+  }
+
   function render(){
     const s = steps[index];
     const total = steps.length;
@@ -451,8 +563,10 @@
           ${defectBtn}
 
           <div class="mini-list">
+            <div class="flow-start">START</div>
+
             ${steps.map((x,idx)=>`
-              <div class="mini-item ${idx===index?"active":""}" data-idx="${idx}">
+              <div class="mini-item ${getStepStatus(idx)}" data-idx="${idx}">
                 <div class="mini-no">${esc(x.StepNo)}</div>
                 <div>
                   <div class="mini-t">${esc(x.StepTitle)}</div>
@@ -460,6 +574,8 @@
                 </div>
               </div>
             `).join("")}
+
+            <div class="flow-end">END</div>
           </div>
         </aside>
       </div>
