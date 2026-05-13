@@ -20,153 +20,242 @@
       font-size:14px;
       line-height:1.7;
     }
-    .container{display:flex;min-height:100vh}
+
+    .container{
+      display:flex;
+      min-height:100vh;
+    }
 
     .sidebar{
       width:70px;
       background:linear-gradient(180deg,#4A89C8 0%,#2E75B6 100%);
-      display:flex;flex-direction:column;align-items:center;
-      padding-top:20px;gap:10px;
-      position:fixed;height:100vh;left:0;top:0;z-index:100;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      padding-top:20px;
+      gap:10px;
+      position:fixed;
+      height:100vh;
+      left:0;
+      top:0;
+      z-index:100;
     }
-    .sidebar-icon{
-      width:50px;height:50px;display:flex;align-items:center;justify-content:center;
-      color:rgba(255,255,255,.85);
-      font-size:20px;border-radius:12px;
-      cursor:pointer;transition:.2s;text-decoration:none;
-      user-select:none;-webkit-tap-highlight-color:transparent;
-    }
-    .sidebar-icon:hover,.sidebar-icon.active{background:rgba(255,255,255,.18);color:#fff}
 
-    .main-content{flex:1;margin-left:70px;width:calc(100% - 70px);padding:0}
+    .sidebar-icon{
+      width:50px;
+      height:50px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:rgba(255,255,255,.85);
+      font-size:20px;
+      border-radius:12px;
+      cursor:pointer;
+      transition:.2s;
+      text-decoration:none;
+    }
+
+    .sidebar-icon:hover,
+    .sidebar-icon.active{
+      background:rgba(255,255,255,.18);
+      color:#fff;
+    }
+
+    .main-content{
+      flex:1;
+      margin-left:70px;
+      width:calc(100% - 70px);
+    }
 
     .header{
       background:linear-gradient(135deg,#4A89C8 0%,#2E75B6 100%);
       padding:60px 40px;
-      min-height:240px;
       text-align:center;
       box-shadow:0 4px 15px rgba(74,137,200,.25);
-      display:flex;flex-direction:column;justify-content:center;align-items:center;
     }
+
     .header h1{
-      color:#fff;font-size:42px;font-weight:700;margin-bottom:15px;letter-spacing:1px;
-      text-shadow:0 2px 4px rgba(0,0,0,.2);
+      color:#fff;
+      font-size:42px;
+      font-weight:700;
+      margin-bottom:15px;
     }
+
     .header p{
       color:rgba(255,255,255,.95);
-      font-size:18px;max-width:650px;margin:0 auto;line-height:1.7;
+      font-size:18px;
     }
 
-    .wrap{padding:16px 18px 24px}
+    .wrap{
+      padding:16px 18px 24px;
+    }
 
     .topbar{
-      background:#fff;border-radius:16px;padding:14px 16px;
+      background:#fff;
+      border-radius:16px;
+      padding:14px 16px;
       box-shadow:0 2px 10px rgba(46,58,89,.08);
-      display:flex;align-items:center;justify-content:space-between;
-      gap:12px;flex-wrap:wrap;margin-bottom:14px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
+      margin-bottom:14px;
     }
+
     .pill{
-      display:inline-flex;align-items:center;gap:8px;
-      padding:8px 12px;border-radius:999px;
-      background:#E6F0FA;color:#2E75B6;
-      font-weight:800;font-size:13px;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 12px;
+      border-radius:999px;
+      background:#E6F0FA;
+      color:#2E75B6;
+      font-weight:800;
+      font-size:13px;
     }
-    .meta{color:#6B7A90;font-size:13px}
+
+    .meta{
+      color:#6B7A90;
+      font-size:13px;
+    }
+
     .btn-back{
-      display:inline-flex;align-items:center;gap:8px;
-      padding:10px 12px;border-radius:10px;
-      background:#4A89C8;color:#fff;text-decoration:none;font-weight:800;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:10px 12px;
+      border-radius:10px;
+      background:#4A89C8;
+      color:#fff;
+      text-decoration:none;
+      font-weight:800;
     }
-    .btn-back:hover{background:#2E75B6}
+
+    .btn-back:hover{
+      background:#2E75B6;
+    }
 
     .stage{
       display:grid;
-      grid-template-columns: 1fr 360px;
+      grid-template-columns:1fr 360px;
       gap:14px;
-      align-items:stretch;
     }
-    @media (max-width: 980px){ .stage{grid-template-columns:1fr} }
+
+    @media (max-width:980px){
+      .stage{
+        grid-template-columns:1fr;
+      }
+    }
 
     .slide{
-      background:#fff;border-radius:18px;
+      background:#fff;
+      border-radius:18px;
       box-shadow:0 6px 18px rgba(46,58,89,.10);
       overflow:hidden;
-      display:flex;flex-direction:column;min-height:520px;
+      display:flex;
+      flex-direction:column;
     }
 
     .slide-head{
-      padding:16px 16px 12px;border-bottom:1px solid #eef3f8;
-      display:flex;gap:12px;align-items:flex-start;
+      padding:16px;
+      border-bottom:1px solid #eef3f8;
+      display:flex;
+      gap:12px;
+      align-items:flex-start;
     }
+
     .badge{
-      width:44px;height:44px;border-radius:16px;
-      background:#4A89C8;color:#fff;
-      display:flex;align-items:center;justify-content:center;
-      font-weight:900;font-size:16px;flex:0 0 auto;
+      width:44px;
+      height:44px;
+      border-radius:16px;
+      background:#4A89C8;
+      color:#fff;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:900;
+      font-size:16px;
+      flex:0 0 auto;
     }
-    .head-text{flex:1}
-    .title{font-weight:900;color:#1f2d3d;font-size:20px;line-height:1.15;margin-top:2px}
-    .short{margin-top:8px;color:#6B7A90;font-size:14px;line-height:1.45}
+
+    .head-text{
+      flex:1;
+    }
+
+    .title{
+      font-weight:900;
+      color:#1f2d3d;
+      font-size:20px;
+      line-height:1.15;
+    }
+
+    .short{
+      margin-top:8px;
+      color:#6B7A90;
+      font-size:14px;
+    }
 
     .slide-body{
       padding:14px 16px 16px;
-      display:flex;flex-direction:column;gap:12px;flex:1;
+      display:flex;
+      flex-direction:column;
+      gap:12px;
     }
 
     .detail{
       color:#2E3A59;
       font-size:14px;
       line-height:1.55;
-      background:#fff;
-      border:none;
-      padding:12px 12px;
-      border-radius:14px;
-      white-space: pre-line;
+      padding:12px;
+      white-space:pre-line;
     }
 
-    .wi-actions{ margin-top: 10px; }
-    .btn-wi{
-      display:inline-flex;align-items:center;justify-content:center;gap:10px;
-      padding:12px 14px;border-radius:12px;
-      background:#2F80ED;color:#fff;text-decoration:none;font-weight:900;
-      transition:.2s;
-      box-shadow:0 6px 16px rgba(47,128,237,0.22);
-      width: fit-content;
+    .wi-actions{
+      margin-top:10px;
     }
-    .btn-wi:hover{ transform: translateY(-1px); filter:brightness(.98); }
-    .btn-wi.disabled{
-      background:#c9d6e3;color:#5b6b7a;box-shadow:none;pointer-events:none;
+
+    .btn-wi{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      padding:12px 14px;
+      border-radius:12px;
+      background:#2F80ED;
+      color:#fff;
+      text-decoration:none;
+      font-weight:900;
+      box-shadow:0 6px 16px rgba(47,128,237,0.22);
     }
 
     .hazard-frame{
       --b:8px;
       --r:22px;
-      --pad:0px;
       position:relative;
       border-radius:var(--r);
-      padding:calc(var(--b) + var(--pad));
-      box-shadow:0 6px 18px rgba(46,58,89,.12);
+      padding:var(--b);
       overflow:hidden;
-      background:transparent;
     }
+
     .hazard-frame::before{
       content:"";
-      position:absolute;inset:0;
+      position:absolute;
+      inset:0;
       border-radius:var(--r);
       background:repeating-linear-gradient(
         45deg,
         var(--c1) 0 14px,
         var(--c2) 14px 28px
       );
-      z-index:0;
     }
+
     .hazard-frame::after{
       content:"";
       position:absolute;
       inset:var(--b);
       border-radius:calc(var(--r) - var(--b));
       background:var(--inner);
-      z-index:1;
     }
 
     .hazard-red{
@@ -174,100 +263,230 @@
       --c2:#D32F2F;
       --inner:#FDECEA;
     }
+
     .hazard-yellow{
       --c1:#111;
       --c2:#F7D400;
       --inner:#FFF8E1;
     }
 
-    .critical, .impact{
+    .critical,
+    .impact{
       position:relative;
       z-index:2;
-      border:none !important;
-      outline:none;
-      box-shadow:none;
-      border-radius:0;
       padding:18px;
-      display:flex;gap:10px;align-items:flex-start;
-      font-size:14px;font-weight:800;
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+      font-size:14px;
+      font-weight:800;
       background:transparent;
     }
+
     .critical{
       color:#B71C1C;
-      white-space: pre-line;
-    }
-    .impact{ color:#7A4F00; }
-
-    .critical i,.impact i{margin-top:3px}
-
-    .impact-text{flex:1}
-    .impact-title{font-weight:900;margin-bottom:6px}
-    .impact-line{white-space:pre-line;font-weight:900}
-    .impact-subtitle{font-weight:900;margin-top:12px;margin-bottom:6px}
-    .impact-list{white-space:pre-line;font-weight:800}
-
-    .panel{
-      background:#fff;border-radius:18px;
-      box-shadow:0 2px 10px rgba(46,58,89,.08);
-      padding:14px;
-      display:flex;flex-direction:column;gap:12px;
-    }
-    .progress{
-      background:#f2f7fd;border:1px solid #e3edf8;border-radius:16px;padding:12px;
-    }
-    .progress-top{
-      display:flex;justify-content:space-between;align-items:center;gap:10px;
-      color:#294b6a;font-weight:800;
-    }
-    .bar{
-      height:10px;border-radius:999px;background:#dbe7f6;margin-top:10px;overflow:hidden;
-    }
-    .bar > div{
-      height:100%;width:0%;
-      background:#4A89C8;border-radius:999px;transition:width .25s ease;
+      white-space:pre-line;
     }
 
-    .nav-btns{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-    .btn{
-      border:none;border-radius:14px;padding:12px 12px;
-      font-family:'Sarabun',sans-serif;font-weight:900;
-      cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;
-      transition:.2s;
-    }
-    .btn:disabled{opacity:.45;cursor:not-allowed}
-    .btn-prev{background:#eef3f8;color:#2c3e50}
-    .btn-prev:hover{background:#e4ecf5}
-    .btn-next{background:#4A89C8;color:#fff}
-    .btn-next:hover{background:#2E75B6}
-
-    .btn-defect{
-      margin-top:10px;display:flex;align-items:center;justify-content:center;gap:8px;
-      padding:14px;border-radius:14px;
-      background:#4A89C8;
-      color:#fff;
-      font-weight:900;text-decoration:none;transition:.2s;
+    .impact{
+      color:#7A4F00;
     }
 
-    .btn-defect:hover{
-      background:#2E75B6;
-      filter:brightness(.95)
+    .impact-text{
+      flex:1;
+    }
+
+    .impact-title{
+      font-weight:900;
+      margin-bottom:6px;
+    }
+
+    .impact-line,
+    .impact-list{
+      white-space:pre-line;
+    }
+
+    .impact-subtitle{
+      font-weight:900;
+      margin-top:12px;
+      margin-bottom:6px;
+    }
+
+    .process-flow-section{
+      margin-top:14px;
+      padding:16px;
+      border-radius:18px;
+      background:#F8FBFF;
+      border:1px solid #E5EDF5;
     }
 
     .side-section-title{
-      font-size:13px;
+      font-size:14px;
       font-weight:900;
       color:#294b6a;
-      margin:4px 2px 0;
       display:flex;
+      align-items:center;
+      gap:8px;
+      margin-bottom:10px;
+    }
+
+    .flowchart{
+      display:flex;
+      flex-direction:column;
       align-items:center;
       gap:8px;
     }
 
-    .side-section-title i{
-      color:#4A89C8;
+    .flowchart-wide{
+      max-width:560px;
+      margin:0 auto;
     }
 
-    /* ===== MINI LIST เดิม + สีสถานะ ===== */
+    .flow-terminal{
+      width:100%;
+      text-align:center;
+      padding:10px;
+      border-radius:999px;
+      background:#EEF6FF;
+      border:2px solid #4A89C8;
+      color:#2E75B6;
+      font-weight:900;
+      font-size:12px;
+    }
+
+    .flow-arrow{
+      color:#7B8BA1;
+      font-size:16px;
+    }
+
+    .flow-card{
+      width:100%;
+      border-radius:16px;
+      padding:12px;
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+      cursor:pointer;
+      transition:.2s;
+      border:2px solid #E5EDF5;
+      background:#fff;
+    }
+
+    .flow-card:hover{
+      transform:translateY(-1px);
+    }
+
+    .flow-no{
+      width:30px;
+      height:30px;
+      border-radius:50%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:900;
+      font-size:12px;
+      background:#EAF3FF;
+      color:#2E75B6;
+      flex:0 0 auto;
+    }
+
+    .flow-title{
+      font-size:13px;
+      font-weight:900;
+      color:#1F2D3D;
+    }
+
+    .flow-short{
+      margin-top:4px;
+      font-size:12px;
+      color:#6B7A90;
+      line-height:1.35;
+    }
+
+    .flow-card.completed{
+      background:#F0FDF4;
+      border-color:#22C55E;
+    }
+
+    .flow-card.completed .flow-no{
+      background:#22C55E;
+      color:#fff;
+    }
+
+    .flow-card.active{
+      background:#EFF6FF;
+      border-color:#2F80ED;
+      box-shadow:0 0 0 4px rgba(47,128,237,.12);
+    }
+
+    .flow-card.active .flow-no{
+      background:#2F80ED;
+      color:#fff;
+    }
+
+    .panel{
+      background:#fff;
+      border-radius:18px;
+      box-shadow:0 2px 10px rgba(46,58,89,.08);
+      padding:14px;
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+    }
+
+    .progress{
+      background:#f2f7fd;
+      border:1px solid #e3edf8;
+      border-radius:16px;
+      padding:12px;
+    }
+
+    .progress-top{
+      display:flex;
+      justify-content:space-between;
+      font-weight:800;
+      color:#294b6a;
+    }
+
+    .bar{
+      height:10px;
+      border-radius:999px;
+      background:#dbe7f6;
+      margin-top:10px;
+      overflow:hidden;
+    }
+
+    .bar > div{
+      height:100%;
+      background:#4A89C8;
+      border-radius:999px;
+    }
+
+    .nav-btns{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:10px;
+    }
+
+    .btn{
+      border:none;
+      border-radius:14px;
+      padding:12px;
+      font-family:'Sarabun',sans-serif;
+      font-weight:900;
+      cursor:pointer;
+    }
+
+    .btn-prev{
+      background:#eef3f8;
+      color:#2c3e50;
+    }
+
+    .btn-next{
+      background:#4A89C8;
+      color:#fff;
+    }
+
     .mini-list{
       border:1px solid #eef3f8;
       border-radius:16px;
@@ -302,7 +521,6 @@
       font-weight:900;
       font-size:12px;
       flex:0 0 auto;
-      margin-top:1px;
     }
 
     .mini-t{
@@ -341,144 +559,12 @@
       color:#fff;
     }
 
-    .mini-item.pending{
-      background:#fff;
-    }
-
-    .mini-item:hover{
-      background:#f8fbff;
-    }
-
-    .mini-item.completed:hover{
-      background:#EAFBF0;
-    }
-
-    .mini-item.active:hover{
-      background:#EFF6FF;
-    }
-
-    /* ===== FLOWCHART CARD BLOCK ===== */
-    .flowchart{
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      gap:7px;
-      margin-top:2px;
-    }
-
-    .flow-terminal{
-      width:100%;
-      text-align:center;
-      padding:9px 12px;
-      border-radius:999px;
-      background:#EEF6FF;
-      border:2px solid #4A89C8;
-      color:#2E75B6;
-      font-size:12px;
-      font-weight:900;
-      letter-spacing:1px;
-    }
-
-    .flow-arrow{
-      color:#7B8BA1;
-      font-size:16px;
-      line-height:1;
-      height:16px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-    }
-
-    .flow-card{
-      width:100%;
-      border-radius:16px;
-      padding:12px;
-      display:flex;
-      gap:10px;
-      align-items:flex-start;
-      cursor:pointer;
-      transition:.2s;
-      border:2px solid #E5EDF5;
-      background:#fff;
-    }
-
-    .flow-card:hover{
-      transform:translateY(-1px);
-    }
-
-    .flow-no{
-      width:30px;
-      height:30px;
-      border-radius:50%;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      font-weight:900;
-      font-size:12px;
-      flex:0 0 auto;
-      background:#EAF3FF;
-      color:#2E75B6;
-    }
-
-    .flow-title{
-      font-size:13px;
-      font-weight:900;
-      color:#1F2D3D;
-      line-height:1.3;
-    }
-
-    .flow-short{
-      margin-top:4px;
-      font-size:12px;
-      line-height:1.35;
-      color:#6B7A90;
-    }
-
-    .flow-card.completed{
-      background:#F0FDF4;
-      border-color:#22C55E;
-    }
-
-    .flow-card.completed .flow-no{
-      background:#22C55E;
-      color:#fff;
-    }
-
-    .flow-card.active{
-      background:#EFF6FF;
-      border-color:#2F80ED;
-      box-shadow:0 0 0 4px rgba(47,128,237,.12);
-    }
-
-    .flow-card.active .flow-no{
-      background:#2F80ED;
-      color:#fff;
-    }
-
-    .flow-card.pending{
-      background:#fff;
-    }
-
     .loading,.error{
-      background:#fff;border-radius:16px;padding:30px;
-      box-shadow:0 2px 10px rgba(46,58,89,.08);
-      text-align:center;color:#6B7A90;
-    }
-    .loading i{font-size:46px;margin-bottom:10px;color:#90a4ae}
-    .error i{font-size:46px;margin-bottom:10px;color:#e57373}
-
-    @media (max-width: 768px){
-      .container{flex-direction:column}
-      .sidebar{
-        width:100%;height:60px;flex-direction:row;justify-content:center;
-        position:relative;left:auto;top:auto;padding:10px;gap:12px;
-      }
-      .main-content{margin-left:0;width:100%}
-      .header{padding:40px 20px;min-height:170px}
-      .header h1{font-size:28px}
-      .header p{font-size:15px;max-width:650px}
-      .wrap{padding:12px 12px 20px}
-      .slide{min-height:unset}
+      background:#fff;
+      border-radius:16px;
+      padding:30px;
+      text-align:center;
+      color:#6B7A90;
     }
   </style>
 </head>
@@ -487,307 +573,273 @@
 <div class="container">
 
 <nav class="sidebar">
-  <a class="sidebar-icon" data-page="index" href="index.html"><i class="fas fa-home"></i></a>
-  <a class="sidebar-icon" data-page="kb" href="knowledge-base.html"><i class="fas fa-book"></i></a>
-  <a class="sidebar-icon active" data-page="lp" href="learning-path.html"><i class="fas fa-graduation-cap"></i></a>
-  <a class="sidebar-icon" data-page="quiz" href="quiz.html"><i class="fas fa-clipboard-check"></i></a>
-  <a class="sidebar-icon" data-page="share" href="share-experience.html"><i class="fas fa-comments"></i></a>
-  <a class="sidebar-icon" href="login.html" id="logoutBtn"><i class="fas fa-sign-out-alt"></i></a>
+  <a class="sidebar-icon" href="index.html"><i class="fas fa-home"></i></a>
+  <a class="sidebar-icon" href="knowledge-base.html"><i class="fas fa-book"></i></a>
+  <a class="sidebar-icon active" href="learning-path.html"><i class="fas fa-graduation-cap"></i></a>
+  <a class="sidebar-icon" href="quiz.html"><i class="fas fa-clipboard-check"></i></a>
+  <a class="sidebar-icon" href="share-experience.html"><i class="fas fa-comments"></i></a>
 </nav>
 
-  <main class="main-content">
-    <header class="header">
-      <h1>Learning Process</h1>
-      <p>เรียนทีละ Step แบบสไลด์ — 1 ขั้นตอนต่อ 1 หน้า กด “ถัดไป” เพื่อไปต่อ</p>
-    </header>
+<main class="main-content">
 
-    <div class="wrap">
-      <div class="topbar">
-        <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
-          <span class="pill"><i class="fas fa-gear"></i> <span id="procTitle">Process</span></span>
-          <span class="meta" id="procMeta">-</span>
-        </div>
-        <a class="btn-back" href="learning-path.html"><i class="fas fa-arrow-left"></i> กลับหน้า Learning Path</a>
-      </div>
+<header class="header">
+  <h1>Learning Process</h1>
+  <p>เรียนทีละ Step แบบสไลด์</p>
+</header>
 
-      <div id="content">
-        <div class="loading">
-          <i class="fas fa-spinner fa-spin"></i>
-          <div>กำลังโหลดข้อมูล...</div>
-        </div>
-      </div>
-    </div>
-  </main>
+<div class="wrap">
+
+<div class="topbar">
+  <div style="display:flex; gap:10px; align-items:center;">
+    <span class="pill">
+      <i class="fas fa-gear"></i>
+      <span id="procTitle">Process</span>
+    </span>
+
+    <span class="meta" id="procMeta">-</span>
+  </div>
+
+  <a class="btn-back" href="learning-path.html">
+    <i class="fas fa-arrow-left"></i>
+    กลับหน้า Learning Path
+  </a>
+</div>
+
+<div id="content">
+  <div class="loading">
+    <i class="fas fa-spinner fa-spin"></i>
+    <div>กำลังโหลดข้อมูล...</div>
+  </div>
+</div>
+
+</div>
+</main>
 </div>
 
 <script>
-  const API_BASE = "https://script.google.com/macros/s/AKfycbwMRbnqSLTmmI4wofmNfZ5YPFGSiqg__rZUgyDlTTR03JchnQXgUj7DKDvzS4-QBmJrvw/exec";
-  const LEARNING_API = API_BASE + "?view=learning";
-  const WI_API = (proc)=> API_BASE + "?view=wi&process=" + encodeURIComponent(proc);
+const API_BASE = "https://script.google.com/macros/s/AKfycbwMRbnqSLTmmI4wofmNfZ5YPFGSiqg__rZUgyDlTTR03JchnQXgUj7DKDvzS4-QBmJrvw/exec";
+const LEARNING_API = API_BASE + "?view=learning";
 
-  const procMap = {"1":"ผสมเปียก","2":"แร่งเปียก","3":"อบลมร้อน","4":"แร่งแห้ง","5":"ผสมแห้ง","6":"ตอกเม็ดยา","7":"บรรจุซอง"};
+let steps = [];
+let index = 0;
 
-  let steps = [];
-  let index = 0;
-  let currentProc = "1";
+function esc(s){
+  return String(s ?? "")
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;");
+}
 
-  let wiLink = "";
-  let wiName = "";
+function getStepStatus(idx){
+  if(idx < index) return "completed";
+  if(idx === index) return "active";
+  return "pending";
+}
 
-  function getQueryParam(name){
-    const url = new URL(window.location.href);
-    return url.searchParams.get(name);
-  }
+function setIndex(i){
+  index = Math.max(0, Math.min(i, steps.length - 1));
+  render();
+}
 
-  function esc(s){
-    return String(s ?? "")
-      .replaceAll("&","&amp;").replaceAll("<","&lt;")
-      .replaceAll(">","&gt;").replaceAll('"',"&quot;")
-      .replaceAll("'","&#039;");
-  }
+function render(){
 
-  function setIndex(i){
-    index = Math.max(0, Math.min(i, steps.length - 1));
-    render();
-  }
+  const s = steps[index];
+  const total = steps.length;
+  const percent = Math.round(((index+1)/total)*100);
 
-  function getStepStatus(idx){
-    if(idx < index) return "completed";
-    if(idx === index) return "active";
-    return "pending";
-  }
+  document.getElementById("content").innerHTML = `
+    <div class="stage">
 
-  function render(){
-    const s = steps[index];
-    const total = steps.length;
+      <div class="slide">
 
-    const impactProc = esc(String(s.ImpactProcess ?? "").trim()) || "-";
-    const impactDef  = esc(String(s.ImpactDefect ?? "").trim()) || "-";
+        <div class="slide-head">
+          <div class="badge">${esc(s.StepNo)}</div>
 
-    const percent = total ? Math.round(((index+1)/total)*100) : 0;
-
-    const defectBtn = (index === total - 1) ? `
-      <a class="btn-defect" href="defect-learning.html?process=${encodeURIComponent(currentProc)}">
-        <i class="fas fa-triangle-exclamation"></i>
-        เรียนรู้ลักษณะของเสีย 
-      </a>
-    ` : ``;
-
-    const wiBtnHtml = `
-      <div class="wi-actions">
-        <a id="wiProcessBtn"
-           class="btn-wi ${wiLink ? "" : "disabled"}"
-           href="${wiLink ? esc(wiLink) : "#"}"
-           target="_blank" rel="noopener">
-          <i class="fas fa-file-lines"></i>
-          ${wiLink
-            ? `เปิดไฟล์  ${esc(wiName || ("Process " + currentProc))}`
-            : `ยังไม่มีไฟล์ WI สำหรับ Process ${esc(currentProc)}`
-          }
-        </a>
-      </div>
-    `;
-
-    document.getElementById("content").innerHTML = `
-      <div class="stage">
-        <div class="slide">
-          <div class="slide-head">
-            <div class="badge">${esc(s.StepNo)}</div>
-            <div class="head-text">
-              <div class="title">${esc(s.StepTitle)}</div>
-              <div class="short">${esc(s.StepShort || "")}</div>
-            </div>
-          </div>
-
-          <div class="slide-body">
-            <div class="detail">${esc(s.StepDetail || "")}</div>
-
-            ${wiBtnHtml}
-
-            <div class="hazard-frame hazard-red">
-              <div class="critical">
-                <i class="fas fa-triangle-exclamation"></i>
-                <div>Critical Point:\n${esc(s.CriticalPoint || "-")}</div>
-              </div>
-            </div>
-
-            <div class="hazard-frame hazard-yellow">
-              <div class="impact">
-                <i class="fas fa-share-nodes"></i>
-                <div class="impact-text">
-                  <div class="impact-title">ถ้าพลาดจะกระทบกระบวนการ</div>
-                  <div class="impact-line">${impactProc}</div>
-
-                  <div class="impact-subtitle">ทำให้เกิดของเสีย</div>
-                  <div class="impact-list">${impactDef}</div>
-                </div>
-              </div>
-            </div>
-
+          <div class="head-text">
+            <div class="title">${esc(s.StepTitle)}</div>
+            <div class="short">${esc(s.StepShort || "")}</div>
           </div>
         </div>
 
-        <aside class="panel">
-          <div class="progress">
-            <div class="progress-top">
-              <div>Step ${index+1} / ${total}</div>
-              <div>${percent}%</div>
+        <div class="slide-body">
+
+          <div class="detail">
+${esc(s.StepDetail || "")}
+          </div>
+
+          <div class="hazard-frame hazard-red">
+            <div class="critical">
+              <i class="fas fa-triangle-exclamation"></i>
+
+              <div>
+Critical Point:
+${esc(s.CriticalPoint || "-")}
+              </div>
             </div>
-            <div class="bar"><div style="width:${percent}%"></div></div>
           </div>
 
-          <div class="nav-btns">
-            <button class="btn btn-prev" id="btnPrev" ${index===0 ? "disabled":""}>
-              <i class="fas fa-arrow-left"></i> ก่อนหน้า
-            </button>
-            <button class="btn btn-next" id="btnNext" ${index===total-1 ? "disabled":""}>
-              ถัดไป <i class="fas fa-arrow-right"></i>
-            </button>
-          </div>
+          <div class="hazard-frame hazard-yellow">
+            <div class="impact">
+              <i class="fas fa-share-nodes"></i>
 
-          ${defectBtn}
+              <div class="impact-text">
+                <div class="impact-title">
+                  ถ้าพลาดจะกระทบกระบวนการ
+                </div>
 
-          <div class="side-section-title">
-            <i class="fas fa-list-check"></i>
-            Step Overview
-          </div>
+                <div class="impact-line">
+${esc(s.ImpactProcess || "-")}
+                </div>
 
-          <div class="mini-list">
-            ${steps.map((x,idx)=>`
-              <div class="mini-item ${getStepStatus(idx)}" data-idx="${idx}">
-                <div class="mini-no">${esc(x.StepNo)}</div>
-                <div>
-                  <div class="mini-t">${esc(x.StepTitle)}</div>
-                  <div class="mini-s">${esc(x.StepShort || "")}</div>
+                <div class="impact-subtitle">
+                  ทำให้เกิดของเสีย
+                </div>
+
+                <div class="impact-list">
+${esc(s.ImpactDefect || "-")}
                 </div>
               </div>
-            `).join("")}
+            </div>
           </div>
 
-          <div class="side-section-title">
-            <i class="fas fa-diagram-project"></i>
-            Process Flow
-          </div>
+          <!-- PROCESS FLOW -->
+          <div class="process-flow-section">
 
-          <div class="flowchart">
-            <div class="flow-terminal">START</div>
+            <div class="side-section-title">
+              <i class="fas fa-diagram-project"></i>
+              Process Flow
+            </div>
 
-            ${steps.map((x,idx)=>`
+            <div class="flowchart flowchart-wide">
+
+              <div class="flow-terminal">
+                START
+              </div>
+
+              ${steps.map((x,idx)=>`
+
+                <div class="flow-arrow">
+                  <i class="fas fa-arrow-down"></i>
+                </div>
+
+                <div class="flow-card ${getStepStatus(idx)}" data-idx="${idx}">
+
+                  <div class="flow-no">
+                    ${esc(x.StepNo)}
+                  </div>
+
+                  <div>
+                    <div class="flow-title">
+                      ${esc(x.StepTitle)}
+                    </div>
+
+                    <div class="flow-short">
+                      ${esc(x.StepShort || "")}
+                    </div>
+                  </div>
+
+                </div>
+
+              `).join("")}
+
               <div class="flow-arrow">
                 <i class="fas fa-arrow-down"></i>
               </div>
 
-              <div class="flow-card ${getStepStatus(idx)}" data-idx="${idx}">
-                <div class="flow-no">${esc(x.StepNo)}</div>
-                <div>
-                  <div class="flow-title">${esc(x.StepTitle)}</div>
-                  <div class="flow-short">${esc(x.StepShort || "")}</div>
+              <div class="flow-terminal">
+                END
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- RIGHT -->
+      <aside class="panel">
+
+        <div class="progress">
+          <div class="progress-top">
+            <div>Step ${index+1} / ${total}</div>
+            <div>${percent}%</div>
+          </div>
+
+          <div class="bar">
+            <div style="width:${percent}%"></div>
+          </div>
+        </div>
+
+        <div class="nav-btns">
+          <button class="btn btn-prev" id="btnPrev">
+            ← ก่อนหน้า
+          </button>
+
+          <button class="btn btn-next" id="btnNext">
+            ถัดไป →
+          </button>
+        </div>
+
+        <div class="side-section-title">
+          <i class="fas fa-list-check"></i>
+          Step Overview
+        </div>
+
+        <div class="mini-list">
+
+          ${steps.map((x,idx)=>`
+
+            <div class="mini-item ${getStepStatus(idx)}" data-idx="${idx}">
+
+              <div class="mini-no">
+                ${esc(x.StepNo)}
+              </div>
+
+              <div>
+                <div class="mini-t">
+                  ${esc(x.StepTitle)}
+                </div>
+
+                <div class="mini-s">
+                  ${esc(x.StepShort || "")}
                 </div>
               </div>
-            `).join("")}
 
-            <div class="flow-arrow">
-              <i class="fas fa-arrow-down"></i>
             </div>
 
-            <div class="flow-terminal">END</div>
-          </div>
-        </aside>
-      </div>
-    `;
+          `).join("")}
 
-    document.getElementById("btnPrev").onclick = ()=> setIndex(index-1);
-    document.getElementById("btnNext").onclick = ()=> setIndex(index+1);
-
-    document.querySelectorAll(".mini-item, .flow-card").forEach(el=>{
-      el.addEventListener("click", ()=>{
-        const idx = Number(el.getAttribute("data-idx"));
-        if(!Number.isNaN(idx)) setIndex(idx);
-      });
-    });
-
-    document.onkeydown = (e)=>{
-      if(e.key === "ArrowLeft") setIndex(index-1);
-      if(e.key === "ArrowRight") setIndex(index+1);
-    };
-  }
-
-  async function load(){
-    const proc = String(getQueryParam("process") || "1").trim();
-    currentProc = proc;
-
-    document.getElementById("procTitle").textContent = `Process ${proc}`;
-    document.getElementById("procMeta").textContent  = procMap[proc] ? `กระบวนการ: ${procMap[proc]}` : "-";
-
-    try{
-      const wiRes = await fetch(WI_API(proc));
-      const wiData = await wiRes.json();
-
-      const wiRow =
-        Array.isArray(wiData) ? wiData[0] :
-        (wiData && wiData.FileURL ? wiData : null);
-
-      wiLink = wiRow?.FileURL ? String(wiRow.FileURL).trim() : "";
-      wiName = wiRow?.FileName ? String(wiRow.FileName).trim() : "";
-    }catch(e){
-      wiLink = ""; wiName = "";
-    }
-
-    try{
-      const res = await fetch(LEARNING_API);
-      const data = await res.json();
-
-      steps = (Array.isArray(data) ? data : [])
-        .filter(x => String(x.Process).trim() === proc)
-        .sort((a,b)=> Number(a.StepNo)-Number(b.StepNo));
-
-      if(!steps.length){
-        document.getElementById("content").innerHTML = `
-          <div class="error">
-            <i class="fas fa-circle-exclamation"></i>
-            <div>ไม่พบข้อมูลของ Process ${esc(proc)} ในชีท Learning Path</div>
-          </div>
-        `;
-        return;
-      }
-
-      const startStep = Number(getQueryParam("step"));
-      if(!Number.isNaN(startStep) && startStep>0){
-        const idx = steps.findIndex(x => Number(x.StepNo) === startStep);
-        if(idx >= 0) index = idx;
-      }
-
-      render();
-    }catch(err){
-      console.error(err);
-      document.getElementById("content").innerHTML = `
-        <div class="error">
-          <i class="fas fa-exclamation-triangle"></i>
-          <div>โหลดข้อมูลไม่สำเร็จ</div>
         </div>
-      `;
-    }
-  }
 
-  load();
+      </aside>
+
+    </div>
+  `;
+
+  document.getElementById("btnPrev").onclick = ()=> setIndex(index-1);
+  document.getElementById("btnNext").onclick = ()=> setIndex(index+1);
+
+  document.querySelectorAll(".mini-item, .flow-card").forEach(el=>{
+    el.addEventListener("click", ()=>{
+      const idx = Number(el.dataset.idx);
+      if(!Number.isNaN(idx)) setIndex(idx);
+    });
+  });
+}
+
+async function load(){
+
+  const res = await fetch(LEARNING_API);
+  const data = await res.json();
+
+  steps = data
+    .filter(x => String(x.Process).trim() === "1")
+    .sort((a,b)=> Number(a.StepNo)-Number(b.StepNo));
+
+  render();
+}
+
+load();
 </script>
-
-<script>
-  document.getElementById('logoutBtn').addEventListener('click', function(event) {
-    event.preventDefault();
-    event.stopImmediatePropagation();
-
-    localStorage.removeItem('currentUser');
-    localStorage.removeItem('kmsUser');
-    localStorage.removeItem('savedEmployeeId');
-
-    sessionStorage.removeItem('currentUser');
-    sessionStorage.removeItem('kmsUser');
-
-    window.location.replace('login.html');
-  }, true);
-</script>
-
-<script src="Js"></script>
 </body>
 </html>
