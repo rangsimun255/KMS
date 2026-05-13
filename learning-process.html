@@ -19,9 +19,9 @@
     body{
       font-family:'Sarabun',sans-serif;
       background:#F4F7FB;
-      color:#2E3A59;
       min-height:100vh;
       overflow-x:hidden;
+      color:#2E3A59;
     }
 
     .container{
@@ -34,36 +34,28 @@
     .sidebar{
       width:70px;
       background:linear-gradient(180deg,#4A89C8 0%,#2E75B6 100%);
-      position:fixed;
-      left:0;
-      top:0;
-      height:100vh;
-
       display:flex;
       flex-direction:column;
       align-items:center;
-
       padding-top:20px;
       gap:10px;
-
+      position:fixed;
+      height:100vh;
+      left:0;
+      top:0;
       z-index:100;
     }
 
     .sidebar-icon{
       width:50px;
       height:50px;
-
-      border-radius:14px;
-
       display:flex;
       align-items:center;
       justify-content:center;
-
       color:rgba(255,255,255,.9);
-
-      text-decoration:none;
       font-size:20px;
-
+      border-radius:14px;
+      text-decoration:none;
       transition:.2s;
     }
 
@@ -81,6 +73,32 @@
       width:calc(100% - 70px);
     }
 
+    .header{
+      background:linear-gradient(135deg,#4A89C8 0%,#2E75B6 100%);
+      padding:60px 40px;
+      min-height:240px;
+      text-align:center;
+
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      align-items:center;
+    }
+
+    .header h1{
+      color:#fff;
+      font-size:42px;
+      font-weight:800;
+      margin-bottom:14px;
+    }
+
+    .header p{
+      color:rgba(255,255,255,.92);
+      font-size:18px;
+      max-width:700px;
+      line-height:1.7;
+    }
+
     .wrap{
       padding:16px;
     }
@@ -88,13 +106,13 @@
     .topbar{
       background:#fff;
       border-radius:18px;
-
       padding:14px 18px;
 
       display:flex;
       align-items:center;
       justify-content:space-between;
       gap:10px;
+      flex-wrap:wrap;
 
       box-shadow:0 4px 16px rgba(46,58,89,.06);
 
@@ -153,7 +171,7 @@
 
     .stage{
       display:grid;
-      grid-template-columns:1fr 420px;
+      grid-template-columns:1fr 400px;
       gap:16px;
       align-items:start;
     }
@@ -195,7 +213,7 @@
       align-items:center;
       justify-content:center;
 
-      font-size:26px;
+      font-size:24px;
       font-weight:900;
 
       flex:0 0 auto;
@@ -287,13 +305,6 @@
       flex:0 0 auto;
     }
 
-    .flow-line{
-      width:20px;
-      height:2px;
-      background:#C8D8EB;
-      flex:0 0 auto;
-    }
-
     .flow-arrow-inline{
       color:#7B8BA1;
       font-size:18px;
@@ -301,26 +312,28 @@
     }
 
     .flow-step{
-      min-width:220px;
-      min-height:120px;
+      min-width:180px;
+      min-height:95px;
 
-      background:#fff;
       border:2px solid #E5EDF5;
+      background:#fff;
 
-      border-radius:22px;
+      border-radius:16px;
 
-      padding:18px 16px;
+      padding:12px 10px;
 
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      justify-content:center;
       text-align:center;
 
-      transition:.2s;
       cursor:pointer;
 
       flex:0 0 auto;
+
+      transition:.2s;
+
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      align-items:center;
     }
 
     .flow-step:hover{
@@ -328,33 +341,31 @@
     }
 
     .flow-step-no{
-      width:42px;
-      height:42px;
+      width:34px;
+      height:34px;
 
       border-radius:50%;
+
+      background:#EAF3FF;
+      color:#2F80ED;
 
       display:flex;
       align-items:center;
       justify-content:center;
 
-      background:#EAF3FF;
-      color:#2F80ED;
+      margin:0 auto 8px;
 
       font-weight:900;
-      font-size:16px;
-
-      margin-bottom:14px;
+      font-size:14px;
     }
 
     .flow-step-short{
-      font-size:18px;
+      font-size:15px;
       font-weight:900;
-      line-height:1.45;
       color:#1F2D3D;
+      line-height:1.35;
       text-align:center;
     }
-
-    /* completed */
 
     .flow-step.completed{
       background:#F0FDF4;
@@ -366,12 +377,10 @@
       color:#fff;
     }
 
-    /* active */
-
     .flow-step.active{
       background:#EFF6FF;
       border-color:#2F80ED;
-      box-shadow:0 0 0 5px rgba(47,128,237,.15);
+      box-shadow:0 0 0 4px rgba(47,128,237,.12);
     }
 
     .flow-step.active .flow-step-no{
@@ -387,13 +396,13 @@
 
       padding:18px;
 
-      font-size:17px;
-      line-height:1.9;
+      font-size:16px;
+      line-height:1.8;
 
       white-space:pre-line;
     }
 
-    /* ================= BUTTON ================= */
+    /* ================= WI BUTTON ================= */
 
     .btn-wi{
       display:inline-flex;
@@ -410,23 +419,30 @@
       width:fit-content;
 
       font-weight:900;
-
-      box-shadow:0 8px 18px rgba(47,128,237,.2);
     }
 
-    /* ================= HAZARD ================= */
+    .btn-wi.disabled{
+      background:#C9D6E3;
+      color:#5B6B7A;
+      pointer-events:none;
+    }
+
+    /* ================= HAZARD FRAME ================= */
 
     .hazard-frame{
-      --b:10px;
-      --r:28px;
+      --b:8px;
+      --r:22px;
+      --pad:0px;
 
       position:relative;
-
       border-radius:var(--r);
 
-      padding:var(--b);
+      padding:calc(var(--b) + var(--pad));
 
       overflow:hidden;
+      background:transparent;
+
+      box-shadow:0 4px 12px rgba(46,58,89,.10);
     }
 
     .hazard-frame::before{
@@ -441,16 +457,21 @@
         var(--c1) 0 14px,
         var(--c2) 14px 28px
       );
+
+      z-index:0;
     }
 
     .hazard-frame::after{
       content:"";
       position:absolute;
+
       inset:var(--b);
 
       border-radius:calc(var(--r) - var(--b));
 
       background:var(--inner);
+
+      z-index:1;
     }
 
     .hazard-red{
@@ -470,37 +491,53 @@
       position:relative;
       z-index:2;
 
-      padding:24px;
+      padding:18px;
 
       display:flex;
-      gap:14px;
+      gap:10px;
       align-items:flex-start;
 
+      font-size:14px;
       font-weight:800;
+      line-height:1.6;
+
+      background:transparent;
     }
 
     .critical{
       color:#C62828;
       white-space:pre-line;
-      font-size:16px;
-      line-height:1.8;
     }
 
     .impact{
       color:#8A5A00;
-      white-space:pre-line;
-      font-size:16px;
-      line-height:1.8;
+    }
+
+    .critical i,
+    .impact i{
+      margin-top:3px;
+      flex:0 0 auto;
     }
 
     .impact-text{
       flex:1;
     }
 
-    .impact-title,
+    .impact-title{
+      font-weight:900;
+      margin-bottom:6px;
+    }
+
     .impact-subtitle{
       font-weight:900;
-      margin-bottom:8px;
+      margin-top:10px;
+      margin-bottom:6px;
+    }
+
+    .impact-line,
+    .impact-list{
+      white-space:pre-line;
+      line-height:1.55;
     }
 
     /* ================= RIGHT ================= */
@@ -587,8 +624,6 @@
       cursor:not-allowed;
     }
 
-    /* ================= STEP OVERVIEW ================= */
-
     .mini-list{
       border:1px solid #E9F0F8;
       border-radius:18px;
@@ -667,366 +702,41 @@
       color:#fff;
     }
 
+    @media (max-width:768px){
+
+      .sidebar{
+        width:100%;
+        height:60px;
+
+        flex-direction:row;
+        justify-content:center;
+
+        position:relative;
+      }
+
+      .main-content{
+        margin-left:0;
+        width:100%;
+      }
+
+      .header{
+        padding:40px 20px;
+        min-height:180px;
+      }
+
+      .header h1{
+        font-size:30px;
+      }
+
+      .wrap{
+        padding:12px;
+      }
+    }
+
   </style>
 </head>
 
 <body>
-
-<div class="container">
-
-  <nav class="sidebar">
-
-    <a class="sidebar-icon" href="index.html">
-      <i class="fas fa-home"></i>
-    </a>
-
-    <a class="sidebar-icon" href="knowledge-base.html">
-      <i class="fas fa-book"></i>
-    </a>
-
-    <a class="sidebar-icon active" href="learning-path.html">
-      <i class="fas fa-graduation-cap"></i>
-    </a>
-
-    <a class="sidebar-icon" href="quiz.html">
-      <i class="fas fa-clipboard-check"></i>
-    </a>
-
-    <a class="sidebar-icon" href="share-experience.html">
-      <i class="fas fa-comments"></i>
-    </a>
-
-  </nav>
-
-  <main class="main-content">
-
-    <div class="wrap">
-
-      <div class="topbar">
-
-        <div class="topbar-left">
-
-          <div class="pill">
-            <i class="fas fa-gear"></i>
-            <span id="procTitle">Process 1</span>
-          </div>
-
-          <div class="meta" id="procMeta">
-            กระบวนการ: ผสมเปียก
-          </div>
-
-        </div>
-
-        <a class="btn-back" href="learning-path.html">
-          <i class="fas fa-arrow-left"></i>
-          กลับหน้า Learning Path
-        </a>
-
-      </div>
-
-      <div id="content"></div>
-
-    </div>
-
-  </main>
-
-</div>
-
-<script>
-
-  const API_BASE = "https://script.google.com/macros/s/AKfycbwMRbnqSLTmmI4wofmNfZ5YPFGSiqg__rZUgyDlTTR03JchnQXgUj7DKDvzS4-QBmJrvw/exec";
-  const LEARNING_API = API_BASE + "?view=learning";
-
-  let steps = [];
-  let index = 0;
-
-  function esc(s){
-    return String(s ?? "")
-      .replaceAll("&","&amp;")
-      .replaceAll("<","&lt;")
-      .replaceAll(">","&gt;");
-  }
-
-  function getStepStatus(idx){
-
-    if(idx < index) return "completed";
-    if(idx === index) return "active";
-
-    return "pending";
-  }
-
-  function setIndex(i){
-
-    index = Math.max(0, Math.min(i, steps.length - 1));
-
-    render();
-  }
-
-  function render(){
-
-    const s = steps[index];
-
-    const total = steps.length;
-
-    const percent = Math.round(((index + 1) / total) * 100);
-
-    document.getElementById("content").innerHTML = `
-
-      <div class="stage">
-
-        <!-- LEFT -->
-
-        <div class="slide">
-
-          <div class="slide-head">
-
-            <div class="badge">
-              ${esc(s.StepNo)}
-            </div>
-
-            <div class="head-text">
-
-              <div class="title">
-                ${esc(s.StepTitle)}
-              </div>
-
-              <div class="short">
-                ${esc(s.StepShort || "")}
-              </div>
-
-            </div>
-
-          </div>
-
-          <div class="slide-body">
-
-            <!-- FLOW -->
-
-            <div class="process-flow-section">
-
-              <div class="side-section-title">
-                <i class="fas fa-diagram-project"></i>
-                Process Flow
-              </div>
-
-              <div class="flow-top-wrap">
-
-                <div class="flow-start">
-                  START
-                </div>
-
-                ${steps.map((x,idx)=>`
-
-                  <div class="flow-arrow-inline">
-                    <i class="fas fa-arrow-right"></i>
-                  </div>
-
-                  <div class="flow-step ${getStepStatus(idx)}" data-idx="${idx}">
-
-                    <div class="flow-step-no">
-                      ${esc(x.StepNo)}
-                    </div>
-
-                    <div class="flow-step-short">
-                      ${esc(x.StepShort || "")}
-                    </div>
-
-                  </div>
-
-                `).join("")}
-
-                <div class="flow-arrow-inline">
-                  <i class="fas fa-arrow-right"></i>
-                </div>
-
-                <div class="flow-end">
-                  END
-                </div>
-
-              </div>
-
-            </div>
-
-            <!-- DETAIL -->
-
-            <div class="detail">
-${esc(s.StepDetail || "")}
-            </div>
-
-            <!-- CRITICAL -->
-
-            <div class="hazard-frame hazard-red">
-
-              <div class="critical">
-
-                <i class="fas fa-triangle-exclamation"></i>
-
-                <div>
-Critical Point:
-${esc(s.CriticalPoint || "-")}
-                </div>
-
-              </div>
-
-            </div>
-
-            <!-- IMPACT -->
-
-            <div class="hazard-frame hazard-yellow">
-
-              <div class="impact">
-
-                <i class="fas fa-share-nodes"></i>
-
-                <div class="impact-text">
-
-                  <div class="impact-title">
-                    ถ้าพลาดจะกระทบกระบวนการ
-                  </div>
-
-                  <div>
-${esc(s.ImpactProcess || "-")}
-                  </div>
-
-                  <div class="impact-subtitle" style="margin-top:14px;">
-                    ทำให้เกิดของเสีย
-                  </div>
-
-                  <div>
-${esc(s.ImpactDefect || "-")}
-                  </div>
-
-                </div>
-
-              </div>
-
-            </div>
-
-          </div>
-
-        </div>
-
-        <!-- RIGHT -->
-
-        <aside class="panel">
-
-          <div class="progress">
-
-            <div class="progress-top">
-
-              <div>
-                Step ${index + 1} / ${total}
-              </div>
-
-              <div>
-                ${percent}%
-              </div>
-
-            </div>
-
-            <div class="bar">
-              <div style="width:${percent}%"></div>
-            </div>
-
-          </div>
-
-          <div class="nav-btns">
-
-            <button class="btn btn-prev"
-              ${index === 0 ? "disabled" : ""}
-              id="btnPrev">
-
-              ← ก่อนหน้า
-
-            </button>
-
-            <button class="btn btn-next"
-              ${index === total - 1 ? "disabled" : ""}
-              id="btnNext">
-
-              ถัดไป →
-
-            </button>
-
-          </div>
-
-          <div class="side-section-title">
-            <i class="fas fa-list-check"></i>
-            Step Overview
-          </div>
-
-          <div class="mini-list">
-
-            ${steps.map((x,idx)=>`
-
-              <div class="mini-item ${getStepStatus(idx)}" data-idx="${idx}">
-
-                <div class="mini-no">
-                  ${esc(x.StepNo)}
-                </div>
-
-                <div>
-
-                  <div class="mini-t">
-                    ${esc(x.StepTitle)}
-                  </div>
-
-                  <div class="mini-s">
-                    ${esc(x.StepShort || "")}
-                  </div>
-
-                </div>
-
-              </div>
-
-            `).join("")}
-
-          </div>
-
-        </aside>
-
-      </div>
-    `;
-
-    document.getElementById("btnPrev").onclick =
-      ()=> setIndex(index - 1);
-
-    document.getElementById("btnNext").onclick =
-      ()=> setIndex(index + 1);
-
-    document.querySelectorAll(".mini-item, .flow-step")
-      .forEach(el=>{
-
-        el.addEventListener("click", ()=>{
-
-          const idx = Number(el.dataset.idx);
-
-          if(!Number.isNaN(idx)){
-            setIndex(idx);
-          }
-
-        });
-
-      });
-
-  }
-
-  async function load(){
-
-    const res = await fetch(LEARNING_API);
-
-    const data = await res.json();
-
-    steps = data
-      .filter(x => String(x.Process).trim() === "1")
-      .sort((a,b)=> Number(a.StepNo)-Number(b.StepNo));
-
-    render();
-  }
-
-  load();
-
-</script>
 
 </body>
 </html>
