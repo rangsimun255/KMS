@@ -61,6 +61,33 @@
       width:calc(100% - 70px);
     }
 
+    .header{
+      background:linear-gradient(135deg,#4A89C8 0%,#2E75B6 100%);
+      padding:60px 40px;
+      min-height:240px;
+      text-align:center;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      align-items:center;
+      box-shadow:0 4px 15px rgba(74,137,200,.25);
+    }
+
+    .header h1{
+      color:#fff;
+      font-size:42px;
+      font-weight:800;
+      margin-bottom:14px;
+      letter-spacing:1px;
+    }
+
+    .header p{
+      color:rgba(255,255,255,.92);
+      font-size:18px;
+      max-width:700px;
+      line-height:1.7;
+    }
+
     .wrap{padding:16px}
 
     .topbar{
@@ -73,6 +100,7 @@
       gap:10px;
       box-shadow:0 4px 16px rgba(46,58,89,.06);
       margin-bottom:14px;
+      flex-wrap:wrap;
     }
 
     .topbar-left{
@@ -203,12 +231,6 @@
       padding-bottom:10px;
     }
 
-    .flow-top-wrap::-webkit-scrollbar{height:8px}
-    .flow-top-wrap::-webkit-scrollbar-thumb{
-      background:#D6E3F2;
-      border-radius:999px;
-    }
-
     .flow-start,
     .flow-end{
       min-width:110px;
@@ -247,8 +269,6 @@
       cursor:pointer;
       flex:0 0 auto;
     }
-
-    .flow-step:hover{transform:translateY(-2px)}
 
     .flow-step-no{
       width:42px;
@@ -300,6 +320,29 @@
       font-size:17px;
       line-height:1.9;
       white-space:pre-line;
+    }
+
+    .wi-actions{margin-top:4px}
+
+    .btn-wi{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      background:#2F80ED;
+      color:#fff;
+      text-decoration:none;
+      padding:14px 18px;
+      border-radius:16px;
+      width:fit-content;
+      font-weight:900;
+      box-shadow:0 8px 18px rgba(47,128,237,.2);
+    }
+
+    .btn-wi.disabled{
+      background:#c9d6e3;
+      color:#5b6b7a;
+      box-shadow:none;
+      pointer-events:none;
     }
 
     .hazard-frame{
@@ -365,9 +408,7 @@
       white-space:pre-line;
     }
 
-    .impact{
-      color:#8A5A00;
-    }
+    .impact{color:#8A5A00}
 
     .critical i,
     .impact i{
@@ -478,6 +519,20 @@
       cursor:not-allowed;
     }
 
+    .btn-defect{
+      margin-top:4px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      padding:14px;
+      border-radius:14px;
+      background:#4A89C8;
+      color:#fff;
+      font-weight:900;
+      text-decoration:none;
+    }
+
     .mini-list{
       border:1px solid #E9F0F8;
       border-radius:18px;
@@ -543,6 +598,42 @@
       background:#2F80ED;
       color:#fff;
     }
+
+    .loading,.error{
+      background:#fff;
+      border-radius:18px;
+      padding:30px;
+      text-align:center;
+      color:#6B7A90;
+      box-shadow:0 4px 16px rgba(46,58,89,.06);
+    }
+
+    @media(max-width:768px){
+      .container{flex-direction:column}
+
+      .sidebar{
+        width:100%;
+        height:60px;
+        flex-direction:row;
+        justify-content:center;
+        position:relative;
+        padding:10px;
+      }
+
+      .main-content{
+        margin-left:0;
+        width:100%;
+      }
+
+      .header{
+        padding:40px 20px;
+        min-height:170px;
+      }
+
+      .header h1{font-size:30px}
+      .header p{font-size:15px}
+      .wrap{padding:12px}
+    }
   </style>
 </head>
 
@@ -556,21 +647,26 @@
     <a class="sidebar-icon active" href="learning-path.html"><i class="fas fa-graduation-cap"></i></a>
     <a class="sidebar-icon" href="quiz.html"><i class="fas fa-clipboard-check"></i></a>
     <a class="sidebar-icon" href="share-experience.html"><i class="fas fa-comments"></i></a>
+    <a class="sidebar-icon" href="login.html" id="logoutBtn"><i class="fas fa-sign-out-alt"></i></a>
   </nav>
 
   <main class="main-content">
+
+    <header class="header">
+      <h1>Learning Process</h1>
+      <p>เรียนทีละ Step แบบสไลด์ — 1 ขั้นตอนต่อ 1 หน้า กด “ถัดไป” เพื่อไปต่อ</p>
+    </header>
+
     <div class="wrap">
 
       <div class="topbar">
         <div class="topbar-left">
           <div class="pill">
             <i class="fas fa-gear"></i>
-            <span id="procTitle">Process 1</span>
+            <span id="procTitle">Process</span>
           </div>
 
-          <div class="meta" id="procMeta">
-            กระบวนการ: ผสมเปียก
-          </div>
+          <div class="meta" id="procMeta">-</div>
         </div>
 
         <a class="btn-back" href="learning-path.html">
@@ -579,7 +675,12 @@
         </a>
       </div>
 
-      <div id="content"></div>
+      <div id="content">
+        <div class="loading">
+          <i class="fas fa-spinner fa-spin"></i>
+          <div>กำลังโหลดข้อมูล...</div>
+        </div>
+      </div>
 
     </div>
   </main>
@@ -589,15 +690,36 @@
 <script>
   const API_BASE = "https://script.google.com/macros/s/AKfycbwMRbnqSLTmmI4wofmNfZ5YPFGSiqg__rZUgyDlTTR03JchnQXgUj7DKDvzS4-QBmJrvw/exec";
   const LEARNING_API = API_BASE + "?view=learning";
+  const WI_API = (proc)=> API_BASE + "?view=wi&process=" + encodeURIComponent(proc);
+
+  const procMap = {
+    "1":"ผสมเปียก",
+    "2":"แร่งเปียก",
+    "3":"อบลมร้อน",
+    "4":"แร่งแห้ง",
+    "5":"ผสมแห้ง",
+    "6":"ตอกเม็ดยา",
+    "7":"บรรจุซอง"
+  };
 
   let steps = [];
   let index = 0;
+  let currentProc = "1";
+  let wiLink = "";
+  let wiName = "";
+
+  function getQueryParam(name){
+    const url = new URL(window.location.href);
+    return url.searchParams.get(name);
+  }
 
   function esc(s){
     return String(s ?? "")
       .replaceAll("&","&amp;")
       .replaceAll("<","&lt;")
-      .replaceAll(">","&gt;");
+      .replaceAll(">","&gt;")
+      .replaceAll('"',"&quot;")
+      .replaceAll("'","&#039;");
   }
 
   function getStepStatus(idx){
@@ -618,6 +740,25 @@
 
     const impactProcess = esc((s.ImpactProcess || "").trim()) || "-";
     const impactDefect = esc((s.ImpactDefect || "").trim()) || "-";
+
+    const defectBtn = (index === total - 1) ? `
+      <a class="btn-defect" href="defect-learning.html?process=${encodeURIComponent(currentProc)}">
+        <i class="fas fa-triangle-exclamation"></i>
+        เรียนรู้ลักษณะของเสีย
+      </a>
+    ` : ``;
+
+    const wiBtnHtml = `
+      <div class="wi-actions">
+        <a class="btn-wi ${wiLink ? "" : "disabled"}"
+           href="${wiLink ? esc(wiLink) : "#"}"
+           target="_blank"
+           rel="noopener">
+          <i class="fas fa-file-lines"></i>
+          ${wiLink ? `เปิดไฟล์ ${esc(wiName || ("Process " + currentProc))}` : `ยังไม่มีไฟล์ WI`}
+        </a>
+      </div>
+    `;
 
     document.getElementById("content").innerHTML = `
       <div class="stage">
@@ -663,6 +804,8 @@
             </div>
 
             <div class="detail">${esc(s.StepDetail || "")}</div>
+
+            ${wiBtnHtml}
 
             <div class="hazard-frame hazard-red">
               <div class="critical">
@@ -716,6 +859,8 @@ ${esc(s.CriticalPoint || "-")}</div>
             </button>
           </div>
 
+          ${defectBtn}
+
           <div class="side-section-title">
             <i class="fas fa-list-check"></i>
             Step Overview
@@ -747,20 +892,88 @@ ${esc(s.CriticalPoint || "-")}</div>
         if(!Number.isNaN(idx)) setIndex(idx);
       });
     });
+
+    document.onkeydown = (e)=>{
+      if(e.key === "ArrowLeft") setIndex(index - 1);
+      if(e.key === "ArrowRight") setIndex(index + 1);
+    };
   }
 
   async function load(){
-    const res = await fetch(LEARNING_API);
-    const data = await res.json();
+    const proc = String(getQueryParam("process") || "1").trim();
+    currentProc = proc;
 
-    steps = data
-      .filter(x => String(x.Process).trim() === "1")
-      .sort((a,b)=> Number(a.StepNo)-Number(b.StepNo));
+    document.getElementById("procTitle").textContent = `Process ${proc}`;
+    document.getElementById("procMeta").textContent = procMap[proc] ? `กระบวนการ: ${procMap[proc]}` : "-";
 
-    render();
+    try{
+      const wiRes = await fetch(WI_API(proc));
+      const wiData = await wiRes.json();
+
+      const wiRow =
+        Array.isArray(wiData) ? wiData[0] :
+        (wiData && wiData.FileURL ? wiData : null);
+
+      wiLink = wiRow?.FileURL ? String(wiRow.FileURL).trim() : "";
+      wiName = wiRow?.FileName ? String(wiRow.FileName).trim() : "";
+    }catch(e){
+      wiLink = "";
+      wiName = "";
+    }
+
+    try{
+      const res = await fetch(LEARNING_API);
+      const data = await res.json();
+
+      steps = (Array.isArray(data) ? data : [])
+        .filter(x => String(x.Process).trim() === proc)
+        .sort((a,b)=> Number(a.StepNo)-Number(b.StepNo));
+
+      if(!steps.length){
+        document.getElementById("content").innerHTML = `
+          <div class="error">
+            <i class="fas fa-circle-exclamation"></i>
+            <div>ไม่พบข้อมูลของ Process ${esc(proc)}</div>
+          </div>
+        `;
+        return;
+      }
+
+      const startStep = Number(getQueryParam("step"));
+      if(!Number.isNaN(startStep) && startStep > 0){
+        const idx = steps.findIndex(x => Number(x.StepNo) === startStep);
+        if(idx >= 0) index = idx;
+      }
+
+      render();
+    }catch(err){
+      console.error(err);
+      document.getElementById("content").innerHTML = `
+        <div class="error">
+          <i class="fas fa-exclamation-triangle"></i>
+          <div>โหลดข้อมูลไม่สำเร็จ</div>
+        </div>
+      `;
+    }
   }
 
   load();
+</script>
+
+<script>
+  document.getElementById('logoutBtn').addEventListener('click', function(event) {
+    event.preventDefault();
+    event.stopImmediatePropagation();
+
+    localStorage.removeItem('currentUser');
+    localStorage.removeItem('kmsUser');
+    localStorage.removeItem('savedEmployeeId');
+
+    sessionStorage.removeItem('currentUser');
+    sessionStorage.removeItem('kmsUser');
+
+    window.location.replace('login.html');
+  }, true);
 </script>
 
 </body>
