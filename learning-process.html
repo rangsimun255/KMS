@@ -9,12 +9,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
 
   <style>
-
-    *{
-      margin:0;
-      padding:0;
-      box-sizing:border-box;
-    }
+    *{margin:0;padding:0;box-sizing:border-box}
 
     body{
       font-family:'Sarabun',sans-serif;
@@ -24,12 +19,7 @@
       overflow-x:hidden;
     }
 
-    .container{
-      display:flex;
-      min-height:100vh;
-    }
-
-    /* ================= SIDEBAR ================= */
+    .container{display:flex;min-height:100vh}
 
     .sidebar{
       width:70px;
@@ -38,32 +28,24 @@
       left:0;
       top:0;
       height:100vh;
-
       display:flex;
       flex-direction:column;
       align-items:center;
-
       padding-top:20px;
       gap:10px;
-
       z-index:100;
     }
 
     .sidebar-icon{
       width:50px;
       height:50px;
-
       border-radius:14px;
-
       display:flex;
       align-items:center;
       justify-content:center;
-
       color:rgba(255,255,255,.9);
-
       text-decoration:none;
       font-size:20px;
-
       transition:.2s;
     }
 
@@ -72,8 +54,6 @@
       background:rgba(255,255,255,.16);
       color:#fff;
     }
-
-    /* ================= MAIN ================= */
 
     .main-content{
       flex:1;
@@ -85,12 +65,10 @@
       background:linear-gradient(135deg,#4A89C8 0%,#2E75B6 100%);
       padding:60px 40px;
       min-height:220px;
-
       display:flex;
       flex-direction:column;
       align-items:center;
       justify-content:center;
-
       text-align:center;
     }
 
@@ -107,23 +85,18 @@
       line-height:1.7;
     }
 
-    .wrap{
-      padding:16px;
-    }
+    .wrap{padding:16px}
 
     .topbar{
       background:#fff;
       border-radius:20px;
       padding:14px 18px;
-
       display:flex;
       align-items:center;
       justify-content:space-between;
       flex-wrap:wrap;
       gap:12px;
-
       box-shadow:0 4px 16px rgba(46,58,89,.06);
-
       margin-bottom:14px;
     }
 
@@ -138,13 +111,10 @@
       display:flex;
       align-items:center;
       gap:8px;
-
       background:#EAF3FF;
       color:#2F80ED;
-
       padding:10px 14px;
       border-radius:999px;
-
       font-size:13px;
       font-weight:800;
     }
@@ -159,18 +129,13 @@
       background:#2F80ED;
       color:#fff;
       text-decoration:none;
-
       padding:12px 18px;
       border-radius:14px;
-
       display:flex;
       align-items:center;
       gap:10px;
-
       font-weight:800;
     }
-
-    /* ================= LAYOUT ================= */
 
     .stage{
       display:grid;
@@ -180,12 +145,8 @@
     }
 
     @media(max-width:1200px){
-      .stage{
-        grid-template-columns:1fr;
-      }
+      .stage{grid-template-columns:1fr}
     }
-
-    /* ================= LEFT ================= */
 
     .slide{
       background:#fff;
@@ -197,7 +158,6 @@
     .slide-head{
       padding:22px;
       border-bottom:1px solid #EEF3F8;
-
       display:flex;
       gap:16px;
       align-items:flex-start;
@@ -206,25 +166,18 @@
     .badge{
       width:58px;
       height:58px;
-
       border-radius:18px;
-
       background:#2F80ED;
       color:#fff;
-
       display:flex;
       align-items:center;
       justify-content:center;
-
       font-size:26px;
       font-weight:900;
-
       flex:0 0 auto;
     }
 
-    .head-text{
-      flex:1;
-    }
+    .head-text{flex:1}
 
     .title{
       font-size:34px;
@@ -247,8 +200,6 @@
       gap:18px;
     }
 
-    /* ================= FLOW ================= */
-
     .process-flow-section{
       background:#F8FBFF;
       border:1px solid #E5EDF5;
@@ -260,7 +211,6 @@
       display:flex;
       align-items:center;
       gap:10px;
-
       color:#234A74;
       font-weight:900;
       font-size:18px;
@@ -268,21 +218,15 @@
 
     .flow-top-wrap{
       margin-top:18px;
-
       display:flex;
       align-items:center;
       gap:10px;
-
       overflow-x:auto;
       padding-bottom:10px;
-
       scroll-behavior:smooth;
     }
 
-    .flow-top-wrap::-webkit-scrollbar{
-      height:8px;
-    }
-
+    .flow-top-wrap::-webkit-scrollbar{height:8px}
     .flow-top-wrap::-webkit-scrollbar-thumb{
       background:#C8D8EB;
       border-radius:999px;
@@ -292,20 +236,15 @@
     .flow-end{
       min-width:110px;
       height:62px;
-
       border-radius:18px;
-
       border:2px solid #2F80ED;
       background:#fff;
       color:#2F80ED;
-
       display:flex;
       align-items:center;
       justify-content:center;
-
       font-size:14px;
       font-weight:900;
-
       flex:0 0 auto;
     }
 
@@ -318,47 +257,33 @@
     .flow-step{
       min-width:280px;
       min-height:120px;
-
       background:#fff;
       border:2px solid #E5EDF5;
-
       border-radius:22px;
-
       padding:18px 16px;
-
       display:flex;
       flex-direction:column;
       align-items:center;
       justify-content:center;
-
       text-align:center;
-
       transition:.2s;
       cursor:pointer;
-
       flex:0 0 auto;
     }
 
-    .flow-step:hover{
-      transform:translateY(-2px);
-    }
+    .flow-step:hover{transform:translateY(-2px)}
 
     .flow-step-no{
       width:42px;
       height:42px;
-
       border-radius:50%;
-
       display:flex;
       align-items:center;
       justify-content:center;
-
       background:#EAF3FF;
       color:#2F80ED;
-
       font-weight:900;
       font-size:16px;
-
       margin-bottom:14px;
     }
 
@@ -391,51 +316,42 @@
       color:#fff;
     }
 
-    /* ================= DETAIL ================= */
-
     .detail{
       background:#fff;
       border-radius:18px;
-
       padding:18px;
-
       font-size:17px;
       line-height:1.9;
-
       white-space:pre-line;
     }
 
-    /* ================= WI BUTTON ================= */
+    .wi-actions{margin-top:4px}
 
     .btn-wi{
       display:inline-flex;
       align-items:center;
       gap:10px;
-
       background:#2F80ED;
       color:#fff;
       text-decoration:none;
-
       padding:14px 18px;
       border-radius:16px;
-
       width:fit-content;
-
       font-weight:900;
     }
 
-    /* ================= HAZARD ================= */
+    .btn-wi.disabled{
+      background:#c9d6e3;
+      color:#5b6b7a;
+      pointer-events:none;
+    }
 
     .hazard-frame{
       --b:8px;
       --r:22px;
-
       position:relative;
-
       border-radius:var(--r);
-
       padding:var(--b);
-
       overflow:hidden;
     }
 
@@ -443,9 +359,7 @@
       content:"";
       position:absolute;
       inset:0;
-
       border-radius:var(--r);
-
       background:repeating-linear-gradient(
         45deg,
         var(--c1) 0 14px,
@@ -457,9 +371,7 @@
       content:"";
       position:absolute;
       inset:var(--b);
-
       border-radius:calc(var(--r) - var(--b));
-
       background:var(--inner);
     }
 
@@ -479,13 +391,10 @@
     .impact{
       position:relative;
       z-index:2;
-
       padding:18px;
-
       display:flex;
       gap:10px;
       align-items:flex-start;
-
       font-size:14px;
       font-weight:800;
       line-height:1.6;
@@ -496,13 +405,15 @@
       white-space:pre-line;
     }
 
-    .impact{
-      color:#8A5A00;
+    .impact{color:#8A5A00}
+
+    .critical i,
+    .impact i{
+      margin-top:3px;
+      flex:0 0 auto;
     }
 
-    .impact-text{
-      flex:1;
-    }
+    .impact-text{flex:1}
 
     .impact-content{
       color:#7A5200;
@@ -526,15 +437,11 @@
       white-space:pre-line;
     }
 
-    /* ================= RIGHT ================= */
-
     .panel{
       background:#fff;
       border-radius:24px;
       padding:20px;
-
       box-shadow:0 8px 24px rgba(46,58,89,.08);
-
       display:flex;
       flex-direction:column;
       gap:18px;
@@ -543,27 +450,21 @@
     .progress{
       background:#F5F9FF;
       border:1px solid #E2ECF8;
-
       border-radius:18px;
-
       padding:16px;
     }
 
     .progress-top{
       display:flex;
       justify-content:space-between;
-
       font-weight:900;
       color:#234A74;
     }
 
     .bar{
       margin-top:12px;
-
       height:12px;
-
       border-radius:999px;
-
       background:#DCE8F6;
       overflow:hidden;
     }
@@ -582,14 +483,11 @@
 
     .btn{
       border:none;
-
       padding:14px;
       border-radius:16px;
-
       font-family:'Sarabun',sans-serif;
       font-weight:900;
       font-size:16px;
-
       cursor:pointer;
     }
 
@@ -608,6 +506,20 @@
       cursor:not-allowed;
     }
 
+    .btn-defect{
+      margin-top:4px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      padding:14px;
+      border-radius:14px;
+      background:#4A89C8;
+      color:#fff;
+      font-weight:900;
+      text-decoration:none;
+    }
+
     .mini-list{
       border:1px solid #E9F0F8;
       border-radius:18px;
@@ -616,36 +528,26 @@
 
     .mini-item{
       padding:14px;
-
       display:flex;
       gap:12px;
       align-items:flex-start;
-
       border-bottom:1px solid #EEF3F8;
-
       cursor:pointer;
     }
 
-    .mini-item:last-child{
-      border-bottom:none;
-    }
+    .mini-item:last-child{border-bottom:none}
 
     .mini-no{
       width:34px;
       height:34px;
-
       border-radius:12px;
-
       display:flex;
       align-items:center;
       justify-content:center;
-
       background:#EAF3FF;
       color:#2F80ED;
-
       font-size:13px;
       font-weight:900;
-
       flex:0 0 auto;
     }
 
@@ -683,6 +585,41 @@
       color:#fff;
     }
 
+    .loading,.error{
+      background:#fff;
+      border-radius:18px;
+      padding:30px;
+      text-align:center;
+      color:#6B7A90;
+      box-shadow:0 4px 16px rgba(46,58,89,.06);
+    }
+
+    @media(max-width:768px){
+      .container{flex-direction:column}
+
+      .sidebar{
+        width:100%;
+        height:60px;
+        flex-direction:row;
+        justify-content:center;
+        position:relative;
+        padding:10px;
+      }
+
+      .main-content{
+        margin-left:0;
+        width:100%;
+      }
+
+      .header{
+        padding:40px 20px;
+        min-height:170px;
+      }
+
+      .header h1{font-size:30px}
+      .header p{font-size:15px}
+      .wrap{padding:12px}
+    }
   </style>
 </head>
 
@@ -691,31 +628,12 @@
 <div class="container">
 
   <nav class="sidebar">
-
-    <a class="sidebar-icon" href="index.html">
-      <i class="fas fa-home"></i>
-    </a>
-
-    <a class="sidebar-icon" href="knowledge-base.html">
-      <i class="fas fa-book"></i>
-    </a>
-
-    <a class="sidebar-icon active" href="learning-path.html">
-      <i class="fas fa-graduation-cap"></i>
-    </a>
-
-    <a class="sidebar-icon" href="quiz.html">
-      <i class="fas fa-clipboard-check"></i>
-    </a>
-
-    <a class="sidebar-icon" href="share-experience.html">
-      <i class="fas fa-comments"></i>
-    </a>
-
-    <a class="sidebar-icon" href="login.html" id="logoutBtn">
-      <i class="fas fa-sign-out-alt"></i>
-    </a>
-
+    <a class="sidebar-icon" href="index.html"><i class="fas fa-home"></i></a>
+    <a class="sidebar-icon" href="knowledge-base.html"><i class="fas fa-book"></i></a>
+    <a class="sidebar-icon active" href="learning-path.html"><i class="fas fa-graduation-cap"></i></a>
+    <a class="sidebar-icon" href="quiz.html"><i class="fas fa-clipboard-check"></i></a>
+    <a class="sidebar-icon" href="share-experience.html"><i class="fas fa-comments"></i></a>
+    <a class="sidebar-icon" href="login.html" id="logoutBtn"><i class="fas fa-sign-out-alt"></i></a>
   </nav>
 
   <main class="main-content">
@@ -728,374 +646,334 @@
     <div class="wrap">
 
       <div class="topbar">
-
         <div class="topbar-left">
-
           <div class="pill">
             <i class="fas fa-gear"></i>
             <span id="procTitle">Process</span>
           </div>
-
           <div class="meta" id="procMeta">-</div>
-
         </div>
 
         <a class="btn-back" href="learning-path.html">
           <i class="fas fa-arrow-left"></i>
           กลับหน้า Learning Path
         </a>
-
       </div>
 
-      <div id="content"></div>
+      <div id="content">
+        <div class="loading">
+          <i class="fas fa-spinner fa-spin"></i>
+          <div>กำลังโหลดข้อมูล...</div>
+        </div>
+      </div>
 
     </div>
-
   </main>
 
 </div>
 
 <script>
+  const API_BASE = "https://script.google.com/macros/s/AKfycbwMRbnqSLTmmI4wofmNfZ5YPFGSiqg__rZUgyDlTTR03JchnQXgUj7DKDvzS4-QBmJrvw/exec";
+  const LEARNING_API = API_BASE + "?view=learning";
+  const WI_API = (proc)=> API_BASE + "?view=wi&process=" + encodeURIComponent(proc);
 
-const API_BASE = "https://script.google.com/macros/s/AKfycbwMRbnqSLTmmI4wofmNfZ5YPFGSiqg__rZUgyDlTTR03JchnQXgUj7DKDvzS4-QBmJrvw/exec";
+  const procMap = {
+    "1":"ผสมเปียก",
+    "2":"แร่งเปียก",
+    "3":"อบลมร้อน",
+    "4":"แร่งแห้ง",
+    "5":"ผสมแห้ง",
+    "6":"ตอกเม็ดยา",
+    "7":"บรรจุซอง"
+  };
 
-const LEARNING_API = API_BASE + "?view=learning";
+  let steps = [];
+  let index = 0;
+  let currentProc = "1";
+  let wiLink = "";
+  let wiName = "";
 
-let steps = [];
-let index = 0;
+  function getQueryParam(name){
+    const url = new URL(window.location.href);
+    return url.searchParams.get(name);
+  }
 
-function esc(s){
-  return String(s ?? "")
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;");
-}
+  function esc(s){
+    return String(s ?? "")
+      .replaceAll("&","&amp;")
+      .replaceAll("<","&lt;")
+      .replaceAll(">","&gt;")
+      .replaceAll('"',"&quot;")
+      .replaceAll("'","&#039;");
+  }
 
-function getStepStatus(idx){
+  function getStepStatus(idx){
+    if(idx < index) return "completed";
+    if(idx === index) return "active";
+    return "pending";
+  }
 
-  if(idx < index) return "completed";
+  function setIndex(i){
+    index = Math.max(0, Math.min(i, steps.length - 1));
+    render();
+  }
 
-  if(idx === index) return "active";
+  function render(){
+    const s = steps[index];
+    const total = steps.length;
+    const percent = Math.round(((index + 1) / total) * 100);
 
-  return "pending";
-}
+    const impactProcess = esc((s.ImpactProcess || "").trim()) || "-";
+    const impactDefect = esc((s.ImpactDefect || "").trim()) || "-";
 
-function setIndex(i){
+    const defectBtn = (index === total - 1) ? `
+      <a class="btn-defect" href="defect-learning.html?process=${encodeURIComponent(currentProc)}">
+        <i class="fas fa-triangle-exclamation"></i>
+        เรียนรู้ลักษณะของเสีย
+      </a>
+    ` : ``;
 
-  index = Math.max(0, Math.min(i, steps.length - 1));
+    const wiBtnHtml = `
+      <div class="wi-actions">
+        <a class="btn-wi ${wiLink ? "" : "disabled"}"
+           href="${wiLink ? esc(wiLink) : "#"}"
+           target="_blank"
+           rel="noopener">
+          <i class="fas fa-file-lines"></i>
+          ${wiLink ? `เปิดไฟล์ ${esc(wiName || ("Process " + currentProc))}` : `ยังไม่มีไฟล์ WI`}
+        </a>
+      </div>
+    `;
 
-  render();
-}
+    document.getElementById("content").innerHTML = `
+      <div class="stage">
 
-function render(){
+        <div class="slide">
+          <div class="slide-head">
+            <div class="badge">${esc(s.StepNo)}</div>
 
-  const s = steps[index];
-
-  const total = steps.length;
-
-  const percent = Math.round(((index + 1) / total) * 100);
-
-  const impactProcess = esc((s.ImpactProcess || "").trim()) || "-";
-
-  const impactDefect = esc((s.ImpactDefect || "").trim()) || "-";
-
-  document.getElementById("content").innerHTML = `
-
-    <div class="stage">
-
-      <!-- LEFT -->
-
-      <div class="slide">
-
-        <div class="slide-head">
-
-          <div class="badge">
-            ${esc(s.StepNo)}
+            <div class="head-text">
+              <div class="title">${esc(s.StepTitle)}</div>
+              <div class="short">${esc(s.StepShort || "")}</div>
+            </div>
           </div>
 
-          <div class="head-text">
+          <div class="slide-body">
 
-            <div class="title">
-              ${esc(s.StepTitle)}
-            </div>
-
-            <div class="short">
-              ${esc(s.StepShort || "")}
-            </div>
-
-          </div>
-
-        </div>
-
-        <div class="slide-body">
-
-          <!-- FLOW -->
-
-          <div class="process-flow-section">
-
-            <div class="side-section-title">
-              <i class="fas fa-diagram-project"></i>
-              Process Flow
-            </div>
-
-            <div class="flow-top-wrap">
-
-              <div class="flow-start">
-                START
+            <div class="process-flow-section">
+              <div class="side-section-title">
+                <i class="fas fa-diagram-project"></i>
+                Process Flow
               </div>
 
-              ${steps.map((x,idx)=>`
+              <div class="flow-top-wrap">
+                <div class="flow-start">START</div>
+
+                ${steps.map((x,idx)=>`
+                  <div class="flow-arrow-inline">
+                    <i class="fas fa-arrow-right"></i>
+                  </div>
+
+                  <div class="flow-step ${getStepStatus(idx)}" data-idx="${idx}">
+                    <div class="flow-step-no">${esc(x.StepNo)}</div>
+                    <div class="flow-step-short">${esc(x.StepShort || "")}</div>
+                  </div>
+                `).join("")}
 
                 <div class="flow-arrow-inline">
                   <i class="fas fa-arrow-right"></i>
                 </div>
 
-                <div class="flow-step ${getStepStatus(idx)}" data-idx="${idx}">
+                <div class="flow-end">END</div>
+              </div>
+            </div>
 
-                  <div class="flow-step-no">
-                    ${esc(x.StepNo)}
+            <div class="detail">${esc(s.StepDetail || "")}</div>
+
+            ${wiBtnHtml}
+
+            <div class="hazard-frame hazard-red">
+              <div class="critical">
+                <i class="fas fa-triangle-exclamation"></i>
+                <div>Critical Point:
+${esc(s.CriticalPoint || "-")}</div>
+              </div>
+            </div>
+
+            <div class="hazard-frame hazard-yellow">
+              <div class="impact">
+                <i class="fas fa-share-nodes"></i>
+
+                <div class="impact-text">
+                  <div class="impact-content">
+
+                    <div class="impact-heading">กระทบกระบวนการ</div>
+                    <div class="impact-value">${impactProcess}</div>
+
+                    <div class="impact-subheading">ทำให้เกิดของเสีย</div>
+                    <div class="impact-value">${impactDefect}</div>
+
                   </div>
-
-                  <div class="flow-step-short">
-                    ${esc(x.StepShort || "")}
-                  </div>
-
                 </div>
-
-              `).join("")}
-
-              <div class="flow-arrow-inline">
-                <i class="fas fa-arrow-right"></i>
               </div>
-
-              <div class="flow-end">
-                END
-              </div>
-
             </div>
 
           </div>
-
-          <!-- DETAIL -->
-
-          <div class="detail">
-${esc(s.StepDetail || "")}
-          </div>
-
-          <!-- CRITICAL -->
-
-          <div class="hazard-frame hazard-red">
-
-            <div class="critical">
-
-              <i class="fas fa-triangle-exclamation"></i>
-
-              <div>
-Critical Point:
-${esc(s.CriticalPoint || "-")}
-              </div>
-
-            </div>
-
-          </div>
-
-          <!-- IMPACT -->
-
-          <div class="hazard-frame hazard-yellow">
-
-            <div class="impact">
-
-              <i class="fas fa-share-nodes"></i>
-
-              <div class="impact-text">
-
-                <div class="impact-content">
-
-                  <div class="impact-heading">
-                    กระทบกระบวนการ
-                  </div>
-
-                  <div class="impact-value">
-${impactProcess}
-                  </div>
-
-                  <div class="impact-subheading">
-                    ทำให้เกิดของเสีย
-                  </div>
-
-                  <div class="impact-value">
-${impactDefect}
-                  </div>
-
-                </div>
-
-              </div>
-
-            </div>
-
-          </div>
-
         </div>
+
+        <aside class="panel">
+          <div class="progress">
+            <div class="progress-top">
+              <div>Step ${index + 1} / ${total}</div>
+              <div>${percent}%</div>
+            </div>
+
+            <div class="bar">
+              <div style="width:${percent}%"></div>
+            </div>
+          </div>
+
+          <div class="nav-btns">
+            <button class="btn btn-prev" ${index === 0 ? "disabled" : ""} id="btnPrev">
+              ← ก่อนหน้า
+            </button>
+
+            <button class="btn btn-next" ${index === total - 1 ? "disabled" : ""} id="btnNext">
+              ถัดไป →
+            </button>
+          </div>
+
+          ${defectBtn}
+
+          <div class="side-section-title">
+            <i class="fas fa-list-check"></i>
+            Step Overview
+          </div>
+
+          <div class="mini-list">
+            ${steps.map((x,idx)=>`
+              <div class="mini-item ${getStepStatus(idx)}" data-idx="${idx}">
+                <div class="mini-no">${esc(x.StepNo)}</div>
+
+                <div>
+                  <div class="mini-t">${esc(x.StepTitle)}</div>
+                  <div class="mini-s">${esc(x.StepShort || "")}</div>
+                </div>
+              </div>
+            `).join("")}
+          </div>
+        </aside>
 
       </div>
+    `;
 
-      <!-- RIGHT -->
+    setTimeout(() => {
+      if(index < 2) return;
 
-      <aside class="panel">
+      const activeFlow = document.querySelector(".flow-step.active");
 
-        <div class="progress">
+      if(activeFlow){
+        activeFlow.scrollIntoView({
+          behavior:"smooth",
+          inline:"center",
+          block:"nearest"
+        });
+      }
+    }, 50);
 
-          <div class="progress-top">
+    document.getElementById("btnPrev").onclick = () => setIndex(index - 1);
+    document.getElementById("btnNext").onclick = () => setIndex(index + 1);
 
-            <div>
-              Step ${index + 1} / ${total}
-            </div>
-
-            <div>
-              ${percent}%
-            </div>
-
-          </div>
-
-          <div class="bar">
-            <div style="width:${percent}%"></div>
-          </div>
-
-        </div>
-
-        <div class="nav-btns">
-
-          <button class="btn btn-prev"
-            ${index === 0 ? "disabled" : ""}
-            id="btnPrev">
-
-            ← ก่อนหน้า
-
-          </button>
-
-          <button class="btn btn-next"
-            ${index === total - 1 ? "disabled" : ""}
-            id="btnNext">
-
-            ถัดไป →
-
-          </button>
-
-        </div>
-
-        <div class="side-section-title">
-          <i class="fas fa-list-check"></i>
-          Step Overview
-        </div>
-
-        <div class="mini-list">
-
-          ${steps.map((x,idx)=>`
-
-            <div class="mini-item ${getStepStatus(idx)}" data-idx="${idx}">
-
-              <div class="mini-no">
-                ${esc(x.StepNo)}
-              </div>
-
-              <div>
-
-                <div class="mini-t">
-                  ${esc(x.StepTitle)}
-                </div>
-
-                <div class="mini-s">
-                  ${esc(x.StepShort || "")}
-                </div>
-
-              </div>
-
-            </div>
-
-          `).join("")}
-
-        </div>
-
-      </aside>
-
-    </div>
-  `;
-
-  /* ================= AUTO CENTER FLOW ================= */
-
-  setTimeout(() => {
-
-    if(index < 2) return;
-
-    const activeFlow = document.querySelector(".flow-step.active");
-
-    if(activeFlow){
-
-      activeFlow.scrollIntoView({
-        behavior:"smooth",
-        inline:"center",
-        block:"nearest"
-      });
-
-    }
-
-  }, 50);
-
-  document.getElementById("btnPrev").onclick =
-    ()=> setIndex(index - 1);
-
-  document.getElementById("btnNext").onclick =
-    ()=> setIndex(index + 1);
-
-  document.querySelectorAll(".mini-item, .flow-step")
-    .forEach(el=>{
-
+    document.querySelectorAll(".mini-item, .flow-step").forEach(el=>{
       el.addEventListener("click", ()=>{
-
         const idx = Number(el.dataset.idx);
-
-        if(!Number.isNaN(idx)){
-          setIndex(idx);
-        }
-
+        if(!Number.isNaN(idx)) setIndex(idx);
       });
-
     });
 
-}
+    document.onkeydown = (e)=>{
+      if(e.key === "ArrowLeft") setIndex(index - 1);
+      if(e.key === "ArrowRight") setIndex(index + 1);
+    };
+  }
 
-async function load(){
+  async function load(){
+    const proc = String(getQueryParam("process") || "1").trim();
+    currentProc = proc;
+    index = 0;
 
-  const res = await fetch(LEARNING_API);
+    document.getElementById("procTitle").textContent = `Process ${proc}`;
+    document.getElementById("procMeta").textContent =
+      procMap[proc] ? `กระบวนการ: ${procMap[proc]}` : "-";
 
-  const data = await res.json();
+    try{
+      const wiRes = await fetch(WI_API(proc));
+      const wiData = await wiRes.json();
 
-  steps = data
-    .filter(x => String(x.Process).trim() === "1")
-    .sort((a,b)=> Number(a.StepNo)-Number(b.StepNo));
+      const wiRow =
+        Array.isArray(wiData) ? wiData[0] :
+        (wiData && wiData.FileURL ? wiData : null);
 
-  render();
-}
+      wiLink = wiRow?.FileURL ? String(wiRow.FileURL).trim() : "";
+      wiName = wiRow?.FileName ? String(wiRow.FileName).trim() : "";
+    }catch(e){
+      wiLink = "";
+      wiName = "";
+    }
 
-load();
+    try{
+      const res = await fetch(LEARNING_API);
+      const data = await res.json();
 
+      steps = (Array.isArray(data) ? data : [])
+        .filter(x => String(x.Process).trim() === proc)
+        .sort((a,b)=> Number(a.StepNo)-Number(b.StepNo));
+
+      if(!steps.length){
+        document.getElementById("content").innerHTML = `
+          <div class="error">
+            <i class="fas fa-circle-exclamation"></i>
+            <div>ไม่พบข้อมูลของ Process ${esc(proc)}</div>
+          </div>
+        `;
+        return;
+      }
+
+      const startStep = Number(getQueryParam("step"));
+      if(!Number.isNaN(startStep) && startStep > 0){
+        const idx = steps.findIndex(x => Number(x.StepNo) === startStep);
+        if(idx >= 0) index = idx;
+      }
+
+      render();
+    }catch(err){
+      console.error(err);
+      document.getElementById("content").innerHTML = `
+        <div class="error">
+          <i class="fas fa-exclamation-triangle"></i>
+          <div>โหลดข้อมูลไม่สำเร็จ</div>
+        </div>
+      `;
+    }
+  }
+
+  load();
 </script>
 
 <script>
-document.getElementById('logoutBtn').addEventListener('click', function(event) {
+  document.getElementById('logoutBtn').addEventListener('click', function(event) {
+    event.preventDefault();
+    event.stopImmediatePropagation();
 
-  event.preventDefault();
+    localStorage.removeItem('currentUser');
+    localStorage.removeItem('kmsUser');
+    localStorage.removeItem('savedEmployeeId');
 
-  localStorage.removeItem('currentUser');
-  localStorage.removeItem('kmsUser');
-  localStorage.removeItem('savedEmployeeId');
+    sessionStorage.removeItem('currentUser');
+    sessionStorage.removeItem('kmsUser');
 
-  sessionStorage.removeItem('currentUser');
-  sessionStorage.removeItem('kmsUser');
-
-  window.location.replace('login.html');
-
-}, true);
+    window.location.replace('login.html');
+  }, true);
 </script>
 
 </body>
