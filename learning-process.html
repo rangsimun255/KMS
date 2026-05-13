@@ -141,8 +141,6 @@
       transition:.2s;
     }
 
-    .btn-back:hover{transform:translateY(-1px)}
-
     .stage{
       display:grid;
       grid-template-columns:1fr 420px;
@@ -408,7 +406,9 @@
       white-space:pre-line;
     }
 
-    .impact{color:#8A5A00}
+    .impact{
+      color:#8A5A00;
+    }
 
     .critical i,
     .impact i{
@@ -418,34 +418,36 @@
 
     .impact-text{flex:1}
 
-    .impact-table{
+    .impact-group{
+      display:flex;
+      flex-direction:column;
+      gap:12px;
       width:100%;
-      border-collapse:collapse;
+    }
+
+    .impact-block{
       background:rgba(255,255,255,.65);
-      border-radius:12px;
+      border:1px solid rgba(138,90,0,.15);
+      border-radius:16px;
       overflow:hidden;
     }
 
-    .impact-table th{
-      width:180px;
-      background:#FFF3BF;
-      color:#6B4A00;
-      text-align:left;
-      vertical-align:top;
-      padding:10px 12px;
+    .impact-label{
+      background:#FFF1B8;
+      color:#7A5200;
+      padding:10px 14px;
+      font-size:14px;
       font-weight:900;
-      border:1px solid rgba(138,90,0,.18);
+      border-bottom:1px solid rgba(138,90,0,.12);
     }
 
-    .impact-table td{
-      background:#fffdf2;
-      color:#6B4A00;
-      padding:10px 12px;
-      vertical-align:top;
-      border:1px solid rgba(138,90,0,.18);
-      white-space:pre-line;
-      line-height:1.55;
+    .impact-value{
+      padding:12px 16px;
+      color:#7A5200;
+      font-size:15px;
       font-weight:800;
+      line-height:1.65;
+      white-space:pre-line;
     }
 
     .panel{
@@ -820,16 +822,19 @@ ${esc(s.CriticalPoint || "-")}</div>
                 <i class="fas fa-share-nodes"></i>
 
                 <div class="impact-text">
-                  <table class="impact-table">
-                    <tr>
-                      <th>กระทบกระบวนการ</th>
-                      <td>${impactProcess}</td>
-                    </tr>
-                    <tr>
-                      <th>ทำให้เกิดของเสีย</th>
-                      <td>${impactDefect}</td>
-                    </tr>
-                  </table>
+                  <div class="impact-group">
+
+                    <div class="impact-block">
+                      <div class="impact-label">กระทบกระบวนการ</div>
+                      <div class="impact-value">${impactProcess}</div>
+                    </div>
+
+                    <div class="impact-block">
+                      <div class="impact-label">ทำให้เกิดของเสีย</div>
+                      <div class="impact-value">${impactDefect}</div>
+                    </div>
+
+                  </div>
                 </div>
               </div>
             </div>
