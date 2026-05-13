@@ -418,36 +418,23 @@
 
     .impact-text{flex:1}
 
-    .impact-group{
-      display:flex;
-      flex-direction:column;
-      gap:12px;
-      width:100%;
-    }
-
-    .impact-block{
-      background:rgba(255,255,255,.65);
-      border:1px solid rgba(138,90,0,.15);
-      border-radius:16px;
-      overflow:hidden;
-    }
-
-    .impact-label{
-      background:#FFF1B8;
-      color:#7A5200;
-      padding:10px 14px;
-      font-size:14px;
-      font-weight:900;
-      border-bottom:1px solid rgba(138,90,0,.12);
-    }
-
-    .impact-value{
-      padding:12px 16px;
+    .impact-content{
       color:#7A5200;
       font-size:15px;
       font-weight:800;
-      line-height:1.65;
+      line-height:1.7;
       white-space:pre-line;
+    }
+
+    .impact-heading{
+      font-weight:900;
+      margin-bottom:8px;
+    }
+
+    .impact-subheading{
+      font-weight:900;
+      margin-top:14px;
+      margin-bottom:8px;
     }
 
     .panel{
@@ -822,18 +809,12 @@ ${esc(s.CriticalPoint || "-")}</div>
                 <i class="fas fa-share-nodes"></i>
 
                 <div class="impact-text">
-                  <div class="impact-group">
+                  <div class="impact-content">
+                    <div class="impact-heading">กระทบกระบวนการ</div>
+                    ${impactProcess}
 
-                    <div class="impact-block">
-                      <div class="impact-label">กระทบกระบวนการ</div>
-                      <div class="impact-value">${impactProcess}</div>
-                    </div>
-
-                    <div class="impact-block">
-                      <div class="impact-label">ทำให้เกิดของเสีย</div>
-                      <div class="impact-value">${impactDefect}</div>
-                    </div>
-
+                    <div class="impact-subheading">ทำให้เกิดของเสีย</div>
+                    ${impactDefect}
                   </div>
                 </div>
               </div>
