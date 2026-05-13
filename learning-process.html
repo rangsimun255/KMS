@@ -5,20 +5,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Learning Process - KMS</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <style>
-    *{margin:0;padding:0;box-sizing:border-box}
+
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+    }
 
     body{
       font-family:'Sarabun',sans-serif;
       background:#F4F7FB;
+      color:#2E3A59;
       min-height:100vh;
       overflow-x:hidden;
-      color:#2E3A59;
-      font-size:14px;
-      line-height:1.7;
     }
 
     .container{
@@ -26,40 +29,51 @@
       min-height:100vh;
     }
 
+    /* ================= SIDEBAR ================= */
+
     .sidebar{
       width:70px;
       background:linear-gradient(180deg,#4A89C8 0%,#2E75B6 100%);
+      position:fixed;
+      left:0;
+      top:0;
+      height:100vh;
+
       display:flex;
       flex-direction:column;
       align-items:center;
+
       padding-top:20px;
       gap:10px;
-      position:fixed;
-      height:100vh;
-      left:0;
-      top:0;
+
       z-index:100;
     }
 
     .sidebar-icon{
       width:50px;
       height:50px;
+
+      border-radius:14px;
+
       display:flex;
       align-items:center;
       justify-content:center;
-      color:rgba(255,255,255,.85);
-      font-size:20px;
-      border-radius:12px;
-      cursor:pointer;
-      transition:.2s;
+
+      color:rgba(255,255,255,.9);
+
       text-decoration:none;
+      font-size:20px;
+
+      transition:.2s;
     }
 
     .sidebar-icon:hover,
     .sidebar-icon.active{
-      background:rgba(255,255,255,.18);
+      background:rgba(255,255,255,.16);
       color:#fff;
     }
+
+    /* ================= MAIN ================= */
 
     .main-content{
       flex:1;
@@ -67,115 +81,123 @@
       width:calc(100% - 70px);
     }
 
-    .header{
-      background:linear-gradient(135deg,#4A89C8 0%,#2E75B6 100%);
-      padding:60px 40px;
-      text-align:center;
-      box-shadow:0 4px 15px rgba(74,137,200,.25);
-    }
-
-    .header h1{
-      color:#fff;
-      font-size:42px;
-      font-weight:700;
-      margin-bottom:15px;
-    }
-
-    .header p{
-      color:rgba(255,255,255,.95);
-      font-size:18px;
-    }
-
     .wrap{
-      padding:16px 18px 24px;
+      padding:16px;
     }
 
     .topbar{
       background:#fff;
-      border-radius:16px;
-      padding:14px 16px;
-      box-shadow:0 2px 10px rgba(46,58,89,.08);
+      border-radius:18px;
+
+      padding:14px 18px;
+
       display:flex;
       align-items:center;
       justify-content:space-between;
-      gap:12px;
-      flex-wrap:wrap;
+      gap:10px;
+
+      box-shadow:0 4px 16px rgba(46,58,89,.06);
+
       margin-bottom:14px;
     }
 
+    .topbar-left{
+      display:flex;
+      align-items:center;
+      gap:14px;
+      flex-wrap:wrap;
+    }
+
     .pill{
-      display:inline-flex;
+      display:flex;
       align-items:center;
       gap:8px;
-      padding:8px 12px;
+
+      background:#EAF3FF;
+      color:#2F80ED;
+
+      padding:10px 14px;
       border-radius:999px;
-      background:#E6F0FA;
-      color:#2E75B6;
-      font-weight:800;
+
       font-size:13px;
+      font-weight:800;
     }
 
     .meta{
-      color:#6B7A90;
       font-size:13px;
+      color:#6B7A90;
+      font-weight:700;
     }
 
     .btn-back{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding:10px 12px;
-      border-radius:10px;
-      background:#4A89C8;
+      background:#2F80ED;
       color:#fff;
       text-decoration:none;
+
+      padding:12px 18px;
+      border-radius:14px;
+
+      display:flex;
+      align-items:center;
+      gap:10px;
+
       font-weight:800;
+      transition:.2s;
     }
 
     .btn-back:hover{
-      background:#2E75B6;
+      transform:translateY(-1px);
     }
+
+    /* ================= LAYOUT ================= */
 
     .stage{
       display:grid;
-      grid-template-columns:1fr 360px;
-      gap:14px;
+      grid-template-columns:1fr 420px;
+      gap:16px;
+      align-items:start;
     }
 
-    @media (max-width:980px){
+    @media(max-width:1200px){
       .stage{
         grid-template-columns:1fr;
       }
     }
 
+    /* ================= LEFT ================= */
+
     .slide{
       background:#fff;
-      border-radius:18px;
-      box-shadow:0 6px 18px rgba(46,58,89,.10);
+      border-radius:24px;
       overflow:hidden;
-      display:flex;
-      flex-direction:column;
+      box-shadow:0 8px 24px rgba(46,58,89,.08);
     }
 
     .slide-head{
-      padding:16px;
-      border-bottom:1px solid #eef3f8;
+      padding:22px;
+      border-bottom:1px solid #EEF3F8;
+
       display:flex;
-      gap:12px;
+      gap:16px;
       align-items:flex-start;
     }
 
     .badge{
-      width:44px;
-      height:44px;
-      border-radius:16px;
-      background:#4A89C8;
+      width:58px;
+      height:58px;
+
+      border-radius:18px;
+
+      background:#2F80ED;
       color:#fff;
+
       display:flex;
       align-items:center;
       justify-content:center;
+
+      font-size:26px;
       font-weight:900;
-      font-size:16px;
+
       flex:0 0 auto;
     }
 
@@ -184,57 +206,232 @@
     }
 
     .title{
-      font-weight:900;
-      color:#1f2d3d;
-      font-size:20px;
+      font-size:34px;
       line-height:1.15;
+      font-weight:900;
+      color:#1F2D3D;
     }
 
     .short{
       margin-top:8px;
+
+      font-size:18px;
       color:#6B7A90;
-      font-size:14px;
+      font-weight:600;
     }
 
     .slide-body{
-      padding:14px 16px 16px;
+      padding:22px;
       display:flex;
       flex-direction:column;
-      gap:12px;
+      gap:18px;
     }
 
-    .detail{
-      color:#2E3A59;
+    /* ================= FLOW ================= */
+
+    .process-flow-section{
+      background:#F8FBFF;
+      border:1px solid #E5EDF5;
+      border-radius:22px;
+      padding:20px;
+    }
+
+    .side-section-title{
+      display:flex;
+      align-items:center;
+      gap:10px;
+
+      color:#234A74;
+      font-weight:900;
+      font-size:18px;
+    }
+
+    .flow-top-wrap{
+      margin-top:18px;
+
+      display:flex;
+      align-items:center;
+      gap:10px;
+
+      overflow-x:auto;
+      padding-bottom:10px;
+    }
+
+    .flow-top-wrap::-webkit-scrollbar{
+      height:8px;
+    }
+
+    .flow-top-wrap::-webkit-scrollbar-thumb{
+      background:#D6E3F2;
+      border-radius:999px;
+    }
+
+    .flow-start,
+    .flow-end{
+      min-width:110px;
+      height:62px;
+
+      border-radius:18px;
+
+      border:2px solid #2F80ED;
+      background:#fff;
+      color:#2F80ED;
+
+      display:flex;
+      align-items:center;
+      justify-content:center;
+
       font-size:14px;
-      line-height:1.55;
-      padding:12px;
+      font-weight:900;
+
+      flex:0 0 auto;
+    }
+
+    .flow-line{
+      width:20px;
+      height:2px;
+      background:#C8D8EB;
+      flex:0 0 auto;
+    }
+
+    .flow-arrow-inline{
+      color:#7B8BA1;
+      font-size:18px;
+      flex:0 0 auto;
+    }
+
+    .flow-step{
+      min-width:150px;
+
+      background:#fff;
+      border:2px solid #E5EDF5;
+
+      border-radius:20px;
+
+      padding:16px 14px;
+
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      text-align:center;
+
+      transition:.2s;
+      cursor:pointer;
+
+      flex:0 0 auto;
+    }
+
+    .flow-step:hover{
+      transform:translateY(-2px);
+    }
+
+    .flow-step-no{
+      width:40px;
+      height:40px;
+
+      border-radius:50%;
+
+      display:flex;
+      align-items:center;
+      justify-content:center;
+
+      background:#EAF3FF;
+      color:#2F80ED;
+
+      font-weight:900;
+      font-size:14px;
+
+      margin-bottom:12px;
+    }
+
+    .flow-step-title{
+      font-size:15px;
+      font-weight:900;
+      line-height:1.35;
+      color:#1F2D3D;
+    }
+
+    .flow-step-short{
+      margin-top:6px;
+
+      font-size:12px;
+      line-height:1.45;
+
+      color:#6B7A90;
+    }
+
+    /* completed */
+
+    .flow-step.completed{
+      background:#F0FDF4;
+      border-color:#22C55E;
+    }
+
+    .flow-step.completed .flow-step-no{
+      background:#22C55E;
+      color:#fff;
+    }
+
+    /* active */
+
+    .flow-step.active{
+      background:#EFF6FF;
+      border-color:#2F80ED;
+      box-shadow:0 0 0 4px rgba(47,128,237,.12);
+    }
+
+    .flow-step.active .flow-step-no{
+      background:#2F80ED;
+      color:#fff;
+    }
+
+    /* ================= DETAIL ================= */
+
+    .detail{
+      background:#fff;
+      border-radius:18px;
+
+      padding:18px;
+
+      font-size:17px;
+      line-height:1.9;
+
       white-space:pre-line;
     }
 
-    .wi-actions{
-      margin-top:10px;
-    }
+    /* ================= BUTTON ================= */
 
     .btn-wi{
       display:inline-flex;
       align-items:center;
-      justify-content:center;
       gap:10px;
-      padding:12px 14px;
-      border-radius:12px;
+
       background:#2F80ED;
       color:#fff;
       text-decoration:none;
+
+      padding:14px 18px;
+      border-radius:16px;
+
+      width:fit-content;
+
       font-weight:900;
-      box-shadow:0 6px 16px rgba(47,128,237,0.22);
+
+      box-shadow:0 8px 18px rgba(47,128,237,.2);
     }
 
+    /* ================= HAZARD ================= */
+
     .hazard-frame{
-      --b:8px;
-      --r:22px;
+      --b:10px;
+      --r:28px;
+
       position:relative;
+
       border-radius:var(--r);
+
       padding:var(--b);
+
       overflow:hidden;
     }
 
@@ -242,7 +439,9 @@
       content:"";
       position:absolute;
       inset:0;
+
       border-radius:var(--r);
+
       background:repeating-linear-gradient(
         45deg,
         var(--c1) 0 14px,
@@ -254,254 +453,164 @@
       content:"";
       position:absolute;
       inset:var(--b);
+
       border-radius:calc(var(--r) - var(--b));
+
       background:var(--inner);
     }
 
     .hazard-red{
       --c1:#111;
-      --c2:#D32F2F;
-      --inner:#FDECEA;
+      --c2:#E53935;
+      --inner:#FFF1F1;
     }
 
     .hazard-yellow{
       --c1:#111;
-      --c2:#F7D400;
-      --inner:#FFF8E1;
+      --c2:#FFD600;
+      --inner:#FFFBEA;
     }
 
     .critical,
     .impact{
       position:relative;
       z-index:2;
-      padding:18px;
+
+      padding:24px;
+
       display:flex;
-      gap:10px;
+      gap:14px;
       align-items:flex-start;
-      font-size:14px;
+
       font-weight:800;
-      background:transparent;
     }
 
     .critical{
-      color:#B71C1C;
+      color:#C62828;
       white-space:pre-line;
+      font-size:16px;
+      line-height:1.8;
     }
 
     .impact{
-      color:#7A4F00;
+      color:#8A5A00;
+      white-space:pre-line;
+      font-size:16px;
+      line-height:1.8;
     }
 
     .impact-text{
       flex:1;
     }
 
-    .impact-title{
-      font-weight:900;
-      margin-bottom:6px;
-    }
-
-    .impact-line,
-    .impact-list{
-      white-space:pre-line;
-    }
-
+    .impact-title,
     .impact-subtitle{
       font-weight:900;
-      margin-top:12px;
-      margin-bottom:6px;
+      margin-bottom:8px;
     }
 
-    .process-flow-section{
-      margin-top:14px;
-      padding:16px;
-      border-radius:18px;
-      background:#F8FBFF;
-      border:1px solid #E5EDF5;
-    }
-
-    .side-section-title{
-      font-size:14px;
-      font-weight:900;
-      color:#294b6a;
-      display:flex;
-      align-items:center;
-      gap:8px;
-      margin-bottom:10px;
-    }
-
-    .flowchart{
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      gap:8px;
-    }
-
-    .flowchart-wide{
-      max-width:560px;
-      margin:0 auto;
-    }
-
-    .flow-terminal{
-      width:100%;
-      text-align:center;
-      padding:10px;
-      border-radius:999px;
-      background:#EEF6FF;
-      border:2px solid #4A89C8;
-      color:#2E75B6;
-      font-weight:900;
-      font-size:12px;
-    }
-
-    .flow-arrow{
-      color:#7B8BA1;
-      font-size:16px;
-    }
-
-    .flow-card{
-      width:100%;
-      border-radius:16px;
-      padding:12px;
-      display:flex;
-      gap:10px;
-      align-items:flex-start;
-      cursor:pointer;
-      transition:.2s;
-      border:2px solid #E5EDF5;
-      background:#fff;
-    }
-
-    .flow-card:hover{
-      transform:translateY(-1px);
-    }
-
-    .flow-no{
-      width:30px;
-      height:30px;
-      border-radius:50%;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      font-weight:900;
-      font-size:12px;
-      background:#EAF3FF;
-      color:#2E75B6;
-      flex:0 0 auto;
-    }
-
-    .flow-title{
-      font-size:13px;
-      font-weight:900;
-      color:#1F2D3D;
-    }
-
-    .flow-short{
-      margin-top:4px;
-      font-size:12px;
-      color:#6B7A90;
-      line-height:1.35;
-    }
-
-    .flow-card.completed{
-      background:#F0FDF4;
-      border-color:#22C55E;
-    }
-
-    .flow-card.completed .flow-no{
-      background:#22C55E;
-      color:#fff;
-    }
-
-    .flow-card.active{
-      background:#EFF6FF;
-      border-color:#2F80ED;
-      box-shadow:0 0 0 4px rgba(47,128,237,.12);
-    }
-
-    .flow-card.active .flow-no{
-      background:#2F80ED;
-      color:#fff;
-    }
+    /* ================= RIGHT ================= */
 
     .panel{
       background:#fff;
-      border-radius:18px;
-      box-shadow:0 2px 10px rgba(46,58,89,.08);
-      padding:14px;
+      border-radius:24px;
+      padding:20px;
+
+      box-shadow:0 8px 24px rgba(46,58,89,.08);
+
       display:flex;
       flex-direction:column;
-      gap:12px;
+      gap:18px;
     }
 
     .progress{
-      background:#f2f7fd;
-      border:1px solid #e3edf8;
-      border-radius:16px;
-      padding:12px;
+      background:#F5F9FF;
+      border:1px solid #E2ECF8;
+
+      border-radius:18px;
+
+      padding:16px;
     }
 
     .progress-top{
       display:flex;
       justify-content:space-between;
-      font-weight:800;
-      color:#294b6a;
+
+      font-weight:900;
+      color:#234A74;
     }
 
     .bar{
-      height:10px;
+      margin-top:12px;
+
+      height:12px;
+
       border-radius:999px;
-      background:#dbe7f6;
-      margin-top:10px;
+
+      background:#DCE8F6;
       overflow:hidden;
     }
 
     .bar > div{
       height:100%;
-      background:#4A89C8;
+      background:#2F80ED;
       border-radius:999px;
+      transition:.25s;
     }
 
     .nav-btns{
       display:grid;
       grid-template-columns:1fr 1fr;
-      gap:10px;
+      gap:12px;
     }
 
     .btn{
       border:none;
-      border-radius:14px;
-      padding:12px;
+
+      padding:14px;
+      border-radius:16px;
+
       font-family:'Sarabun',sans-serif;
       font-weight:900;
+      font-size:16px;
+
       cursor:pointer;
+      transition:.2s;
     }
 
     .btn-prev{
-      background:#eef3f8;
-      color:#2c3e50;
+      background:#EEF3F8;
+      color:#2E3A59;
     }
 
     .btn-next{
-      background:#4A89C8;
+      background:#2F80ED;
       color:#fff;
     }
 
+    .btn:disabled{
+      opacity:.45;
+      cursor:not-allowed;
+    }
+
+    /* ================= STEP OVERVIEW ================= */
+
     .mini-list{
-      border:1px solid #eef3f8;
-      border-radius:16px;
+      border:1px solid #E9F0F8;
+      border-radius:18px;
       overflow:hidden;
-      background:#fff;
     }
 
     .mini-item{
-      padding:10px 12px;
+      padding:14px;
+
       display:flex;
-      gap:10px;
+      gap:12px;
       align-items:flex-start;
-      border-bottom:1px solid #eef3f8;
+
+      border-bottom:1px solid #EEF3F8;
+
       cursor:pointer;
-      background:#fff;
       transition:.2s;
     }
 
@@ -510,36 +619,45 @@
     }
 
     .mini-no{
-      width:26px;
-      height:26px;
-      border-radius:10px;
-      background:#E6F0FA;
-      color:#2E75B6;
+      width:34px;
+      height:34px;
+
+      border-radius:12px;
+
       display:flex;
       align-items:center;
       justify-content:center;
+
+      background:#EAF3FF;
+      color:#2F80ED;
+
+      font-size:13px;
       font-weight:900;
-      font-size:12px;
+
       flex:0 0 auto;
     }
 
     .mini-t{
-      font-size:13px;
+      font-size:15px;
       font-weight:900;
-      color:#1f2d3d;
-      line-height:1.25;
+      color:#1F2D3D;
+      line-height:1.4;
     }
 
     .mini-s{
-      font-size:12px;
-      color:#6B7A90;
       margin-top:4px;
-      line-height:1.3;
+
+      font-size:13px;
+      line-height:1.45;
+
+      color:#6B7A90;
     }
+
+    /* completed */
 
     .mini-item.completed{
       background:#F0FDF4;
-      border-left:5px solid #22C55E;
+      border-left:6px solid #22C55E;
     }
 
     .mini-item.completed .mini-no{
@@ -547,11 +665,11 @@
       color:#fff;
     }
 
+    /* active */
+
     .mini-item.active{
       background:#EFF6FF;
-      border-left:5px solid #2F80ED;
-      outline:2px solid #BFDBFE;
-      outline-offset:-2px;
+      border-left:6px solid #2F80ED;
     }
 
     .mini-item.active .mini-no{
@@ -559,287 +677,401 @@
       color:#fff;
     }
 
-    .loading,.error{
-      background:#fff;
-      border-radius:16px;
-      padding:30px;
-      text-align:center;
-      color:#6B7A90;
-    }
   </style>
 </head>
 
 <body>
+
 <div class="container">
 
-<nav class="sidebar">
-  <a class="sidebar-icon" href="index.html"><i class="fas fa-home"></i></a>
-  <a class="sidebar-icon" href="knowledge-base.html"><i class="fas fa-book"></i></a>
-  <a class="sidebar-icon active" href="learning-path.html"><i class="fas fa-graduation-cap"></i></a>
-  <a class="sidebar-icon" href="quiz.html"><i class="fas fa-clipboard-check"></i></a>
-  <a class="sidebar-icon" href="share-experience.html"><i class="fas fa-comments"></i></a>
-</nav>
+  <!-- SIDEBAR -->
 
-<main class="main-content">
+  <nav class="sidebar">
 
-<header class="header">
-  <h1>Learning Process</h1>
-  <p>เรียนทีละ Step แบบสไลด์</p>
-</header>
+    <a class="sidebar-icon" href="index.html">
+      <i class="fas fa-home"></i>
+    </a>
 
-<div class="wrap">
+    <a class="sidebar-icon" href="knowledge-base.html">
+      <i class="fas fa-book"></i>
+    </a>
 
-<div class="topbar">
-  <div style="display:flex; gap:10px; align-items:center;">
-    <span class="pill">
-      <i class="fas fa-gear"></i>
-      <span id="procTitle">Process</span>
-    </span>
+    <a class="sidebar-icon active" href="learning-path.html">
+      <i class="fas fa-graduation-cap"></i>
+    </a>
 
-    <span class="meta" id="procMeta">-</span>
-  </div>
+    <a class="sidebar-icon" href="quiz.html">
+      <i class="fas fa-clipboard-check"></i>
+    </a>
 
-  <a class="btn-back" href="learning-path.html">
-    <i class="fas fa-arrow-left"></i>
-    กลับหน้า Learning Path
-  </a>
-</div>
+    <a class="sidebar-icon" href="share-experience.html">
+      <i class="fas fa-comments"></i>
+    </a>
 
-<div id="content">
-  <div class="loading">
-    <i class="fas fa-spinner fa-spin"></i>
-    <div>กำลังโหลดข้อมูล...</div>
-  </div>
-</div>
+  </nav>
 
-</div>
-</main>
+  <!-- MAIN -->
+
+  <main class="main-content">
+
+    <div class="wrap">
+
+      <!-- TOPBAR -->
+
+      <div class="topbar">
+
+        <div class="topbar-left">
+
+          <div class="pill">
+            <i class="fas fa-gear"></i>
+            <span id="procTitle">Process 1</span>
+          </div>
+
+          <div class="meta" id="procMeta">
+            กระบวนการ: ผสมเปียก
+          </div>
+
+        </div>
+
+        <a class="btn-back" href="learning-path.html">
+          <i class="fas fa-arrow-left"></i>
+          กลับหน้า Learning Path
+        </a>
+
+      </div>
+
+      <!-- CONTENT -->
+
+      <div id="content"></div>
+
+    </div>
+
+  </main>
+
 </div>
 
 <script>
-const API_BASE = "https://script.google.com/macros/s/AKfycbwMRbnqSLTmmI4wofmNfZ5YPFGSiqg__rZUgyDlTTR03JchnQXgUj7DKDvzS4-QBmJrvw/exec";
-const LEARNING_API = API_BASE + "?view=learning";
 
-let steps = [];
-let index = 0;
+  const API_BASE = "YOUR_API";
+  const LEARNING_API = API_BASE + "?view=learning";
 
-function esc(s){
-  return String(s ?? "")
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;");
-}
+  let steps = [];
+  let index = 0;
 
-function getStepStatus(idx){
-  if(idx < index) return "completed";
-  if(idx === index) return "active";
-  return "pending";
-}
+  function esc(s){
+    return String(s ?? "")
+      .replaceAll("&","&amp;")
+      .replaceAll("<","&lt;")
+      .replaceAll(">","&gt;");
+  }
 
-function setIndex(i){
-  index = Math.max(0, Math.min(i, steps.length - 1));
-  render();
-}
+  function getStepStatus(idx){
 
-function render(){
+    if(idx < index) return "completed";
+    if(idx === index) return "active";
 
-  const s = steps[index];
-  const total = steps.length;
-  const percent = Math.round(((index+1)/total)*100);
+    return "pending";
+  }
 
-  document.getElementById("content").innerHTML = `
-    <div class="stage">
+  function setIndex(i){
 
-      <div class="slide">
+    index = Math.max(0, Math.min(i, steps.length - 1));
 
-        <div class="slide-head">
-          <div class="badge">${esc(s.StepNo)}</div>
+    render();
+  }
 
-          <div class="head-text">
-            <div class="title">${esc(s.StepTitle)}</div>
-            <div class="short">${esc(s.StepShort || "")}</div>
-          </div>
-        </div>
+  function render(){
 
-        <div class="slide-body">
+    const s = steps[index];
 
-          <div class="detail">
-${esc(s.StepDetail || "")}
-          </div>
+    const total = steps.length;
 
-          <div class="hazard-frame hazard-red">
-            <div class="critical">
-              <i class="fas fa-triangle-exclamation"></i>
+    const percent = Math.round(((index + 1) / total) * 100);
 
-              <div>
-Critical Point:
-${esc(s.CriticalPoint || "-")}
-              </div>
-            </div>
-          </div>
+    const wiBtnHtml = `
+      <a class="btn-wi" href="#" target="_blank">
+        <i class="fas fa-file-lines"></i>
+        เปิดไฟล์ WI
+      </a>
+    `;
 
-          <div class="hazard-frame hazard-yellow">
-            <div class="impact">
-              <i class="fas fa-share-nodes"></i>
+    document.getElementById("content").innerHTML = `
 
-              <div class="impact-text">
-                <div class="impact-title">
-                  ถ้าพลาดจะกระทบกระบวนการ
-                </div>
+      <div class="stage">
 
-                <div class="impact-line">
-${esc(s.ImpactProcess || "-")}
-                </div>
+        <!-- LEFT -->
 
-                <div class="impact-subtitle">
-                  ทำให้เกิดของเสีย
-                </div>
+        <div class="slide">
 
-                <div class="impact-list">
-${esc(s.ImpactDefect || "-")}
-                </div>
-              </div>
-            </div>
-          </div>
+          <!-- HEADER -->
 
-          <!-- PROCESS FLOW -->
-          <div class="process-flow-section">
+          <div class="slide-head">
 
-            <div class="side-section-title">
-              <i class="fas fa-diagram-project"></i>
-              Process Flow
+            <div class="badge">
+              ${esc(s.StepNo)}
             </div>
 
-            <div class="flowchart flowchart-wide">
+            <div class="head-text">
 
-              <div class="flow-terminal">
-                START
+              <div class="title">
+                ${esc(s.StepTitle)}
               </div>
 
-              ${steps.map((x,idx)=>`
+              <div class="short">
+                ${esc(s.StepShort || "")}
+              </div>
 
-                <div class="flow-arrow">
-                  <i class="fas fa-arrow-down"></i>
+            </div>
+
+          </div>
+
+          <!-- BODY -->
+
+          <div class="slide-body">
+
+            <!-- FLOW -->
+
+            <div class="process-flow-section">
+
+              <div class="side-section-title">
+                <i class="fas fa-diagram-project"></i>
+                Process Flow
+              </div>
+
+              <div class="flow-top-wrap">
+
+                <div class="flow-start">
+                  START
                 </div>
 
-                <div class="flow-card ${getStepStatus(idx)}" data-idx="${idx}">
+                <div class="flow-line"></div>
 
-                  <div class="flow-no">
-                    ${esc(x.StepNo)}
-                  </div>
+                ${steps.map((x,idx)=>`
 
-                  <div>
-                    <div class="flow-title">
+                  <div class="flow-step ${getStepStatus(idx)}" data-idx="${idx}">
+
+                    <div class="flow-step-no">
+                      ${esc(x.StepNo)}
+                    </div>
+
+                    <div class="flow-step-title">
                       ${esc(x.StepTitle)}
                     </div>
 
-                    <div class="flow-short">
+                    <div class="flow-step-short">
                       ${esc(x.StepShort || "")}
                     </div>
+
+                  </div>
+
+                  ${idx !== steps.length - 1 ? `
+                    <div class="flow-arrow-inline">
+                      <i class="fas fa-arrow-right"></i>
+                    </div>
+                  ` : ""}
+
+                `).join("")}
+
+                <div class="flow-line"></div>
+
+                <div class="flow-end">
+                  END
+                </div>
+
+              </div>
+
+            </div>
+
+            <!-- DETAIL -->
+
+            <div class="detail">
+${esc(s.StepDetail || "")}
+            </div>
+
+            <!-- WI -->
+
+            ${wiBtnHtml}
+
+            <!-- CRITICAL -->
+
+            <div class="hazard-frame hazard-red">
+
+              <div class="critical">
+
+                <i class="fas fa-triangle-exclamation"></i>
+
+                <div>
+Critical Point:
+${esc(s.CriticalPoint || "-")}
+                </div>
+
+              </div>
+
+            </div>
+
+            <!-- IMPACT -->
+
+            <div class="hazard-frame hazard-yellow">
+
+              <div class="impact">
+
+                <i class="fas fa-share-nodes"></i>
+
+                <div class="impact-text">
+
+                  <div class="impact-title">
+                    ถ้าพลาดจะกระทบกระบวนการ
+                  </div>
+
+                  <div>
+${esc(s.ImpactProcess || "-")}
+                  </div>
+
+                  <div class="impact-subtitle" style="margin-top:14px;">
+                    ทำให้เกิดของเสีย
+                  </div>
+
+                  <div>
+${esc(s.ImpactDefect || "-")}
                   </div>
 
                 </div>
 
-              `).join("")}
-
-              <div class="flow-arrow">
-                <i class="fas fa-arrow-down"></i>
-              </div>
-
-              <div class="flow-terminal">
-                END
               </div>
 
             </div>
+
           </div>
 
         </div>
-      </div>
 
-      <!-- RIGHT -->
-      <aside class="panel">
+        <!-- RIGHT -->
 
-        <div class="progress">
-          <div class="progress-top">
-            <div>Step ${index+1} / ${total}</div>
-            <div>${percent}%</div>
-          </div>
+        <aside class="panel">
 
-          <div class="bar">
-            <div style="width:${percent}%"></div>
-          </div>
-        </div>
+          <!-- PROGRESS -->
 
-        <div class="nav-btns">
-          <button class="btn btn-prev" id="btnPrev">
-            ← ก่อนหน้า
-          </button>
+          <div class="progress">
 
-          <button class="btn btn-next" id="btnNext">
-            ถัดไป →
-          </button>
-        </div>
+            <div class="progress-top">
 
-        <div class="side-section-title">
-          <i class="fas fa-list-check"></i>
-          Step Overview
-        </div>
-
-        <div class="mini-list">
-
-          ${steps.map((x,idx)=>`
-
-            <div class="mini-item ${getStepStatus(idx)}" data-idx="${idx}">
-
-              <div class="mini-no">
-                ${esc(x.StepNo)}
+              <div>
+                Step ${index + 1} / ${total}
               </div>
 
               <div>
-                <div class="mini-t">
-                  ${esc(x.StepTitle)}
-                </div>
-
-                <div class="mini-s">
-                  ${esc(x.StepShort || "")}
-                </div>
+                ${percent}%
               </div>
 
             </div>
 
-          `).join("")}
+            <div class="bar">
+              <div style="width:${percent}%"></div>
+            </div>
 
-        </div>
+          </div>
 
-      </aside>
+          <!-- NAV -->
 
-    </div>
-  `;
+          <div class="nav-btns">
 
-  document.getElementById("btnPrev").onclick = ()=> setIndex(index-1);
-  document.getElementById("btnNext").onclick = ()=> setIndex(index+1);
+            <button class="btn btn-prev"
+              ${index === 0 ? "disabled" : ""}
+              id="btnPrev">
 
-  document.querySelectorAll(".mini-item, .flow-card").forEach(el=>{
-    el.addEventListener("click", ()=>{
-      const idx = Number(el.dataset.idx);
-      if(!Number.isNaN(idx)) setIndex(idx);
-    });
-  });
-}
+              ← ก่อนหน้า
 
-async function load(){
+            </button>
 
-  const res = await fetch(LEARNING_API);
-  const data = await res.json();
+            <button class="btn btn-next"
+              ${index === total - 1 ? "disabled" : ""}
+              id="btnNext">
 
-  steps = data
-    .filter(x => String(x.Process).trim() === "1")
-    .sort((a,b)=> Number(a.StepNo)-Number(b.StepNo));
+              ถัดไป →
 
-  render();
-}
+            </button>
 
-load();
+          </div>
+
+          <!-- STEP OVERVIEW -->
+
+          <div class="side-section-title">
+            <i class="fas fa-list-check"></i>
+            Step Overview
+          </div>
+
+          <div class="mini-list">
+
+            ${steps.map((x,idx)=>`
+
+              <div class="mini-item ${getStepStatus(idx)}" data-idx="${idx}">
+
+                <div class="mini-no">
+                  ${esc(x.StepNo)}
+                </div>
+
+                <div>
+
+                  <div class="mini-t">
+                    ${esc(x.StepTitle)}
+                  </div>
+
+                  <div class="mini-s">
+                    ${esc(x.StepShort || "")}
+                  </div>
+
+                </div>
+
+              </div>
+
+            `).join("")}
+
+          </div>
+
+        </aside>
+
+      </div>
+    `;
+
+    document.getElementById("btnPrev").onclick =
+      ()=> setIndex(index - 1);
+
+    document.getElementById("btnNext").onclick =
+      ()=> setIndex(index + 1);
+
+    document.querySelectorAll(".mini-item, .flow-step")
+      .forEach(el=>{
+
+        el.addEventListener("click", ()=>{
+
+          const idx = Number(el.dataset.idx);
+
+          if(!Number.isNaN(idx)){
+            setIndex(idx);
+          }
+
+        });
+
+      });
+
+  }
+
+  async function load(){
+
+    const res = await fetch(LEARNING_API);
+
+    const data = await res.json();
+
+    steps = data
+      .filter(x => String(x.Process).trim() === "1")
+      .sort((a,b)=> Number(a.StepNo)-Number(b.StepNo));
+
+    render();
+  }
+
+  load();
+
 </script>
+
 </body>
 </html>
