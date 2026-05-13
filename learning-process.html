@@ -302,20 +302,6 @@
       white-space:pre-line;
     }
 
-    .btn-wi{
-      display:inline-flex;
-      align-items:center;
-      gap:10px;
-      background:#2F80ED;
-      color:#fff;
-      text-decoration:none;
-      padding:14px 18px;
-      border-radius:16px;
-      width:fit-content;
-      font-weight:900;
-      box-shadow:0 8px 18px rgba(47,128,237,.2);
-    }
-
     .hazard-frame{
       --b:8px;
       --r:22px;
@@ -368,9 +354,10 @@
       display:flex;
       gap:10px;
       align-items:flex-start;
-      font-weight:800;
       font-size:14px;
+      font-weight:800;
       line-height:1.6;
+      background:transparent;
     }
 
     .critical{
@@ -378,9 +365,17 @@
       white-space:pre-line;
     }
 
-    .impact{color:#8A5A00}
+    .impact{
+      color:#8A5A00;
+    }
 
-    .impact-text{flex:1;width:100%}
+    .critical i,
+    .impact i{
+      margin-top:3px;
+      flex:0 0 auto;
+    }
+
+    .impact-text{flex:1}
 
     .impact-table{
       width:100%;
@@ -390,28 +385,26 @@
       overflow:hidden;
     }
 
-    .impact-table th,
+    .impact-table th{
+      width:180px;
+      background:#FFF3BF;
+      color:#6B4A00;
+      text-align:left;
+      vertical-align:top;
+      padding:10px 12px;
+      font-weight:900;
+      border:1px solid rgba(138,90,0,.18);
+    }
+
     .impact-table td{
-      border:1px solid rgba(138,90,0,.22);
+      background:#fffdf2;
+      color:#6B4A00;
       padding:10px 12px;
       vertical-align:top;
-      text-align:left;
-      font-size:14px;
-      line-height:1.55;
-    }
-
-    .impact-table th{
-      width:190px;
-      background:rgba(255,214,0,.20);
-      color:#7A4F00;
-      font-weight:900;
-      white-space:nowrap;
-    }
-
-    .impact-table td{
-      color:#5F4300;
-      font-weight:800;
+      border:1px solid rgba(138,90,0,.18);
       white-space:pre-line;
+      line-height:1.55;
+      font-weight:800;
     }
 
     .panel{
@@ -550,7 +543,6 @@
       background:#2F80ED;
       color:#fff;
     }
-
   </style>
 </head>
 
@@ -563,4 +555,213 @@
     <a class="sidebar-icon" href="knowledge-base.html"><i class="fas fa-book"></i></a>
     <a class="sidebar-icon active" href="learning-path.html"><i class="fas fa-graduation-cap"></i></a>
     <a class="sidebar-icon" href="quiz.html"><i class="fas fa-clipboard-check"></i></a>
-    <a class="sidebar-icon" href="share-experience.html"><i class="fas fa
+    <a class="sidebar-icon" href="share-experience.html"><i class="fas fa-comments"></i></a>
+  </nav>
+
+  <main class="main-content">
+    <div class="wrap">
+
+      <div class="topbar">
+        <div class="topbar-left">
+          <div class="pill">
+            <i class="fas fa-gear"></i>
+            <span id="procTitle">Process 1</span>
+          </div>
+
+          <div class="meta" id="procMeta">
+            กระบวนการ: ผสมเปียก
+          </div>
+        </div>
+
+        <a class="btn-back" href="learning-path.html">
+          <i class="fas fa-arrow-left"></i>
+          กลับหน้า Learning Path
+        </a>
+      </div>
+
+      <div id="content"></div>
+
+    </div>
+  </main>
+
+</div>
+
+<script>
+  const API_BASE = "https://script.google.com/macros/s/AKfycbwMRbnqSLTmmI4wofmNfZ5YPFGSiqg__rZUgyDlTTR03JchnQXgUj7DKDvzS4-QBmJrvw/exec";
+  const LEARNING_API = API_BASE + "?view=learning";
+
+  let steps = [];
+  let index = 0;
+
+  function esc(s){
+    return String(s ?? "")
+      .replaceAll("&","&amp;")
+      .replaceAll("<","&lt;")
+      .replaceAll(">","&gt;");
+  }
+
+  function getStepStatus(idx){
+    if(idx < index) return "completed";
+    if(idx === index) return "active";
+    return "pending";
+  }
+
+  function setIndex(i){
+    index = Math.max(0, Math.min(i, steps.length - 1));
+    render();
+  }
+
+  function render(){
+    const s = steps[index];
+    const total = steps.length;
+    const percent = Math.round(((index + 1) / total) * 100);
+
+    const impactProcess = esc((s.ImpactProcess || "").trim()) || "-";
+    const impactDefect = esc((s.ImpactDefect || "").trim()) || "-";
+
+    document.getElementById("content").innerHTML = `
+      <div class="stage">
+
+        <div class="slide">
+          <div class="slide-head">
+            <div class="badge">${esc(s.StepNo)}</div>
+
+            <div class="head-text">
+              <div class="title">${esc(s.StepTitle)}</div>
+              <div class="short">${esc(s.StepShort || "")}</div>
+            </div>
+          </div>
+
+          <div class="slide-body">
+
+            <div class="process-flow-section">
+              <div class="side-section-title">
+                <i class="fas fa-diagram-project"></i>
+                Process Flow
+              </div>
+
+              <div class="flow-top-wrap">
+                <div class="flow-start">START</div>
+
+                ${steps.map((x,idx)=>`
+                  <div class="flow-arrow-inline">
+                    <i class="fas fa-arrow-right"></i>
+                  </div>
+
+                  <div class="flow-step ${getStepStatus(idx)}" data-idx="${idx}">
+                    <div class="flow-step-no">${esc(x.StepNo)}</div>
+                    <div class="flow-step-short">${esc(x.StepShort || "")}</div>
+                  </div>
+                `).join("")}
+
+                <div class="flow-arrow-inline">
+                  <i class="fas fa-arrow-right"></i>
+                </div>
+
+                <div class="flow-end">END</div>
+              </div>
+            </div>
+
+            <div class="detail">${esc(s.StepDetail || "")}</div>
+
+            <div class="hazard-frame hazard-red">
+              <div class="critical">
+                <i class="fas fa-triangle-exclamation"></i>
+                <div>Critical Point:
+${esc(s.CriticalPoint || "-")}</div>
+              </div>
+            </div>
+
+            <div class="hazard-frame hazard-yellow">
+              <div class="impact">
+                <i class="fas fa-share-nodes"></i>
+
+                <div class="impact-text">
+                  <table class="impact-table">
+                    <tr>
+                      <th>กระทบกระบวนการ</th>
+                      <td>${impactProcess}</td>
+                    </tr>
+                    <tr>
+                      <th>ทำให้เกิดของเสีย</th>
+                      <td>${impactDefect}</td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <aside class="panel">
+          <div class="progress">
+            <div class="progress-top">
+              <div>Step ${index + 1} / ${total}</div>
+              <div>${percent}%</div>
+            </div>
+
+            <div class="bar">
+              <div style="width:${percent}%"></div>
+            </div>
+          </div>
+
+          <div class="nav-btns">
+            <button class="btn btn-prev" ${index === 0 ? "disabled" : ""} id="btnPrev">
+              ← ก่อนหน้า
+            </button>
+
+            <button class="btn btn-next" ${index === total - 1 ? "disabled" : ""} id="btnNext">
+              ถัดไป →
+            </button>
+          </div>
+
+          <div class="side-section-title">
+            <i class="fas fa-list-check"></i>
+            Step Overview
+          </div>
+
+          <div class="mini-list">
+            ${steps.map((x,idx)=>`
+              <div class="mini-item ${getStepStatus(idx)}" data-idx="${idx}">
+                <div class="mini-no">${esc(x.StepNo)}</div>
+
+                <div>
+                  <div class="mini-t">${esc(x.StepTitle)}</div>
+                  <div class="mini-s">${esc(x.StepShort || "")}</div>
+                </div>
+              </div>
+            `).join("")}
+          </div>
+        </aside>
+
+      </div>
+    `;
+
+    document.getElementById("btnPrev").onclick = () => setIndex(index - 1);
+    document.getElementById("btnNext").onclick = () => setIndex(index + 1);
+
+    document.querySelectorAll(".mini-item, .flow-step").forEach(el=>{
+      el.addEventListener("click", ()=>{
+        const idx = Number(el.dataset.idx);
+        if(!Number.isNaN(idx)) setIndex(idx);
+      });
+    });
+  }
+
+  async function load(){
+    const res = await fetch(LEARNING_API);
+    const data = await res.json();
+
+    steps = data
+      .filter(x => String(x.Process).trim() === "1")
+      .sort((a,b)=> Number(a.StepNo)-Number(b.StepNo));
+
+    render();
+  }
+
+  load();
+</script>
+
+</body>
+</html>
